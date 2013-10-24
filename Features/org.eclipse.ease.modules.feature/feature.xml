@@ -3,7 +3,7 @@
       id="org.eclipse.ease.modules.feature"
       label="EASE basic modules"
       version="1.0.0.qualifier"
-      plugin="org.eclipse.escriptmonkey.scripting">
+      plugin="org.eclipse.ease">
 
    <description url="http://www.example.com/description">
       EASE basic modules to interact with Eclipse Workbench
@@ -26,21 +26,21 @@ Contributors:
    </license>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.module.platform"
+         id="org.eclipse.ease.module.platform"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.modules.interaction"
+         id="org.eclipse.ease.module.interaction"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.modules.resources"
+         id="org.eclipse.ease.module.resources"
          download-size="0"
          install-size="0"
          version="0.0.0"

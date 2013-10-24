@@ -3,7 +3,7 @@
       id="org.eclipse.ease.javascript.feature"
       label="EASE Javascript feature"
       version="1.0.0.qualifier"
-      plugin="org.eclipse.escriptmonkey.scripting">
+      plugin="org.eclipse.ease">
 
    <description url="http://www.example.com/description">
       All EASE component mandatory to devellop Javascript scripts.
@@ -26,28 +26,28 @@ Contributors:
    </license>
 
    <plugin
-         id="org.eclipse.eclipsemonkey.lang.javascript.examples"
+         id="org.eclipse.ease.lang.javascript.examples"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.debugger"
+         id="org.eclipse.ease.engine.javascript.rhino.debugger"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.javascript.rhino"
+         id="org.eclipse.ease.javascript.rhino"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.javascript.rhino.ui"
+         id="org.eclipse.ease.javascript.rhino.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

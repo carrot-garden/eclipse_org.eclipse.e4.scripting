@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.ease.core.feature"
+      id="org.eclipse.ease.feature"
       label="EASE Core feature"
       version="1.0.0.qualifier"
-      plugin="org.eclipse.escriptmonkey.scripting">
+      plugin="org.eclipse.ease">
 
    <description url="http://www.example.com/description">
       All the core component mandatory for EASE
@@ -26,21 +26,21 @@ Contributors:
    </license>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting"
+         id="org.eclipse.ease"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.log"
+         id="org.eclipse.ease.log"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.storedscript"
+         id="org.eclipse.ease.storedscript"
          download-size="0"
          install-size="0"
          version="0.0.0"

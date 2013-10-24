@@ -34,10 +34,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.ease.discovery.DiscoveryDefinition;
 import org.eclipse.ease.discovery.InstallableComponent;
 import org.eclipse.ease.discovery.ui.Activator;
+import org.eclipse.ease.log.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
-import org.eclipse.escriptmonkey.scripting.log.Logger;
 
 /**
  * Updater that checks that features are available for installation

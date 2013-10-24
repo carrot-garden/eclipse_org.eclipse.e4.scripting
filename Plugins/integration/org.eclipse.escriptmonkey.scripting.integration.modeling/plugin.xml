@@ -2,28 +2,28 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.escriptmonkey.scripting.module.platform.Selector">
+         point="org.eclipse.ease.module.platform.Selector">
       <Selector
             id="GMFSemanticSeletor"
-            impl="org.eclipse.escriptmonkey.scripting.integration.modeling.selector.GMFSemanticSeletor"
+            impl="org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor"
             priority="50">
       </Selector>
       <Selector
             id="GMFNotationSelector"
-            impl="org.eclipse.escriptmonkey.scripting.integration.modeling.selector.GMFNotationSelector"
+            impl="org.eclipse.ease.integration.modeling.selector.GMFNotationSelector"
             priority="45">
       </Selector>
    </extension>
    <extension
-         point="org.eclipse.escriptmonkey.scripting.language">
+         point="org.eclipse.ease.language">
       <module
-            class="org.eclipse.escriptmonkey.scripting.integration.modeling.EcoreModule"
+            class="org.eclipse.ease.integration.modeling.EcoreModule"
             documentation="true"
             name="EcoreModule"
             visible="true">
       </module>
       <module
-            class="org.eclipse.escriptmonkey.scripting.integration.modeling.NotationModule"
+            class="org.eclipse.ease.integration.modeling.NotationModule"
             documentation="true"
             name="NotationModule"
             visible="true">

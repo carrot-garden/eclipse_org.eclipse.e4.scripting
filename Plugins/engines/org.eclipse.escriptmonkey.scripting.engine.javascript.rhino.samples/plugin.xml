@@ -10,7 +10,7 @@
       </category>
     <wizard
           category="org.eclipse.ui.Examples/org.eclipse.eclipsemonkey.newsamplecategory"
-          class="org.eclipse.eclipsemonkey.lang.javascript.examples.ExampleWizards"
+          class="org.eclipse.ease.lang.javascript.examples.ExampleWizards"
           icon="icons/eclipse_monkey_js.png"
           id="org.eclipse.eclipsemonkey.examples"
           name="EScript Monkey Javascripts Examples">

@@ -3,7 +3,7 @@
       id="org.eclipse.ease.integration.modeling.papyrus.feature"
       label="EASE Papyrus intgration"
       version="1.0.0.qualifier"
-      plugin="org.eclipse.escriptmonkey.scripting">
+      plugin="org.eclipse.ease">
 
    <description>
       EASE components use to integrate EASE into MDT Papyrus.
@@ -27,14 +27,14 @@ Contributors:
    </license>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.integration.modeling.papyrus"
+         id="org.eclipse.ease.integration.modeling.papyrus"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.integration.modeling.papyrus.examples"
+         id="org.eclipse.ease.integration.modeling.papyrus.examples"
          download-size="0"
          install-size="0"
          version="0.0.0"

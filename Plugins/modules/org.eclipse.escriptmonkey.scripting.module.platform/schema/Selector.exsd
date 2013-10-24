@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.escriptmonkey.scripting.module.platform" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.ease.module.platform" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.escriptmonkey.scripting.module.platform" id="Selector" name="Selector"/>
+         <meta.schema plugin="org.eclipse.ease.module.platform" id="Selector" name="Selector"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]
@@ -79,7 +79,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.escriptmonkey.scripting.module.platform.modules.ISelector"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ease.module.platform.modules.ISelector"/>
                </appinfo>
             </annotation>
          </attribute>

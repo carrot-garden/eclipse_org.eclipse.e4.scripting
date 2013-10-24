@@ -6,48 +6,48 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="coreexpression"
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression"
+            id="org.eclipse.ease.ui.expression.xtext.CoreExpression"
             name="CoreExpression Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+                    definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.validate">
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="org.eclipse.ease.ui.expression.xtext.CoreExpression.validate">
          <activeWhen>
             <reference
-                    definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+                    definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
             </reference>
          </activeWhen>
       	</handler>
       	<!-- copy qualified name -->
         <handler
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
-				<reference definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened" />
+				<reference definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
-            		<reference definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.XtextEditor.opened" />
+            		<reference definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.XtextEditor.opened" />
 	                <iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -56,22 +56,22 @@
         </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+        <definition id="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression" 
+                        value="org.eclipse.ease.ui.expression.xtext.CoreExpression" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
         </definition>
-        <definition id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.XtextEditor.opened">
+        <definition id="org.eclipse.ease.ui.expression.xtext.CoreExpression.XtextEditor.opened">
             <and>
                 <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression" 
+                        value="org.eclipse.ease.ui.expression.xtext.CoreExpression" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -80,33 +80,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.eclipse.ease.ui.expression.xtext.CoreExpression"
             name="CoreExpression">
-            <keywordReference id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.keyword_CoreExpression"/>
+            <keywordReference id="org.eclipse.ease.ui.expression.xtext.ui.keyword_CoreExpression"/>
         </page>
         <page
-            category="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression"
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.coloring"
+            category="org.eclipse.ease.ui.expression.xtext.CoreExpression"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="org.eclipse.ease.ui.expression.xtext.CoreExpression.coloring"
             name="Syntax Coloring">
-            <keywordReference id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.keyword_CoreExpression"/>
+            <keywordReference id="org.eclipse.ease.ui.expression.xtext.ui.keyword_CoreExpression"/>
         </page>
         <page
-            category="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression"
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.templates"
+            category="org.eclipse.ease.ui.expression.xtext.CoreExpression"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="org.eclipse.ease.ui.expression.xtext.CoreExpression.templates"
             name="Templates">
-            <keywordReference id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.keyword_CoreExpression"/>
+            <keywordReference id="org.eclipse.ease.ui.expression.xtext.ui.keyword_CoreExpression"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.eclipse.ease.ui.expression.xtext.CoreExpression"
             name="CoreExpression">
-            <keywordReference id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.keyword_CoreExpression"/>
+            <keywordReference id="org.eclipse.ease.ui.expression.xtext.ui.keyword_CoreExpression"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -116,14 +116,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.keyword_CoreExpression"
+            id="org.eclipse.ease.ui.expression.xtext.ui.keyword_CoreExpression"
             label="CoreExpression"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.validate"
+            id="org.eclipse.ease.ui.expression.xtext.CoreExpression.validate"
             name="Validate">
       </command>
       <!-- copy qualified name -->
@@ -144,12 +144,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.validate"
+                 commandId="org.eclipse.ease.ui.expression.xtext.CoreExpression.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+                    definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -159,7 +159,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
          		style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened" />
+                	<reference definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -167,7 +167,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
             	style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened" />
+                	<reference definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -176,7 +176,7 @@
 				style="push" tooltip="Copy Qualified Name">
          		<visibleWhen checkEnabled="false">
 	            	<and>
-	            		<reference definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.XtextEditor.opened" />
+	            		<reference definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -189,7 +189,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+                	<reference definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -197,11 +197,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+                    definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -212,19 +212,19 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="coreexpression">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="coreexpression">
         </resourceServiceProvider>
     </extension>
 
 
-	<!-- marker definitions for org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression -->
+	<!-- marker definitions for org.eclipse.ease.ui.expression.xtext.CoreExpression -->
 	<extension
 	        id="coreexpression.check.fast"
 	        name="CoreExpression Problem"
@@ -250,27 +250,27 @@
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
       </participant>
    </extension>
    <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            category="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression"
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.compiler.preferencePage"
+            category="org.eclipse.ease.ui.expression.xtext.CoreExpression"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="org.eclipse.ease.ui.expression.xtext.CoreExpression.compiler.preferencePage"
             name="Compiler">
-            <keywordReference id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.keyword_CoreExpression"/>
+            <keywordReference id="org.eclipse.ease.ui.expression.xtext.ui.keyword_CoreExpression"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            category="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression"
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.compiler.propertyPage"
+            category="org.eclipse.ease.ui.expression.xtext.CoreExpression"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="org.eclipse.ease.ui.expression.xtext.CoreExpression.compiler.propertyPage"
             name="Compiler">
-            <keywordReference id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.keyword_CoreExpression"/>
+            <keywordReference id="org.eclipse.ease.ui.expression.xtext.ui.keyword_CoreExpression"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -282,11 +282,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+					definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -306,33 +306,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened"/>
+					<reference definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression -->
+    <!-- quickfix marker resolution generator for org.eclipse.ease.ui.expression.xtext.CoreExpression -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.coreexpression.check.fast">
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.eclipse.ease.ui.expression.xtext.ui.coreexpression.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.coreexpression.check.normal">
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.eclipse.ease.ui.expression.xtext.ui.coreexpression.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.coreexpression.check.expensive">
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.eclipse.ease.ui.expression.xtext.ui.coreexpression.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
@@ -342,11 +342,11 @@
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+					definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -358,7 +358,7 @@
                style="push">
             <visibleWhen checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.Editor.opened">
+                     definitionId="org.eclipse.ease.ui.expression.xtext.CoreExpression.Editor.opened">
                </reference>
             </visibleWhen>
          </command>
@@ -366,29 +366,29 @@
    </extension>
    <extension point="org.eclipse.ui.preferencePages">
 	    <page
-	        category="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression"
-	        class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-	        id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.refactoring"
+	        category="org.eclipse.ease.ui.expression.xtext.CoreExpression"
+	        class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.eclipse.ease.ui.expression.xtext.CoreExpression.refactoring"
 	        name="Refactoring">
-	        <keywordReference id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.keyword_CoreExpression"/>
+	        <keywordReference id="org.eclipse.ease.ui.expression.xtext.ui.keyword_CoreExpression"/>
 	    </page>
 	</extension>
 
   <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.compare.contentViewers"
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="org.eclipse.ease.ui.expression.xtext.CoreExpression.compare.contentViewers"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="coreexpression">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.compare.contentMergeViewers"
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="org.eclipse.ease.ui.expression.xtext.CoreExpression.compare.contentMergeViewers"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="coreexpression" label="CoreExpression Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.CoreExpression.editors.documentProviders"
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+    <provider id="org.eclipse.ease.ui.expression.xtext.CoreExpression.editors.documentProviders"
+            class="org.eclipse.ease.ui.expression.xtext.ui.CoreExpressionExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
             extensions="coreexpression">
     </provider>
   </extension>

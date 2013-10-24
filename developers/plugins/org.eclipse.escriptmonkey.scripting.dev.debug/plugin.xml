@@ -6,19 +6,19 @@
          point="org.eclipse.ui.commands">
       <category
             name="EScript Monkey Debug"
-            id="org.eclipse.escriptmonkey.scripting.dev.debug.commandcategory">
+            id="org.eclipse.ease.dev.debug.commandcategory">
       </category>
       <command
             name="Display Script Metadata"
-            categoryId="org.eclipse.escriptmonkey.scripting.dev.debug.commandcategory"
-            id="org.eclipse.escriptmonkey.scripting.dev.debug.displaymetadatacommand">
+            categoryId="org.eclipse.ease.dev.debug.commandcategory"
+            id="org.eclipse.ease.dev.debug.displaymetadatacommand">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            commandId="org.eclipse.escriptmonkey.scripting.dev.debug.displaymetadatacommand"
-            class="org.eclipse.escriptmonkey.scripting.dev.debug.handlers.DisplaySelectedScriptMedataHandler">
+            commandId="org.eclipse.ease.dev.debug.displaymetadatacommand"
+            class="org.eclipse.ease.dev.debug.handlers.DisplaySelectedScriptMedataHandler">
       </handler>
    </extension>
    <extension
@@ -28,22 +28,22 @@
          <menu
                label="EScript monkey debug"
                mnemonic="M"
-               id="org.eclipse.escriptmonkey.scripting.dev.debug.menuid">
+               id="org.eclipse.ease.dev.debug.menuid">
             <command
-                  commandId="org.eclipse.escriptmonkey.scripting.dev.debug.displaymetadatacommand"
+                  commandId="org.eclipse.ease.dev.debug.displaymetadatacommand"
                   mnemonic="S"
-                  id="org.eclipse.escriptmonkey.scripting.dev.debug.displaymetadatamenu">
+                  id="org.eclipse.ease.dev.debug.displaymetadatamenu">
             </command>
          </menu>
       </menuContribution>
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="org.eclipse.escriptmonkey.scripting.dev.debug.toolbarID">
+               id="org.eclipse.ease.dev.debug.toolbarID">
             <command
-                  commandId="org.eclipse.escriptmonkey.scripting.dev.debug.displaymetadatacommand"
+                  commandId="org.eclipse.ease.dev.debug.displaymetadatacommand"
                   tooltip="Display Metadata"
-                  id="org.eclipse.escriptmonkey.scripting.dev.debug.displaymetadatamenu2">
+                  id="org.eclipse.ease.dev.debug.displaymetadatamenu2">
             </command>
          </toolbar>
       </menuContribution>
@@ -51,8 +51,8 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="org.eclipse.escriptmonkey.scripting.dev.debug.StoredScriptEplorerView"
-            id="org.eclipse.escriptmonkey.scripting.dev.debug.storedScriptView"
+            class="org.eclipse.ease.dev.debug.StoredScriptEplorerView"
+            id="org.eclipse.ease.dev.debug.storedScriptView"
             name="[Developper debug] Display StoredScript Model"
             restorable="true">
       </view>

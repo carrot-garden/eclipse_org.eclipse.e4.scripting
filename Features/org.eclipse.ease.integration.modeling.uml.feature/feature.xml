@@ -3,7 +3,7 @@
       id="org.eclipse.ease.integration.modeling.uml.feature"
       label="EASE UML Integration"
       version="1.0.0.qualifier"
-      plugin="org.eclipse.escriptmonkey.scripting">
+      plugin="org.eclipse.ease">
 
    <description>
       EASE components use to integrate EASE into UML.
@@ -27,14 +27,14 @@ Contributors:
    </license>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.integration.modeling.uml"
+         id="org.eclipse.ease.integration.modeling.uml"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.integration.modeling.uml.examples"
+         id="org.eclipse.ease.integration.modeling.uml.examples"
          download-size="0"
          install-size="0"
          version="0.0.0"

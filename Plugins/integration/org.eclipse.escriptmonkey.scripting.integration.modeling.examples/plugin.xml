@@ -5,8 +5,8 @@
          point="org.eclipse.ui.newWizards">
     <wizard
           category="org.eclipse.ui.Examples/org.eclipse.eclipsemonkey.newsamplecategory"
-          class="org.eclipse.escriptmonkey.scripting.integration.modeling.examples.ModelingIntegrationScriptSamples"
-          id="org.eclipse.escriptmonkey.scripting.integration.modeling.examples.examples"
+          class="org.eclipse.ease.integration.modeling.examples.ModelingIntegrationScriptSamples"
+          id="org.eclipse.ease.integration.modeling.examples.examples"
           name="Modeling integration into EASE">
     </wizard>
    </extension>

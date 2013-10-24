@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: E4 Ui
-Bundle-SymbolicName: org.eclipse.escriptmonkey.scripting.e4.ui;singleton:=true
+Bundle-SymbolicName: org.eclipse.ease.ui.e4;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.escriptmonkey.scripting.e4.ui.Activator
+Bundle-Activator: org.eclipse.ease.ui.e4.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.e4.core.di,
@@ -12,12 +12,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.ui.di,
  org.eclipse.e4.ui.workbench,
  org.eclipse.e4.ui.services,
- org.eclipse.escriptmonkey.scripting.storedscript;bundle-version="1.0.0",
- org.eclipse.escriptmonkey.scripting.ui;bundle-version="1.0.0",
- org.eclipse.escriptmonkey.scripting.ui.expression;bundle-version="1.0.0",
+ org.eclipse.ease.storedscript;bundle-version="1.0.0",
+ org.eclipse.ease.ui;bundle-version="1.0.0",
+ org.eclipse.ease.ui.expression;bundle-version="1.0.0",
  org.eclipse.core.expressions;bundle-version="3.4.500",
  org.eclipse.debug.ui,
- org.eclipse.escriptmonkey.scripting.ui.expression.xtext;bundle-version="1.0.0",
- org.eclipse.escriptmonkey.scripting.log;bundle-version="1.0.0"
+ org.eclipse.ease.ui.expression.xtext;bundle-version="1.0.0",
+ org.eclipse.ease.log;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

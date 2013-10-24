@@ -8,7 +8,7 @@
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
-               class="org.eclipse.escriptmonkey.scripting.storedscript.EScriptMonkeyMonkeyProjectNature">
+               class="org.eclipse.ease.storedscript.EScriptMonkeyMonkeyProjectNature">
          </run>
       </runtime>
    </extension>
@@ -17,7 +17,7 @@
       <!-- @generated ScriptUIGraph -->
       <package
             uri="http://storedscript/1.0"
-            class="org.eclipse.escriptmonkey.scripting.storedscript.storedscript.StoredscriptPackage"
+            class="org.eclipse.ease.storedscript.storedscript.StoredscriptPackage"
             genModel="models/StoredScript.genmodel"/>
    </extension>
 
@@ -25,7 +25,7 @@
       <!-- @generated ScriptUIGraph -->
       <factory
             uri="http://storedscript/1.0"
-            class="org.eclipse.escriptmonkey.scripting.storedscript.storedscript.provider.StoredscriptItemProviderAdapterFactory"
+            class="org.eclipse.ease.storedscript.storedscript.provider.StoredscriptItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

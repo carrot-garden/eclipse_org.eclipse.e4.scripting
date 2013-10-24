@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.ease.core.ui.feature"
+      id="org.eclipse.ease.ui.feature"
       label="EASE core UI feature"
       version="1.0.0.qualifier"
-      plugin="org.eclipse.escriptmonkey.scripting">
+      plugin="org.eclipse.ease">
 
    <description>
       All the EASE component for User Interface integration
@@ -26,35 +26,35 @@ Contributors:
    </license>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.ui"
+         id="org.eclipse.ease.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.e4.ui"
+         id="org.eclipse.ease.ui.e4"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.ui.expression"
+         id="org.eclipse.ease.ui.expression"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext"
+         id="org.eclipse.ease.ui.expression.xtext"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui"
+         id="org.eclipse.ease.ui.expression.xtext.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

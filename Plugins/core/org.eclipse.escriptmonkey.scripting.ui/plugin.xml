@@ -6,71 +6,71 @@
       <view
             allowMultiple="true"
             category="org.eclipse.ui"
-            class="org.eclipse.escriptmonkey.scripting.ui.view.ScriptShell"
+            class="org.eclipse.ease.ui.view.ScriptShell"
             icon="images/shell_view.gif"
-            id="org.eclipse.escriptmonkey.views.scriptShell"
+            id="org.eclipse.ease.views.scriptShell"
             name="Script Shell"
             restorable="true">
       </view>
       <category
-            id="org.eclipse.escriptmonkey.scripting.ui.scriptviewCategory"
+            id="org.eclipse.ease.ui.scriptviewCategory"
             name="Script Views">
       </category>
       <view
-            category="org.eclipse.escriptmonkey.scripting.ui.scriptviewCategory"
-            class="org.eclipse.escriptmonkey.scripting.ui.view.ScriptEplorerView"
-            id="org.eclipse.escriptmonkey.scripting.ui.view.ScriptEplorerView"
+            category="org.eclipse.ease.ui.scriptviewCategory"
+            class="org.eclipse.ease.ui.view.ScriptEplorerView"
+            id="org.eclipse.ease.ui.view.ScriptEplorerView"
             name="Script view explorer">
       </view>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <category
-            id="org.eclipse.escriptmonkey.commands.category.scriptShell"
+            id="org.eclipse.ease.commands.category.scriptShell"
             name="Script Shell">
       </category>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.scriptShell"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.ClearDisplay"
-            id="org.eclipse.escriptmonkey.commands.scriptShell.clearDisplay"
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.ClearDisplay"
+            id="org.eclipse.ease.commands.scriptShell.clearDisplay"
             name="Clear Display">
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.scriptShell"
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
             description="Terminate current script"
-            id="org.eclipse.escriptmonkey.commands.scriptShell.stop"
+            id="org.eclipse.ease.commands.scriptShell.stop"
             name="Abort script execution">
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.scriptShell"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.Reset"
-            id="org.eclipse.escriptmonkey.commands.scriptShell.reset"
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.Reset"
+            id="org.eclipse.ease.commands.scriptShell.reset"
             name="Reset">
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.scriptShell"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.SwitchEngine"
-            id="org.eclipse.escriptmonkey.commands.scriptShell.switchEngine"
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.SwitchEngine"
+            id="org.eclipse.ease.commands.scriptShell.switchEngine"
             name="Switch script engine">
          <commandParameter
-               id="org.eclipse.escriptmonkey.commands.scriptShell.switchEngine.id"
+               id="org.eclipse.ease.commands.scriptShell.switchEngine.id"
                name="Script engine ID"
                optional="false">
          </commandParameter>
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.scriptShell"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.SpawnShell"
-            id="org.eclipse.escriptmonkey.commands.scriptShell.newShell"
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.SpawnShell"
+            id="org.eclipse.ease.commands.scriptShell.newShell"
             name="Spawn new shell">
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.scriptShell"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.LoadModule"
-            id="org.eclipse.escriptmonkey.commands.scriptShell.loadModule"
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.LoadModule"
+            id="org.eclipse.ease.commands.scriptShell.loadModule"
             name="Load Module">
          <commandParameter
-               id="org.eclipse.escriptmonkey.commands.scriptShell.loadModule.moduleID"
+               id="org.eclipse.ease.commands.scriptShell.loadModule.moduleID"
                name="Module ID"
                optional="true">
          </commandParameter>
@@ -79,24 +79,24 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            id="org.eclipse.escriptmonkey.commands.category.macro"
+            id="org.eclipse.ease.commands.category.macro"
             name="Macro">
       </category>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.macro"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.Run"
-            id="org.eclipse.escriptmonkey.commands.macro.run"
+            categoryId="org.eclipse.ease.commands.category.macro"
+            defaultHandler="org.eclipse.ease.ui.handler.Run"
+            id="org.eclipse.ease.commands.macro.run"
             name="Run Macro">
          <commandParameter
-               id="org.eclipse.escriptmonkey.commands.macro.run.name"
+               id="org.eclipse.ease.commands.macro.run.name"
                name="Macro Name"
                optional="false">
          </commandParameter>
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.macro"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.ToggleMacroRecording"
-            id="org.eclipse.escriptmonkey.commands.macro.toggleMacroRecording"
+            categoryId="org.eclipse.ease.commands.category.macro"
+            defaultHandler="org.eclipse.ease.ui.handler.ToggleMacroRecording"
+            id="org.eclipse.ease.commands.macro.toggleMacroRecording"
             name="Toggle  Macro Recording">
          <state
                class="org.eclipse.jface.commands.ToggleState"
@@ -104,40 +104,40 @@
          </state>
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.macro"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.ShowMacroManager"
-            id="org.eclipse.escriptmonkey.commands.macro.showMacroManager"
+            categoryId="org.eclipse.ease.commands.category.macro"
+            defaultHandler="org.eclipse.ease.ui.handler.ShowMacroManager"
+            id="org.eclipse.ease.commands.macro.showMacroManager"
             name="Show Macro Manager">
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.macro"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.Delete"
-            id="org.eclipse.escriptmonkey.commands.macro.delete"
+            categoryId="org.eclipse.ease.commands.category.macro"
+            defaultHandler="org.eclipse.ease.ui.handler.Delete"
+            id="org.eclipse.ease.commands.macro.delete"
             name="Delete Macro">
          <commandParameter
-               id="org.eclipse.escriptmonkey.commands.macro.delete.name"
+               id="org.eclipse.ease.commands.macro.delete.name"
                name="Macro Name"
                optional="false">
          </commandParameter>
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.macro"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.Rename"
-            id="org.eclipse.escriptmonkey.commands.macro.rename"
+            categoryId="org.eclipse.ease.commands.category.macro"
+            defaultHandler="org.eclipse.ease.ui.handler.Rename"
+            id="org.eclipse.ease.commands.macro.rename"
             name="Rename Macro">
          <commandParameter
-               id="org.eclipse.escriptmonkey.commands.macro.rename.name"
+               id="org.eclipse.ease.commands.macro.rename.name"
                name="Macro Name"
                optional="false">
          </commandParameter>
       </command>
       <command
-            categoryId="org.eclipse.escriptmonkey.commands.category.macro"
-            defaultHandler="org.eclipse.escriptmonkey.scripting.ui.handler.Edit"
-            id="org.eclipse.escriptmonkey.commands.macro.edit"
+            categoryId="org.eclipse.ease.commands.category.macro"
+            defaultHandler="org.eclipse.ease.ui.handler.Edit"
+            id="org.eclipse.ease.commands.macro.edit"
             name="Edit Macro">
          <commandParameter
-               id="org.eclipse.escriptmonkey.commands.macro.edit.name"
+               id="org.eclipse.ease.commands.macro.edit.name"
                name="Macro Name"
                optional="false">
          </commandParameter>
@@ -146,28 +146,28 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.eclipse.escriptmonkey.scripting.ui.handler.StopScriptExecution"
-            commandId="org.eclipse.escriptmonkey.commands.scriptShell.stop">
+            class="org.eclipse.ease.ui.handler.StopScriptExecution"
+            commandId="org.eclipse.ease.commands.scriptShell.stop">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="toolbar:org.eclipse.escriptmonkey.views.scriptShell">
+            locationURI="toolbar:org.eclipse.ease.views.scriptShell">
          <separator
                name="top"
                visible="false">
          </separator>
          <command
-               commandId="org.eclipse.escriptmonkey.commands.scriptShell.loadModule"
+               commandId="org.eclipse.ease.commands.scriptShell.loadModule"
                icon="images/libraries.gif"
-               id="org.eclipse.escriptmonkey.commands.scriptShell.loadModule.popup"
+               id="org.eclipse.ease.commands.scriptShell.loadModule.popup"
                label="Load Module"
                style="pulldown"
                tooltip="Load an external module">
          </command>
          <command
-               commandId="org.eclipse.escriptmonkey.commands.scriptShell.clearDisplay"
+               commandId="org.eclipse.ease.commands.scriptShell.clearDisplay"
                icon="images/erase.gif"
                label="Clear Display"
                style="push">
@@ -177,23 +177,23 @@
                visible="true">
          </separator>
          <command
-               commandId="org.eclipse.escriptmonkey.commands.scriptShell.switchEngine"
+               commandId="org.eclipse.ease.commands.scriptShell.switchEngine"
                icon="images/engine.png"
-               id="org.eclipse.escriptmonkey.commands.scriptShell.switchEngine.popup"
+               id="org.eclipse.ease.commands.scriptShell.switchEngine.popup"
                label="Switch engine"
                style="pulldown">
          </command>
          <command
-               commandId="org.eclipse.escriptmonkey.commands.scriptShell.reset"
+               commandId="org.eclipse.ease.commands.scriptShell.reset"
                icon="platform:/plugin/org.eclipse.equinox.p2.ui/icons/obj/iu_update_obj.gif"
                label="Reset"
                style="push"
                tooltip="Reset Script Engine">
          </command>
          <command
-               commandId="org.eclipse.escriptmonkey.commands.scriptShell.newShell"
+               commandId="org.eclipse.ease.commands.scriptShell.newShell"
                icon="images/shell_view.gif"
-               id="org.eclipse.escriptmonkey.commands.scriptShell.newShell.popup"
+               id="org.eclipse.ease.commands.scriptShell.newShell.popup"
                label="New shell"
                style="push">
          </command>
@@ -202,14 +202,14 @@
                visible="true">
          </separator>
          <command
-               commandId="org.eclipse.escriptmonkey.commands.macro.showMacroManager"
+               commandId="org.eclipse.ease.commands.macro.showMacroManager"
                icon="images/macro_folder.gif"
-               id="org.eclipse.escriptmonkey.commands.macro.showMacroManager.popup"
+               id="org.eclipse.ease.commands.macro.showMacroManager.popup"
                label="Macro Manager"
                style="pulldown">
          </command>
          <command
-               commandId="org.eclipse.escriptmonkey.commands.macro.toggleMacroRecording"
+               commandId="org.eclipse.ease.commands.macro.toggleMacroRecording"
                icon="images/start_record_macro.gif"
                label="Toggle Macro Recording"
                style="toggle">
@@ -223,10 +223,10 @@
    <extension
          point="org.eclipse.ui.services">
       <serviceFactory
-            factoryClass="org.eclipse.escriptmonkey.scripting.ui.service.MacroServiceFactory">
+            factoryClass="org.eclipse.ease.ui.service.MacroServiceFactory">
          <service></service>
          <service
-               serviceClass="org.eclipse.escriptmonkey.scripting.ui.IMacroService">
+               serviceClass="org.eclipse.ease.ui.IMacroService">
          </service>
       </serviceFactory>
    </extension>
@@ -234,15 +234,15 @@
          point="org.eclipse.ecf.filetransfer.urlStreamHandlerService">
       <urlStreamHandlerService
             protocol="macro"
-            serviceClass="org.eclipse.escriptmonkey.scripting.ui.macro.MacroURLStreamHandler">
+            serviceClass="org.eclipse.ease.ui.macro.MacroURLStreamHandler">
       </urlStreamHandlerService>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="org.eclipse.escriptmonkey.scripting.ui.propertytester.ScriptEnginePropertyTester"
-            id="org.eclipse.escriptmonkey.propertyTester.scriptEngineID"
-            namespace="org.eclipse.escriptmonkey.scripting.ui"
+            class="org.eclipse.ease.ui.propertytester.ScriptEnginePropertyTester"
+            id="org.eclipse.ease.propertyTester.scriptEngineID"
+            namespace="org.eclipse.ease.ui"
             properties="engineID"
             type="org.eclipse.ui.IViewPart">
       </propertyTester>
@@ -250,18 +250,18 @@
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
-            id="org.eclipse.escriptmonkey.scripting.ui.launchConfigurationType1"
+            id="org.eclipse.ease.ui.launchConfigurationType1"
             name="name">
       </launchConfigurationType>
    </extension>
    <extension
          point="org.eclipse.ui.console.consolePageParticipants">
       <consolePageParticipant
-            class="org.eclipse.escriptmonkey.scripting.ui.console.ScriptConsolePageParticipant"
-            id="org.eclipse.escriptmonkey.scripting.ui.consolePageParticipant">
+            class="org.eclipse.ease.ui.console.ScriptConsolePageParticipant"
+            id="org.eclipse.ease.ui.consolePageParticipant">
          <enablement>
             <instanceof
-                  value="org.eclipse.escriptmonkey.scripting.ui.console.ScriptConsole">
+                  value="org.eclipse.ease.ui.console.ScriptConsole">
             </instanceof>
          </enablement>
       </consolePageParticipant>
@@ -270,7 +270,7 @@
       <!-- @generated ScriptUIGraph -->
       <package
             uri="http://scriptuigraph/1.0"
-            class="org.eclipse.escriptmonkey.scripting.ui.scriptuigraph.ScriptuigraphPackage"
+            class="org.eclipse.ease.ui.scriptuigraph.ScriptuigraphPackage"
             genModel="model/ScriptUIGraph.genmodel"/>
    </extension>
 
@@ -278,7 +278,7 @@
       <!-- @generated ScriptUIGraph -->
       <factory
             uri="http://scriptuigraph/1.0"
-            class="org.eclipse.escriptmonkey.scripting.ui.scriptuigraph.provider.ScriptuigraphItemProviderAdapterFactory"
+            class="org.eclipse.ease.ui.scriptuigraph.provider.ScriptuigraphItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -289,29 +289,29 @@
 
    
    <extension
-        point="org.eclipse.escriptmonkey.scripting.storedscript.metadata">
+        point="org.eclipse.ease.storedscript.metadata">
      <metadata
-           impl="org.eclipse.escriptmonkey.scripting.ui.metadata.DescriptionMetadataParser"
+           impl="org.eclipse.ease.ui.metadata.DescriptionMetadataParser"
            name="Description">
      </metadata>
      <metadata
-           impl="org.eclipse.escriptmonkey.scripting.ui.metadata.MenuMetadataParser"
+           impl="org.eclipse.ease.ui.metadata.MenuMetadataParser"
            name="Menu">
      </metadata>
       <metadata
-            impl="org.eclipse.escriptmonkey.scripting.ui.metadata.EnableWhenMetadataParser"
+            impl="org.eclipse.ease.ui.metadata.EnableWhenMetadataParser"
             name="EnableWhen">
       </metadata>
       <metadata
-            impl="org.eclipse.escriptmonkey.scripting.ui.metadata.ThreadMetadataParser"
+            impl="org.eclipse.ease.ui.metadata.ThreadMetadataParser"
             name="Thread">
       </metadata>
       <metadata
-            impl="org.eclipse.escriptmonkey.scripting.ui.metadata.AvailableFromMetadataParser"
+            impl="org.eclipse.ease.ui.metadata.AvailableFromMetadataParser"
             name="AvailableFrom">
       </metadata>
       <metadata
-            impl="org.eclipse.escriptmonkey.scripting.ui.metadata.EffectiveScriptGenerationMetadata"
+            impl="org.eclipse.ease.ui.metadata.EffectiveScriptGenerationMetadata"
             name="GenerateInjectedCodeFile">
       </metadata>
   </extension>
@@ -319,7 +319,7 @@
          point="org.eclipse.ui.commands">
       <command
             description="Run the script selected in the Script Explorer View"
-            id="org.eclipse.escriptmonkey.scripting.ui.runSelectedScript"
+            id="org.eclipse.ease.ui.runSelectedScript"
             name="Run Selected Script">
       </command>
    </extension>

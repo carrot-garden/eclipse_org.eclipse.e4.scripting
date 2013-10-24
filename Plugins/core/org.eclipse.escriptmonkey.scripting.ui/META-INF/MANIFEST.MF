@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.eclipse.escriptmonkey.scripting.ui;singleton:=true
+Bundle-SymbolicName: org.eclipse.ease.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.escriptmonkey.scripting,
+Require-Bundle: org.eclipse.ease,
  org.eclipse.ui.console;bundle-version="[3.5.100,4.0.0)",
  org.eclipse.jface;bundle-version="[3.8.0,4.0.0)",
  org.eclipse.ui.ide;bundle-version="[3.8.0,4.0.0)",
@@ -25,23 +25,23 @@ Require-Bundle: org.eclipse.escriptmonkey.scripting,
  org.eclipse.debug.core;bundle-version="[3.8.0,4.0.0)",
  org.eclipse.debug.ui;bundle-version="[3.9.0,4.0.0)",
  org.eclipse.jdt.debug.ui;bundle-version="[3.6.200,4.0.0)",
- org.eclipse.escriptmonkey.scripting.storedscript,
+ org.eclipse.ease.storedscript,
  com.google.guava;bundle-version="11.0.2",
  org.eclipse.ui.forms,
  org.eclipse.core.filesystem,
  org.eclipse.emf.workspace;bundle-version="1.5.1",
- org.eclipse.escriptmonkey.scripting.log;bundle-version="1.0.0"
+ org.eclipse.ease.log;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.eclipse.escriptmonkey.scripting.ui.Activator
-Export-Package: org.eclipse.escriptmonkey.scripting.ui,
- org.eclipse.escriptmonkey.scripting.ui.actions,
- org.eclipse.escriptmonkey.scripting.ui.console,
- org.eclipse.escriptmonkey.scripting.ui.launching,
- org.eclipse.escriptmonkey.scripting.ui.metadata,
- org.eclipse.escriptmonkey.scripting.ui.scriptuigraph,
- org.eclipse.escriptmonkey.scripting.ui.scriptuigraph.impl,
- org.eclipse.escriptmonkey.scripting.ui.scriptuigraph.provider,
- org.eclipse.escriptmonkey.scripting.ui.scriptuigraph.util,
- org.eclipse.escriptmonkey.scripting.ui.utils,
- org.eclipse.escriptmonkey.scripting.ui.wizard,
+Bundle-Activator: org.eclipse.ease.ui.Activator
+Export-Package: org.eclipse.ease.ui,
+ org.eclipse.ease.ui.actions,
+ org.eclipse.ease.ui.console,
+ org.eclipse.ease.ui.launching,
+ org.eclipse.ease.ui.metadata,
+ org.eclipse.ease.ui.scriptuigraph,
+ org.eclipse.ease.ui.scriptuigraph.impl,
+ org.eclipse.ease.ui.scriptuigraph.provider,
+ org.eclipse.ease.ui.scriptuigraph.util,
+ org.eclipse.ease.ui.utils,
+ org.eclipse.ease.ui.wizard,
  org.eclipse.wb.swt

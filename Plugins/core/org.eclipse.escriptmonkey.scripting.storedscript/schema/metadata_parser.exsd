@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.escriptmonkey.scripting.storedscript" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.ease.storedscript" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.escriptmonkey.scripting.storedscript" id="metadata" name="metadata"/>
+         <meta.schema plugin="org.eclipse.ease.storedscript" id="metadata" name="metadata"/>
       </appinfo>
       <documentation>
          This extension is used to provid a metada parser for a script type
@@ -66,7 +66,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.escriptmonkey.scripting.storedscript.metada.IHeaderParser"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ease.storedscript.metada.IHeaderParser"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -81,7 +81,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.escriptmonkey.scripting.language/scriptType/@type"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.language/scriptType/@type"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -103,7 +103,7 @@
                   The parser used to extract the metadata
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.escriptmonkey.scripting.storedscript.metada.IMetadataParser"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ease.storedscript.metada.IMetadataParser"/>
                </appinfo>
             </annotation>
          </attribute>

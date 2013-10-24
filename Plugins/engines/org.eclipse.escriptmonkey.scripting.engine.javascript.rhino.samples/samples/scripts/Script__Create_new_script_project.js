@@ -35,7 +35,7 @@ function main() {
 	
 	var project = openProjectWizard();
 	addProjectNature(project,
-			"org.eclipse.escriptmonkey.scripting.storedscript.EScript_Monkey_Nature");
+			"org.eclipse.ease.storedscript.EScript_Monkey_Nature");
 
 	if (project != null) {
 		createFolder("/" + project.getName() + "/scripts");

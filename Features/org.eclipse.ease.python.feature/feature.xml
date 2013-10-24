@@ -3,7 +3,7 @@
       id="org.eclipse.ease.python.feature"
       label="EASE Python"
       version="1.0.0.qualifier"
-      plugin="org.eclipse.escriptmonkey.scripting">
+      plugin="org.eclipse.ease">
 
    <description>
       EASE component use to handle python language.
@@ -27,14 +27,14 @@ Contributors:
    </license>
 
    <plugin
-         id="org.eclipse.escriptmonkey.lang.python"
+         id="org.eclipse.ease.lang.python"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.escriptmonkey.lang.python.samples"
+         id="org.eclipse.ease.lang.python.samples"
          download-size="0"
          install-size="0"
          version="0.0.0"

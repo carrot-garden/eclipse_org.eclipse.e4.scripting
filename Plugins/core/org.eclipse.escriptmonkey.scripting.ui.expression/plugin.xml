@@ -10,7 +10,7 @@
       <!-- @generated CoreExpression -->
       <package
             uri="http://coreexpression/1.0"
-            class="org.eclipse.escriptmonkey.scripting.ui.expression.coreexpression.CoreexpressionPackage"
+            class="org.eclipse.ease.ui.expression.coreexpression.CoreexpressionPackage"
             genModel="model/CoreExpression.genmodel"/>
    </extension>
 

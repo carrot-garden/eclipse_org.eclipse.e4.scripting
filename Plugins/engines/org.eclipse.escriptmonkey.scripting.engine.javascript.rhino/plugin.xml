@@ -2,14 +2,14 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.escriptmonkey.scripting.language">
+         point="org.eclipse.ease.language">
       <scriptType
             extension_file="js"
             type="JavaScript">
       </scriptType>
       <engine
-            class="org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.RhinoScriptEngine"
-            id="org.eclipse.escriptmonkey.scripting.javascript.rhino"
+            class="org.eclipse.ease.engine.javascript.rhino.RhinoScriptEngine"
+            id="org.eclipse.ease.javascript.rhino"
             name="JavaScript (Rhino)"
             priority="10">
          <supportedScriptType
@@ -17,19 +17,19 @@
          </supportedScriptType>
       </engine>
       <moduleWrapper
-            class="org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.RhinoModuleWrapper"
-            engineID="org.eclipse.escriptmonkey.scripting.javascript.rhino">
+            class="org.eclipse.ease.engine.javascript.rhino.RhinoModuleWrapper"
+            engineID="org.eclipse.ease.javascript.rhino">
       </moduleWrapper>
       <launchExtension
-            class="org.eclipse.escriptmonkey.scripting.modules.BootStrapper"
-            engineID="org.eclipse.escriptmonkey.scripting.javascript.rhino">
+            class="org.eclipse.ease.modules.BootStrapper"
+            engineID="org.eclipse.ease.javascript.rhino">
       </launchExtension>
    </extension>
    <extension
-         point="org.eclipse.escriptmonkey.scripting.storedscript.metadata">
+         point="org.eclipse.ease.storedscript.metadata">
       <parser
             id="JavaScriptMetadaHeaderParser"
-            parser_class="org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.JavascriptHeaderParser">
+            parser_class="org.eclipse.ease.engine.javascript.rhino.JavascriptHeaderParser">
          <script_type
                type="JavaScript">
          </script_type>

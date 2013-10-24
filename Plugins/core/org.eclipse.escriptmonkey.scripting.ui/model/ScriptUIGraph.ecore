@@ -29,7 +29,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="StoredScriptUI" eSuperTypes="#//SubNode">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="script" lowerBound="1"
-        eType="ecore:EClass ../../org.eclipse.escriptmonkey.scripting.storedscript/models/StoredScript.ecore#//IStoredScript"/>
+        eType="ecore:EClass ../../org.eclipse.ease.storedscript/models/StoredScript.ecore#//IStoredScript"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Root" eSuperTypes="#//ParentNode"/>
 </ecore:EPackage>

@@ -2,9 +2,9 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.escriptmonkey.scripting.language">
+         point="org.eclipse.ease.language">
       <module
-            class="org.eclipse.escriptmonkey.scripting.integration.modeling.uml.modules.UMLModule"
+            class="org.eclipse.ease.integration.modeling.uml.modules.UMLModule"
             documentation="true"
             name="UMLModule"
             visible="true">

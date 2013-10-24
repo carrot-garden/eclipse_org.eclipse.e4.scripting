@@ -5,9 +5,9 @@
          point="org.eclipse.ui.newWizards">
     <wizard
           category="org.eclipse.ui.Examples/org.eclipse.eclipsemonkey.newsamplecategory"
-          class="org.eclipse.eclipsemonkey.lang.python.examples.PythonMonkeyExamplesWizard"
+          class="org.eclipse.ease.lang.python.examples.PythonMonkeyExamplesWizard"
           icon="icons/escript_monkey_py.png"
-          id="org.eclipse.eclipsemonkey.lang.python.examples"
+          id="org.eclipse.ease.lang.python.examples"
           name="EScript Monkey Pyton Scripts Examples">
     </wizard>
    </extension>

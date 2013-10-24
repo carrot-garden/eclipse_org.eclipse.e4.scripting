@@ -3,7 +3,7 @@
       id="org.eclipse.ease.discovery.feature"
       label="Ease Discovery"
       version="1.0.0.qualifier"
-      plugin="org.eclipse.escriptmonkey.scripting">
+      plugin="org.eclipse.ease">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

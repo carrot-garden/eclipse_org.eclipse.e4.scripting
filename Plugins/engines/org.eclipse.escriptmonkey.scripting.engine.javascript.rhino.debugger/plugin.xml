@@ -4,8 +4,8 @@
    <extension
          point="org.eclipse.debug.ui.debugModelPresentations">
       <debugModelPresentation
-            class="org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.debugger.model.RhinoDebugModelPresentation"
-            id="org.eclipse.escriptmonkey.debugModelPresentation.rhino">
+            class="org.eclipse.ease.engine.javascript.rhino.debugger.model.RhinoDebugModelPresentation"
+            id="org.eclipse.ease.debugModelPresentation.rhino">
       </debugModelPresentation>
    </extension>
    <extension
@@ -14,27 +14,27 @@
             id="variableViewActions"
             targetID="org.eclipse.debug.ui.VariableView">
          <menu
-               id="org.eclipse.escriptmonkey.debug.ui.variableview.menu"
+               id="org.eclipse.ease.debug.ui.variableview.menu"
                label="EScript">
             <groupMarker
                   name="escript">
             </groupMarker>
          </menu>
          <action
-               class="org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.debugger.actions.FunctionFilterAction"
+               class="org.eclipse.ease.engine.javascript.rhino.debugger.actions.FunctionFilterAction"
                helpContextId="show_functions_variable_help_context"
-               id="org.eclipse.escriptmonkey.scripting.ui.variableview.show.functions"
+               id="org.eclipse.ease.ui.variableview.show.functions"
                label="Show functions"
-               menubarPath="org.eclipse.escriptmonkey.debug.ui.variableview.menu/escript"
+               menubarPath="org.eclipse.ease.debug.ui.variableview.menu/escript"
                style="toggle"
                tooltip="Tooltip text">
          </action>
          <action
-               class="org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.debugger.actions.ModuleFilterAction"
+               class="org.eclipse.ease.engine.javascript.rhino.debugger.actions.ModuleFilterAction"
                helpContextId="show_functions_variable_help_context"
-               id="org.eclipse.escriptmonkey.scripting.ui.variableview.show.modules"
+               id="org.eclipse.ease.ui.variableview.show.modules"
                label="Show modules"
-               menubarPath="org.eclipse.escriptmonkey.debug.ui.variableview.menu/escript"
+               menubarPath="org.eclipse.ease.debug.ui.variableview.menu/escript"
                style="toggle"
                tooltip="Tooltip text">
          </action>

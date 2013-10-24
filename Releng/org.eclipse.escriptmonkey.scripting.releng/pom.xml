@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>escriptmonkey</groupId>
-	<artifactId>org.eclipse.escriptmonkey.scripting.releng</artifactId>
+	<artifactId>org.eclipse.ease.releng</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -110,20 +110,20 @@
 	<modules>
 	<!-- PLugins -->
 		<module>
-			../org.eclipse.escriptmonkey.scripting.releng.target
+			../org.eclipse.ease.releng.target
 		</module>
 		<!-- Core -->
 		<module>
-			../../Plugins/core/org.eclipse.escriptmonkey.scripting
+			../../Plugins/core/org.eclipse.ease
 		</module>
 		<module>
-			../../developers/plugins/org.eclipse.escriptmonkey.scripting.dev.debug
+			../../developers/plugins/org.eclipse.ease.dev.debug
 		</module>
 		<module>
-			../../Plugins/core/org.eclipse.escriptmonkey.scripting.log
+			../../Plugins/core/org.eclipse.ease.log
 		</module>
 		<module>
-			../../Plugins/core/org.eclipse.escriptmonkey.scripting.storedscript
+			../../Plugins/core/org.eclipse.ease.storedscript
 		</module>
 			<!--  Discovery -->
 			<module>
@@ -138,75 +138,75 @@
 			
 			<!-- UI -->
 			<module>
-				../../Plugins/core/org.eclipse.escriptmonkey.scripting.ui
+				../../Plugins/core/org.eclipse.ease.ui
 			</module>
 			<module>
-				../../Plugins/core/org.eclipse.escriptmonkey.scripting.e4.ui
+				../../Plugins/core/org.eclipse.ease.ui.e4
 			</module>
 			
 			<module>
-				../../Plugins/core/org.eclipse.escriptmonkey.scripting.ui.expression
+				../../Plugins/core/org.eclipse.ease.ui.expression
 			</module>
 			<module>
-				../../Plugins/core/org.eclipse.escriptmonkey.scripting.ui.expression.xtext
+				../../Plugins/core/org.eclipse.ease.ui.expression.xtext
 			</module>
 			<module>
-				../../Plugins/core/org.eclipse.escriptmonkey.scripting.ui.expression.xtext.ui
+				../../Plugins/core/org.eclipse.ease.ui.expression.xtext.ui
 			</module>
 
 			<!-- Lang -->
 				<!-- Python -->
 		<module>
-			../../Plugins/engines/org.eclipse.escriptmonkey.lang.python
+			../../Plugins/engines/org.eclipse.ease.lang.python
 		</module>
 		<module>
-			../../Plugins/engines/org.eclipse.escriptmonkey.lang.python.samples
+			../../Plugins/engines/org.eclipse.ease.lang.python.samples
 		</module>
 		
 				<!-- Javascript -->
 		<module>
-			../../Plugins/engines/org.eclipse.escriptmonkey.scripting.engine.javascript.rhino
+			../../Plugins/engines/org.eclipse.ease.engine.javascript.rhino
 		</module>
 		<module>
-			../../Plugins/engines/org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.ui
+			../../Plugins/engines/org.eclipse.ease.engine.javascript.rhino.ui
 		</module>
 		<module>
-			../../Plugins/engines/org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.samples
+			../../Plugins/engines/org.eclipse.ease.engine.javascript.rhino.samples
 		</module>
 		<module>
-			../../Plugins/engines/org.eclipse.escriptmonkey.scripting.engine.javascript.rhino.debugger
+			../../Plugins/engines/org.eclipse.ease.engine.javascript.rhino.debugger
 		</module>
 		
 		
 		
 			<!-- Modules -->
 		<module>
-			../../Plugins/modules/org.eclipse.escriptmonkey.scripting.module.platform
+			../../Plugins/modules/org.eclipse.ease.module.platform
 		</module>
 		<module>
-			../../Plugins/modules/org.eclipse.escriptmonkey.scripting.modules.interaction
+			../../Plugins/modules/org.eclipse.ease.module.interaction
 		</module>
 		<module>
-			../../Plugins/modules/org.eclipse.escriptmonkey.scripting.modules.resources
+			../../Plugins/modules/org.eclipse.ease.module.resources
 		</module>
 			<!-- Integration -->
 		<module>
-			../../Plugins/integration/org.eclipse.escriptmonkey.scripting.integration.modeling
+			../../Plugins/integration/org.eclipse.ease.integration.modeling
 		</module>
 		<module>
-			../../Plugins/integration/org.eclipse.escriptmonkey.scripting.integration.modeling.examples
+			../../Plugins/integration/org.eclipse.ease.integration.modeling.examples
 		</module>
 		<module>
-			../../Plugins/integration/org.eclipse.escriptmonkey.scripting.integration.modeling.papyrus
+			../../Plugins/integration/org.eclipse.ease.integration.modeling.papyrus
 		</module>
 		<module>
-			../../Plugins/integration/org.eclipse.escriptmonkey.scripting.integration.modeling.papyrus.examples
+			../../Plugins/integration/org.eclipse.ease.integration.modeling.papyrus.examples
 		</module>
 		<module>
-			../../Plugins/integration/org.eclipse.escriptmonkey.scripting.integration.modeling.uml
+			../../Plugins/integration/org.eclipse.ease.integration.modeling.uml
 		</module>
 		<module>
-			../../Plugins/integration/org.eclipse.escriptmonkey.scripting.integration.modeling.uml.examples
+			../../Plugins/integration/org.eclipse.ease.integration.modeling.uml.examples
 		</module>
 		
 		
@@ -216,10 +216,10 @@
 		
 		<!-- Features -->
 		<module>
-			../../Features/org.eclipse.ease.core.feature
+			../../Features/org.eclipse.ease.feature
 		</module>
 		<module>
-			../../Features/org.eclipse.ease.core.ui.feature
+			../../Features/org.eclipse.ease.ui.feature
 		</module>
 		<module>
 			../../Features/org.eclipse.ease.integration.modeling.feature
@@ -245,7 +245,7 @@
 		
 		<!-- Update site -->
 		<module>
-			../org.eclipse.escriptmonkey.scripting.releng.p2
+			../org.eclipse.ease.releng.p2
 		</module>
 		
 	</modules>

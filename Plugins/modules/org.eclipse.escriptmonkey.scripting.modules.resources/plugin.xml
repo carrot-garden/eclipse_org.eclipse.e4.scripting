@@ -2,15 +2,15 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.escriptmonkey.scripting.language">
+         point="org.eclipse.ease.language">
       <module
-            class="org.eclipse.escriptmonkey.scripting.modules.resources.WorkspaceResourceModule"
+            class="org.eclipse.ease.module.resources.WorkspaceResourceModule"
             documentation="true"
             name="WorkspaceResourceModule"
             visible="true">
       </module>
    <module
-            class="org.eclipse.escriptmonkey.scripting.modules.resources.ResourcesModule"
+            class="org.eclipse.ease.module.resources.ResourcesModule"
             documentation="true"
             name="ResourcesModule"
             visible="true">

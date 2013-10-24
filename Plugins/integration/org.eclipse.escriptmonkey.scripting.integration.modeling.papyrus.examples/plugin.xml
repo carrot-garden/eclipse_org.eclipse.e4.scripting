@@ -5,8 +5,8 @@
          point="org.eclipse.ui.newWizards">
     <wizard
           category="org.eclipse.ui.Examples/org.eclipse.eclipsemonkey.newsamplecategory"
-          class="org.eclipse.escriptmonkey.scripting.integration.modeling.papyrus.examples.PapyrusScriptSamples"
-          id="org.eclipse.escriptmonkey.scripting.integration.modeling.papyrus.examples.PapyrusScriptSamples"
+          class="org.eclipse.ease.integration.modeling.papyrus.examples.PapyrusScriptSamples"
+          id="org.eclipse.ease.integration.modeling.papyrus.examples.PapyrusScriptSamples"
           name="Papyrus integration into EASE">
     </wizard>
    </extension>

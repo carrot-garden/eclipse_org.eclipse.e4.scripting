@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.escriptmonkey.scripting" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.ease" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.escriptmonkey.scripting" id="language" name="Language"/>
+         <meta.schema plugin="org.eclipse.ease" id="language" name="Language"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]
@@ -76,7 +76,7 @@
                   Implementation of script engine
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.escriptmonkey.scripting.IScriptEngine"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ease.IScriptEngine"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -117,7 +117,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.escriptmonkey.scripting.language/scriptType/@type"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.language/scriptType/@type"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -132,7 +132,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.escriptmonkey.scripting.language/engine/@id"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.language/engine/@id"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -142,7 +142,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.escriptmonkey.scripting.IScriptEngineLaunchExtension"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ease.IScriptEngineLaunchExtension"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -167,7 +167,7 @@
                   Implementing class
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.escriptmonkey.scripting.IScriptModule"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ease.IScriptModule"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -196,7 +196,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.escriptmonkey.scripting.language/module/@name"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.language/module/@name"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -211,7 +211,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.escriptmonkey.scripting.language/engine/@id"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.language/engine/@id"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -221,7 +221,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.escriptmonkey.scripting.modules.IModuleWrapper"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ease.modules.IModuleWrapper"/>
                </appinfo>
             </annotation>
          </attribute>
