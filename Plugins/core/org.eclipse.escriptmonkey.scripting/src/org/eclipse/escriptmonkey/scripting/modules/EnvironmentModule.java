@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ import org.eclipse.escriptmonkey.scripting.ExitException;
 import org.eclipse.escriptmonkey.scripting.IModifiableScriptEngine;
 import org.eclipse.escriptmonkey.scripting.Script;
 import org.eclipse.escriptmonkey.scripting.debug.ITracingConstant;
-import org.eclipse.escriptmonkey.scripting.debug.Tracer;
+import org.eclipse.escriptmonkey.scripting.log.Tracer;
 import org.eclipse.escriptmonkey.scripting.service.ScriptService;
 import org.eclipse.swt.widgets.Display;
 
@@ -64,10 +65,13 @@ public class EnvironmentModule extends AbstractScriptModule implements IScriptMo
 	 * 
 	 * @param name
 	 *        name of module to load
+	 * @param injectCode
+	 *        Default value is true. If set to true the load module will only inject a java varaible into the script but will no wrap the script into
+	 *        the Script engine language.
 	 * @return loaded module instance
 	 */
 	@WrapToScript
-	public final IScriptModule loadModule(final String moduleIdentifier) {
+	public final IScriptModule loadModule(@NamedParameter(name = "moduleName") final String moduleIdentifier) {
 		boolean reLoaded = false;
 		IScriptModule module = findModule(moduleIdentifier);
 		if(module == null) {
@@ -132,7 +136,7 @@ public class EnvironmentModule extends AbstractScriptModule implements IScriptMo
 			addModule(module);
 		}
 
-		// create functino wrappers
+		// create function wrappers
 		createWrappers(module, reLoaded);
 
 		// notify listeners
@@ -549,10 +553,12 @@ public class EnvironmentModule extends AbstractScriptModule implements IScriptMo
 
 	void addModule(final IScriptModule module) {
 		// check if a module with same name is already registered
-		for(IScriptModule mod : mModules) {
+		ListIterator<IScriptModule> modulesIterator = mModules.listIterator();
+		while(modulesIterator.hasNext()) {
+			IScriptModule mod = (IScriptModule)modulesIterator.next();
 			if(mod.getModuleName().equals(module.getModuleName())) {
 				// found, remove module as it gets replaced
-				mModules.remove(mod);
+				modulesIterator.remove();
 			}
 		}
 

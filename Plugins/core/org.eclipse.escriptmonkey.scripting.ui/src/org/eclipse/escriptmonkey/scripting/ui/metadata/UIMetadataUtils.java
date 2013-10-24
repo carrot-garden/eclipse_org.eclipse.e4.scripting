@@ -32,6 +32,14 @@ public class UIMetadataUtils extends AbstractMetadataUtils {
 
 	}
 
+	public static boolean generateCodeInjectionFile(IStoredScript script) {
+		String effective = getUniqueMeta(script, IUIMetadata.GENERATE_CODE_INJECTION_FILE_METADA);
+		if("true".equals(effective)) {
+			return true;
+		}
+		return false;
+	}
+
 	public static List<String> getMenu(IStoredScript script) {
 		String menuList = getUniqueMeta(script, IUIMetadata.MENU_METADATA);
 		if(menuList == null) {
@@ -44,12 +52,11 @@ public class UIMetadataUtils extends AbstractMetadataUtils {
 	public static boolean hasToBeLaunchInUI(IStoredScript script) {
 		ScriptMetadata meta = script.getMetadata(IBasicMetadata.THREAD_METADATA);
 		if(meta != null) {
-			for(String value : meta.getValue()) {
-				if(value != null) {
-					String v = value.trim();
-					if(IBasicMetadata.UI_THREAD_METADATA_VALUE.equals(v)) {
-						return true;
-					}
+			String value = meta.getValue();
+			if(value != null) {
+				String v = value.trim();
+				if(IBasicMetadata.UI_THREAD_METADATA_VALUE.equals(v)) {
+					return true;
 				}
 			}
 		}

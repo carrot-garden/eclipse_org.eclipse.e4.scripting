@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.escriptmonkey.scripting.debug.Logger;
+import org.eclipse.escriptmonkey.scripting.log.Logger;
 import org.eclipse.escriptmonkey.scripting.storedscript.notification.IStoredScriptListener;
 import org.eclipse.escriptmonkey.scripting.storedscript.service.IStoredScriptService;
 import org.eclipse.escriptmonkey.scripting.storedscript.storedscript.IStoredScript;
@@ -129,7 +129,7 @@ public class ScriptGraphService implements IStoredScriptListener {
 		} else if(notifier instanceof ScriptMetadata) {
 			ScriptMetadata notif = (ScriptMetadata)notifier;
 			if(StoredscriptPackage.Literals.SCRIPT_METADATA__VALUE.equals(scriptNotif.getFeature())) {
-				if(Notification.ADD == scriptNotif.getEventType()) {
+				if(Notification.SET == scriptNotif.getEventType()) {
 					IStoredScript script = notif.getScript();
 					if(IUIMetadata.MENU_METADATA.equals(notif.getKey())) {
 						removeUIScript(script);
@@ -154,7 +154,7 @@ public class ScriptGraphService implements IStoredScriptListener {
 
 	private void addUIScript(IStoredScript script) {
 		if(script == null) {
-			Logger.logError("No script in registry for " + script.getUri());
+			Logger.logError("Script not found in registry");
 		}
 		List<String> menus = UIMetadataUtils.getMenu(script);
 		BasicEList<String> path = new BasicEList<String>(menus);

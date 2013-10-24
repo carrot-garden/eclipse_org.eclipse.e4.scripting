@@ -14,10 +14,9 @@ import org.eclipse.core.expressions.IIterable;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IAdapterManager;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.escriptmonkey.scripting.debug.Logger;
+import org.eclipse.escriptmonkey.scripting.log.Logger;
 import org.eclipse.escriptmonkey.scripting.modules.AbstractScriptModule;
 import org.eclipse.escriptmonkey.scripting.modules.WrapToScript;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISelectionService;
@@ -53,11 +52,10 @@ public class SelectionModule extends AbstractScriptModule {
 		IEvaluationService esrvc = (IEvaluationService)PlatformUI.getWorkbench().getService(IEvaluationService.class);
 
 		Object customSelection = SelectorService.getInstance().getSelectionFromContext(selection, esrvc.getCurrentState());
-		if(customSelection == null) {
-			String message = "Unable to retreive custom selection service";
-			ErrorDialog.openError(Display.getDefault().getActiveShell(), "Custom Selection Service", message, Logger.createErrorStatus(message, org.eclipse.escriptmonkey.scripting.module.platform.Activator.PLUGIN_ID));
+		if(customSelection != null) {
+			return customSelection;
 		}
-		return customSelection;
+		return selection;
 	}
 
 	@WrapToScript
@@ -73,21 +71,28 @@ public class SelectionModule extends AbstractScriptModule {
 		if(result != null) {
 			return Lists.newArrayList(result.iterator());
 		}
-		ErrorDialog.openError(Display.getDefault().getActiveShell(), "Error getting iterable selection", "The current selection is not an iterable", null);
+		DialogModule.error("The current selection is not an iterable");
 		return null;
 	}
 
 	protected <T extends Object> T getAdapter(Class<T> cla, Object o) {
-		if(cla.isInstance(o)) {
-			return (T)o;
-		} else if(o instanceof IAdaptable) {
-			return (T)((IAdaptable)o).getAdapter(cla);
-		} else {
-			IAdapterManager manager = Platform.getAdapterManager();
-			return (T)manager.getAdapter(o, cla);
+		if(o != null && cla != null) {
+			if(cla.isInstance(o)) {
+				return (T)o;
+			} else if(o instanceof IAdaptable) {
+				return (T)((IAdaptable)o).getAdapter(cla);
+			} else {
+				IAdapterManager manager = Platform.getAdapterManager();
+				if(manager != null) {
+					return (T)manager.getAdapter(o, cla);
+				} else {
+					Logger.logError("Unable to get thr AdapterManger");
+					return null;
+				}
+			}
 		}
+		return null;
 	}
-
 
 	private static class GetSelectionRunnable implements Runnable {
 
@@ -98,6 +103,9 @@ public class SelectionModule extends AbstractScriptModule {
 			ISelectionService selectionService = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService();
 			if(selectionService != null) {
 				this.selection = selectionService.getSelection();
+				if(selection == null) {
+					Logger.logError("Unable to find a selection from the workbench");
+				}
 			}
 		}
 

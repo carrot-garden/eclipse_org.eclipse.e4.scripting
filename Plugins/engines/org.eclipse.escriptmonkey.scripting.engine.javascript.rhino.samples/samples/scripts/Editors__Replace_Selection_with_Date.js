@@ -2,9 +2,12 @@
  * Thread: UI
  * Menu:   Examples > Editors > Replace Selection with Date
  * Kudos: Paul Colton (Aptana, Inc.) & Arthur Daussy
- * Description: You can use this script to replace the current seleciton of the active text editorwith the current date
+ * Description: {You can use this script to replace the current selection of the active text editor with the current date}
  * License: EPL 1.0
- * DOM: http://download.eclipse.org/technology/dash/update/org.eclipse.eclipsemonkey.lang.javascript
+ * EnableWhen::[With selection {
+ *        InstanceOf "org.eclipse.jface.text.TextSelection"{
+ *            }
+ * }]::
  */
  
 function main() {
@@ -29,9 +32,7 @@ function main() {
 			
 			var text = new Date();
 			
-			// apply edit and reveal in editor
 			sourceEditor.applyEdit(offset, deleteLength, text);
-			sourceEditor.selectAndReveal(offset, text.length);
 
 	}
 }

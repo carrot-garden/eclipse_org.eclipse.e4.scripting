@@ -1,8 +1,8 @@
 #
-# Menu: Examples > Modeling > GMF > Display Element in Papyrus
+# Menu: Examples > Modeling > Papyrus > Display Selection in MDT Papyrus
 # Kudos: Arthur Daussy
-# Description: Dispay the semantic object selected
-#EnableWen::[With activeEditor {
+# Description: {Demonstrate the use of Selection Modules  while selecting an element in MDT Papyrus.}
+#EnableWhen::[With activeEditor {
 #    Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
 #}]::
 # License: EPL 1.0

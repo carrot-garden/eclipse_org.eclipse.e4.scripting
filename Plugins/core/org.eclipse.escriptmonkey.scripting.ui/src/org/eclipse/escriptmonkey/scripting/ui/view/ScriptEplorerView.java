@@ -7,8 +7,10 @@ import org.eclipse.escriptmonkey.scripting.ui.ScriptGraphService;
 import org.eclipse.escriptmonkey.scripting.ui.actions.EditScriptAction;
 import org.eclipse.escriptmonkey.scripting.ui.actions.RefreshStoredScriptAction;
 import org.eclipse.escriptmonkey.scripting.ui.actions.RunScriptAction;
+import org.eclipse.escriptmonkey.scripting.ui.scriptuigraph.Node;
 import org.eclipse.escriptmonkey.scripting.ui.scriptuigraph.StoredScriptUI;
 import org.eclipse.escriptmonkey.scripting.ui.scriptuigraph.provider.ScriptCellLabelProvider;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
@@ -19,11 +21,14 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
@@ -43,6 +48,10 @@ public class ScriptEplorerView extends ViewPart {
 
 	private EditScriptAction editScriptAction;
 
+	private Action expandAllAction;
+
+	private Action collapseAll;
+
 	public ScriptEplorerView() {
 	}
 
@@ -53,11 +62,12 @@ public class ScriptEplorerView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		Composite container = toolkit.createComposite(parent, SWT.NONE);
-		toolkit.paintBordersFor(container);
-		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		{
-			treeViewer = new TreeViewer(container, SWT.BORDER);
+			PatternFilter patternFilter = new PatternFilter();
+			//Composite, int, PatternFilter, boolean
+			final FilteredTree filter = new FilteredTree(parent, SWT.NONE, patternFilter, true);
+			//			viewer = ;
+			treeViewer = filter.getViewer();
 			ColumnViewerToolTipSupport.enableFor(treeViewer);
 			Tree tree = treeViewer.getTree();
 			toolkit.paintBordersFor(tree);
@@ -100,6 +110,16 @@ public class ScriptEplorerView extends ViewPart {
 				}
 			});
 		}
+		treeViewer.setComparator(new ViewerComparator() {
+
+			@Override
+			public int compare(Viewer viewer, Object e1, Object e2) {
+				if(e1 instanceof Node && e2 instanceof Node) {
+					return ((Node)e1).getName().compareTo(((Node)e2).getName());
+				}
+				return super.compare(viewer, e1, e2);
+			}
+		});
 
 		createActions();
 		initializeToolBar();
@@ -166,6 +186,28 @@ public class ScriptEplorerView extends ViewPart {
 			refreshStoreAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("org.eclipse.escriptmonkey.scripting.ui", "images/refresh.gif"));
 			refreshStoreAction.setEnabled(true);
 		}
+		{
+			expandAllAction = new Action("Expand ALl") {
+
+				@Override
+				public void run() {
+					treeViewer.expandAll();
+					super.run();
+				}
+			};
+			expandAllAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("org.eclipse.escriptmonkey.scripting.ui", "icons/full/obj16/expandall.gif"));
+		}
+		{
+			collapseAll = new Action("Collapse All") {
+
+				@Override
+				public void run() {
+					treeViewer.collapseAll();
+					super.run();
+				}
+			};
+			collapseAll.setImageDescriptor(ResourceManager.getPluginImageDescriptor("org.eclipse.escriptmonkey.scripting.ui", "icons/full/obj16/collapseall-1.gif"));
+		}
 	}
 
 	/**
@@ -173,6 +215,8 @@ public class ScriptEplorerView extends ViewPart {
 	 */
 	private void initializeToolBar() {
 		IToolBarManager tbm = getViewSite().getActionBars().getToolBarManager();
+		tbm.add(expandAllAction);
+		tbm.add(collapseAll);
 		tbm.add(playScriptAction);
 		tbm.add(editScriptAction);
 		tbm.add(refreshStoreAction);
