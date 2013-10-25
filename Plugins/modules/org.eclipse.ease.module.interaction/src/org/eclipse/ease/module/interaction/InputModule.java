@@ -20,6 +20,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.modules.AbstractScriptModule;
+import org.eclipse.ease.modules.OptionalParameter;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.ease.module.platform.modules.DialogModule;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -44,7 +45,10 @@ public class InputModule extends AbstractScriptModule {
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
 	@WrapToScript
-	public String askSimpleString(String title, String message, String defaultValue) {
+	public String askSimpleString( String message,@OptionalParameter String title,@OptionalParameter String defaultValue) {
+		if(title == null){
+			 title="";
+		}
 		InputDialog dlg = new InputDialog(getShell(), title, message, defaultValue, null);
 		int result = DialogModule.openDialog(dlg);
 		if(result == InputDialog.OK) {
@@ -63,7 +67,6 @@ public class InputModule extends AbstractScriptModule {
 	 *        the message for the dialog box
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
-	@WrapToScript
 	public String askSimpleString(String title, String message) {
 		return askSimpleString(title, message, "");
 	}
@@ -75,7 +78,6 @@ public class InputModule extends AbstractScriptModule {
 	 *        the message for the dialog box
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
-	@WrapToScript
 	public String askSimpleString(String message) {
 		return askSimpleString("Script input", message, "");
 	}

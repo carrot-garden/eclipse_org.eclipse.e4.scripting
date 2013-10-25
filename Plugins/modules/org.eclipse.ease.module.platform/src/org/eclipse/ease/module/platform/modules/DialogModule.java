@@ -11,14 +11,16 @@
 package org.eclipse.ease.module.platform.modules;
 
 import org.eclipse.ease.common.RunnableWithResult;
+import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
-import org.eclipse.ease.log.Logger;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 
 /**
@@ -70,6 +72,8 @@ public class DialogModule extends AbstractScriptModule {
 		});
 
 	}
+	
+
 
 	@WrapToScript
 	public static boolean confirm(final String title, final String message) {
@@ -123,6 +127,31 @@ public class DialogModule extends AbstractScriptModule {
 				ErrorDialog.openError(Display.getDefault().getActiveShell(), "Error", message, Logger.createErrorStatus(message, org.eclipse.ease.module.platform.Activator.PLUGIN_ID));
 			}
 		});
+
+	}
+	@WrapToScript
+	public static Object[] selectFromList(final Object[] selectionOption,final ILabelProvider labelProvider){
+		RunnableWithResult<Object[]> runnable = new RunnableWithResult<Object[]>() {
+
+			private Object[] result;
+
+			@Override
+			public void run() {
+				ElementListSelectionDialog dialog =new ElementListSelectionDialog(Display.getDefault().getActiveShell(), labelProvider);
+				dialog.setElements(selectionOption);
+				if (dialog.open() == ElementListSelectionDialog.OK){
+					this.result = dialog.getResult();
+				}
+				
+			}
+
+			@Override
+			public Object[] getResult() {
+				return result;
+			}
+		};
+		Display.getDefault().syncExec(runnable);
+		return runnable.getResult();
 
 	}
 

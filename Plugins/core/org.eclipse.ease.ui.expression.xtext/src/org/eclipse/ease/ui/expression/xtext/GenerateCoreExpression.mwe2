@@ -4,7 +4,7 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/CoreExpression.xtext"
+var grammarURI = "classpath:/org/eclipse/ease/ui/expression/xtext/CoreExpression.xtext"
 var fileExtensions = "coreexpression"
 var projectName = "org.eclipse.ease.ui.expression.xtext"
 var runtimeProject = "../${projectName}"

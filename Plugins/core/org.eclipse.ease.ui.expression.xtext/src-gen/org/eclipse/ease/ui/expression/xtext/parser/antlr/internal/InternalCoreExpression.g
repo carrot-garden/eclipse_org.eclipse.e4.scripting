@@ -531,71 +531,75 @@ ruleIterableExpression returns [EObject current=null]
     {
     	newLeafNode(otherlv_2, grammarAccess.getIterableExpressionAccess().getIterableKeyword_2());
     }
+(	otherlv_3='operator' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getIterableExpressionAccess().getOperatorKeyword_3_0());
+    }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIterableExpressionAccess().getOperandOperatorParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getIterableExpressionAccess().getOperandOperatorParserRuleCall_3_1_0()); 
 	    }
-		lv_operand_3_0=ruleOperator		{
+		lv_operand_4_0=ruleOperator		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIterableExpressionRule());
 	        }
        		set(
        			$current, 
        			"operand",
-        		lv_operand_3_0, 
+        		lv_operand_4_0, 
         		"Operator");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?	otherlv_4='{' 
+))?	otherlv_5='{' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getIterableExpressionAccess().getLeftCurlyBracketKeyword_4());
+    	newLeafNode(otherlv_5, grammarAccess.getIterableExpressionAccess().getLeftCurlyBracketKeyword_4());
     }
 ((
 (
 		{ 
 	        newCompositeNode(grammarAccess.getIterableExpressionAccess().getExpressionsExpressionParserRuleCall_5_0_0()); 
 	    }
-		lv_expressions_5_0=ruleExpression		{
+		lv_expressions_6_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIterableExpressionRule());
 	        }
        		add(
        			$current, 
        			"expressions",
-        		lv_expressions_5_0, 
+        		lv_expressions_6_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_6=',' 
+)(	otherlv_7=',' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getIterableExpressionAccess().getCommaKeyword_5_1_0());
+    	newLeafNode(otherlv_7, grammarAccess.getIterableExpressionAccess().getCommaKeyword_5_1_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getIterableExpressionAccess().getExpressionsExpressionParserRuleCall_5_1_1_0()); 
 	    }
-		lv_expressions_7_0=ruleExpression		{
+		lv_expressions_8_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIterableExpressionRule());
 	        }
        		add(
        			$current, 
        			"expressions",
-        		lv_expressions_7_0, 
+        		lv_expressions_8_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))*)?	otherlv_8='}' 
+))*)?	otherlv_9='}' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getIterableExpressionAccess().getRightCurlyBracketKeyword_6());
+    	newLeafNode(otherlv_9, grammarAccess.getIterableExpressionAccess().getRightCurlyBracketKeyword_6());
     }
 )
 ;

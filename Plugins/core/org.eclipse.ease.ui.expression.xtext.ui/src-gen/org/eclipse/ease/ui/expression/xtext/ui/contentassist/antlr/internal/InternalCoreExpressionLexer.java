@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2013 Atos
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Arthur Daussy - initial implementation
- *******************************************************************************/
 package org.eclipse.ease.ui.expression.xtext.ui.contentassist.antlr.internal;
 
 // Hack: Use our own Lexer superclass by means of import. 
@@ -43,6 +33,7 @@ public class InternalCoreExpressionLexer extends Lexer {
     public static final int T__32=32;
     public static final int RULE_STRING=4;
     public static final int T__16=16;
+    public static final int T__33=33;
     public static final int T__15=15;
     public static final int T__18=18;
     public static final int T__17=17;
@@ -64,15 +55,15 @@ public class InternalCoreExpressionLexer extends Lexer {
         super(input,state);
 
     }
-    public String getGrammarFileName() { return "../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g"; }
+    public String getGrammarFileName() { return "../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g"; }
 
     // $ANTLR start "T__11"
     public final void mT__11() throws RecognitionException {
         try {
             int _type = T__11;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:11:7: ( 'and' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:11:9: 'and'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:11:7: ( 'and' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:11:9: 'and'
             {
             match("and"); 
 
@@ -92,8 +83,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__12;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:12:7: ( 'or' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:12:9: 'or'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:12:7: ( 'or' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:12:9: 'or'
             {
             match("or"); 
 
@@ -113,8 +104,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__13;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:13:7: ( 'activeContexts' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:13:9: 'activeContexts'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:13:7: ( 'activeContexts' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:13:9: 'activeContexts'
             {
             match("activeContexts"); 
 
@@ -134,8 +125,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:14:7: ( 'activeEditor' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:14:9: 'activeEditor'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:14:7: ( 'activeEditor' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:14:9: 'activeEditor'
             {
             match("activeEditor"); 
 
@@ -155,8 +146,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:15:7: ( 'activeEditorId' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:15:9: 'activeEditorId'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:15:7: ( 'activeEditorId' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:15:9: 'activeEditorId'
             {
             match("activeEditorId"); 
 
@@ -176,8 +167,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:16:7: ( 'activePartId' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:16:9: 'activePartId'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:16:7: ( 'activePartId' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:16:9: 'activePartId'
             {
             match("activePartId"); 
 
@@ -197,8 +188,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:17:7: ( 'activeSite' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:17:9: 'activeSite'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:17:7: ( 'activeSite' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:17:9: 'activeSite'
             {
             match("activeSite"); 
 
@@ -218,8 +209,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:18:7: ( 'selection' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:18:9: 'selection'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:18:7: ( 'selection' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:18:9: 'selection'
             {
             match("selection"); 
 
@@ -239,8 +230,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:19:7: ( '[' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:19:9: '['
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:19:7: ( '[' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:19:9: '['
             {
             match('['); 
 
@@ -259,8 +250,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:20:7: ( ']' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:20:9: ']'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:20:7: ( ']' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:20:9: ']'
             {
             match(']'); 
 
@@ -279,8 +270,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:21:7: ( 'InstanceOf' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:21:9: 'InstanceOf'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:21:7: ( 'InstanceOf' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:21:9: 'InstanceOf'
             {
             match("InstanceOf"); 
 
@@ -300,8 +291,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:22:7: ( 'And' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:22:9: 'And'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:22:7: ( 'And' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:22:9: 'And'
             {
             match("And"); 
 
@@ -321,8 +312,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:23:7: ( '{' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:23:9: '{'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:23:7: ( '{' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:23:9: '{'
             {
             match('{'); 
 
@@ -341,8 +332,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:24:7: ( '}' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:24:9: '}'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:24:7: ( '}' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:24:9: '}'
             {
             match('}'); 
 
@@ -361,8 +352,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:25:7: ( ',' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:25:9: ','
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:25:7: ( ',' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:25:9: ','
             {
             match(','); 
 
@@ -381,8 +372,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:26:7: ( 'Or' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:26:9: 'Or'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:26:7: ( 'Or' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:26:9: 'Or'
             {
             match("Or"); 
 
@@ -402,8 +393,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:27:7: ( 'Not' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:27:9: 'Not'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:27:7: ( 'Not' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:27:9: 'Not'
             {
             match("Not"); 
 
@@ -423,8 +414,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:28:7: ( 'Iterable' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:28:9: 'Iterable'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:28:7: ( 'Iterable' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:28:9: 'Iterable'
             {
             match("Iterable"); 
 
@@ -444,10 +435,10 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:29:7: ( 'With' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:29:9: 'With'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:29:7: ( 'operator' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:29:9: 'operator'
             {
-            match("With"); 
+            match("operator"); 
 
 
             }
@@ -465,10 +456,10 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:30:7: ( 'AdaptTo' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:30:9: 'AdaptTo'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:30:7: ( 'With' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:30:9: 'With'
             {
-            match("AdaptTo"); 
+            match("With"); 
 
 
             }
@@ -486,10 +477,10 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:31:7: ( 'Equal' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:31:9: 'Equal'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:31:7: ( 'AdaptTo' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:31:9: 'AdaptTo'
             {
-            match("Equal"); 
+            match("AdaptTo"); 
 
 
             }
@@ -507,10 +498,10 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:32:7: ( 'ifEmpty' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:32:9: 'ifEmpty'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:32:7: ( 'Equal' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:32:9: 'Equal'
             {
-            match("ifEmpty"); 
+            match("Equal"); 
 
 
             }
@@ -523,15 +514,36 @@ public class InternalCoreExpressionLexer extends Lexer {
     }
     // $ANTLR end "T__32"
 
+    // $ANTLR start "T__33"
+    public final void mT__33() throws RecognitionException {
+        try {
+            int _type = T__33;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:33:7: ( 'ifEmpty' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:33:9: 'ifEmpty'
+            {
+            match("ifEmpty"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__33"
+
     // $ANTLR start "RULE_ID"
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2837:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2837:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2900:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2900:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2837:11: ( '^' )?
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2900:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -540,7 +552,7 @@ public class InternalCoreExpressionLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2837:11: '^'
+                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2900:11: '^'
                     {
                     match('^'); 
 
@@ -558,7 +570,7 @@ public class InternalCoreExpressionLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2837:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2900:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -571,7 +583,7 @@ public class InternalCoreExpressionLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:
+            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -607,10 +619,10 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2839:10: ( ( '0' .. '9' )+ )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2839:12: ( '0' .. '9' )+
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2902:10: ( ( '0' .. '9' )+ )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2902:12: ( '0' .. '9' )+
             {
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2839:12: ( '0' .. '9' )+
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2902:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -624,7 +636,7 @@ public class InternalCoreExpressionLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2839:13: '0' .. '9'
+            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2902:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -656,10 +668,10 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -677,10 +689,10 @@ public class InternalCoreExpressionLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -696,7 +708,7 @@ public class InternalCoreExpressionLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -712,7 +724,7 @@ public class InternalCoreExpressionLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -737,10 +749,10 @@ public class InternalCoreExpressionLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -756,7 +768,7 @@ public class InternalCoreExpressionLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -772,7 +784,7 @@ public class InternalCoreExpressionLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2841:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2904:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -815,12 +827,12 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2843:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2843:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2906:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2906:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2843:24: ( options {greedy=false; } : . )*
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2906:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -845,7 +857,7 @@ public class InternalCoreExpressionLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2843:52: .
+            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2906:52: .
             	    {
             	    matchAny(); 
 
@@ -875,12 +887,12 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2845:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2845:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2908:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2908:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2845:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2908:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -893,7 +905,7 @@ public class InternalCoreExpressionLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2845:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2908:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -913,7 +925,7 @@ public class InternalCoreExpressionLexer extends Lexer {
                 }
             } while (true);
 
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2845:40: ( ( '\\r' )? '\\n' )?
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2908:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -922,9 +934,9 @@ public class InternalCoreExpressionLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2845:41: ( '\\r' )? '\\n'
+                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2908:41: ( '\\r' )? '\\n'
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2845:41: ( '\\r' )?
+                    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2908:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -933,7 +945,7 @@ public class InternalCoreExpressionLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2845:41: '\\r'
+                            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2908:41: '\\r'
                             {
                             match('\r'); 
 
@@ -965,10 +977,10 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2847:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2847:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2910:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2910:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2847:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2910:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -982,7 +994,7 @@ public class InternalCoreExpressionLexer extends Lexer {
 
                 switch (alt11) {
             	case 1 :
-            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:
+            	    // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:
             	    {
             	    if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
             	        input.consume();
@@ -1022,8 +1034,8 @@ public class InternalCoreExpressionLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2849:16: ( . )
-            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2849:18: .
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2912:16: ( . )
+            // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:2912:18: .
             {
             matchAny(); 
 
@@ -1038,208 +1050,215 @@ public class InternalCoreExpressionLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt12=29;
+        // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt12=30;
         alt12 = dfa12.predict(input);
         switch (alt12) {
             case 1 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:10: T__11
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:10: T__11
                 {
                 mT__11(); 
 
                 }
                 break;
             case 2 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:16: T__12
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:16: T__12
                 {
                 mT__12(); 
 
                 }
                 break;
             case 3 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:22: T__13
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:22: T__13
                 {
                 mT__13(); 
 
                 }
                 break;
             case 4 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:28: T__14
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:28: T__14
                 {
                 mT__14(); 
 
                 }
                 break;
             case 5 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:34: T__15
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:34: T__15
                 {
                 mT__15(); 
 
                 }
                 break;
             case 6 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:40: T__16
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:40: T__16
                 {
                 mT__16(); 
 
                 }
                 break;
             case 7 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:46: T__17
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:46: T__17
                 {
                 mT__17(); 
 
                 }
                 break;
             case 8 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:52: T__18
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:52: T__18
                 {
                 mT__18(); 
 
                 }
                 break;
             case 9 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:58: T__19
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:58: T__19
                 {
                 mT__19(); 
 
                 }
                 break;
             case 10 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:64: T__20
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:64: T__20
                 {
                 mT__20(); 
 
                 }
                 break;
             case 11 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:70: T__21
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:70: T__21
                 {
                 mT__21(); 
 
                 }
                 break;
             case 12 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:76: T__22
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:76: T__22
                 {
                 mT__22(); 
 
                 }
                 break;
             case 13 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:82: T__23
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:82: T__23
                 {
                 mT__23(); 
 
                 }
                 break;
             case 14 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:88: T__24
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:88: T__24
                 {
                 mT__24(); 
 
                 }
                 break;
             case 15 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:94: T__25
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:94: T__25
                 {
                 mT__25(); 
 
                 }
                 break;
             case 16 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:100: T__26
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:100: T__26
                 {
                 mT__26(); 
 
                 }
                 break;
             case 17 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:106: T__27
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:106: T__27
                 {
                 mT__27(); 
 
                 }
                 break;
             case 18 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:112: T__28
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:112: T__28
                 {
                 mT__28(); 
 
                 }
                 break;
             case 19 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:118: T__29
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:118: T__29
                 {
                 mT__29(); 
 
                 }
                 break;
             case 20 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:124: T__30
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:124: T__30
                 {
                 mT__30(); 
 
                 }
                 break;
             case 21 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:130: T__31
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:130: T__31
                 {
                 mT__31(); 
 
                 }
                 break;
             case 22 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:136: T__32
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:136: T__32
                 {
                 mT__32(); 
 
                 }
                 break;
             case 23 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:142: RULE_ID
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:142: T__33
+                {
+                mT__33(); 
+
+                }
+                break;
+            case 24 :
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:148: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 24 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:150: RULE_INT
+            case 25 :
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:156: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 25 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:159: RULE_STRING
+            case 26 :
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:165: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 26 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:171: RULE_ML_COMMENT
+            case 27 :
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:177: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 27 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:187: RULE_SL_COMMENT
+            case 28 :
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:193: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 28 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:203: RULE_WS
+            case 29 :
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:209: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 29 :
-                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:211: RULE_ANY_OTHER
+            case 30 :
+                // ../org.eclipse.ease.ui.expression.xtext.ui/src-gen/org/eclipse/ease/ui/expression/xtext/ui/contentassist/antlr/internal/InternalCoreExpression.g:1:217: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -1254,179 +1273,190 @@ public class InternalCoreExpressionLexer extends Lexer {
     protected DFA12 dfa12 = new DFA12(this);
     static final String DFA12_eotS =
         "\1\uffff\3\32\2\uffff\2\32\3\uffff\5\32\1\27\2\uffff\3\27\2\uffff"+
-        "\2\32\1\uffff\1\62\1\32\2\uffff\4\32\3\uffff\1\70\4\32\5\uffff\1"+
-        "\75\1\32\1\uffff\3\32\1\102\1\32\1\uffff\1\104\3\32\1\uffff\4\32"+
-        "\1\uffff\1\32\1\uffff\1\115\7\32\1\uffff\1\125\6\32\1\uffff\10\32"+
-        "\1\147\1\150\6\32\1\157\2\uffff\4\32\1\164\1\32\1\uffff\3\32\1\171"+
-        "\1\uffff\1\172\3\32\2\uffff\1\32\1\u0080\1\u0081\2\32\2\uffff\1"+
-        "\u0084\1\u0085\2\uffff";
+        "\2\32\1\uffff\1\63\2\32\2\uffff\4\32\3\uffff\1\72\4\32\5\uffff\1"+
+        "\77\1\32\1\uffff\4\32\1\105\1\32\1\uffff\1\107\3\32\1\uffff\5\32"+
+        "\1\uffff\1\32\1\uffff\1\121\10\32\1\uffff\1\132\7\32\1\uffff\11"+
+        "\32\1\156\1\157\4\32\1\164\2\32\1\167\2\uffff\4\32\1\uffff\1\174"+
+        "\1\32\1\uffff\3\32\1\u0081\1\uffff\1\u0082\3\32\2\uffff\1\32\1\u0088"+
+        "\1\u0089\2\32\2\uffff\1\u008c\1\u008d\2\uffff";
     static final String DFA12_eofS =
-        "\u0086\uffff";
+        "\u008e\uffff";
     static final String DFA12_minS =
-        "\1\0\1\143\1\162\1\145\2\uffff\1\156\1\144\3\uffff\1\162\1\157"+
+        "\1\0\1\143\1\160\1\145\2\uffff\1\156\1\144\3\uffff\1\162\1\157"+
         "\1\151\1\161\1\146\1\101\2\uffff\2\0\1\52\2\uffff\1\144\1\164\1"+
-        "\uffff\1\60\1\154\2\uffff\1\163\1\145\1\144\1\141\3\uffff\1\60\2"+
-        "\164\1\165\1\105\5\uffff\1\60\1\151\1\uffff\1\145\1\164\1\162\1"+
-        "\60\1\160\1\uffff\1\60\1\150\1\141\1\155\1\uffff\1\166\1\143\2\141"+
-        "\1\uffff\1\164\1\uffff\1\60\1\154\1\160\1\145\1\164\1\156\1\142"+
-        "\1\124\1\uffff\1\60\1\164\1\103\1\151\1\143\1\154\1\157\1\uffff"+
-        "\1\171\1\157\1\144\1\141\1\151\1\157\2\145\2\60\1\156\1\151\1\162"+
-        "\1\164\1\156\1\117\1\60\2\uffff\3\164\1\145\1\60\1\146\1\uffff\1"+
-        "\145\1\157\1\111\1\60\1\uffff\1\60\1\170\1\162\1\144\2\uffff\1\164"+
-        "\2\60\1\163\1\144\2\uffff\2\60\2\uffff";
+        "\uffff\1\60\1\145\1\154\2\uffff\1\163\1\145\1\144\1\141\3\uffff"+
+        "\1\60\2\164\1\165\1\105\5\uffff\1\60\1\151\1\uffff\1\162\1\145\1"+
+        "\164\1\162\1\60\1\160\1\uffff\1\60\1\150\1\141\1\155\1\uffff\1\166"+
+        "\1\141\1\143\2\141\1\uffff\1\164\1\uffff\1\60\1\154\1\160\1\145"+
+        "\2\164\1\156\1\142\1\124\1\uffff\1\60\1\164\1\103\1\157\1\151\1"+
+        "\143\1\154\1\157\1\uffff\1\171\1\157\1\144\1\141\1\151\1\162\1\157"+
+        "\2\145\2\60\1\156\1\151\1\162\1\164\1\60\1\156\1\117\1\60\2\uffff"+
+        "\3\164\1\145\1\uffff\1\60\1\146\1\uffff\1\145\1\157\1\111\1\60\1"+
+        "\uffff\1\60\1\170\1\162\1\144\2\uffff\1\164\2\60\1\163\1\144\2\uffff"+
+        "\2\60\2\uffff";
     static final String DFA12_maxS =
         "\1\uffff\1\156\1\162\1\145\2\uffff\1\164\1\156\3\uffff\1\162\1"+
         "\157\1\151\1\161\1\146\1\172\2\uffff\2\uffff\1\57\2\uffff\1\144"+
-        "\1\164\1\uffff\1\172\1\154\2\uffff\1\163\1\145\1\144\1\141\3\uffff"+
-        "\1\172\2\164\1\165\1\105\5\uffff\1\172\1\151\1\uffff\1\145\1\164"+
-        "\1\162\1\172\1\160\1\uffff\1\172\1\150\1\141\1\155\1\uffff\1\166"+
-        "\1\143\2\141\1\uffff\1\164\1\uffff\1\172\1\154\1\160\1\145\1\164"+
-        "\1\156\1\142\1\124\1\uffff\1\172\1\164\1\123\1\151\1\143\1\154\1"+
-        "\157\1\uffff\1\171\1\157\1\144\1\141\1\151\1\157\2\145\2\172\1\156"+
-        "\1\151\1\162\1\164\1\156\1\117\1\172\2\uffff\3\164\1\145\1\172\1"+
-        "\146\1\uffff\1\145\1\157\1\111\1\172\1\uffff\1\172\1\170\1\162\1"+
-        "\144\2\uffff\1\164\2\172\1\163\1\144\2\uffff\2\172\2\uffff";
+        "\1\164\1\uffff\1\172\1\145\1\154\2\uffff\1\163\1\145\1\144\1\141"+
+        "\3\uffff\1\172\2\164\1\165\1\105\5\uffff\1\172\1\151\1\uffff\1\162"+
+        "\1\145\1\164\1\162\1\172\1\160\1\uffff\1\172\1\150\1\141\1\155\1"+
+        "\uffff\1\166\1\141\1\143\2\141\1\uffff\1\164\1\uffff\1\172\1\154"+
+        "\1\160\1\145\2\164\1\156\1\142\1\124\1\uffff\1\172\1\164\1\123\1"+
+        "\157\1\151\1\143\1\154\1\157\1\uffff\1\171\1\157\1\144\1\141\1\151"+
+        "\1\162\1\157\2\145\2\172\1\156\1\151\1\162\1\164\1\172\1\156\1\117"+
+        "\1\172\2\uffff\3\164\1\145\1\uffff\1\172\1\146\1\uffff\1\145\1\157"+
+        "\1\111\1\172\1\uffff\1\172\1\170\1\162\1\144\2\uffff\1\164\2\172"+
+        "\1\163\1\144\2\uffff\2\172\2\uffff";
     static final String DFA12_acceptS =
-        "\4\uffff\1\11\1\12\2\uffff\1\15\1\16\1\17\6\uffff\1\27\1\30\3\uffff"+
-        "\1\34\1\35\2\uffff\1\27\2\uffff\1\11\1\12\4\uffff\1\15\1\16\1\17"+
-        "\5\uffff\1\30\1\31\1\32\1\33\1\34\2\uffff\1\2\5\uffff\1\20\4\uffff"+
-        "\1\1\4\uffff\1\14\1\uffff\1\21\10\uffff\1\23\7\uffff\1\25\21\uffff"+
-        "\1\24\1\26\6\uffff\1\22\4\uffff\1\10\4\uffff\1\7\1\13\5\uffff\1"+
-        "\4\1\6\2\uffff\1\3\1\5";
+        "\4\uffff\1\11\1\12\2\uffff\1\15\1\16\1\17\6\uffff\1\30\1\31\3\uffff"+
+        "\1\35\1\36\2\uffff\1\30\3\uffff\1\11\1\12\4\uffff\1\15\1\16\1\17"+
+        "\5\uffff\1\31\1\32\1\33\1\34\1\35\2\uffff\1\2\6\uffff\1\20\4\uffff"+
+        "\1\1\5\uffff\1\14\1\uffff\1\21\11\uffff\1\24\10\uffff\1\26\23\uffff"+
+        "\1\25\1\27\4\uffff\1\23\2\uffff\1\22\4\uffff\1\10\4\uffff\1\7\1"+
+        "\13\5\uffff\1\4\1\6\2\uffff\1\3\1\5";
     static final String DFA12_specialS =
-        "\1\1\22\uffff\1\0\1\2\161\uffff}>";
+        "\1\0\22\uffff\1\2\1\1\171\uffff}>";
     static final String[] DFA12_transitionS = {
             "\11\27\2\26\2\27\1\26\22\27\1\26\1\27\1\23\4\27\1\24\4\27\1"+
             "\12\2\27\1\25\12\22\7\27\1\7\3\21\1\16\3\21\1\6\4\21\1\14\1"+
             "\13\7\21\1\15\3\21\1\4\1\27\1\5\1\20\1\21\1\27\1\1\7\21\1\17"+
             "\5\21\1\2\3\21\1\3\7\21\1\10\1\27\1\11\uff82\27",
             "\1\31\12\uffff\1\30",
-            "\1\33",
-            "\1\34",
+            "\1\34\1\uffff\1\33",
+            "\1\35",
             "",
             "",
-            "\1\37\5\uffff\1\40",
-            "\1\42\11\uffff\1\41",
+            "\1\40\5\uffff\1\41",
+            "\1\43\11\uffff\1\42",
             "",
             "",
             "",
-            "\1\46",
             "\1\47",
             "\1\50",
             "\1\51",
             "\1\52",
+            "\1\53",
             "\32\32\4\uffff\1\32\1\uffff\32\32",
             "",
             "",
-            "\0\54",
-            "\0\54",
-            "\1\55\4\uffff\1\56",
+            "\0\55",
+            "\0\55",
+            "\1\56\4\uffff\1\57",
             "",
             "",
-            "\1\60",
             "\1\61",
+            "\1\62",
             "",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
-            "\1\63",
-            "",
-            "",
             "\1\64",
             "\1\65",
+            "",
+            "",
             "\1\66",
             "\1\67",
+            "\1\70",
+            "\1\71",
             "",
             "",
             "",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
-            "\1\71",
-            "\1\72",
             "\1\73",
             "\1\74",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
+            "\1\75",
             "\1\76",
             "",
-            "\1\77",
+            "",
+            "",
+            "",
+            "",
+            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
             "\1\100",
+            "",
             "\1\101",
-            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
+            "\1\102",
             "\1\103",
+            "\1\104",
+            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
+            "\1\106",
             "",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
-            "\1\105",
-            "\1\106",
-            "\1\107",
-            "",
             "\1\110",
             "\1\111",
             "\1\112",
+            "",
             "\1\113",
-            "",
             "\1\114",
-            "",
-            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
+            "\1\115",
             "\1\116",
             "\1\117",
+            "",
             "\1\120",
-            "\1\121",
+            "",
+            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
             "\1\122",
             "\1\123",
             "\1\124",
+            "\1\125",
+            "\1\126",
+            "\1\127",
+            "\1\130",
+            "\1\131",
             "",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
-            "\1\126",
-            "\1\127\1\uffff\1\130\12\uffff\1\131\2\uffff\1\132",
             "\1\133",
-            "\1\134",
-            "\1\135",
-            "\1\136",
-            "",
-            "\1\137",
+            "\1\134\1\uffff\1\135\12\uffff\1\136\2\uffff\1\137",
             "\1\140",
             "\1\141",
             "\1\142",
             "\1\143",
             "\1\144",
+            "",
             "\1\145",
             "\1\146",
-            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
-            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
+            "\1\147",
+            "\1\150",
             "\1\151",
             "\1\152",
             "\1\153",
             "\1\154",
             "\1\155",
-            "\1\156",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
-            "",
-            "",
+            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
             "\1\160",
             "\1\161",
             "\1\162",
             "\1\163",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
             "\1\165",
-            "",
             "\1\166",
-            "\1\167",
-            "\1\170",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
             "",
-            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
+            "",
+            "\1\170",
+            "\1\171",
+            "\1\172",
             "\1\173",
-            "\1\174",
+            "",
+            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
             "\1\175",
             "",
-            "",
             "\1\176",
-            "\12\32\7\uffff\10\32\1\177\21\32\4\uffff\1\32\1\uffff\32\32",
+            "\1\177",
+            "\1\u0080",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
-            "\1\u0082",
+            "",
+            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
             "\1\u0083",
+            "\1\u0084",
+            "\1\u0085",
+            "",
+            "",
+            "\1\u0086",
+            "\12\32\7\uffff\10\32\1\u0087\21\32\4\uffff\1\32\1\uffff\32"+
+            "\32",
+            "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
+            "\1\u008a",
+            "\1\u008b",
             "",
             "",
             "\12\32\7\uffff\32\32\4\uffff\1\32\1\uffff\32\32",
@@ -1465,23 +1495,13 @@ public class InternalCoreExpressionLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA12_19 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA12_19>='\u0000' && LA12_19<='\uFFFF')) ) {s = 44;}
-
-                        else s = 23;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA12_0 = input.LA(1);
 
                         s = -1;
@@ -1533,11 +1553,21 @@ public class InternalCoreExpressionLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 1 : 
                         int LA12_20 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA12_20>='\u0000' && LA12_20<='\uFFFF')) ) {s = 44;}
+                        if ( ((LA12_20>='\u0000' && LA12_20<='\uFFFF')) ) {s = 45;}
+
+                        else s = 23;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA12_19 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA12_19>='\u0000' && LA12_19<='\uFFFF')) ) {s = 45;}
 
                         else s = 23;
 

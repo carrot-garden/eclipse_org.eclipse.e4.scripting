@@ -1,30 +1,19 @@
-/*******************************************************************************
- * Copyright (c) 2013 Atos
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Arthur Daussy - initial implementation
- *******************************************************************************/
 package org.eclipse.ease.ui.expression.xtext.parser.antlr.internal; 
 
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.parser.*;
 import org.eclipse.xtext.parser.impl.*;
-import org.eclipse.ease.ui.expression.xtext.services.CoreExpressionGrammarAccess;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
 import org.eclipse.xtext.parser.antlr.AntlrDatatypeRuleToken;
+import org.eclipse.ease.ui.expression.xtext.services.CoreExpressionGrammarAccess;
 
 
 
 import org.antlr.runtime.*;
-
 import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
@@ -32,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'['", "']'", "'InstanceOf'", "'And'", "'{'", "','", "'}'", "'Or'", "'Not'", "'ifEmpty'", "'Iterable'", "'With'", "'AdaptTo'", "'Equal'", "'and'", "'or'", "'activeContexts'", "'activeEditor'", "'activeEditorId'", "'activePartId'", "'activeSite'", "'selection'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'['", "']'", "'InstanceOf'", "'And'", "'{'", "','", "'}'", "'Or'", "'Not'", "'ifEmpty'", "'Iterable'", "'operator'", "'With'", "'AdaptTo'", "'Equal'", "'and'", "'or'", "'activeContexts'", "'activeEditor'", "'activeEditorId'", "'activePartId'", "'activeSite'", "'selection'"
     };
     public static final int RULE_ID=5;
     public static final int T__29=29;
@@ -54,6 +43,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
     public static final int T__31=31;
     public static final int RULE_STRING=4;
     public static final int T__32=32;
+    public static final int T__33=33;
     public static final int T__16=16;
     public static final int T__15=15;
     public static final int T__18=18;
@@ -79,7 +69,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
         
 
     public String[] getTokenNames() { return InternalCoreExpressionParser.tokenNames; }
-    public String getGrammarFileName() { return "../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g"; }
+    public String getGrammarFileName() { return "../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g"; }
 
 
 
@@ -104,7 +94,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRoot"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:67:1: entryRuleRoot returns [EObject current=null] : iv_ruleRoot= ruleRoot EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:67:1: entryRuleRoot returns [EObject current=null] : iv_ruleRoot= ruleRoot EOF ;
     public final EObject entryRuleRoot() throws RecognitionException {
         EObject current = null;
 
@@ -112,8 +102,8 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:68:2: (iv_ruleRoot= ruleRoot EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:69:2: iv_ruleRoot= ruleRoot EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:68:2: (iv_ruleRoot= ruleRoot EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:69:2: iv_ruleRoot= ruleRoot EOF
             {
              newCompositeNode(grammarAccess.getRootRule()); 
             pushFollow(FollowSets000.FOLLOW_ruleRoot_in_entryRuleRoot75);
@@ -140,7 +130,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRoot"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:76:1: ruleRoot returns [EObject current=null] : (otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:76:1: ruleRoot returns [EObject current=null] : (otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']' ) ;
     public final EObject ruleRoot() throws RecognitionException {
         EObject current = null;
 
@@ -152,21 +142,21 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:79:28: ( (otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:80:1: (otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:79:28: ( (otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:80:1: (otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:80:1: (otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']' )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:80:3: otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']'
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:80:1: (otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:80:3: otherlv_0= '[' ( (lv_expression_1_0= ruleExpression ) ) otherlv_2= ']'
             {
             otherlv_0=(Token)match(input,11,FollowSets000.FOLLOW_11_in_ruleRoot122); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getRootAccess().getLeftSquareBracketKeyword_0());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:84:1: ( (lv_expression_1_0= ruleExpression ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:85:1: (lv_expression_1_0= ruleExpression )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:84:1: ( (lv_expression_1_0= ruleExpression ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:85:1: (lv_expression_1_0= ruleExpression )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:85:1: (lv_expression_1_0= ruleExpression )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:86:3: lv_expression_1_0= ruleExpression
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:85:1: (lv_expression_1_0= ruleExpression )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:86:3: lv_expression_1_0= ruleExpression
             {
              
             	        newCompositeNode(grammarAccess.getRootAccess().getExpressionExpressionParserRuleCall_1_0()); 
@@ -218,7 +208,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:114:1: entryRuleExpression returns [EObject current=null] : iv_ruleExpression= ruleExpression EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:114:1: entryRuleExpression returns [EObject current=null] : iv_ruleExpression= ruleExpression EOF ;
     public final EObject entryRuleExpression() throws RecognitionException {
         EObject current = null;
 
@@ -226,8 +216,8 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:115:2: (iv_ruleExpression= ruleExpression EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:116:2: iv_ruleExpression= ruleExpression EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:115:2: (iv_ruleExpression= ruleExpression EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:116:2: iv_ruleExpression= ruleExpression EOF
             {
              newCompositeNode(grammarAccess.getExpressionRule()); 
             pushFollow(FollowSets000.FOLLOW_ruleExpression_in_entryRuleExpression191);
@@ -254,7 +244,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:123:1: ruleExpression returns [EObject current=null] : (this_InstanceExpression_0= ruleInstanceExpression | this_AndExpression_1= ruleAndExpression | this_OrExpresison_2= ruleOrExpresison | this_NotExpression_3= ruleNotExpression | this_IterableExpression_4= ruleIterableExpression | this_WithExpression_5= ruleWithExpression | this_AdaptExpression_6= ruleAdaptExpression | this_EqualExpression_7= ruleEqualExpression ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:123:1: ruleExpression returns [EObject current=null] : (this_InstanceExpression_0= ruleInstanceExpression | this_AndExpression_1= ruleAndExpression | this_OrExpresison_2= ruleOrExpresison | this_NotExpression_3= ruleNotExpression | this_IterableExpression_4= ruleIterableExpression | this_WithExpression_5= ruleWithExpression | this_AdaptExpression_6= ruleAdaptExpression | this_EqualExpression_7= ruleEqualExpression ) ;
     public final EObject ruleExpression() throws RecognitionException {
         EObject current = null;
 
@@ -278,10 +268,10 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:126:28: ( (this_InstanceExpression_0= ruleInstanceExpression | this_AndExpression_1= ruleAndExpression | this_OrExpresison_2= ruleOrExpresison | this_NotExpression_3= ruleNotExpression | this_IterableExpression_4= ruleIterableExpression | this_WithExpression_5= ruleWithExpression | this_AdaptExpression_6= ruleAdaptExpression | this_EqualExpression_7= ruleEqualExpression ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:127:1: (this_InstanceExpression_0= ruleInstanceExpression | this_AndExpression_1= ruleAndExpression | this_OrExpresison_2= ruleOrExpresison | this_NotExpression_3= ruleNotExpression | this_IterableExpression_4= ruleIterableExpression | this_WithExpression_5= ruleWithExpression | this_AdaptExpression_6= ruleAdaptExpression | this_EqualExpression_7= ruleEqualExpression )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:126:28: ( (this_InstanceExpression_0= ruleInstanceExpression | this_AndExpression_1= ruleAndExpression | this_OrExpresison_2= ruleOrExpresison | this_NotExpression_3= ruleNotExpression | this_IterableExpression_4= ruleIterableExpression | this_WithExpression_5= ruleWithExpression | this_AdaptExpression_6= ruleAdaptExpression | this_EqualExpression_7= ruleEqualExpression ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:127:1: (this_InstanceExpression_0= ruleInstanceExpression | this_AndExpression_1= ruleAndExpression | this_OrExpresison_2= ruleOrExpresison | this_NotExpression_3= ruleNotExpression | this_IterableExpression_4= ruleIterableExpression | this_WithExpression_5= ruleWithExpression | this_AdaptExpression_6= ruleAdaptExpression | this_EqualExpression_7= ruleEqualExpression )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:127:1: (this_InstanceExpression_0= ruleInstanceExpression | this_AndExpression_1= ruleAndExpression | this_OrExpresison_2= ruleOrExpresison | this_NotExpression_3= ruleNotExpression | this_IterableExpression_4= ruleIterableExpression | this_WithExpression_5= ruleWithExpression | this_AdaptExpression_6= ruleAdaptExpression | this_EqualExpression_7= ruleEqualExpression )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:127:1: (this_InstanceExpression_0= ruleInstanceExpression | this_AndExpression_1= ruleAndExpression | this_OrExpresison_2= ruleOrExpresison | this_NotExpression_3= ruleNotExpression | this_IterableExpression_4= ruleIterableExpression | this_WithExpression_5= ruleWithExpression | this_AdaptExpression_6= ruleAdaptExpression | this_EqualExpression_7= ruleEqualExpression )
             int alt1=8;
             switch ( input.LA(1) ) {
             case 13:
@@ -310,17 +300,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                 alt1=5;
                 }
                 break;
-            case 22:
+            case 23:
                 {
                 alt1=6;
                 }
                 break;
-            case 23:
+            case 24:
                 {
                 alt1=7;
                 }
                 break;
-            case 24:
+            case 25:
                 {
                 alt1=8;
                 }
@@ -334,7 +324,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             switch (alt1) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:128:5: this_InstanceExpression_0= ruleInstanceExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:128:5: this_InstanceExpression_0= ruleInstanceExpression
                     {
                      
                             newCompositeNode(grammarAccess.getExpressionAccess().getInstanceExpressionParserRuleCall_0()); 
@@ -352,7 +342,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:138:5: this_AndExpression_1= ruleAndExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:138:5: this_AndExpression_1= ruleAndExpression
                     {
                      
                             newCompositeNode(grammarAccess.getExpressionAccess().getAndExpressionParserRuleCall_1()); 
@@ -370,7 +360,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:148:5: this_OrExpresison_2= ruleOrExpresison
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:148:5: this_OrExpresison_2= ruleOrExpresison
                     {
                      
                             newCompositeNode(grammarAccess.getExpressionAccess().getOrExpresisonParserRuleCall_2()); 
@@ -388,7 +378,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:158:5: this_NotExpression_3= ruleNotExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:158:5: this_NotExpression_3= ruleNotExpression
                     {
                      
                             newCompositeNode(grammarAccess.getExpressionAccess().getNotExpressionParserRuleCall_3()); 
@@ -406,7 +396,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:168:5: this_IterableExpression_4= ruleIterableExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:168:5: this_IterableExpression_4= ruleIterableExpression
                     {
                      
                             newCompositeNode(grammarAccess.getExpressionAccess().getIterableExpressionParserRuleCall_4()); 
@@ -424,7 +414,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:178:5: this_WithExpression_5= ruleWithExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:178:5: this_WithExpression_5= ruleWithExpression
                     {
                      
                             newCompositeNode(grammarAccess.getExpressionAccess().getWithExpressionParserRuleCall_5()); 
@@ -442,7 +432,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:188:5: this_AdaptExpression_6= ruleAdaptExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:188:5: this_AdaptExpression_6= ruleAdaptExpression
                     {
                      
                             newCompositeNode(grammarAccess.getExpressionAccess().getAdaptExpressionParserRuleCall_6()); 
@@ -460,7 +450,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:198:5: this_EqualExpression_7= ruleEqualExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:198:5: this_EqualExpression_7= ruleEqualExpression
                     {
                      
                             newCompositeNode(grammarAccess.getExpressionAccess().getEqualExpressionParserRuleCall_7()); 
@@ -498,7 +488,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInstanceExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:216:1: entryRuleInstanceExpression returns [EObject current=null] : iv_ruleInstanceExpression= ruleInstanceExpression EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:216:1: entryRuleInstanceExpression returns [EObject current=null] : iv_ruleInstanceExpression= ruleInstanceExpression EOF ;
     public final EObject entryRuleInstanceExpression() throws RecognitionException {
         EObject current = null;
 
@@ -506,8 +496,8 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:217:2: (iv_ruleInstanceExpression= ruleInstanceExpression EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:218:2: iv_ruleInstanceExpression= ruleInstanceExpression EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:217:2: (iv_ruleInstanceExpression= ruleInstanceExpression EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:218:2: iv_ruleInstanceExpression= ruleInstanceExpression EOF
             {
              newCompositeNode(grammarAccess.getInstanceExpressionRule()); 
             pushFollow(FollowSets000.FOLLOW_ruleInstanceExpression_in_entryRuleInstanceExpression474);
@@ -534,7 +524,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInstanceExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:225:1: ruleInstanceExpression returns [EObject current=null] : (otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) ) ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:225:1: ruleInstanceExpression returns [EObject current=null] : (otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) ) ) ;
     public final EObject ruleInstanceExpression() throws RecognitionException {
         EObject current = null;
 
@@ -544,21 +534,21 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:228:28: ( (otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) ) ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:229:1: (otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:228:28: ( (otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) ) ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:229:1: (otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) ) )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:229:1: (otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:229:3: otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:229:1: (otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:229:3: otherlv_0= 'InstanceOf' ( (lv_value_1_0= RULE_STRING ) )
             {
             otherlv_0=(Token)match(input,13,FollowSets000.FOLLOW_13_in_ruleInstanceExpression521); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getInstanceExpressionAccess().getInstanceOfKeyword_0());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:233:1: ( (lv_value_1_0= RULE_STRING ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:234:1: (lv_value_1_0= RULE_STRING )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:233:1: ( (lv_value_1_0= RULE_STRING ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:234:1: (lv_value_1_0= RULE_STRING )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:234:1: (lv_value_1_0= RULE_STRING )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:235:3: lv_value_1_0= RULE_STRING
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:234:1: (lv_value_1_0= RULE_STRING )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:235:3: lv_value_1_0= RULE_STRING
             {
             lv_value_1_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleInstanceExpression538); 
 
@@ -601,7 +591,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAndExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:259:1: entryRuleAndExpression returns [EObject current=null] : iv_ruleAndExpression= ruleAndExpression EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:259:1: entryRuleAndExpression returns [EObject current=null] : iv_ruleAndExpression= ruleAndExpression EOF ;
     public final EObject entryRuleAndExpression() throws RecognitionException {
         EObject current = null;
 
@@ -609,8 +599,8 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:260:2: (iv_ruleAndExpression= ruleAndExpression EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:261:2: iv_ruleAndExpression= ruleAndExpression EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:260:2: (iv_ruleAndExpression= ruleAndExpression EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:261:2: iv_ruleAndExpression= ruleAndExpression EOF
             {
              newCompositeNode(grammarAccess.getAndExpressionRule()); 
             pushFollow(FollowSets000.FOLLOW_ruleAndExpression_in_entryRuleAndExpression579);
@@ -637,7 +627,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAndExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:268:1: ruleAndExpression returns [EObject current=null] : ( () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:268:1: ruleAndExpression returns [EObject current=null] : ( () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
     public final EObject ruleAndExpression() throws RecognitionException {
         EObject current = null;
 
@@ -653,14 +643,14 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:271:28: ( ( () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:272:1: ( () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:271:28: ( ( () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:272:1: ( () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:272:1: ( () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:272:2: () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:272:1: ( () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:272:2: () otherlv_1= 'And' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:272:2: ()
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:273:5: 
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:272:2: ()
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:273:5: 
             {
 
                     current = forceCreateModelElement(
@@ -678,22 +668,22 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_2, grammarAccess.getAndExpressionAccess().getLeftCurlyBracketKeyword_2());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:286:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:286:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
-            if ( ((LA3_0>=13 && LA3_0<=14)||(LA3_0>=18 && LA3_0<=24)) ) {
+            if ( ((LA3_0>=13 && LA3_0<=14)||(LA3_0>=18 && LA3_0<=21)||(LA3_0>=23 && LA3_0<=25)) ) {
                 alt3=1;
             }
             switch (alt3) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:286:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:286:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:286:2: ( (lv_expressions_3_0= ruleExpression ) )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:287:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:286:2: ( (lv_expressions_3_0= ruleExpression ) )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:287:1: (lv_expressions_3_0= ruleExpression )
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:287:1: (lv_expressions_3_0= ruleExpression )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:288:3: lv_expressions_3_0= ruleExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:287:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:288:3: lv_expressions_3_0= ruleExpression
                     {
                      
                     	        newCompositeNode(grammarAccess.getAndExpressionAccess().getExpressionsExpressionParserRuleCall_3_0_0()); 
@@ -720,7 +710,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:304:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:304:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     loop2:
                     do {
                         int alt2=2;
@@ -733,17 +723,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:304:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:304:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
                     	    {
                     	    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleAndExpression682); 
 
                     	        	newLeafNode(otherlv_4, grammarAccess.getAndExpressionAccess().getCommaKeyword_3_1_0());
                     	        
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:308:1: ( (lv_expressions_5_0= ruleExpression ) )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:309:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:308:1: ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:309:1: (lv_expressions_5_0= ruleExpression )
                     	    {
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:309:1: (lv_expressions_5_0= ruleExpression )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:310:3: lv_expressions_5_0= ruleExpression
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:309:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:310:3: lv_expressions_5_0= ruleExpression
                     	    {
                     	     
                     	    	        newCompositeNode(grammarAccess.getAndExpressionAccess().getExpressionsExpressionParserRuleCall_3_1_1_0()); 
@@ -810,7 +800,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleOrExpresison"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:338:1: entryRuleOrExpresison returns [EObject current=null] : iv_ruleOrExpresison= ruleOrExpresison EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:338:1: entryRuleOrExpresison returns [EObject current=null] : iv_ruleOrExpresison= ruleOrExpresison EOF ;
     public final EObject entryRuleOrExpresison() throws RecognitionException {
         EObject current = null;
 
@@ -818,8 +808,8 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:339:2: (iv_ruleOrExpresison= ruleOrExpresison EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:340:2: iv_ruleOrExpresison= ruleOrExpresison EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:339:2: (iv_ruleOrExpresison= ruleOrExpresison EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:340:2: iv_ruleOrExpresison= ruleOrExpresison EOF
             {
              newCompositeNode(grammarAccess.getOrExpresisonRule()); 
             pushFollow(FollowSets000.FOLLOW_ruleOrExpresison_in_entryRuleOrExpresison755);
@@ -846,7 +836,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOrExpresison"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:347:1: ruleOrExpresison returns [EObject current=null] : ( () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:347:1: ruleOrExpresison returns [EObject current=null] : ( () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
     public final EObject ruleOrExpresison() throws RecognitionException {
         EObject current = null;
 
@@ -862,14 +852,14 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:350:28: ( ( () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:351:1: ( () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:350:28: ( ( () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:351:1: ( () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:351:1: ( () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:351:2: () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:351:1: ( () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:351:2: () otherlv_1= 'Or' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:351:2: ()
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:352:5: 
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:351:2: ()
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:352:5: 
             {
 
                     current = forceCreateModelElement(
@@ -887,22 +877,22 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_2, grammarAccess.getOrExpresisonAccess().getLeftCurlyBracketKeyword_2());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:365:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:365:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( ((LA5_0>=13 && LA5_0<=14)||(LA5_0>=18 && LA5_0<=24)) ) {
+            if ( ((LA5_0>=13 && LA5_0<=14)||(LA5_0>=18 && LA5_0<=21)||(LA5_0>=23 && LA5_0<=25)) ) {
                 alt5=1;
             }
             switch (alt5) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:365:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:365:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:365:2: ( (lv_expressions_3_0= ruleExpression ) )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:366:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:365:2: ( (lv_expressions_3_0= ruleExpression ) )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:366:1: (lv_expressions_3_0= ruleExpression )
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:366:1: (lv_expressions_3_0= ruleExpression )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:367:3: lv_expressions_3_0= ruleExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:366:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:367:3: lv_expressions_3_0= ruleExpression
                     {
                      
                     	        newCompositeNode(grammarAccess.getOrExpresisonAccess().getExpressionsExpressionParserRuleCall_3_0_0()); 
@@ -929,7 +919,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:383:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:383:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     loop4:
                     do {
                         int alt4=2;
@@ -942,17 +932,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:383:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:383:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
                     	    {
                     	    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleOrExpresison858); 
 
                     	        	newLeafNode(otherlv_4, grammarAccess.getOrExpresisonAccess().getCommaKeyword_3_1_0());
                     	        
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:387:1: ( (lv_expressions_5_0= ruleExpression ) )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:388:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:387:1: ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:388:1: (lv_expressions_5_0= ruleExpression )
                     	    {
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:388:1: (lv_expressions_5_0= ruleExpression )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:389:3: lv_expressions_5_0= ruleExpression
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:388:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:389:3: lv_expressions_5_0= ruleExpression
                     	    {
                     	     
                     	    	        newCompositeNode(grammarAccess.getOrExpresisonAccess().getExpressionsExpressionParserRuleCall_3_1_1_0()); 
@@ -1019,7 +1009,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNotExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:417:1: entryRuleNotExpression returns [EObject current=null] : iv_ruleNotExpression= ruleNotExpression EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:417:1: entryRuleNotExpression returns [EObject current=null] : iv_ruleNotExpression= ruleNotExpression EOF ;
     public final EObject entryRuleNotExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1027,8 +1017,8 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:418:2: (iv_ruleNotExpression= ruleNotExpression EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:419:2: iv_ruleNotExpression= ruleNotExpression EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:418:2: (iv_ruleNotExpression= ruleNotExpression EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:419:2: iv_ruleNotExpression= ruleNotExpression EOF
             {
              newCompositeNode(grammarAccess.getNotExpressionRule()); 
             pushFollow(FollowSets000.FOLLOW_ruleNotExpression_in_entryRuleNotExpression931);
@@ -1055,7 +1045,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:426:1: ruleNotExpression returns [EObject current=null] : ( () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:426:1: ruleNotExpression returns [EObject current=null] : ( () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
     public final EObject ruleNotExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1071,14 +1061,14 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:429:28: ( ( () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:430:1: ( () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:429:28: ( ( () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:430:1: ( () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:430:1: ( () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:430:2: () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:430:1: ( () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:430:2: () otherlv_1= 'Not' otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:430:2: ()
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:431:5: 
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:430:2: ()
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:431:5: 
             {
 
                     current = forceCreateModelElement(
@@ -1096,22 +1086,22 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_2, grammarAccess.getNotExpressionAccess().getLeftCurlyBracketKeyword_2());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:444:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:444:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( ((LA7_0>=13 && LA7_0<=14)||(LA7_0>=18 && LA7_0<=24)) ) {
+            if ( ((LA7_0>=13 && LA7_0<=14)||(LA7_0>=18 && LA7_0<=21)||(LA7_0>=23 && LA7_0<=25)) ) {
                 alt7=1;
             }
             switch (alt7) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:444:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:444:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:444:2: ( (lv_expressions_3_0= ruleExpression ) )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:445:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:444:2: ( (lv_expressions_3_0= ruleExpression ) )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:445:1: (lv_expressions_3_0= ruleExpression )
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:445:1: (lv_expressions_3_0= ruleExpression )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:446:3: lv_expressions_3_0= ruleExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:445:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:446:3: lv_expressions_3_0= ruleExpression
                     {
                      
                     	        newCompositeNode(grammarAccess.getNotExpressionAccess().getExpressionsExpressionParserRuleCall_3_0_0()); 
@@ -1138,7 +1128,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:462:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:462:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     loop6:
                     do {
                         int alt6=2;
@@ -1151,17 +1141,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:462:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:462:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
                     	    {
                     	    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleNotExpression1034); 
 
                     	        	newLeafNode(otherlv_4, grammarAccess.getNotExpressionAccess().getCommaKeyword_3_1_0());
                     	        
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:466:1: ( (lv_expressions_5_0= ruleExpression ) )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:467:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:466:1: ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:467:1: (lv_expressions_5_0= ruleExpression )
                     	    {
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:467:1: (lv_expressions_5_0= ruleExpression )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:468:3: lv_expressions_5_0= ruleExpression
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:467:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:468:3: lv_expressions_5_0= ruleExpression
                     	    {
                     	     
                     	    	        newCompositeNode(grammarAccess.getNotExpressionAccess().getExpressionsExpressionParserRuleCall_3_1_1_0()); 
@@ -1228,7 +1218,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIterableExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:496:1: entryRuleIterableExpression returns [EObject current=null] : iv_ruleIterableExpression= ruleIterableExpression EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:496:1: entryRuleIterableExpression returns [EObject current=null] : iv_ruleIterableExpression= ruleIterableExpression EOF ;
     public final EObject entryRuleIterableExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1236,8 +1226,8 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:497:2: (iv_ruleIterableExpression= ruleIterableExpression EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:498:2: iv_ruleIterableExpression= ruleIterableExpression EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:497:2: (iv_ruleIterableExpression= ruleIterableExpression EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:498:2: iv_ruleIterableExpression= ruleIterableExpression EOF
             {
              newCompositeNode(grammarAccess.getIterableExpressionRule()); 
             pushFollow(FollowSets000.FOLLOW_ruleIterableExpression_in_entryRuleIterableExpression1107);
@@ -1264,33 +1254,34 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIterableExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:505:1: ruleIterableExpression returns [EObject current=null] : ( () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' ( (lv_operand_3_0= ruleOperator ) )? otherlv_4= '{' ( ( (lv_expressions_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) ) )* )? otherlv_8= '}' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:505:1: ruleIterableExpression returns [EObject current=null] : ( () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' (otherlv_3= 'operator' ( (lv_operand_4_0= ruleOperator ) ) )? otherlv_5= '{' ( ( (lv_expressions_6_0= ruleExpression ) ) (otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) ) )* )? otherlv_9= '}' ) ;
     public final EObject ruleIterableExpression() throws RecognitionException {
         EObject current = null;
 
         Token lv_ifEmpty_1_0=null;
         Token otherlv_2=null;
-        Token otherlv_4=null;
-        Token otherlv_6=null;
-        Token otherlv_8=null;
-        AntlrDatatypeRuleToken lv_operand_3_0 = null;
+        Token otherlv_3=null;
+        Token otherlv_5=null;
+        Token otherlv_7=null;
+        Token otherlv_9=null;
+        AntlrDatatypeRuleToken lv_operand_4_0 = null;
 
-        EObject lv_expressions_5_0 = null;
+        EObject lv_expressions_6_0 = null;
 
-        EObject lv_expressions_7_0 = null;
+        EObject lv_expressions_8_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:508:28: ( ( () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' ( (lv_operand_3_0= ruleOperator ) )? otherlv_4= '{' ( ( (lv_expressions_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) ) )* )? otherlv_8= '}' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:509:1: ( () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' ( (lv_operand_3_0= ruleOperator ) )? otherlv_4= '{' ( ( (lv_expressions_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) ) )* )? otherlv_8= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:508:28: ( ( () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' (otherlv_3= 'operator' ( (lv_operand_4_0= ruleOperator ) ) )? otherlv_5= '{' ( ( (lv_expressions_6_0= ruleExpression ) ) (otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) ) )* )? otherlv_9= '}' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:509:1: ( () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' (otherlv_3= 'operator' ( (lv_operand_4_0= ruleOperator ) ) )? otherlv_5= '{' ( ( (lv_expressions_6_0= ruleExpression ) ) (otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) ) )* )? otherlv_9= '}' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:509:1: ( () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' ( (lv_operand_3_0= ruleOperator ) )? otherlv_4= '{' ( ( (lv_expressions_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) ) )* )? otherlv_8= '}' )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:509:2: () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' ( (lv_operand_3_0= ruleOperator ) )? otherlv_4= '{' ( ( (lv_expressions_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) ) )* )? otherlv_8= '}'
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:509:1: ( () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' (otherlv_3= 'operator' ( (lv_operand_4_0= ruleOperator ) ) )? otherlv_5= '{' ( ( (lv_expressions_6_0= ruleExpression ) ) (otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) ) )* )? otherlv_9= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:509:2: () ( (lv_ifEmpty_1_0= 'ifEmpty' ) )? otherlv_2= 'Iterable' (otherlv_3= 'operator' ( (lv_operand_4_0= ruleOperator ) ) )? otherlv_5= '{' ( ( (lv_expressions_6_0= ruleExpression ) ) (otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) ) )* )? otherlv_9= '}'
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:509:2: ()
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:510:5: 
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:509:2: ()
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:510:5: 
             {
 
                     current = forceCreateModelElement(
@@ -1300,7 +1291,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:515:2: ( (lv_ifEmpty_1_0= 'ifEmpty' ) )?
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:515:2: ( (lv_ifEmpty_1_0= 'ifEmpty' ) )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -1309,10 +1300,10 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
             }
             switch (alt8) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:516:1: (lv_ifEmpty_1_0= 'ifEmpty' )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:516:1: (lv_ifEmpty_1_0= 'ifEmpty' )
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:516:1: (lv_ifEmpty_1_0= 'ifEmpty' )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:517:3: lv_ifEmpty_1_0= 'ifEmpty'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:516:1: (lv_ifEmpty_1_0= 'ifEmpty' )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:517:3: lv_ifEmpty_1_0= 'ifEmpty'
                     {
                     lv_ifEmpty_1_0=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleIterableExpression1169); 
 
@@ -1337,25 +1328,32 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_2, grammarAccess.getIterableExpressionAccess().getIterableKeyword_2());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:534:1: ( (lv_operand_3_0= ruleOperator ) )?
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:534:1: (otherlv_3= 'operator' ( (lv_operand_4_0= ruleOperator ) ) )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
-            if ( ((LA9_0>=25 && LA9_0<=26)) ) {
+            if ( (LA9_0==22) ) {
                 alt9=1;
             }
             switch (alt9) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:535:1: (lv_operand_3_0= ruleOperator )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:534:3: otherlv_3= 'operator' ( (lv_operand_4_0= ruleOperator ) )
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:535:1: (lv_operand_3_0= ruleOperator )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:536:3: lv_operand_3_0= ruleOperator
+                    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_22_in_ruleIterableExpression1208); 
+
+                        	newLeafNode(otherlv_3, grammarAccess.getIterableExpressionAccess().getOperatorKeyword_3_0());
+                        
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:538:1: ( (lv_operand_4_0= ruleOperator ) )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:539:1: (lv_operand_4_0= ruleOperator )
+                    {
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:539:1: (lv_operand_4_0= ruleOperator )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:540:3: lv_operand_4_0= ruleOperator
                     {
                      
-                    	        newCompositeNode(grammarAccess.getIterableExpressionAccess().getOperandOperatorParserRuleCall_3_0()); 
+                    	        newCompositeNode(grammarAccess.getIterableExpressionAccess().getOperandOperatorParserRuleCall_3_1_0()); 
                     	    
-                    pushFollow(FollowSets000.FOLLOW_ruleOperator_in_ruleIterableExpression1216);
-                    lv_operand_3_0=ruleOperator();
+                    pushFollow(FollowSets000.FOLLOW_ruleOperator_in_ruleIterableExpression1229);
+                    lv_operand_4_0=ruleOperator();
 
                     state._fsp--;
 
@@ -1366,10 +1364,13 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                            		set(
                            			current, 
                            			"operand",
-                            		lv_operand_3_0, 
+                            		lv_operand_4_0, 
                             		"Operator");
                     	        afterParserOrEnumRuleCall();
                     	    
+
+                    }
+
 
                     }
 
@@ -1379,32 +1380,32 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleIterableExpression1229); 
+            otherlv_5=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleIterableExpression1243); 
 
-                	newLeafNode(otherlv_4, grammarAccess.getIterableExpressionAccess().getLeftCurlyBracketKeyword_4());
+                	newLeafNode(otherlv_5, grammarAccess.getIterableExpressionAccess().getLeftCurlyBracketKeyword_4());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:556:1: ( ( (lv_expressions_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) ) )* )?
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:560:1: ( ( (lv_expressions_6_0= ruleExpression ) ) (otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) ) )* )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( ((LA11_0>=13 && LA11_0<=14)||(LA11_0>=18 && LA11_0<=24)) ) {
+            if ( ((LA11_0>=13 && LA11_0<=14)||(LA11_0>=18 && LA11_0<=21)||(LA11_0>=23 && LA11_0<=25)) ) {
                 alt11=1;
             }
             switch (alt11) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:556:2: ( (lv_expressions_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:560:2: ( (lv_expressions_6_0= ruleExpression ) ) (otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) ) )*
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:556:2: ( (lv_expressions_5_0= ruleExpression ) )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:557:1: (lv_expressions_5_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:560:2: ( (lv_expressions_6_0= ruleExpression ) )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:561:1: (lv_expressions_6_0= ruleExpression )
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:557:1: (lv_expressions_5_0= ruleExpression )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:558:3: lv_expressions_5_0= ruleExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:561:1: (lv_expressions_6_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:562:3: lv_expressions_6_0= ruleExpression
                     {
                      
                     	        newCompositeNode(grammarAccess.getIterableExpressionAccess().getExpressionsExpressionParserRuleCall_5_0_0()); 
                     	    
-                    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleIterableExpression1251);
-                    lv_expressions_5_0=ruleExpression();
+                    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleIterableExpression1265);
+                    lv_expressions_6_0=ruleExpression();
 
                     state._fsp--;
 
@@ -1415,7 +1416,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                            		add(
                            			current, 
                            			"expressions",
-                            		lv_expressions_5_0, 
+                            		lv_expressions_6_0, 
                             		"Expression");
                     	        afterParserOrEnumRuleCall();
                     	    
@@ -1425,7 +1426,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:574:2: (otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:578:2: (otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) ) )*
                     loop10:
                     do {
                         int alt10=2;
@@ -1438,23 +1439,23 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                         switch (alt10) {
                     	case 1 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:574:4: otherlv_6= ',' ( (lv_expressions_7_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:578:4: otherlv_7= ',' ( (lv_expressions_8_0= ruleExpression ) )
                     	    {
-                    	    otherlv_6=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleIterableExpression1264); 
+                    	    otherlv_7=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleIterableExpression1278); 
 
-                    	        	newLeafNode(otherlv_6, grammarAccess.getIterableExpressionAccess().getCommaKeyword_5_1_0());
+                    	        	newLeafNode(otherlv_7, grammarAccess.getIterableExpressionAccess().getCommaKeyword_5_1_0());
                     	        
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:578:1: ( (lv_expressions_7_0= ruleExpression ) )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:579:1: (lv_expressions_7_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:582:1: ( (lv_expressions_8_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:583:1: (lv_expressions_8_0= ruleExpression )
                     	    {
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:579:1: (lv_expressions_7_0= ruleExpression )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:580:3: lv_expressions_7_0= ruleExpression
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:583:1: (lv_expressions_8_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:584:3: lv_expressions_8_0= ruleExpression
                     	    {
                     	     
                     	    	        newCompositeNode(grammarAccess.getIterableExpressionAccess().getExpressionsExpressionParserRuleCall_5_1_1_0()); 
                     	    	    
-                    	    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleIterableExpression1285);
-                    	    lv_expressions_7_0=ruleExpression();
+                    	    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleIterableExpression1299);
+                    	    lv_expressions_8_0=ruleExpression();
 
                     	    state._fsp--;
 
@@ -1465,7 +1466,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     	           		add(
                     	           			current, 
                     	           			"expressions",
-                    	            		lv_expressions_7_0, 
+                    	            		lv_expressions_8_0, 
                     	            		"Expression");
                     	    	        afterParserOrEnumRuleCall();
                     	    	    
@@ -1490,9 +1491,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_8=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleIterableExpression1301); 
+            otherlv_9=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleIterableExpression1315); 
 
-                	newLeafNode(otherlv_8, grammarAccess.getIterableExpressionAccess().getRightCurlyBracketKeyword_6());
+                	newLeafNode(otherlv_9, grammarAccess.getIterableExpressionAccess().getRightCurlyBracketKeyword_6());
                 
 
             }
@@ -1515,7 +1516,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleWithExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:608:1: entryRuleWithExpression returns [EObject current=null] : iv_ruleWithExpression= ruleWithExpression EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:612:1: entryRuleWithExpression returns [EObject current=null] : iv_ruleWithExpression= ruleWithExpression EOF ;
     public final EObject entryRuleWithExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1523,17 +1524,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:609:2: (iv_ruleWithExpression= ruleWithExpression EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:610:2: iv_ruleWithExpression= ruleWithExpression EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:613:2: (iv_ruleWithExpression= ruleWithExpression EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:614:2: iv_ruleWithExpression= ruleWithExpression EOF
             {
              newCompositeNode(grammarAccess.getWithExpressionRule()); 
-            pushFollow(FollowSets000.FOLLOW_ruleWithExpression_in_entryRuleWithExpression1337);
+            pushFollow(FollowSets000.FOLLOW_ruleWithExpression_in_entryRuleWithExpression1351);
             iv_ruleWithExpression=ruleWithExpression();
 
             state._fsp--;
 
              current =iv_ruleWithExpression; 
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleWithExpression1347); 
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleWithExpression1361); 
 
             }
 
@@ -1551,7 +1552,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWithExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:617:1: ruleWithExpression returns [EObject current=null] : (otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:621:1: ruleWithExpression returns [EObject current=null] : (otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
     public final EObject ruleWithExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1569,26 +1570,26 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:620:28: ( (otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:621:1: (otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:624:28: ( (otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:625:1: (otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:621:1: (otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:621:3: otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:625:1: (otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:625:3: otherlv_0= 'With' ( (lv_variable_1_0= ruleVariable ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
             {
-            otherlv_0=(Token)match(input,22,FollowSets000.FOLLOW_22_in_ruleWithExpression1384); 
+            otherlv_0=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleWithExpression1398); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getWithExpressionAccess().getWithKeyword_0());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:625:1: ( (lv_variable_1_0= ruleVariable ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:626:1: (lv_variable_1_0= ruleVariable )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:629:1: ( (lv_variable_1_0= ruleVariable ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:630:1: (lv_variable_1_0= ruleVariable )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:626:1: (lv_variable_1_0= ruleVariable )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:627:3: lv_variable_1_0= ruleVariable
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:630:1: (lv_variable_1_0= ruleVariable )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:631:3: lv_variable_1_0= ruleVariable
             {
              
             	        newCompositeNode(grammarAccess.getWithExpressionAccess().getVariableVariableParserRuleCall_1_0()); 
             	    
-            pushFollow(FollowSets000.FOLLOW_ruleVariable_in_ruleWithExpression1405);
+            pushFollow(FollowSets000.FOLLOW_ruleVariable_in_ruleWithExpression1419);
             lv_variable_1_0=ruleVariable();
 
             state._fsp--;
@@ -1610,31 +1611,31 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleWithExpression1417); 
+            otherlv_2=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleWithExpression1431); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getWithExpressionAccess().getLeftCurlyBracketKeyword_2());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:647:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:651:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
-            if ( ((LA13_0>=13 && LA13_0<=14)||(LA13_0>=18 && LA13_0<=24)) ) {
+            if ( ((LA13_0>=13 && LA13_0<=14)||(LA13_0>=18 && LA13_0<=21)||(LA13_0>=23 && LA13_0<=25)) ) {
                 alt13=1;
             }
             switch (alt13) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:647:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:651:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:647:2: ( (lv_expressions_3_0= ruleExpression ) )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:648:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:651:2: ( (lv_expressions_3_0= ruleExpression ) )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:652:1: (lv_expressions_3_0= ruleExpression )
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:648:1: (lv_expressions_3_0= ruleExpression )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:649:3: lv_expressions_3_0= ruleExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:652:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:653:3: lv_expressions_3_0= ruleExpression
                     {
                      
                     	        newCompositeNode(grammarAccess.getWithExpressionAccess().getExpressionsExpressionParserRuleCall_3_0_0()); 
                     	    
-                    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleWithExpression1439);
+                    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleWithExpression1453);
                     lv_expressions_3_0=ruleExpression();
 
                     state._fsp--;
@@ -1656,7 +1657,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:665:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:669:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     loop12:
                     do {
                         int alt12=2;
@@ -1669,22 +1670,22 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:665:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:669:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleWithExpression1452); 
+                    	    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleWithExpression1466); 
 
                     	        	newLeafNode(otherlv_4, grammarAccess.getWithExpressionAccess().getCommaKeyword_3_1_0());
                     	        
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:669:1: ( (lv_expressions_5_0= ruleExpression ) )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:670:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:673:1: ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:674:1: (lv_expressions_5_0= ruleExpression )
                     	    {
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:670:1: (lv_expressions_5_0= ruleExpression )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:671:3: lv_expressions_5_0= ruleExpression
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:674:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:675:3: lv_expressions_5_0= ruleExpression
                     	    {
                     	     
                     	    	        newCompositeNode(grammarAccess.getWithExpressionAccess().getExpressionsExpressionParserRuleCall_3_1_1_0()); 
                     	    	    
-                    	    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleWithExpression1473);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleWithExpression1487);
                     	    lv_expressions_5_0=ruleExpression();
 
                     	    state._fsp--;
@@ -1721,7 +1722,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_6=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleWithExpression1489); 
+            otherlv_6=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleWithExpression1503); 
 
                 	newLeafNode(otherlv_6, grammarAccess.getWithExpressionAccess().getRightCurlyBracketKeyword_4());
                 
@@ -1746,7 +1747,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAdaptExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:699:1: entryRuleAdaptExpression returns [EObject current=null] : iv_ruleAdaptExpression= ruleAdaptExpression EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:703:1: entryRuleAdaptExpression returns [EObject current=null] : iv_ruleAdaptExpression= ruleAdaptExpression EOF ;
     public final EObject entryRuleAdaptExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1754,17 +1755,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:700:2: (iv_ruleAdaptExpression= ruleAdaptExpression EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:701:2: iv_ruleAdaptExpression= ruleAdaptExpression EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:704:2: (iv_ruleAdaptExpression= ruleAdaptExpression EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:705:2: iv_ruleAdaptExpression= ruleAdaptExpression EOF
             {
              newCompositeNode(grammarAccess.getAdaptExpressionRule()); 
-            pushFollow(FollowSets000.FOLLOW_ruleAdaptExpression_in_entryRuleAdaptExpression1525);
+            pushFollow(FollowSets000.FOLLOW_ruleAdaptExpression_in_entryRuleAdaptExpression1539);
             iv_ruleAdaptExpression=ruleAdaptExpression();
 
             state._fsp--;
 
              current =iv_ruleAdaptExpression; 
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleAdaptExpression1535); 
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleAdaptExpression1549); 
 
             }
 
@@ -1782,7 +1783,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAdaptExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:708:1: ruleAdaptExpression returns [EObject current=null] : (otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:712:1: ruleAdaptExpression returns [EObject current=null] : (otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) ;
     public final EObject ruleAdaptExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1799,23 +1800,23 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:711:28: ( (otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:712:1: (otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:715:28: ( (otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:716:1: (otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:712:1: (otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:712:3: otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:716:1: (otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:716:3: otherlv_0= 'AdaptTo' ( (lv_value_1_0= RULE_STRING ) ) otherlv_2= '{' ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )? otherlv_6= '}'
             {
-            otherlv_0=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleAdaptExpression1572); 
+            otherlv_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleAdaptExpression1586); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getAdaptExpressionAccess().getAdaptToKeyword_0());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:716:1: ( (lv_value_1_0= RULE_STRING ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:717:1: (lv_value_1_0= RULE_STRING )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:720:1: ( (lv_value_1_0= RULE_STRING ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:721:1: (lv_value_1_0= RULE_STRING )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:717:1: (lv_value_1_0= RULE_STRING )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:718:3: lv_value_1_0= RULE_STRING
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:721:1: (lv_value_1_0= RULE_STRING )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:722:3: lv_value_1_0= RULE_STRING
             {
-            lv_value_1_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleAdaptExpression1589); 
+            lv_value_1_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleAdaptExpression1603); 
 
             			newLeafNode(lv_value_1_0, grammarAccess.getAdaptExpressionAccess().getValueSTRINGTerminalRuleCall_1_0()); 
             		
@@ -1835,31 +1836,31 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleAdaptExpression1606); 
+            otherlv_2=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleAdaptExpression1620); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getAdaptExpressionAccess().getLeftCurlyBracketKeyword_2());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:738:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:742:1: ( ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )* )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
-            if ( ((LA15_0>=13 && LA15_0<=14)||(LA15_0>=18 && LA15_0<=24)) ) {
+            if ( ((LA15_0>=13 && LA15_0<=14)||(LA15_0>=18 && LA15_0<=21)||(LA15_0>=23 && LA15_0<=25)) ) {
                 alt15=1;
             }
             switch (alt15) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:738:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:742:2: ( (lv_expressions_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:738:2: ( (lv_expressions_3_0= ruleExpression ) )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:739:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:742:2: ( (lv_expressions_3_0= ruleExpression ) )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:743:1: (lv_expressions_3_0= ruleExpression )
                     {
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:739:1: (lv_expressions_3_0= ruleExpression )
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:740:3: lv_expressions_3_0= ruleExpression
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:743:1: (lv_expressions_3_0= ruleExpression )
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:744:3: lv_expressions_3_0= ruleExpression
                     {
                      
                     	        newCompositeNode(grammarAccess.getAdaptExpressionAccess().getExpressionsExpressionParserRuleCall_3_0_0()); 
                     	    
-                    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleAdaptExpression1628);
+                    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleAdaptExpression1642);
                     lv_expressions_3_0=ruleExpression();
 
                     state._fsp--;
@@ -1881,7 +1882,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:756:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:760:2: (otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) ) )*
                     loop14:
                     do {
                         int alt14=2;
@@ -1894,22 +1895,22 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
                         switch (alt14) {
                     	case 1 :
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:756:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:760:4: otherlv_4= ',' ( (lv_expressions_5_0= ruleExpression ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleAdaptExpression1641); 
+                    	    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleAdaptExpression1655); 
 
                     	        	newLeafNode(otherlv_4, grammarAccess.getAdaptExpressionAccess().getCommaKeyword_3_1_0());
                     	        
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:760:1: ( (lv_expressions_5_0= ruleExpression ) )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:761:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:764:1: ( (lv_expressions_5_0= ruleExpression ) )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:765:1: (lv_expressions_5_0= ruleExpression )
                     	    {
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:761:1: (lv_expressions_5_0= ruleExpression )
-                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:762:3: lv_expressions_5_0= ruleExpression
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:765:1: (lv_expressions_5_0= ruleExpression )
+                    	    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:766:3: lv_expressions_5_0= ruleExpression
                     	    {
                     	     
                     	    	        newCompositeNode(grammarAccess.getAdaptExpressionAccess().getExpressionsExpressionParserRuleCall_3_1_1_0()); 
                     	    	    
-                    	    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleAdaptExpression1662);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleAdaptExpression1676);
                     	    lv_expressions_5_0=ruleExpression();
 
                     	    state._fsp--;
@@ -1946,7 +1947,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_6=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleAdaptExpression1678); 
+            otherlv_6=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleAdaptExpression1692); 
 
                 	newLeafNode(otherlv_6, grammarAccess.getAdaptExpressionAccess().getRightCurlyBracketKeyword_4());
                 
@@ -1971,7 +1972,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEqualExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:790:1: entryRuleEqualExpression returns [EObject current=null] : iv_ruleEqualExpression= ruleEqualExpression EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:794:1: entryRuleEqualExpression returns [EObject current=null] : iv_ruleEqualExpression= ruleEqualExpression EOF ;
     public final EObject entryRuleEqualExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1979,17 +1980,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:791:2: (iv_ruleEqualExpression= ruleEqualExpression EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:792:2: iv_ruleEqualExpression= ruleEqualExpression EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:795:2: (iv_ruleEqualExpression= ruleEqualExpression EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:796:2: iv_ruleEqualExpression= ruleEqualExpression EOF
             {
              newCompositeNode(grammarAccess.getEqualExpressionRule()); 
-            pushFollow(FollowSets000.FOLLOW_ruleEqualExpression_in_entryRuleEqualExpression1714);
+            pushFollow(FollowSets000.FOLLOW_ruleEqualExpression_in_entryRuleEqualExpression1728);
             iv_ruleEqualExpression=ruleEqualExpression();
 
             state._fsp--;
 
              current =iv_ruleEqualExpression; 
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleEqualExpression1724); 
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleEqualExpression1738); 
 
             }
 
@@ -2007,7 +2008,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEqualExpression"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:799:1: ruleEqualExpression returns [EObject current=null] : (otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) ) ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:803:1: ruleEqualExpression returns [EObject current=null] : (otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) ) ) ;
     public final EObject ruleEqualExpression() throws RecognitionException {
         EObject current = null;
 
@@ -2017,23 +2018,23 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:802:28: ( (otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) ) ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:803:1: (otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:806:28: ( (otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) ) ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:807:1: (otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) ) )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:803:1: (otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:803:3: otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:807:1: (otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:807:3: otherlv_0= 'Equal' ( (lv_value_1_0= RULE_STRING ) )
             {
-            otherlv_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleEqualExpression1761); 
+            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleEqualExpression1775); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getEqualExpressionAccess().getEqualKeyword_0());
                 
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:807:1: ( (lv_value_1_0= RULE_STRING ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:808:1: (lv_value_1_0= RULE_STRING )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:811:1: ( (lv_value_1_0= RULE_STRING ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:812:1: (lv_value_1_0= RULE_STRING )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:808:1: (lv_value_1_0= RULE_STRING )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:809:3: lv_value_1_0= RULE_STRING
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:812:1: (lv_value_1_0= RULE_STRING )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:813:3: lv_value_1_0= RULE_STRING
             {
-            lv_value_1_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleEqualExpression1778); 
+            lv_value_1_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleEqualExpression1792); 
 
             			newLeafNode(lv_value_1_0, grammarAccess.getEqualExpressionAccess().getValueSTRINGTerminalRuleCall_1_0()); 
             		
@@ -2074,7 +2075,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleOperator"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:833:1: entryRuleOperator returns [String current=null] : iv_ruleOperator= ruleOperator EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:837:1: entryRuleOperator returns [String current=null] : iv_ruleOperator= ruleOperator EOF ;
     public final String entryRuleOperator() throws RecognitionException {
         String current = null;
 
@@ -2082,17 +2083,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:834:2: (iv_ruleOperator= ruleOperator EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:835:2: iv_ruleOperator= ruleOperator EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:838:2: (iv_ruleOperator= ruleOperator EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:839:2: iv_ruleOperator= ruleOperator EOF
             {
              newCompositeNode(grammarAccess.getOperatorRule()); 
-            pushFollow(FollowSets000.FOLLOW_ruleOperator_in_entryRuleOperator1820);
+            pushFollow(FollowSets000.FOLLOW_ruleOperator_in_entryRuleOperator1834);
             iv_ruleOperator=ruleOperator();
 
             state._fsp--;
 
              current =iv_ruleOperator.getText(); 
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleOperator1831); 
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleOperator1845); 
 
             }
 
@@ -2110,7 +2111,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOperator"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:842:1: ruleOperator returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'and' | kw= 'or' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:846:1: ruleOperator returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'and' | kw= 'or' ) ;
     public final AntlrDatatypeRuleToken ruleOperator() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2119,17 +2120,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:845:28: ( (kw= 'and' | kw= 'or' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:846:1: (kw= 'and' | kw= 'or' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:849:28: ( (kw= 'and' | kw= 'or' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:850:1: (kw= 'and' | kw= 'or' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:846:1: (kw= 'and' | kw= 'or' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:850:1: (kw= 'and' | kw= 'or' )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( (LA16_0==25) ) {
+            if ( (LA16_0==26) ) {
                 alt16=1;
             }
-            else if ( (LA16_0==26) ) {
+            else if ( (LA16_0==27) ) {
                 alt16=2;
             }
             else {
@@ -2140,9 +2141,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
             }
             switch (alt16) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:847:2: kw= 'and'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:851:2: kw= 'and'
                     {
-                    kw=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleOperator1869); 
+                    kw=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleOperator1883); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getOperatorAccess().getAndKeyword_0()); 
@@ -2151,9 +2152,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:854:2: kw= 'or'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:858:2: kw= 'or'
                     {
-                    kw=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleOperator1888); 
+                    kw=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleOperator1902); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getOperatorAccess().getOrKeyword_1()); 
@@ -2182,7 +2183,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVariable"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:869:1: entryRuleVariable returns [String current=null] : iv_ruleVariable= ruleVariable EOF ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:873:1: entryRuleVariable returns [String current=null] : iv_ruleVariable= ruleVariable EOF ;
     public final String entryRuleVariable() throws RecognitionException {
         String current = null;
 
@@ -2190,17 +2191,17 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:870:2: (iv_ruleVariable= ruleVariable EOF )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:871:2: iv_ruleVariable= ruleVariable EOF
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:874:2: (iv_ruleVariable= ruleVariable EOF )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:875:2: iv_ruleVariable= ruleVariable EOF
             {
              newCompositeNode(grammarAccess.getVariableRule()); 
-            pushFollow(FollowSets000.FOLLOW_ruleVariable_in_entryRuleVariable1931);
+            pushFollow(FollowSets000.FOLLOW_ruleVariable_in_entryRuleVariable1945);
             iv_ruleVariable=ruleVariable();
 
             state._fsp--;
 
              current =iv_ruleVariable.getText(); 
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleVariable1942); 
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleVariable1956); 
 
             }
 
@@ -2218,7 +2219,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVariable"
-    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:878:1: ruleVariable returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'activeContexts' | kw= 'activeEditor' | kw= 'activeEditorId' | kw= 'activePartId' | kw= 'activeSite' | kw= 'selection' ) ;
+    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:882:1: ruleVariable returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'activeContexts' | kw= 'activeEditor' | kw= 'activeEditorId' | kw= 'activePartId' | kw= 'activeSite' | kw= 'selection' ) ;
     public final AntlrDatatypeRuleToken ruleVariable() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2227,38 +2228,38 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:881:28: ( (kw= 'activeContexts' | kw= 'activeEditor' | kw= 'activeEditorId' | kw= 'activePartId' | kw= 'activeSite' | kw= 'selection' ) )
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:882:1: (kw= 'activeContexts' | kw= 'activeEditor' | kw= 'activeEditorId' | kw= 'activePartId' | kw= 'activeSite' | kw= 'selection' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:885:28: ( (kw= 'activeContexts' | kw= 'activeEditor' | kw= 'activeEditorId' | kw= 'activePartId' | kw= 'activeSite' | kw= 'selection' ) )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:886:1: (kw= 'activeContexts' | kw= 'activeEditor' | kw= 'activeEditorId' | kw= 'activePartId' | kw= 'activeSite' | kw= 'selection' )
             {
-            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:882:1: (kw= 'activeContexts' | kw= 'activeEditor' | kw= 'activeEditorId' | kw= 'activePartId' | kw= 'activeSite' | kw= 'selection' )
+            // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:886:1: (kw= 'activeContexts' | kw= 'activeEditor' | kw= 'activeEditorId' | kw= 'activePartId' | kw= 'activeSite' | kw= 'selection' )
             int alt17=6;
             switch ( input.LA(1) ) {
-            case 27:
+            case 28:
                 {
                 alt17=1;
                 }
                 break;
-            case 28:
+            case 29:
                 {
                 alt17=2;
                 }
                 break;
-            case 29:
+            case 30:
                 {
                 alt17=3;
                 }
                 break;
-            case 30:
+            case 31:
                 {
                 alt17=4;
                 }
                 break;
-            case 31:
+            case 32:
                 {
                 alt17=5;
                 }
                 break;
-            case 32:
+            case 33:
                 {
                 alt17=6;
                 }
@@ -2272,9 +2273,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
 
             switch (alt17) {
                 case 1 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:883:2: kw= 'activeContexts'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:887:2: kw= 'activeContexts'
                     {
-                    kw=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleVariable1980); 
+                    kw=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleVariable1994); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getVariableAccess().getActiveContextsKeyword_0()); 
@@ -2283,9 +2284,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:890:2: kw= 'activeEditor'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:894:2: kw= 'activeEditor'
                     {
-                    kw=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleVariable1999); 
+                    kw=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleVariable2013); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getVariableAccess().getActiveEditorKeyword_1()); 
@@ -2294,9 +2295,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:897:2: kw= 'activeEditorId'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:901:2: kw= 'activeEditorId'
                     {
-                    kw=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleVariable2018); 
+                    kw=(Token)match(input,30,FollowSets000.FOLLOW_30_in_ruleVariable2032); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getVariableAccess().getActiveEditorIdKeyword_2()); 
@@ -2305,9 +2306,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:904:2: kw= 'activePartId'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:908:2: kw= 'activePartId'
                     {
-                    kw=(Token)match(input,30,FollowSets000.FOLLOW_30_in_ruleVariable2037); 
+                    kw=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleVariable2051); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getVariableAccess().getActivePartIdKeyword_3()); 
@@ -2316,9 +2317,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:911:2: kw= 'activeSite'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:915:2: kw= 'activeSite'
                     {
-                    kw=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleVariable2056); 
+                    kw=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleVariable2070); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getVariableAccess().getActiveSiteKeyword_4()); 
@@ -2327,9 +2328,9 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/escriptmonkey/scripting/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:918:2: kw= 'selection'
+                    // ../org.eclipse.ease.ui.expression.xtext/src-gen/org/eclipse/ease/ui/expression/xtext/parser/antlr/internal/InternalCoreExpression.g:922:2: kw= 'selection'
                     {
-                    kw=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleVariable2075); 
+                    kw=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleVariable2089); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getVariableAccess().getSelectionKeyword_5()); 
@@ -2365,7 +2366,7 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
     private static class FollowSets000 {
         public static final BitSet FOLLOW_ruleRoot_in_entryRuleRoot75 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleRoot85 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_11_in_ruleRoot122 = new BitSet(new long[]{0x0000000001FC6000L});
+        public static final BitSet FOLLOW_11_in_ruleRoot122 = new BitSet(new long[]{0x0000000003BC6000L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleRoot143 = new BitSet(new long[]{0x0000000000001000L});
         public static final BitSet FOLLOW_12_in_ruleRoot155 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleExpression_in_entryRuleExpression191 = new BitSet(new long[]{0x0000000000000000L});
@@ -2385,71 +2386,72 @@ public class InternalCoreExpressionParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleAndExpression_in_entryRuleAndExpression579 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleAndExpression589 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_14_in_ruleAndExpression635 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleAndExpression647 = new BitSet(new long[]{0x0000000001FE6000L});
+        public static final BitSet FOLLOW_15_in_ruleAndExpression647 = new BitSet(new long[]{0x0000000003BE6000L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleAndExpression669 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_16_in_ruleAndExpression682 = new BitSet(new long[]{0x0000000001FC6000L});
+        public static final BitSet FOLLOW_16_in_ruleAndExpression682 = new BitSet(new long[]{0x0000000003BC6000L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleAndExpression703 = new BitSet(new long[]{0x0000000000030000L});
         public static final BitSet FOLLOW_17_in_ruleAndExpression719 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleOrExpresison_in_entryRuleOrExpresison755 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleOrExpresison765 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_18_in_ruleOrExpresison811 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleOrExpresison823 = new BitSet(new long[]{0x0000000001FE6000L});
+        public static final BitSet FOLLOW_15_in_ruleOrExpresison823 = new BitSet(new long[]{0x0000000003BE6000L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleOrExpresison845 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_16_in_ruleOrExpresison858 = new BitSet(new long[]{0x0000000001FC6000L});
+        public static final BitSet FOLLOW_16_in_ruleOrExpresison858 = new BitSet(new long[]{0x0000000003BC6000L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleOrExpresison879 = new BitSet(new long[]{0x0000000000030000L});
         public static final BitSet FOLLOW_17_in_ruleOrExpresison895 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNotExpression_in_entryRuleNotExpression931 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleNotExpression941 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_19_in_ruleNotExpression987 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleNotExpression999 = new BitSet(new long[]{0x0000000001FE6000L});
+        public static final BitSet FOLLOW_15_in_ruleNotExpression999 = new BitSet(new long[]{0x0000000003BE6000L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleNotExpression1021 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_16_in_ruleNotExpression1034 = new BitSet(new long[]{0x0000000001FC6000L});
+        public static final BitSet FOLLOW_16_in_ruleNotExpression1034 = new BitSet(new long[]{0x0000000003BC6000L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleNotExpression1055 = new BitSet(new long[]{0x0000000000030000L});
         public static final BitSet FOLLOW_17_in_ruleNotExpression1071 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleIterableExpression_in_entryRuleIterableExpression1107 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleIterableExpression1117 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_20_in_ruleIterableExpression1169 = new BitSet(new long[]{0x0000000000200000L});
-        public static final BitSet FOLLOW_21_in_ruleIterableExpression1195 = new BitSet(new long[]{0x0000000006008000L});
-        public static final BitSet FOLLOW_ruleOperator_in_ruleIterableExpression1216 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleIterableExpression1229 = new BitSet(new long[]{0x0000000001FE6000L});
-        public static final BitSet FOLLOW_ruleExpression_in_ruleIterableExpression1251 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_16_in_ruleIterableExpression1264 = new BitSet(new long[]{0x0000000001FC6000L});
-        public static final BitSet FOLLOW_ruleExpression_in_ruleIterableExpression1285 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_17_in_ruleIterableExpression1301 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleWithExpression_in_entryRuleWithExpression1337 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleWithExpression1347 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_22_in_ruleWithExpression1384 = new BitSet(new long[]{0x00000001F8000000L});
-        public static final BitSet FOLLOW_ruleVariable_in_ruleWithExpression1405 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleWithExpression1417 = new BitSet(new long[]{0x0000000001FE6000L});
-        public static final BitSet FOLLOW_ruleExpression_in_ruleWithExpression1439 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_16_in_ruleWithExpression1452 = new BitSet(new long[]{0x0000000001FC6000L});
-        public static final BitSet FOLLOW_ruleExpression_in_ruleWithExpression1473 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_17_in_ruleWithExpression1489 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAdaptExpression_in_entryRuleAdaptExpression1525 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleAdaptExpression1535 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_23_in_ruleAdaptExpression1572 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleAdaptExpression1589 = new BitSet(new long[]{0x0000000000008000L});
-        public static final BitSet FOLLOW_15_in_ruleAdaptExpression1606 = new BitSet(new long[]{0x0000000001FE6000L});
-        public static final BitSet FOLLOW_ruleExpression_in_ruleAdaptExpression1628 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_16_in_ruleAdaptExpression1641 = new BitSet(new long[]{0x0000000001FC6000L});
-        public static final BitSet FOLLOW_ruleExpression_in_ruleAdaptExpression1662 = new BitSet(new long[]{0x0000000000030000L});
-        public static final BitSet FOLLOW_17_in_ruleAdaptExpression1678 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEqualExpression_in_entryRuleEqualExpression1714 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleEqualExpression1724 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_24_in_ruleEqualExpression1761 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleEqualExpression1778 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleOperator_in_entryRuleOperator1820 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleOperator1831 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleOperator1869 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_26_in_ruleOperator1888 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleVariable_in_entryRuleVariable1931 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleVariable1942 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_27_in_ruleVariable1980 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_28_in_ruleVariable1999 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_29_in_ruleVariable2018 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_30_in_ruleVariable2037 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_31_in_ruleVariable2056 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_32_in_ruleVariable2075 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_21_in_ruleIterableExpression1195 = new BitSet(new long[]{0x0000000000408000L});
+        public static final BitSet FOLLOW_22_in_ruleIterableExpression1208 = new BitSet(new long[]{0x000000000C000000L});
+        public static final BitSet FOLLOW_ruleOperator_in_ruleIterableExpression1229 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_15_in_ruleIterableExpression1243 = new BitSet(new long[]{0x0000000003BE6000L});
+        public static final BitSet FOLLOW_ruleExpression_in_ruleIterableExpression1265 = new BitSet(new long[]{0x0000000000030000L});
+        public static final BitSet FOLLOW_16_in_ruleIterableExpression1278 = new BitSet(new long[]{0x0000000003BC6000L});
+        public static final BitSet FOLLOW_ruleExpression_in_ruleIterableExpression1299 = new BitSet(new long[]{0x0000000000030000L});
+        public static final BitSet FOLLOW_17_in_ruleIterableExpression1315 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleWithExpression_in_entryRuleWithExpression1351 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleWithExpression1361 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_23_in_ruleWithExpression1398 = new BitSet(new long[]{0x00000003F0000000L});
+        public static final BitSet FOLLOW_ruleVariable_in_ruleWithExpression1419 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_15_in_ruleWithExpression1431 = new BitSet(new long[]{0x0000000003BE6000L});
+        public static final BitSet FOLLOW_ruleExpression_in_ruleWithExpression1453 = new BitSet(new long[]{0x0000000000030000L});
+        public static final BitSet FOLLOW_16_in_ruleWithExpression1466 = new BitSet(new long[]{0x0000000003BC6000L});
+        public static final BitSet FOLLOW_ruleExpression_in_ruleWithExpression1487 = new BitSet(new long[]{0x0000000000030000L});
+        public static final BitSet FOLLOW_17_in_ruleWithExpression1503 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAdaptExpression_in_entryRuleAdaptExpression1539 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleAdaptExpression1549 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_24_in_ruleAdaptExpression1586 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleAdaptExpression1603 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_15_in_ruleAdaptExpression1620 = new BitSet(new long[]{0x0000000003BE6000L});
+        public static final BitSet FOLLOW_ruleExpression_in_ruleAdaptExpression1642 = new BitSet(new long[]{0x0000000000030000L});
+        public static final BitSet FOLLOW_16_in_ruleAdaptExpression1655 = new BitSet(new long[]{0x0000000003BC6000L});
+        public static final BitSet FOLLOW_ruleExpression_in_ruleAdaptExpression1676 = new BitSet(new long[]{0x0000000000030000L});
+        public static final BitSet FOLLOW_17_in_ruleAdaptExpression1692 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEqualExpression_in_entryRuleEqualExpression1728 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleEqualExpression1738 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_25_in_ruleEqualExpression1775 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleEqualExpression1792 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleOperator_in_entryRuleOperator1834 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleOperator1845 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_26_in_ruleOperator1883 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_27_in_ruleOperator1902 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleVariable_in_entryRuleVariable1945 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleVariable1956 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_28_in_ruleVariable1994 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_29_in_ruleVariable2013 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_30_in_ruleVariable2032 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_31_in_ruleVariable2051 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_32_in_ruleVariable2070 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_33_in_ruleVariable2089 = new BitSet(new long[]{0x0000000000000002L});
     }
 
 

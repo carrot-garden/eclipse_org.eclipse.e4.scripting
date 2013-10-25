@@ -28,14 +28,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ease.common.RunnableWithResult;
 import org.eclipse.ease.injection.CodeInjectorUtils;
+import org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor;
+import org.eclipse.ease.integration.modeling.ui.UriSelectionDialog;
+import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.module.interaction.InputModule;
+import org.eclipse.ease.module.interaction.OutputModule;
+import org.eclipse.ease.module.platform.modules.DialogModule;
+import org.eclipse.ease.module.platform.modules.SelectionModule;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.BootStrapper;
 import org.eclipse.ease.modules.IModuleWrapper;
 import org.eclipse.ease.modules.NamedParameter;
 import org.eclipse.ease.modules.OptionalParameter;
 import org.eclipse.ease.modules.WrapToScript;
-import org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor;
-import org.eclipse.ease.integration.modeling.ui.UriSelectionDialog;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
@@ -51,13 +56,10 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.ease.log.Logger;
-import org.eclipse.ease.module.platform.modules.DialogModule;
-import org.eclipse.ease.module.platform.modules.SelectionModule;
-import org.eclipse.ease.module.interaction.InputModule;
-import org.eclipse.ease.module.interaction.OutputModule;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -513,6 +515,8 @@ public class EcoreModule extends AbstractScriptModule {
 			operation.run();
 		}
 	}
+	
+
 
 	protected static class RunnableCommandWrapper extends AbstractCommand {
 
@@ -549,16 +553,35 @@ public class EcoreModule extends AbstractScriptModule {
 			return true;
 		}
 	}
+	@WrapToScript
+	public Object[] selectFromList(List<? extends Object> inputs) {
+		return DialogModule.selectFromList(inputs.toArray(), new LabelProvider(){
+			@Override
+			public String getText(Object element) {
+				if (element instanceof EObject) {
+					return getLabelProvider( (EObject) element).getText(element);
+				}
+				return element.toString();
+			}
+		});
+
+	}
 
 	private static ComposedAdapterFactory adapter = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
 	@WrapToScript
 	public String ePrint(EObject target) {
-		IItemLabelProvider labelProvider = (IItemLabelProvider)adapter.adapt(target, IItemLabelProvider.class);
+		IItemLabelProvider labelProvider = getLabelProvider(target);
 		if(labelProvider != null) {
 			return labelProvider.getText(target);
 		}
 		return "[ERRO] Unable to print this EObject";
+	}
+
+
+	private IItemLabelProvider getLabelProvider(EObject target) {
+		IItemLabelProvider labelProvider = (IItemLabelProvider)adapter.adapt(target, IItemLabelProvider.class);
+		return labelProvider;
 	}
 
 

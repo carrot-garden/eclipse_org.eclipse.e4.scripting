@@ -1669,9 +1669,9 @@ rule__IterableExpression__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getIterableExpressionAccess().getOperandAssignment_3()); }
-(rule__IterableExpression__OperandAssignment_3)?
-{ after(grammarAccess.getIterableExpressionAccess().getOperandAssignment_3()); }
+{ before(grammarAccess.getIterableExpressionAccess().getGroup_3()); }
+(rule__IterableExpression__Group_3__0)?
+{ after(grammarAccess.getIterableExpressionAccess().getGroup_3()); }
 )
 
 ;
@@ -1778,6 +1778,69 @@ finally {
 
 
 
+
+
+
+
+
+
+rule__IterableExpression__Group_3__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__IterableExpression__Group_3__0__Impl
+	rule__IterableExpression__Group_3__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__IterableExpression__Group_3__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getIterableExpressionAccess().getOperatorKeyword_3_0()); }
+
+	'operator' 
+
+{ after(grammarAccess.getIterableExpressionAccess().getOperatorKeyword_3_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__IterableExpression__Group_3__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__IterableExpression__Group_3__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__IterableExpression__Group_3__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getIterableExpressionAccess().getOperandAssignment_3_1()); }
+(rule__IterableExpression__OperandAssignment_3_1)
+{ after(grammarAccess.getIterableExpressionAccess().getOperandAssignment_3_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 
 
@@ -2683,14 +2746,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IterableExpression__OperandAssignment_3
+rule__IterableExpression__OperandAssignment_3_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIterableExpressionAccess().getOperandOperatorParserRuleCall_3_0()); }
-	ruleOperator{ after(grammarAccess.getIterableExpressionAccess().getOperandOperatorParserRuleCall_3_0()); }
+{ before(grammarAccess.getIterableExpressionAccess().getOperandOperatorParserRuleCall_3_1_0()); }
+	ruleOperator{ after(grammarAccess.getIterableExpressionAccess().getOperandOperatorParserRuleCall_3_1_0()); }
 )
 
 ;
