@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ease.storedscript;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -24,5 +25,12 @@ public interface IContentProvider {
 	public String getContent() throws CoreException, IOException;
 
 	public InputStream getInputStream() throws IOException;
+
+	/**
+	 * Try to get the file related to this store script. Can return null if the stored script is not a file
+	 * @return
+	 */
+	public File getFile();
+
 
 }

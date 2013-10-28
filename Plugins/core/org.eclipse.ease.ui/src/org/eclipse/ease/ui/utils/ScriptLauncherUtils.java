@@ -10,16 +10,17 @@
  */
 package org.eclipse.ease.ui.utils;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.IScriptEngine;
-import org.eclipse.ease.service.ScriptService;
-import org.eclipse.ease.ui.console.ScriptConsole;
-import org.eclipse.ease.ui.metadata.UIMetadataUtils;
 import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.service.ScriptService;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
 import org.eclipse.ease.storedscript.storedscript.ScriptType;
+import org.eclipse.ease.ui.console.ScriptConsole;
+import org.eclipse.ease.ui.metadata.UIMetadataUtils;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 
@@ -46,11 +47,19 @@ public class ScriptLauncherUtils {
 		engine.setErrorStream(console.getErrorStream());
 		engine.setTerminateOnIdle(true);
 		try {
-			engine.executeAsync(script.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-			Logger.logError(e.getMessage());
+			//First try to run it as a file
+			File file = script.getFile();
+			if(file != null) {
+				engine.executeAsync(file);
+			} else {
+				//If is not file run from input stream
+				engine.executeAsync(script.getInputStream());
+			}
+		} catch (IOException e2) {
+			e2.printStackTrace();
+			Logger.logError(e2.getMessage());
 		}
+
 		engine.schedule();
 	}
 
