@@ -3,7 +3,7 @@
   <artifactId>org.eclipse.ease.releng.target</artifactId>
   <packaging>eclipse-target-definition</packaging>
   <parent>
-  	<groupId>escriptmonkey</groupId>
+  	<groupId>org.eclipse.ease</groupId>
   	<artifactId>org.eclipse.ease.releng</artifactId>
   	<version>0.1.0-SNAPSHOT</version>
   	<relativePath>../org.eclipse.ease.releng</relativePath>

@@ -3,7 +3,7 @@
   <artifactId>org.eclipse.ease.discovery.ui.menu</artifactId>
   <parent>
   	<relativePath>../../../Releng/org.eclipse.ease.releng/pom.xml</relativePath>
-  	<groupId>escriptmonkey</groupId>
+  	<groupId>org.eclipse.ease</groupId>
   	<artifactId>org.eclipse.ease.releng</artifactId>
   	<version>0.1.0-SNAPSHOT</version>
   </parent>

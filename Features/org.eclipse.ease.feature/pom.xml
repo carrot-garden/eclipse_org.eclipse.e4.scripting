@@ -14,7 +14,7 @@
 
   <parent>
   	<relativePath>../../Releng/org.eclipse.ease.releng</relativePath>
-  	<groupId>escriptmonkey</groupId>
+  	<groupId>org.eclipse.ease</groupId>
   	<artifactId>org.eclipse.ease.releng</artifactId>
   	<version>0.1.0-SNAPSHOT</version>
   </parent>
