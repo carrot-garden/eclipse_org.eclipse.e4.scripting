@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Platform
 Bundle-SymbolicName: org.eclipse.ease.module.platform;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.ease.module.platform.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.ease;bundle-version="1.0.0",
+ org.eclipse.ease,
  org.eclipse.core.resources,
  org.eclipse.text,
  org.eclipse.ui.workbench.texteditor,
@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text;bundle-version="3.8.100",
  org.eclipse.core.expressions,
  com.google.guava;bundle-version="11.0.2",
- org.eclipse.ease.log;bundle-version="1.0.0"
+ org.eclipse.ease.log
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.ease.module.platform,

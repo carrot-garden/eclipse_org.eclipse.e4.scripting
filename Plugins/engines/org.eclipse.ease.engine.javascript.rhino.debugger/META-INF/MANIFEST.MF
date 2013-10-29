@@ -2,20 +2,20 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Rhino Debugger Support
 Bundle-SymbolicName: org.eclipse.ease.engine.javascript.rhino.debugger;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.ease.engine.javascript.rhino.debugger.Activator
 Bundle-Vendor: eScriptMonkey
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.debug.core,
  org.mozilla.javascript;bundle-version="1.7.2",
- org.eclipse.ease.javascript.rhino;bundle-version="1.0.0",
- org.eclipse.ease;bundle-version="1.0.0",
+ org.eclipse.ease.javascript.rhino,
+ org.eclipse.ease,
  org.eclipse.debug.ui,
  org.eclipse.jface;bundle-version="3.9.0",
  org.eclipse.ui.workbench,
  org.eclipse.ui.ide;bundle-version="3.9.0",
  org.eclipse.ui.editors,
- org.eclipse.ease.log;bundle-version="1.0.0"
+ org.eclipse.ease.log
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.ease.engine.javascript.rhino.debugger,

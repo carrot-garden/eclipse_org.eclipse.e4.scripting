@@ -23,9 +23,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.ui.forms,
  org.eclipse.ease.discovery,
- org.eclipse.ease.log;bundle-version="1.0.0"
+ org.eclipse.ease.log
 Bundle-Vendor: %providerName
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-ManifestVersion: 2
 Bundle-Activator: org.eclipse.ease.discovery.ui.Activator
 Bundle-SymbolicName: org.eclipse.ease.discovery.ui;singleton:=true

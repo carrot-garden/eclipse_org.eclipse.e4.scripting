@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.ease;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Eclipse.org - E4
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0";visibility:=reexport,
@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0";visibility:=reex
  org.eclipse.ui;bundle-version="3.103.0",
  org.eclipse.ecf.filetransfer,
  com.google.guava;bundle-version="10.0.1",
- org.eclipse.ease.log;bundle-version="1.0.0",
+ org.eclipse.ease.log,
  org.eclipse.debug.core,
  org.eclipse.ui.ide;bundle-version="3.9.0"
 Export-Package: org.eclipse.ease,

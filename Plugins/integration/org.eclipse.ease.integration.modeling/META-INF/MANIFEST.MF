@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Modeling
 Bundle-SymbolicName: org.eclipse.ease.integration.modeling;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.ease.integration.modeling.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.ease.module.platform;bundle-version="1.0.0",
+ org.eclipse.ease.module.platform,
  org.eclipse.emf.ecore;bundle-version="2.9.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.7.0",
- org.eclipse.ease.log;bundle-version="1.0.0",
- org.eclipse.ease;bundle-version="1.0.0",
+ org.eclipse.ease.log,
+ org.eclipse.ease,
  com.google.guava;bundle-version="11.0.2",
  org.eclipse.ease.module.interaction,
  org.eclipse.ui.ide;bundle-version="3.9.0",
