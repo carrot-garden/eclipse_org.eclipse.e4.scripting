@@ -16,7 +16,19 @@
 		<xtext-version>2.4.3</xtext-version>
 	</properties>
 
-	
+	<repositories>
+		<repository>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>eclipse-hosted</id>
+			<url>https://repo.eclipse.org/content/repositories/eclipse/</url>
+		</repository>
+	</repositories>
+
 	<pluginRepositories>
 		<!-- Repository to resolve xtend-maven-plugin -->
 		<pluginRepository>
