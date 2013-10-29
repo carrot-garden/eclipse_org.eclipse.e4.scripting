@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>escriptmonkey</groupId>
 	<artifactId>org.eclipse.ease.releng</artifactId>
@@ -7,7 +8,7 @@
 
 	<properties>
 		<tycho-version>0.18.1</tycho-version>
-
+		<xtext-version>2.4.3</xtext-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -18,10 +19,52 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/kepler/</url>
 		</repository>
+		<!-- Repository to resolve the XText dependencies -->
+		<!-- <repository> -->
+		<!-- <id>p2.eclipse.xtext</id> -->
+		<!-- <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url> -->
+		<!-- <layout>p2</layout> -->
+		<!-- </repository> -->
 	</repositories>
+	<pluginRepositories>
+		<!-- Repository to resolve xtend-maven-plugin -->
+		<pluginRepository>
+			<id>xtend</id>
+			<url>http://build.eclipse.org/common/xtend/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtext-version}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<!-- need to prefix by basedir to generate to currently built module -->
+							<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<!-- these dependencies are contributed in Eclipse by the "Xtend Library" 
+						classpath container -->
+					<dependency>
+						<groupId>org.eclipse.xtend</groupId>
+						<artifactId>org.eclipse.xtend.lib</artifactId>
+						<version>${xtext-version}</version>
+						<type>pom</type>
+					</dependency>
+				</dependencies>
+			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -33,7 +76,7 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-				    <allowConflictingDependencies>true</allowConflictingDependencies>
+					<allowConflictingDependencies>true</allowConflictingDependencies>
 					<!-- configure the p2 target environments for multi-platform build -->
 					<environments>
 						<environment>
@@ -105,10 +148,10 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	
+
+
 	<modules>
-	<!-- PLugins -->
+		<!-- PLugins -->
 		<module>
 			../org.eclipse.ease.releng.target
 		</module>
@@ -125,45 +168,45 @@
 		<module>
 			../../Plugins/core/org.eclipse.ease.storedscript
 		</module>
-			<!--  Discovery -->
-			<module>
+		<!-- Discovery -->
+		<module>
 				../../Plugins/core/org.eclipse.ease.discovery.ui.menu
 			</module>
-			<module>
+		<module>
 				../../Plugins/core/org.eclipse.ease.discovery.ui
 			</module>
-			<module>
+		<module>
 				../../Plugins/core/org.eclipse.ease.discovery
 			</module>
-			
-			<!-- UI -->
-			<module>
+
+		<!-- UI -->
+		<module>
 				../../Plugins/core/org.eclipse.ease.ui
 			</module>
-			<module>
+		<module>
 				../../Plugins/core/org.eclipse.ease.ui.e4
 			</module>
-			
-			<module>
+
+		<module>
 				../../Plugins/core/org.eclipse.ease.ui.expression
 			</module>
-			<module>
+		<module>
 				../../Plugins/core/org.eclipse.ease.ui.expression.xtext
 			</module>
-			<module>
+		<module>
 				../../Plugins/core/org.eclipse.ease.ui.expression.xtext.ui
 			</module>
 
-			<!-- Lang -->
-				<!-- Python -->
+		<!-- Lang -->
+		<!-- Python -->
 		<module>
 			../../Plugins/engines/org.eclipse.ease.lang.python
 		</module>
 		<module>
 			../../Plugins/engines/org.eclipse.ease.lang.python.examples
 		</module>
-		
-				<!-- Javascript -->
+
+		<!-- Javascript -->
 		<module>
 			../../Plugins/engines/org.eclipse.ease.engine.javascript.rhino
 		</module>
@@ -176,10 +219,10 @@
 		<module>
 			../../Plugins/engines/org.eclipse.ease.engine.javascript.rhino.debugger
 		</module>
-		
-		
-		
-			<!-- Modules -->
+
+
+
+		<!-- Modules -->
 		<module>
 			../../Plugins/modules/org.eclipse.ease.module.platform
 		</module>
@@ -189,7 +232,7 @@
 		<module>
 			../../Plugins/modules/org.eclipse.ease.module.resources
 		</module>
-			<!-- Integration -->
+		<!-- Integration -->
 		<module>
 			../../Plugins/integration/org.eclipse.ease.integration.modeling
 		</module>
@@ -208,12 +251,12 @@
 		<module>
 			../../Plugins/integration/org.eclipse.ease.integration.modeling.uml.examples
 		</module>
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		<!-- Features -->
 		<module>
 			../../Features/org.eclipse.ease.feature
@@ -242,13 +285,13 @@
 		<module>
 			../../Features/org.eclipse.ease.discovery.feature
 		</module>
-		
+
 		<!-- Update site -->
 		<module>
 			../org.eclipse.ease.releng.p2
 		</module>
-		
+
 	</modules>
-	
-	
+
+
 </project>  
