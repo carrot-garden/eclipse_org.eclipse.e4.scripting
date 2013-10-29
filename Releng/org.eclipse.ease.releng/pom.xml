@@ -13,7 +13,7 @@
 	</parent>
 
 	<properties>
-		<xtext-version>2.4.3</xtext-version>
+		<xtext-version>2.3.1</xtext-version>
 	</properties>
 
 	<repositories>
