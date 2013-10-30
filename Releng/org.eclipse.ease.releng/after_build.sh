@@ -10,5 +10,5 @@ cp -R ${sourceUpdateSiteLocation}* ${targetUpdateSiteLocation}
 
 #Publish dicovery
 sourceDiscoveryLocation=Plugins/core/org.eclipse.ease.discovery/DiscoveryDefinition.xmi
-cp ${sourceDiscoveryLocation}* ${targetUpdateSiteLocation}
+cp ${sourceDiscoveryLocation} ${targetUpdateSiteLocation}
 
