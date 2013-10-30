@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 
 
@@ -242,7 +243,14 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 		}
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		findScriptsInContainer(getHandleFileExtension(), workspace.getRoot(), false);
+		Collection<String> extensiontions = Collections2.transform(registry.getScriptTypes(), new Function<org.eclipse.ease.storedscript.storedscript.ScriptType, String>() {
+
+			@Override
+			public String apply(org.eclipse.ease.storedscript.storedscript.ScriptType arg0) {
+				return arg0.getExtension();
+			}
+		});
+		findScriptsInContainer(extensiontions, workspace.getRoot(), false);
 		/*
 		 * TODO
 		 */
