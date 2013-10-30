@@ -7,8 +7,8 @@ echo "Clearing $targetUpdateSiteLocation"
 rm -rf ${targetUpdateSiteLocation}*
 #Moving generated update site
 echo "Moving $sourceUpdateSiteLocation to $targetUpdateSiteLocation"
-mv ${sourceUpdateSiteLocation}* ${targetUpdateSiteLocation}
+cp ${sourceUpdateSiteLocation}* ${targetUpdateSiteLocation}
 
 #Publish dicovery
 sourceDiscoveryLocation=Plugins/core/org.eclipse.ease.discovery/DiscoveryDefinition.xmi
-mv ${sourceDiscoveryLocation}* ${targetUpdateSiteLocation}
+cp ${sourceDiscoveryLocation}* ${targetUpdateSiteLocation}
