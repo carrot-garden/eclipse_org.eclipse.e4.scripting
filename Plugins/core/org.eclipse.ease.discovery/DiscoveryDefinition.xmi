@@ -22,9 +22,9 @@
     </components>
     <components
         name="Jython"
-        provider="E4"
+        provider="POLARSYS"
         description="Install Jython intepreter to be able to run Python script"
-        license="EPL"
+        license="EPL and PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2"
         incubation="true">
       <sitesURLS>http://download.eclipse.org/releases/kepler</sitesURLS>
       <sitesURLS>http://download.eclipse.org/e4/updates/ease/eclipse-e4-ease-nightly/</sitesURLS>

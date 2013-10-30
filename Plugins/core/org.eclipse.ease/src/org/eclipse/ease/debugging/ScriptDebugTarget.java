@@ -61,7 +61,7 @@ public abstract class ScriptDebugTarget extends ScriptDebugElement implements ID
 
 	@Override
 	public String getName() throws DebugException {
-		return "eScriptMonkey Rhino Debugger";
+		return "EASE Rhino Debugger";
 	}
 
 	@Override
