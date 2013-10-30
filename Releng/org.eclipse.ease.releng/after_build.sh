@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 
 targetUpdateSiteLocation=/home/data/httpd/download.eclipse.org/e4/updates/ease/${JOB_NAME}/
 sourceUpdateSiteLocation=${WORKSPACE}/Releng/org.eclipse.ease.releng.p2/target/repository/
