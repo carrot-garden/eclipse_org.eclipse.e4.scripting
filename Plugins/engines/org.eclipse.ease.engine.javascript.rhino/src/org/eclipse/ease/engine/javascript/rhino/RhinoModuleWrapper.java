@@ -20,10 +20,10 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.eclipse.ease.Activator;
+import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.modules.AbstractModuleWrapper;
 import org.eclipse.ease.modules.EnvironmentModule;
 import org.eclipse.ease.modules.OptionalParameter;
-import org.eclipse.ease.log.Logger;
 
 public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
@@ -72,7 +72,7 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
 		for(String name : functionNames) {
 			if(!isCorrectMethodName(name)) {
-				Logger.logError("The method name " + name + " from the module " + moduleVariable + "can not be used because it's name is not correct", Activator.PLUGIN_ID);
+				Logger.logError("The method name " + name + " from the module " + moduleVariable + " can not be used because it's name is not correct", Activator.PLUGIN_ID);
 				return "";
 			}
 			if(!name.isEmpty()) {

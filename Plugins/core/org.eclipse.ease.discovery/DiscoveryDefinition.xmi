@@ -4,7 +4,7 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:discovery="http://www.eclipse.org/ease/discovery/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/ease/discovery/1.0 ../org.eclipse.ease.discovery/model/discovery.ecore">
+    xsi:schemaLocation="http://www.eclipse.org/ease/discovery/1.0 model/discovery.ecore">
   <categories
       name="Engines"
       description="All available engine">
@@ -24,7 +24,7 @@
         name="Jython"
         provider="POLARSYS"
         description="Install Jython intepreter to be able to run Python script"
-        license="EPL and PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2"
+        license="EPL,PSF Licence V2"
         incubation="true">
       <sitesURLS>http://download.eclipse.org/releases/kepler</sitesURLS>
       <sitesURLS>http://download.eclipse.org/e4/updates/ease/eclipse-e4-ease-nightly/</sitesURLS>
