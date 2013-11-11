@@ -19,6 +19,7 @@ import java.security.PrivilegedAction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.eclipse.ease.AbstractScriptEngine;
 import org.eclipse.ease.FileTrace;
@@ -232,7 +233,7 @@ public class RhinoScriptEngine extends AbstractScriptEngine implements IDebugEng
 
 	@Override
 	public void setVariable(final String name, final Object content) {
-		if(!RhinoModuleWrapper.isSaveName(name))
+		if(!isSaveName(name))
 			throw new RuntimeException("\"" + name + "\" is not a valid JavaScript variable name");
 
 		final Scriptable scope = getScope();
@@ -329,4 +330,50 @@ public class RhinoScriptEngine extends AbstractScriptEngine implements IDebugEng
 		return super.getFileTrace();
 	}
 
+	@Override
+	public boolean hasVariable(String name) {
+		if(getScope() != null) {
+			final Object value = getScope().get(name, getScope());
+			return !Scriptable.NOT_FOUND.equals(value);
+		}
+
+		throw new RuntimeException("Cannot query variable, Scope not initialized");
+	}
+
+	@Override
+	public String getSaveVariableName(String name) {
+		return getSaveName(name);
+	}
+
+	static String getSaveName(final String identifier) {
+		// check if name is already valid
+		if(isSaveName(identifier))
+			return identifier;
+
+		// not valid, convert string to valid format
+		final StringBuilder buffer = new StringBuilder(identifier.replaceAll("[^a-zA-Z0-9]", "_"));
+
+		// remove '_' at the beginning
+		while((buffer.length() > 0) && (buffer.charAt(0) == '_'))
+			buffer.deleteCharAt(0);
+
+		// remove trailing '_'
+		while((buffer.length() > 0) && (buffer.charAt(buffer.length() - 1) == '_'))
+			buffer.deleteCharAt(buffer.length() - 1);
+
+		// check for valid first character
+		if(buffer.length() > 0) {
+			final char start = buffer.charAt(0);
+			if((start < 65) || ((start > 90) && (start < 97)) || (start > 122))
+				buffer.insert(0, '_');
+		} else
+			// buffer is empty
+			buffer.insert(0, '_');
+
+		return buffer.toString();
+	}
+
+	static boolean isSaveName(final String identifier) {
+		return Pattern.matches("[a-zA-Z_$][a-zA-Z0-9_$]*", identifier);
+	}
 }

@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Interface to be implemented by a script debug engine
  */
-public interface IDebugEngine extends IModifiableScriptEngine {
+public interface IDebugEngine  {
 
 	Object removeVariable(final String name);
 

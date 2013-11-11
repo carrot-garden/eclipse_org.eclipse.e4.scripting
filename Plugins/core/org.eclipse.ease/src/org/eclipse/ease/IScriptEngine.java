@@ -17,11 +17,12 @@ import java.io.PrintStream;
 import java.io.Reader;
 
 /**
- * Interface for a script engine. A script engine is capable of interpreting script code at runtime. Script engines shall be derived from
- * {@link Thread} and
+ * Interface for a script engine. A script engine is capable of interpreting script code at runtime. Script engines shall be derived from {@link Thread} and
  * therefore run separately from other code. An engine shall be started by calling {@link #schedule()}.
  */
 public interface IScriptEngine {
+
+	String UNDEFINED = "_-_-_undefined_-_-_";
 
 	/**
 	 * Execute script code asynchronously. The code provided will be scheduled and executed as soon as all previously scheduled code is executed. If
@@ -186,4 +187,44 @@ public interface IScriptEngine {
 	 * @return engine name
 	 */
 	String getName();
+
+	/**
+	 * Set a variable in the script engine. This variable will be stored in the global script scope
+	 * 
+	 * @param name
+	 *        variable name
+	 * @param content
+	 *        variable content
+	 */
+	void setVariable(final String name, final Object content);
+
+	/**
+	 * Get a script variable. Retrieve a variable from the global script scope.
+	 * 
+	 * @param name
+	 *        variable name
+	 * 
+	 * @return variable content or <code>null</code>
+	 */
+	Object getVariable(final String name);
+
+	/**
+	 * Check if a variable exists within the scope of the engine. As a variable content may be <code>null</code>, {@link #getVariable(String)} might not be
+	 * sufficient to query.
+	 * 
+	 * @param name
+	 *        variable name
+	 * @return <code>true</code> when variable exists
+	 */
+	boolean hasVariable(String name);
+
+	/**
+	 * Return a save name to be used for a variable. The returned value denotes a valid name to be used for a variable within this engine. The returned name
+	 * might already be in use.
+	 * 
+	 * @param name
+	 *        variable name candidate
+	 * @return converted variable name
+	 */
+	String getSaveVariableName(String name);
 }

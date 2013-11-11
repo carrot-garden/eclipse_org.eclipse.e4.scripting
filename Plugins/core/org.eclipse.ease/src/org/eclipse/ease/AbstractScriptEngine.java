@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.FileTrace.Trace;
+import org.eclipse.ease.debug.ITracingConstant;
+import org.eclipse.ease.log.Tracer;
 import org.eclipse.ease.service.ScriptService;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
@@ -74,13 +76,13 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	@Override
 	public final ScriptResult executeAsync(final Object content) {
 		final Script piece;
-		if(content instanceof Script)
+		if (content instanceof Script)
 			piece = (Script)content;
 		else
 			piece = new Script(content);
 
 		mCodePieces.add(piece);
-		synchronized(this) {
+		synchronized (this) {
 			notifyAll();
 		}
 
@@ -90,12 +92,12 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	@Override
 	public final ScriptResult executeSync(final Object content) throws InterruptedException {
 
-		if(getState() == NONE)
+		if (getState() == NONE)
 			throw new RuntimeException("Engine is not started yet, cannot run code");
 
 		final ScriptResult result = executeAsync(content);
-		synchronized(result) {
-			while(!result.isReady())
+		synchronized (result) {
+			while (!result.isReady())
 				result.wait();
 		}
 
@@ -105,7 +107,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	@Override
 	public final ScriptResult inject(final Object content) {
 		final Script piece;
-		if(content instanceof Script)
+		if (content instanceof Script)
 			piece = (Script)content;
 		else
 			piece = new Script(content);
@@ -119,17 +121,22 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	 * 
 	 * @param script
 	 *        script to be executed
+	 * @param notifyListerners
+	 *        <code>true</code> when listeners should be informed of code fragment
 	 * @return script execution result
 	 */
-	private ScriptResult inject(final Script script, final boolean newScriptEvent) {
+	private ScriptResult inject(final Script script, final boolean notifyListerners) {
 
-		synchronized(script.getResult()) {
+		synchronized (script.getResult()) {
 
 			try {
+				if (ITracingConstant.MODULE_WRAPPER_TRACING)
+					Tracer.logInfo("Executing (" + script.getTitle() + "):\n" + script.getCode());
+
 				mFileTrace.push(script.getFile());
 
 				// execution
-				if(newScriptEvent)
+				if (notifyListerners)
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_START);
 				else
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_INJECTION_START);
@@ -145,7 +152,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 			} catch (final Exception e) {
 				script.setException(e);
 				String message = e.getMessage();
-				if(message != null) {
+				if (message != null) {
 
 					getErrorStream().println("Message :" + message);
 				} else {
@@ -153,9 +160,8 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 					e.printStackTrace(getErrorStream());
 				}
 
-
 			} finally {
-				if(newScriptEvent)
+				if (notifyListerners)
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_END);
 				else
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_INJECTION_END);
@@ -168,15 +174,16 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	public final IStatus runUIThread(final IProgressMonitor monitor) {
-		if(monitor.isCanceled()) {
+		if (monitor.isCanceled()) {
 			return Status.CANCEL_STATUS;
 		}
 		Display asyncDisplay = getDisplay();
-		if(asyncDisplay == null || asyncDisplay.isDisposed()) {
+		if (asyncDisplay == null || asyncDisplay.isDisposed()) {
 			return Status.CANCEL_STATUS;
 		}
 		asyncDisplay.asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				IStatus result = null;
 				Throwable throwable = null;
@@ -184,7 +191,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 					//As we are in the UI Thread we can
 					//always know what to tell the job.
 					setThread(Thread.currentThread());
-					if(monitor.isCanceled()) {
+					if (monitor.isCanceled()) {
 						result = Status.CANCEL_STATUS;
 					} else {
 						UIStats.start(UIStats.UI_JOB, getName());
@@ -195,7 +202,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 					throwable = t;
 				} finally {
 					UIStats.end(UIStats.UI_JOB, AbstractScriptEngine.this, getName());
-					if(result == null) {
+					if (result == null) {
 						result = new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, IStatus.ERROR, ProgressMessages.InternalError, throwable);
 					}
 					done(result);
@@ -205,11 +212,10 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 		return Job.ASYNC_FINISH;
 	}
 
-
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		IStatus status = null;
-		if(isUI()) {
+		if (isUI()) {
 			status = runUIThread(monitor);
 		} else {
 			status = runCode(monitor);
@@ -217,29 +223,28 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 		return status;
 	}
 
-
 	protected Display getDisplay() {
 		return PlatformUI.getWorkbench().getDisplay();
 	}
 
 	public final IStatus runCode(final IProgressMonitor monitor) {
-		if(setupEngine()) {
+		if (setupEngine()) {
 			mFileTrace = new FileTrace();
 
 			notifyExecutionListeners(null, IExecutionListener.ENGINE_START);
 
 			// main loop
-			while((!monitor.isCanceled()) && (!isTerminated())) {
+			while ((!monitor.isCanceled()) && (!isTerminated())) {
 
 				// execute code
-				if(!mCodePieces.isEmpty()) {
+				if (!mCodePieces.isEmpty()) {
 					final Script piece = mCodePieces.remove(0);
 					inject(piece, true);
 
 				} else {
 
-					synchronized(this) {
-						if(!isTerminated()) {
+					synchronized (this) {
+						if (!isTerminated()) {
 							try {
 								wait();
 							} catch (final InterruptedException e) {
@@ -250,8 +255,8 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 			}
 
 			// discard pending code pieces
-			synchronized(mCodePieces) {
-				for(final Script script : mCodePieces)
+			synchronized (mCodePieces) {
+				for (final Script script : mCodePieces)
 					script.setException(new ExitException());
 			}
 
@@ -262,7 +267,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 			teardownEngine();
 		}
 
-		if(isTerminated())
+		if (isTerminated())
 			return Status.OK_STATUS;
 
 		return Status.CANCEL_STATUS;
@@ -275,7 +280,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	@Override
 	public void setOutputStream(final OutputStream outputStream) {
-		if(outputStream instanceof PrintStream)
+		if (outputStream instanceof PrintStream)
 			mOutStream = (PrintStream)outputStream;
 
 		else
@@ -299,7 +304,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	@Override
 	public void setErrorStream(final OutputStream errorStream) {
-		if(errorStream instanceof PrintStream)
+		if (errorStream instanceof PrintStream)
 			mErrorStream = (PrintStream)errorStream;
 
 		else
@@ -346,7 +351,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	protected void notifyExecutionListeners(final Script script, final int status) {
-		for(final Object listener : mExecutionListeners.getListeners())
+		for (final Object listener : mExecutionListeners.getListeners())
 			((IExecutionListener)listener).notify(this, script, status);
 	}
 
@@ -358,20 +363,20 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 		// ask thread to terminate
 		cancel();
-		if(getThread() != null)
+		if (getThread() != null)
 			getThread().interrupt();
 	}
 
 	@Override
 	public void reset() {
 		// make sure that everybody gets notified that script engine got a reset
-		for(final Script script : mCodePieces)
+		for (final Script script : mCodePieces)
 			script.setException(new ExitException("Script engine got resetted."));
 
 		mCodePieces.clear();
 
 		// re-enable launch extensions to register themselves
-		for(final IScriptEngineLaunchExtension extension : ScriptService.getLaunchExtensions(getID()))
+		for (final IScriptEngineLaunchExtension extension : ScriptService.getLaunchExtensions(getID()))
 			extension.createEngine(this);
 	}
 
@@ -382,9 +387,9 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	@Override
 	public Object getExecutedFile() {
-		for(Trace trace : getFileTrace()) {
+		for (Trace trace : getFileTrace()) {
 			Object file = trace.getFile();
-			if(file != null)
+			if (file != null)
 				return file;
 		}
 
@@ -400,10 +405,12 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 		return mID;
 	}
 
+	@Override
 	public void setIsUI(boolean isUI) {
 		this.isUI = isUI;
 	}
 
+	@Override
 	public boolean isUI() {
 		return isUI;
 	}
@@ -418,7 +425,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	protected abstract boolean setupEngine();
 
 	/**
-	 * Teatdown engine. Called immediately before the engine terminates. This method is not called when {@link #setupEngine()} fails.
+	 * Teardown engine. Called immediately before the engine terminates. This method is not called when {@link #setupEngine()} fails.
 	 * 
 	 * @return teardown result
 	 */

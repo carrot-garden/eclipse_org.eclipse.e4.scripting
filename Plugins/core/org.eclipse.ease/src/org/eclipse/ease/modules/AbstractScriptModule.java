@@ -10,69 +10,50 @@
  *******************************************************************************/
 package org.eclipse.ease.modules;
 
-import java.util.Map;
-
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.ease.IModifiableScriptEngine;
 import org.eclipse.ease.IScriptEngine;
-import org.eclipse.ease.ScriptResult;
 import org.eclipse.ease.injection.CodeInjectorUtils;
-import org.eclipse.ease.service.ScriptService;
 
+/**
+ * Base class to be used for modules. Handles retrieval of script engine and environment module.
+ */
 public abstract class AbstractScriptModule implements IScriptModule {
 
-	private String mName = "(undefined)";
-
+	/** Script engine instance. */
 	private IScriptEngine mEngine = null;
 
-	private EnvironmentModule mEnvironmentModule = null;
-
-	public AbstractScriptModule() {
-
-		Map<String, ModuleDefinition> modules = ScriptService.getInstance().getAvailableModules();
-		for(ModuleDefinition definition : modules.values()) {
-			if(definition.getModuleClassName().equals(this.getClass().getName())) {
-				mName = definition.getName();
-				break;
-			}
-		}
-
-		// detect engine
-		final Job currentJob = Job.getJobManager().currentJob();
-		if(currentJob instanceof IScriptEngine) {
-			mEngine = (IScriptEngine)currentJob;
-
-			// find environment module
-			if(mEngine instanceof IModifiableScriptEngine) {
-				// engine supports direct reading of variables
-				Object module = ((IModifiableScriptEngine)mEngine).getVariable(getWrapper().getEnvironmentModuleName());
-				if(module instanceof EnvironmentModule) {
-					mEnvironmentModule = (EnvironmentModule)module;
-					mEnvironmentModule.addModule(this);
-				}
-
-			} else {
-				// need to query engine by executing code
-				ScriptResult result = mEngine.inject(getWrapper().getEnvironmentModuleName());
-				if(result.getResult() instanceof EnvironmentModule) {
-					mEnvironmentModule = (EnvironmentModule)result.getResult();
-					mEnvironmentModule.addModule(this);
-				}
-			}
-		}
-	}
+	/** Environment module instance. */
+	private EnvironmentModule mEnvironment = null;
 
 	@Override
-	public IScriptEngine getScriptEngine() {
+	public void initialize(IScriptEngine engine, EnvironmentModule environment) {
+		mEngine = engine;
+		mEnvironment = environment;
+	}
+
+	/**
+	 * Get the current script engine.
+	 * 
+	 * @return script engine
+	 */
+	protected IScriptEngine getScriptEngine() {
 		return mEngine;
 	}
 
-	@Override
-	public String getModuleName() {
-		return mName;
+	/**
+	 * Get the current environment module.
+	 * 
+	 * @return environment module
+	 */
+	protected EnvironmentModule getEnvironment() {
+		return mEnvironment;
 	}
 
-	public IModuleWrapper getWrapper() {
+	/**
+	 * Get the generic script wrapper registered for this script engine.
+	 * 
+	 * @return script wrapper
+	 */
+	protected IModuleWrapper getWrapper() {
 		return CodeInjectorUtils.getWrapper(getScriptEngine());
 	}
 }

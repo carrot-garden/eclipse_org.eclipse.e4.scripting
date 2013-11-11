@@ -19,51 +19,56 @@ import org.eclipse.core.runtime.IConfigurationElement;
 
 public class ModuleDefinition {
 
-    private static final String VISIBLE = "visible";
+	/** Module name parameter. */
+	private static final String NAME = "name";
 
-    private static final String DEPENDENCY = "dependency";
+	/** Module class parameter. */
+	private static final String CLASS = "class";
 
-    /** Module dependency parameter name. */
-    private static final String CONFIG_DEPENDENCY_NAME = "module";
+	/** Module visibility parameter. */
+	private static final String VISIBLE = "visible";
 
-    private static final String NAME = "name";
-    private static final String CLASS = "class";
-    private final IConfigurationElement mConfig;
+	/** Module dependency node. */
+	private static final String DEPENDENCY = "dependency";
 
-    public ModuleDefinition(final IConfigurationElement config) {
-        mConfig = config;
-    }
+	/** Module dependency parameter name. */
+	private static final String CONFIG_DEPENDENCY_NAME = "module";
 
-    public String getName() {
-        return mConfig.getAttribute(NAME);
-    }
+	/** Main configuration element for module. */
+	private final IConfigurationElement mConfig;
 
-    public Collection<String> getDependencies() {
-        Set<String> dependencies = new HashSet<String>();
+	public ModuleDefinition(final IConfigurationElement config) {
+		mConfig = config;
+	}
 
-        for (final IConfigurationElement element : mConfig.getChildren(DEPENDENCY))
-            dependencies.add(element.getAttribute(CONFIG_DEPENDENCY_NAME));
+	public String getName() {
+		return mConfig.getAttribute(NAME);
+	}
 
-        return dependencies;
-    }
+	public Collection<String> getDependencies() {
+		Set<String> dependencies = new HashSet<String>();
 
-    public String getModuleClassName() {
-        return mConfig.getAttribute(CLASS);
-    }
+		for (final IConfigurationElement element : mConfig.getChildren(DEPENDENCY))
+			dependencies.add(element.getAttribute(CONFIG_DEPENDENCY_NAME));
 
-    public IScriptModule getModuleInstance() {
-        try {
-            Object clazz = mConfig.createExecutableExtension(CLASS);
-            if (clazz instanceof IScriptModule)
-                return (IScriptModule) clazz;
-        } catch (CoreException e) {
-            // could not create class, ignore
-        }
+		return dependencies;
+	}
 
-        return null;
-    }
+	public String getModuleClassName() {
+		return mConfig.getAttribute(CLASS);
+	}
 
-    public boolean isVisible() {
-        return Boolean.parseBoolean(mConfig.getAttribute(VISIBLE));
-    }
+	public Object getModuleInstance() {
+		try {
+			return mConfig.createExecutableExtension(CLASS);
+		} catch (CoreException e) {
+			// could not create class, ignore
+		}
+
+		return null;
+	}
+
+	public boolean isVisible() {
+		return Boolean.parseBoolean(mConfig.getAttribute(VISIBLE));
+	}
 }

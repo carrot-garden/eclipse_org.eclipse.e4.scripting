@@ -29,7 +29,7 @@ public final class Tracer {
 	 * 
 	 * @return
 	 */
-	public static boolean isDebuging() {
+	public static boolean isDebugging() {
 		return Activator.getDefault().isDebugging();
 	}
 

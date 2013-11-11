@@ -15,5 +15,5 @@ public interface IModuleListener {
     int LOADED = 1;
     int RELOADED = 2;
 
-    void notifyModule(IScriptModule module, int type);
+    void notifyModule(Object module, int type);
 }

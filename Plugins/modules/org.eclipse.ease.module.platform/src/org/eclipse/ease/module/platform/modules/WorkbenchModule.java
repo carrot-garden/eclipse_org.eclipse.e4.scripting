@@ -11,11 +11,11 @@
 package org.eclipse.ease.module.platform.modules;
 
 import org.eclipse.ease.common.RunnableWithResult;
-import org.eclipse.ease.modules.AbstractScriptModule;
-import org.eclipse.ease.modules.NamedParameter;
-import org.eclipse.ease.modules.OptionalParameter;
-import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.modules.AbstractScriptModule;
+import org.eclipse.ease.modules.ScriptParameter;
+import org.eclipse.ease.modules.WrapToScript;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -29,13 +29,10 @@ import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.internal.dialogs.ShowViewDialog;
 import org.eclipse.ui.views.IViewDescriptor;
 
-
 public class WorkbenchModule extends AbstractScriptModule {
-
 
 	public WorkbenchModule() {
 	}
-
 
 	@WrapToScript
 	public static IWorkbench getActiveWorkbench() {
@@ -84,14 +81,14 @@ public class WorkbenchModule extends AbstractScriptModule {
 	 * @return
 	 */
 	@WrapToScript
-	public IViewPart showView(@NamedParameter(name = "viewID") @OptionalParameter String viewID) {
-		if(viewID == null) {
+	public IViewPart showView(@ScriptParameter(optional = true) String viewID) {
+		if ((viewID == null) || (viewID.trim().isEmpty())) {
 			ShowViewDialog dialog = new ShowViewDialog(getActiveWindow(), WorkbenchPlugin.getDefault().getViewRegistry());
-			if(dialog.open() != ShowViewDialog.OK) {
+			if (dialog.open() != Window.OK) {
 				return null;
 			}
 			IViewDescriptor[] result = dialog.getSelection();
-			if(result == null || result.length == 0) {
+			if (result == null || result.length == 0) {
 				return null;
 			}
 			viewID = result[0].getId();
@@ -103,11 +100,9 @@ public class WorkbenchModule extends AbstractScriptModule {
 
 	private class ShowViewRunnable implements RunnableWithResult<IViewPart> {
 
-		private String id;
+		private final String id;
 
 		private IViewPart result;
-
-
 
 		public ShowViewRunnable(String id) {
 			super();
@@ -129,8 +124,5 @@ public class WorkbenchModule extends AbstractScriptModule {
 		public IViewPart getResult() {
 			return result;
 		}
-
 	}
-
-
 }

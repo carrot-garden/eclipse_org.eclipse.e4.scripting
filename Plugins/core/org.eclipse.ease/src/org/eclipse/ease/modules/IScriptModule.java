@@ -12,9 +12,19 @@ package org.eclipse.ease.modules;
 
 import org.eclipse.ease.IScriptEngine;
 
+/**
+ * Interface which may be implemented by script modules. If a module implements this interface, the script engine and environment will register themselves.
+ * Implementing this interface is optional for a module.
+ */
 public interface IScriptModule {
 
-    String getModuleName();
-
-    IScriptEngine getScriptEngine();
+	/**
+	 * Provides script engine and environment instances.
+	 * 
+	 * @param engine
+	 *        script engine this module is loaded in
+	 * @param environment
+	 *        environment module that tracks this module
+	 */
+	void initialize(IScriptEngine engine, EnvironmentModule environment);
 }
