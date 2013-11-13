@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ease.language">
+      <module
+            class="org.eclipse.ease.integration.modeling.papyrus.PapyrusModule"
+            documentation="true"
+            name="PapyrusModule"
+            visible="true">
+      </module>
+   </extension>
+
+</plugin>

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Papyrus
-Bundle-SymbolicName: org.eclipse.ease.integration.modeling.papyrus
+Bundle-SymbolicName: org.eclipse.ease.integration.modeling.papyrus;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.ease.integration.modeling.papyrus.Activator
 Require-Bundle: org.eclipse.ui,
@@ -15,6 +15,15 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.papyrus.infra.core;bundle-version="0.10.1",
  org.eclipse.papyrus.uml.tools,
  org.eclipse.ease.integration.modeling.uml,
- org.eclipse.ease.log
+ org.eclipse.ease.log,
+ org.eclipse.papyrus.infra.gmfdiag.modelexplorer;bundle-version="0.10.1",
+ org.eclipse.papyrus.infra.gmfdiag.navigation,
+ org.eclipse.papyrus.uml.diagram.clazz;bundle-version="0.10.1",
+ org.eclipse.papyrus.uml.diagram.pkg;bundle-version="0.10.1",
+ org.eclipse.gmf.runtime.common.core,
+ org.eclipse.papyrus.infra.gmfdiag.commands;bundle-version="0.10.1",
+ org.eclipse.emf.transaction;bundle-version="1.4.0",
+ org.eclipse.papyrus.infra.gmfdiag.common;bundle-version="0.10.1",
+ org.eclipse.papyrus.infra.services.controlmode
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

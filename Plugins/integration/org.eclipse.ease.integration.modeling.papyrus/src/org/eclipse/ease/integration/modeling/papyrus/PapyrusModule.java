@@ -1,28 +1,56 @@
 package org.eclipse.ease.integration.modeling.papyrus;
 
-import org.eclipse.ease.integration.modeling.EcoreModule;
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.ease.integration.modeling.GMFtoEMFCommandWrapper;
 import org.eclipse.ease.integration.modeling.NotationModule;
 import org.eclipse.ease.integration.modeling.uml.modules.UMLModule;
 import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.modules.NamedParameter;
+import org.eclipse.ease.modules.OptionalParameter;
 import org.eclipse.ease.modules.WrapToScript;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.gmf.runtime.common.core.command.CommandResult;
+import org.eclipse.gmf.runtime.common.core.command.CompositeCommand;
+import org.eclipse.gmf.runtime.common.core.command.ICommand;
+import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.papyrus.commands.ICreationCommand;
+import org.eclipse.papyrus.commands.OpenDiagramCommand;
+import org.eclipse.papyrus.infra.core.extension.commands.ICreationCondition;
 import org.eclipse.papyrus.infra.core.resource.ModelSet;
+import org.eclipse.papyrus.infra.gmfdiag.navigation.CreatedNavigableElement;
+import org.eclipse.papyrus.infra.gmfdiag.navigation.ExistingNavigableElement;
+import org.eclipse.papyrus.infra.gmfdiag.navigation.NavigableElement;
+import org.eclipse.papyrus.infra.gmfdiag.navigation.NavigationHelper;
+import org.eclipse.papyrus.infra.services.controlmode.ControlModeManager;
+import org.eclipse.papyrus.infra.services.controlmode.ControlModeRequest;
+import org.eclipse.papyrus.infra.services.controlmode.IControlModeManager;
+import org.eclipse.papyrus.uml.diagram.clazz.ClassDiagramCreationCondition;
+import org.eclipse.papyrus.uml.diagram.clazz.CreateClassDiagramCommand;
+import org.eclipse.papyrus.uml.diagram.pkg.PackageDiagramCreateCommand;
+import org.eclipse.papyrus.uml.diagram.pkg.PackageDiagramCreationCondition;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Model;
 
 
-public class PapyrusModule extends EcoreModule {
+public class PapyrusModule extends UMLModule {
 
-	private UMLModule umlModule = new UMLModule();
 
 	private NotationModule notationModule = new NotationModule();
 
 	@WrapToScript
 	public ModelSet getModelSet() {
-		EditingDomain editingDomain = getEditingDomain();
+		EditingDomain editingDomain = TransactionUtil.getEditingDomain(getModel());
 		if(editingDomain == null) {
 			Logger.logError("Unable to get the editing domain");
 			return null;
@@ -36,10 +64,7 @@ public class PapyrusModule extends EcoreModule {
 		return null;
 	}
 
-	@WrapToScript
-	public Model getModel() {
-		return umlModule.getModel();
-	}
+
 
 	@WrapToScript
 	public View getSelectionView() {
@@ -52,11 +77,117 @@ public class PapyrusModule extends EcoreModule {
 
 	@WrapToScript
 	public Element getSelectionElement() {
-		EObject elem = umlModule.getSelection();
+		EObject elem = getSelection();
 		if(elem instanceof Element) {
 			return (Element)elem;
 		}
 		return null;
 	}
 
+	/**
+	 * Create a new diagram
+	 * For now only Package and class diagram are implemented
+	 * 
+	 * @param semanticElement
+	 *        UML or Sysml element of the diagram
+	 * @param diagramName
+	 *        The name of the diagram (default value = NewDiagram)
+	 * @param open
+	 *        True if the diagram shall be open (default = false)
+	 */
+	@WrapToScript
+	public void createDiagram(EObject semanticElement, @NamedParameter(name = "diagramType") String diagramType, @NamedParameter(name = "diagramName") @OptionalParameter(defaultValue = "NewDiagram") String diagramName, @NamedParameter(name = "open") boolean open) {
+		if("Class".equals(diagramType)) {
+			createDiagram(getModelSet(), new CreateClassDiagramCommand(), new ClassDiagramCreationCondition(), semanticElement, diagramName, open);
+		} else if("Package".equals(diagramType)) {
+			createDiagram(getModelSet(), new PackageDiagramCreateCommand(), new PackageDiagramCreationCondition(), semanticElement, diagramName, open);
+		}
+	}
+
+	@WrapToScript
+	public void control(EObject semanticElement, @OptionalParameter String fileName) {
+		if(fileName == null) {
+			fileName = semanticElement.eResource().getURIFragment(semanticElement);
+		}
+		URI baseURI = semanticElement.eResource().getURI();
+		URI createURI = baseURI.trimSegments(1).appendSegment(fileName + ".uml");
+		ControlModeRequest controlRequest = ControlModeRequest.createUIControlModelRequest(getEditingDomain(), semanticElement, createURI);
+		controlRequest.setIsUIAction(false);
+		IControlModeManager controlMng = ControlModeManager.getInstance();
+		ICommand controlCommand = controlMng.getControlCommand(controlRequest);
+		getEditingDomain().getCommandStack().execute(new GMFtoEMFCommandWrapper(controlCommand));
+	}
+
+	private void createDiagram(ModelSet modelSet, ICreationCommand creationCommand, ICreationCondition creationCondition, EObject target, String diagramName, boolean openDiagram) {
+		NavigableElement navElement = getNavigableElementWhereToCreateDiagram(creationCondition, target);
+		if(navElement != null && modelSet != null) {
+			CompositeCommand command = getLinkCreateAndOpenNavigableDiagramCommand(navElement, creationCommand, diagramName, modelSet, openDiagram);
+			//			modelSet.getTransactionalEditingDomain().getCommandStack().execute(new GMFtoEMFCommandWrapper(command));
+			try {
+				command.execute(new NullProgressMonitor(), null);
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	private NavigableElement getNavigableElementWhereToCreateDiagram(ICreationCondition creationCondition, EObject selectedElement) {
+
+		if(selectedElement != null) {
+			// First check if the current element can host the requested diagram
+			if(creationCondition.create(selectedElement)) {
+				return new ExistingNavigableElement(selectedElement, null);
+			} else {
+				List<NavigableElement> navElements = NavigationHelper.getInstance().getAllNavigableElements(selectedElement);
+				// this will sort elements by navigation depth
+				Collections.sort(navElements);
+
+				for(NavigableElement navElement : navElements) {
+					// ignore existing elements because we want a hierarchy to
+					// be created if it is not on the current element
+					if(navElement instanceof CreatedNavigableElement && creationCondition.create(navElement.getElement())) {
+						return navElement;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	protected TransactionalEditingDomain getEditingDomain() {
+		return (TransactionalEditingDomain)super.getEditingDomain();
+	}
+
+	public static CompositeCommand getLinkCreateAndOpenNavigableDiagramCommand(final NavigableElement navElement, ICreationCommand creationCommandInterface, final String diagramName, ModelSet modelSet, boolean openDiagram) {
+		CompositeCommand compositeCommand = new CompositeCommand("Create diagram");
+
+		if(navElement instanceof CreatedNavigableElement) {
+			compositeCommand.add(new AbstractTransactionalCommand(modelSet.getTransactionalEditingDomain(), "Create hierarchy", null) {
+
+				@Override
+				protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
+					NavigationHelper.linkToModel((CreatedNavigableElement)navElement);
+					NavigationHelper.setBaseName((CreatedNavigableElement)navElement, "");
+					return CommandResult.newOKCommandResult();
+				}
+			});
+		}
+
+		ICommand createDiagCommand = creationCommandInterface.getCreateDiagramCommand(modelSet, navElement.getElement(), diagramName);
+		compositeCommand.add(createDiagCommand);
+		if(openDiagram) {
+			compositeCommand.add(new OpenDiagramCommand(modelSet.getTransactionalEditingDomain(), createDiagCommand));
+		}
+
+		return compositeCommand;
+	}
+
+
+	@Override
+	@WrapToScript
+	public void save(@OptionalParameter Object object) {
+		save();
+	}
 }
