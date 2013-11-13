@@ -168,6 +168,12 @@
 			../org.eclipse.ease.releng.p2
 		</module>
 
+		<module>
+			../../developers/plugins/org.eclipse.ease.tools.helpgenerator
+		</module>
+		<module>
+			../../developers/features/org.eclipse.ease.tools.feature
+		</module>
 	</modules>
 
 

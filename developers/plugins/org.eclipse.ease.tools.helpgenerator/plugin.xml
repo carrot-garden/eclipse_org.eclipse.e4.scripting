@@ -2,8 +2,8 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         id="org.eclipse.ease.modulesDocumentationBuilder"
-         name="Module Documentation Builder"
+         id="org.eclipse.ease.helpgenerator"
+         name="EASE Documentation Builder"
          point="org.eclipse.core.resources.builders">
       <builder
             hasNature="false">
@@ -36,7 +36,7 @@
                      <not>
                         <test
                               forcePluginActivation="true"
-                              property="org.eclipse.ease.moduleDocBuilder.isEnabled">
+                              property="org.eclipse.ease.helpgenerator.isEnabled">
                         </test>
                      </not>
                   </iterate>
@@ -62,7 +62,7 @@
                   <iterate>
                      <test
                            forcePluginActivation="true"
-                           property="org.eclipse.ease.moduleDocBuilder.isEnabled">
+                           property="org.eclipse.ease.helpgenerator.isEnabled">
                      </test>
                   </iterate>
                </and>
@@ -75,12 +75,12 @@
       <command
             defaultHandler="org.eclipse.ease.tools.helpgenerator.commands.AddModuleDocBuilder"
             id="org.eclipse.ease.helpgenerator.addBuilder"
-            name="Add Module Doc Builder">
+            name="Add EASE Documentation Builder">
       </command>
       <command
             defaultHandler="org.eclipse.ease.tools.helpgenerator.commands.RemoveModuleDocBuilder"
             id="org.eclipse.ease.helpgenerator.removeBuilder"
-            name="Remove Module Doc Builder">
+            name="Remove EASE Documentation Builder">
       </command>
    </extension>
    <extension
@@ -88,7 +88,7 @@
       <propertyTester
             class="org.eclipse.ease.tools.helpgenerator.propertytester.TestBuilderEnabled"
             id="org.eclipse.ease.helpgenerator.moduledocbuilder"
-            namespace="org.eclipse.ease.moduleDocBuilder"
+            namespace="org.eclipse.ease.helpgenerator"
             properties="isEnabled"
             type="java.lang.Object">
       </propertyTester>

@@ -1,0 +1,170 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../../org.eclipse.ease/help/scripting_book.css">
+	</head>
+	<body>
+	<h1>Module Environment</h1>
+	<p>The Environment provides base functions for all script interpreters. It is automatically loaded by any interpreter upon startup.</p>
+	<p class="dependencies"></p>
+
+	<h2>Function Overview</h2>
+	<table class="functions">
+		<tr>
+			<th><a href="#loadModule">loadModule</a></th>
+			<td>Load a module. Loading a module generally enhances the JavaScript environment with new functions and variables. If a module was already loaded before, it
+ gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
+ the whole module stack.</td>
+		</tr>
+		<tr>
+			<th><a href="#wrap">wrap</a></th>
+			<td>Creates wrapper functions for a given java instance. Searches for members and methods annotated with {@link WrapToScript} and creates wrapping code in
+ the target script language. A method named &lt;instance&gt;.myMethod() will be made available by calling myMethod().</td>
+		</tr>
+		<tr>
+			<th><a href="#findModule">findModule</a></th>
+			<td>Resolves a loaded module and returns the Java instance. Will only query previously loaded modules.</td>
+		</tr>
+		<tr>
+			<th><a href="#eval">eval</a></th>
+			<td>Execute script code. This method executes script code directly in the running interpreter. Execution is done in the same thread as the caller thread.</td>
+		</tr>
+		<tr>
+			<th><a href="#exit">exit</a></th>
+			<td>Terminates script execution immediately. Code following this command will not be executed anymore.</td>
+		</tr>
+		<tr>
+			<th><a href="#include">include</a></th>
+			<td>Include and execute a script file. Quite similar to eval(Object) a source file is opened and its content is executed. Multiple sources are available:
+ "workspace://" opens a file relative to the workspace root, "project://" opens a file relative to the current project, "file://" opens a file from the
+ file system.</td>
+		</tr>
+		<tr>
+			<th><a href="#print">print</a></th>
+			<td>Print to standard output.</td>
+		</tr>
+	</table>
+
+	<h2>Functions</h2>
+
+	<h3><a id="loadModule">loadModule</a></h3>
+	<p class="synopsis">java.lang.Object loadModule(java.lang.String identifier)</p>
+	<p class="description">Load a module. Loading a module generally enhances the JavaScript environment with new functions and variables. If a module was already loaded before, it
+ gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
+ the whole module stack.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>identifier</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
+			<td></td>
+		</tr>
+	</table>
+	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a> ... </p>
+
+	<h3><a id="wrap">wrap</a></h3>
+	<p class="synopsis">void wrap(java.lang.Object toBeWrapped)</p>
+	<p class="description">Creates wrapper functions for a given java instance. Searches for members and methods annotated with {@link WrapToScript} and creates wrapping code in
+ the target script language. A method named &lt;instance&gt;.myMethod() will be made available by calling myMethod().</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>toBeWrapped</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a></td>
+			<td>instance to be wrapped</td>
+		</tr>
+	</table>
+
+	<h3><a id="findModule">findModule</a></h3>
+	<p class="synopsis">java.lang.Object findModule(java.lang.String name)</p>
+	<p class="description">Resolves a loaded module and returns the Java instance. Will only query previously loaded modules.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>name</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
+			<td>name of the module to resolve</td>
+		</tr>
+	</table>
+	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a> ... </p>
+
+	<h3><a id="eval">eval</a></h3>
+	<p class="synopsis">java.lang.Object eval(java.lang.Object data)</p>
+	<p class="description">Execute script code. This method executes script code directly in the running interpreter. Execution is done in the same thread as the caller thread.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>data</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a></td>
+			<td>code to be interpreted</td>
+		</tr>
+	</table>
+	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a> ... </p>
+
+	<h3><a id="exit">exit</a></h3>
+	<p class="synopsis">void exit(java.lang.Object value)</p>
+	<p class="description">Terminates script execution immediately. Code following this command will not be executed anymore.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>value</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a></td>
+			<td>return code</td>
+		</tr>
+	</table>
+
+	<h3><a id="include">include</a></h3>
+	<p class="synopsis">java.lang.Object include(java.lang.String filename)</p>
+	<p class="description">Include and execute a script file. Quite similar to eval(Object) a source file is opened and its content is executed. Multiple sources are available:
+ "workspace://" opens a file relative to the workspace root, "project://" opens a file relative to the current project, "file://" opens a file from the
+ file system.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>filename</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
+			<td>name of file to be included</td>
+		</tr>
+	</table>
+	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a> ... </p>
+
+	<h3><a id="print">print</a></h3>
+	<p class="synopsis">void print(java.lang.Object text)</p>
+	<p class="description">Print to standard output.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>text</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a></td>
+			<td>text to write to standard output</td>
+		</tr>
+	</table>
+	</body>
+</html>

@@ -1,16 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2012 Infineon Technologies Austria AG
- *
- * Contributors:
- *     Christian Pontesegger - initial version
- *     
- * Version Control:
- *     Last edited by: $Author$
- *     Date:           $Date$
- *     Revision:       $Revision$
- *     Head URL:       $URL$
- *******************************************************************************/
-
 package org.eclipse.ease.tools.helpgenerator;
 
 import java.io.ByteArrayInputStream;
@@ -32,7 +19,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.XMLMemento;
@@ -47,12 +33,9 @@ import com.sun.javadoc.ParamTag;
 import com.sun.javadoc.Parameter;
 import com.sun.javadoc.RootDoc;
 
-/**
- * COMMENT add type comment.
- * 
- */
 public class JavascriptDoclet extends Doclet {
 
+	private static final String WRAP_TO_SCRIPT = "org.eclipse.ease.modules.WrapToScript";
 	private static final String LINE_DELIMITER = "\n";
 
 	public static boolean start(final RootDoc root) {
@@ -75,25 +58,18 @@ public class JavascriptDoclet extends Doclet {
 				if (foundDestinationOption) {
 					reporter.printError("Only one -d option allowed.");
 					return false;
-				} else {
+				} else
 					foundDestinationOption = true;
-				}
 			}
 		}
-		if (!foundDestinationOption) {
+		if (!foundDestinationOption)
 			reporter.printError("Usage: javadoc -d destinationfolder ...");
-		}
+
 		return foundDestinationOption;
 	}
 
 	private Map<String, String> mLookupTable;
 
-	/**
-	 * COMMENT add method comment.
-	 * 
-	 * @param root
-	 * @return
-	 */
 	private boolean process(final RootDoc root) {
 		System.out.println("----------------------------------------");
 		System.out.println("-- running doclet");
@@ -348,6 +324,8 @@ public class JavascriptDoclet extends Doclet {
 					}
 				}
 
+				buffer.append(readResourceFile("/templates/footer.txt"));
+
 				// write document
 				writeFile(project.getFile(new Path("/help/module_" + escape(mLookupTable.get(clazz.qualifiedName()) + ".html"))), buffer.toString());
 				createdFiles = true;
@@ -368,7 +346,7 @@ public class JavascriptDoclet extends Doclet {
 
 	private String getSynonyms(final MethodDoc method) {
 		for (AnnotationDesc annotation : method.annotations()) {
-			if (WrapToScript.class.equals(annotation.getClass())) {
+			if (WRAP_TO_SCRIPT.equals(annotation.annotationType().qualifiedName())) {
 				for (ElementValuePair pair : annotation.elementValues()) {
 					if ("alias".equals(pair.element().name()))
 						return pair.value().toString();
@@ -381,7 +359,7 @@ public class JavascriptDoclet extends Doclet {
 
 	private static void writeFile(final IFile file, final String data) throws CoreException, UnsupportedEncodingException {
 		if (file.getParent() instanceof IFolder)
-			Tools.createFolder((IFolder)file.getParent(), IResource.NONE, true);
+			Tools.createFolder((IFolder) file.getParent(), IResource.NONE, true);
 
 		// save data to file
 		if (!file.exists())
@@ -439,7 +417,7 @@ public class JavascriptDoclet extends Doclet {
 	 */
 	private boolean isExported(final MethodDoc method) {
 		for (final AnnotationDesc annotation : method.annotations()) {
-			if (WrapToScript.class.getName().equals(annotation.annotationType().name()))
+			if (WRAP_TO_SCRIPT.equals(annotation.annotationType().qualifiedName()))
 				return true;
 		}
 
@@ -450,7 +428,7 @@ public class JavascriptDoclet extends Doclet {
 		final StringBuffer buffer = new StringBuffer();
 		final InputStream stream = Tools.getResourceStream("org.eclipse.ease.tools.helpgenerator", path);
 		while (stream.available() > 0)
-			buffer.append((char)stream.read());
+			buffer.append((char) stream.read());
 
 		return buffer;
 	}
