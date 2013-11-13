@@ -14,22 +14,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.ease.IModifiableScriptEngine;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
+import org.eclipse.ease.log.Tracer;
 import org.eclipse.ease.modules.BootStrapper;
-import org.eclipse.ease.modules.EnvironmentModule;
 import org.eclipse.ease.modules.IModuleWrapper;
 import org.eclipse.ease.modules.IScriptFunctionModifier;
-import org.eclipse.ease.modules.IScriptModule;
-import org.eclipse.ease.modules.WrapToScript;
-import org.eclipse.ease.log.Tracer;
 import org.eclipse.swt.widgets.Display;
 
 import com.google.common.base.Function;
@@ -72,7 +67,7 @@ public class CodeInjectorUtils {
 
 
 		if(objectToInject != null) {
-			((IModifiableScriptEngine)objectToInject).setVariable(variableName, objectToInject);
+			((IScriptEngine)objectToInject).setVariable(variableName, objectToInject);
 			if(ITracingConstant.ENVIRONEMENT_MODULE_WRAPPER_TRACING) {
 				Tracer.logInfo("[Environement Module] Add variable to engine :\n " + variableName + " with value" + objectToInject);
 			}
@@ -169,23 +164,23 @@ public class CodeInjectorUtils {
 	 * @param reload
 	 * @param engine
 	 */
-	public void injectModules(final IScriptModule module, final boolean reload, IScriptEngine engine) {
-		Predicate<Method> methodSelector = new Predicate<Method>() {
-
-			@Override
-			public boolean apply(Method arg0) {
-				return arg0.getAnnotation(WrapToScript.class) != null;
-			}
-		};
-		Predicate<Field> fieldSelector = new Predicate<Field>() {
-
-			@Override
-			public boolean apply(Field arg0) {
-				return Modifier.isStatic(arg0.getModifiers()) && arg0.getAnnotation(WrapToScript.class) != null;
-			}
-		};
-		injectClass(module.getClass(), methodSelector, fieldSelector, null, null, EnvironmentModule.getRegisteredModuleName(module.getModuleName()), engine, "Injecting module " + module.getModuleName());
-	}
+//	public void injectModules(final IScriptModule module, final boolean reload, IScriptEngine engine) {
+//		Predicate<Method> methodSelector = new Predicate<Method>() {
+//
+//			@Override
+//			public boolean apply(Method arg0) {
+//				return arg0.getAnnotation(WrapToScript.class) != null;
+//			}
+//		};
+//		Predicate<Field> fieldSelector = new Predicate<Field>() {
+//
+//			@Override
+//			public boolean apply(Field arg0) {
+//				return Modifier.isStatic(arg0.getModifiers()) && arg0.getAnnotation(WrapToScript.class) != null;
+//			}
+//		};
+//		injectClass(module.getClass(), methodSelector, fieldSelector, null, null, EnvironmentModule.getRegisteredModuleName(module.getModuleName()), engine, "Injecting module " + module.getModuleName());
+//	}
 
 
 	/**
@@ -198,7 +193,7 @@ public class CodeInjectorUtils {
 	public static void injectJavaVariable(String variableName, Object objectToInject, IScriptEngine engine) {
 		if(objectToInject != null) {
 			String registeredModuleName = variableName;
-			((IModifiableScriptEngine)engine).setVariable(registeredModuleName, objectToInject);
+			((IScriptEngine)engine).setVariable(registeredModuleName, objectToInject);
 			if(ITracingConstant.ENVIRONEMENT_MODULE_WRAPPER_TRACING) {
 				Tracer.logInfo("[Environement Module] Add variable to engine :\n " + registeredModuleName + " with value" + objectToInject);
 			}

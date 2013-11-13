@@ -1,23 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: EScript - Rhino engine
+Bundle-Name: EASE Rhino Interpreter (Incubation)
 Bundle-SymbolicName: org.eclipse.ease.javascript.rhino;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Vendor: Code & me
+Bundle-Vendor: Eclipse.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.ease,
- org.mozilla.javascript;bundle-version="1.7.2",
- org.eclipse.osgi;bundle-version="3.8.0",
- org.eclipse.core.runtime;bundle-version="3.8.0",
- org.eclipse.core.resources;bundle-version="3.8.0",
- org.eclipse.wst.jsdt.debug.core;bundle-version="3.1.0",
- org.eclipse.wst.jsdt.debug.rhino.debugger;bundle-version="1.0.300",
- org.eclipse.debug.core;bundle-version="3.7.100",
- org.eclipse.wst.jsdt.debug.transport;bundle-version="1.0.100",
- org.eclipse.ease.storedscript,
- com.google.guava;bundle-version="11.0.2",
- org.eclipse.ease.lang.python,
- org.eclipse.ease.log
+Require-Bundle: org.eclipse.ease;bundle-version="[0.1.0,1.0.0)",
+ org.mozilla.javascript;bundle-version="[1.7.2,2.0.0)",
+ org.eclipse.ease.storedscript;bundle-version="[0.1.0,1.0.0)",
+ org.eclipse.ease.log;bundle-version="[0.1.0,1.0.0)"
 Eclipse-BuddyPolicy: global
 Export-Package: org.eclipse.ease.engine.javascript.rhino,
  org.eclipse.ease.engine.javascript.rhino.debugger

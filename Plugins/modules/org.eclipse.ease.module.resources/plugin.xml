@@ -2,18 +2,16 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ease.language">
+         point="org.eclipse.ease.modules">
       <module
             class="org.eclipse.ease.module.resources.WorkspaceResourceModule"
-            documentation="true"
             name="WorkspaceResourceModule"
             visible="true">
       </module>
-   <module
+      <module
             class="org.eclipse.ease.module.resources.ResourcesModule"
-            documentation="true"
             name="ResourcesModule"
             visible="true">
-    </module>
+      </module>
    </extension>
 </plugin>

@@ -3,28 +3,24 @@
 <plugin>
    <extension-point id="Selector" name="Selector" schema="schema/Selector.exsd"/>
    <extension
-         point="org.eclipse.ease.language">
+         point="org.eclipse.ease.modules">
       <module
             class="org.eclipse.ease.module.platform.modules.DialogModule"
-            documentation="true"
             name="DialogModule"
             visible="true">
       </module>
       <module
             class="org.eclipse.ease.module.platform.modules.WorkbenchModule"
-            documentation="true"
             name="WorkbenchModule"
             visible="true">
       </module>
       <module
             class="org.eclipse.ease.module.platform.modules.TextEditorModule"
-            documentation="true"
             name="TextEditorModule"
             visible="true">
       </module>
       <module
             class="org.eclipse.ease.module.platform.modules.SelectionModule"
-            documentation="true"
             name="SelectionModule"
             visible="true">
       </module>

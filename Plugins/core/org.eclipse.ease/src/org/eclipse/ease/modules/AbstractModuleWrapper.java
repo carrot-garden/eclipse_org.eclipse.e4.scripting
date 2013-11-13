@@ -12,9 +12,7 @@ package org.eclipse.ease.modules;
 
 import java.lang.annotation.Annotation;
 
-
 public abstract class AbstractModuleWrapper implements IModuleWrapper {
-
 
 	public AbstractModuleWrapper() {
 	}
@@ -26,18 +24,12 @@ public abstract class AbstractModuleWrapper implements IModuleWrapper {
 	 * @return
 	 */
 	protected String getParameterName(Annotation[] parameterAnnotations) {
-		for(Annotation annot : parameterAnnotations) {
-			if(annot instanceof NamedParameter) {
-				NamedParameter namedParameter = (NamedParameter)annot;
+		for (Annotation annot : parameterAnnotations) {
+			if (annot instanceof ScriptParameter) {
+				ScriptParameter namedParameter = (ScriptParameter)annot;
 				return namedParameter.name();
 			}
 		}
 		return null;
 	}
-
-	@Override
-	public String getEnvironmentModuleName() {
-		return EnvironmentModule.getRegisteredModuleName(EnvironmentModule.ENVIRONMENT_MODULE_NAME);
-	}
-
 }

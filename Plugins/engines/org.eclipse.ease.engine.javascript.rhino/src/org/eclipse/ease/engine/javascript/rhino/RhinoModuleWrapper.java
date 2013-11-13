@@ -17,22 +17,19 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.modules.AbstractModuleWrapper;
-import org.eclipse.ease.modules.EnvironmentModule;
-import org.eclipse.ease.modules.OptionalParameter;
+import org.eclipse.ease.modules.ScriptParameter;
 
 public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
 	private static final String UNDIFINED_KEYWORD = "undifined";
 
-
 	@Override
 	public String getSaveVariableName(final String variableName) {
-		return getSaveName(variableName);
+		return RhinoScriptEngine.getSaveName(variableName);
 	}
 
 	@Override
@@ -44,17 +41,17 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		StringBuffer body = new StringBuffer();
 
 		// insert hooked pre execution code
-		if(preExecutionCode != null) {
+		if (preExecutionCode != null) {
 			body.append(preExecutionCode);
 		}
 
 		// create parameter string
 		final StringBuilder parameters = new StringBuilder();
-		for(int i = 0; i < method.getParameterTypes().length; i++) {
+		for (int i = 0; i < method.getParameterTypes().length; i++) {
 			parameters.append(", ");
 			parameters.append((char)('a' + i));
 		}
-		if(parameters.length() > 0)
+		if (parameters.length() > 0)
 			parameters.replace(0, 2, "");
 
 		// insert method call
@@ -63,19 +60,19 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		body.append(generateCallMethodOnDefinedVariableInfo(moduleVariable, method.getName(), resultName, generateParameterCall));
 
 		// insert hooked post execution code
-		if(postExecutionCode != null) {
+		if (postExecutionCode != null) {
 			body.append(postExecutionCode);
 		}
 
 		// insert return statement
 		body.append(generateReturnStatement(resultName));
 
-		for(String name : functionNames) {
-			if(!isCorrectMethodName(name)) {
+		for (String name : functionNames) {
+			if (!isCorrectMethodName(name)) {
 				Logger.logError("The method name " + name + " from the module " + moduleVariable + " can not be used because it's name is not correct", Activator.PLUGIN_ID);
 				return "";
 			}
-			if(!name.isEmpty()) {
+			if (!name.isEmpty()) {
 				javaScriptCode.append(generateMethodDefinition(body, generateParameterCall, name));
 			}
 		}
@@ -102,23 +99,23 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		StringBuilder defaultValueParameters = new StringBuilder();
 		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 		Class<?>[] parametersTypes = method.getParameterTypes();
-		for(int parameterIndex = 0; parameterIndex < parametersTypes.length; parameterIndex++) {
+		for (int parameterIndex = 0; parameterIndex < parametersTypes.length; parameterIndex++) {
 			Annotation[] annots = parameterAnnotations[parameterIndex];
 			String parameterName = getParameterName(annots);
-			if(parameterName == null) {
+			if (parameterName == null) {
 				parameterName = "a" + parameterIndex;
 			}
 			Class<?> type = parametersTypes[parameterIndex];
-			if(annots.length > 0) {
-				for(Annotation a : annots) {
-					if(a instanceof OptionalParameter) {
+			if (annots.length > 0) {
+				for (Annotation a : annots) {
+					if (a instanceof ScriptParameter) {
 						defaultValueParameters.append("\tvar ");
 						defaultValueParameters.append(parameterName);
 						defaultValueParameters.append(" = ");
 						defaultValueParameters.append(parameterName);
 						defaultValueParameters.append(" || ");
-						CharSequence setOptionalParameterValue = setOptionalParameterValue(type, (OptionalParameter)a);
-						if(setOptionalParameterValue != null) {
+						CharSequence setOptionalParameterValue = setOptionalParameterValue(type, (ScriptParameter)a);
+						if (setOptionalParameterValue != null) {
 							defaultValueParameters.append(setOptionalParameterValue);
 						} else {
 							defaultValueParameters.append("null");
@@ -138,12 +135,12 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 	 * @param a
 	 * @return
 	 */
-	protected CharSequence setOptionalParameterValue(Class<?> type, OptionalParameter a) {
-		Object defaultValue = OptionalParameter.OptionalParameterHelper.getDefaultValue(a, type);
+	protected CharSequence setOptionalParameterValue(Class<?> type, ScriptParameter a) {
+		Object defaultValue = ScriptParameter.OptionalParameterHelper.getDefaultValue(a, type);
 		StringBuilder parametersSignature = new StringBuilder();
 		parametersSignature.append("=");
-		if(defaultValue != null) {
-			if(defaultValue instanceof String) {
+		if (defaultValue != null) {
+			if (defaultValue instanceof String) {
 				parametersSignature.append("\"" + defaultValue + "\"");
 			} else {
 				parametersSignature.append(defaultValue.toString());
@@ -158,19 +155,15 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
 	public static List<String> forbidenKeywork = new ArrayList<String>();
 
-
 	public boolean isCorrectMethodName(String methodName) {
-		return isSaveName(methodName) && !forbidenKeywork.contains(methodName);
+		return RhinoScriptEngine.isSaveName(methodName) && !forbidenKeywork.contains(methodName);
 	}
-
 
 	static {
 		forbidenKeywork.add("for");
 		forbidenKeywork.add("while");
 		//Complete this list
 	}
-
-
 
 	/**
 	 * Generate method definition.
@@ -200,7 +193,6 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		return methodDef.toString();
 	}
 
-
 	/**
 	 * @param method
 	 * @return
@@ -209,14 +201,14 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		StringBuilder parameters = new StringBuilder();
 		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 		Class<?>[] parametersTypes = method.getParameterTypes();
-		for(int parameterIndex = 0; parameterIndex < parametersTypes.length; parameterIndex++) {
+		for (int parameterIndex = 0; parameterIndex < parametersTypes.length; parameterIndex++) {
 			Annotation[] annots = parameterAnnotations[parameterIndex];
 			String parameterName = getParameterName(annots);
-			if(parameterName == null) {
+			if (parameterName == null) {
 				parameterName = "a" + parameterIndex;
 			}
 			parameters.append(parameterName);
-			if(parameterIndex != parametersTypes.length - 1) {
+			if (parameterIndex != parametersTypes.length - 1) {
 				parameters.append(", ");
 			}
 		}
@@ -225,17 +217,12 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
 	@Override
 	public String getConstantDefinition(final String name, final Field field) {
-		return "const " + getSaveName(name) + " = Packages." + field.getDeclaringClass().getName() + "." + field.getName() + ";\n";
-	}
-
-	@Override
-	public String getEnvironmentModuleName() {
-		return EnvironmentModule.getRegisteredModuleName(EnvironmentModule.ENVIRONMENT_MODULE_NAME);
+		return "const " + RhinoScriptEngine.getSaveName(name) + " = Packages." + field.getDeclaringClass().getName() + "." + field.getName() + ";\n";
 	}
 
 	@Override
 	public String getVariableDefinition(final String name, final String content) {
-		return "var " + getSaveName(name) + " = " + content + ";";
+		return "var " + RhinoScriptEngine.getSaveName(name) + " = " + content + ";";
 	}
 
 	@Override
@@ -245,52 +232,20 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		code.append(clazz.getName());
 		code.append("(");
 
-		if(parameters != null) {
-			for(String parameter : parameters) {
+		if (parameters != null) {
+			for (String parameter : parameters) {
 				code.append('"');
 				code.append(parameter);
 				code.append('"');
 				code.append(", ");
 			}
-			if(parameters.length > 0)
+			if (parameters.length > 0)
 				code.replace(code.length() - 2, code.length(), "");
 		}
 
 		code.append(")");
 
 		return code.toString();
-	}
-
-	private static String getSaveName(final String identifier) {
-		// check if name is already valid
-		if(isSaveName(identifier))
-			return identifier;
-
-		// not valid, convert string to valid format
-		final StringBuilder buffer = new StringBuilder(identifier.replaceAll("[^a-zA-Z0-9]", "_"));
-
-		// remove '_' at the beginning
-		while((buffer.length() > 0) && (buffer.charAt(0) == '_'))
-			buffer.deleteCharAt(0);
-
-		// remove trailing '_'
-		while((buffer.length() > 0) && (buffer.charAt(buffer.length() - 1) == '_'))
-			buffer.deleteCharAt(buffer.length() - 1);
-
-		// check for valid first character
-		if(buffer.length() > 0) {
-			final char start = buffer.charAt(0);
-			if((start < 65) || ((start > 90) && (start < 97)) || (start > 122))
-				buffer.insert(0, '_');
-		} else
-			// buffer is empty
-			buffer.insert(0, '_');
-
-		return buffer.toString();
-	}
-
-	public static boolean isSaveName(final String identifier) {
-		return Pattern.matches("[a-zA-Z_$][a-zA-Z0-9_$]*", identifier);
 	}
 
 	protected String generateReturnStatement(String resultName) {

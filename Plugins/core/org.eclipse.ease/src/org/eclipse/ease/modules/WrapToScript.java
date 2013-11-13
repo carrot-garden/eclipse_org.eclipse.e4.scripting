@@ -10,25 +10,24 @@
  *******************************************************************************/
 package org.eclipse.ease.modules;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Annotation indicating that the annotated method should be wrapped to JavaScript. AbstractJavaScriptModule is a base class that performs auto wrapping for
- * methods annotated this way. Wrappers add JavaScript code that automatically calls the annotated Java method.
+ * Annotation indicating that the annotated method should be wrapped to the target script language. Wrappers add script code that automatically calls the
+ * annotated Java method.
  */
 @Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD, ElementType.FIELD })
 public @interface WrapToScript {
-    /** Delimiter for alias names. */
-    String DELIMITER = ";";
 
-    /**
-     * Indicates that the method will be visible to online help. Defaults to <code>true</code>.
-     */
-    boolean visible() default true;
+	/** Delimiter for alias names. */
+	String DELIMITER = ";";
 
-    /**
-     * Defines alias names for the same command. Names are delimited by ";"
-     */
-    String alias() default "";
+	/**
+	 * Defines alias names for the same command. Names are delimited by ";"
+	 */
+	String alias() default "";
 }

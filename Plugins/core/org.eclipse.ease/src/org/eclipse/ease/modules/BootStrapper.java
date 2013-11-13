@@ -13,27 +13,24 @@ package org.eclipse.ease.modules;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.Script;
-import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.service.ScriptService;
-import org.eclipse.ease.log.Tracer;
 
 /**
- * The RhinoEnvironment provides base functions for all JavaScript interpreters. It is automatically loaded by any interpreter upon startup.
+ * Loads basic module support for script engines. The {@link EnvironmentModule} provides basic functionality to manage modules, include other source files and
+ * to print data. It will be loaded automatically when a script engine is started.
  */
 public class BootStrapper implements IScriptEngineLaunchExtension {
 
 	@Override
 	public void createEngine(final IScriptEngine engine) {
 		IModuleWrapper wrapper = getWrapper(engine.getID());
-		if(wrapper != null) {
+		if (wrapper != null) {
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.append(wrapper.classInstantiation(EnvironmentModule.class, new String[0]));
 			stringBuilder.append(".loadModule(\"");
 			stringBuilder.append(EnvironmentModule.ENVIRONMENT_MODULE_NAME);
-			stringBuilder.append("\");");
-			if(ITracingConstant.MODULE_WRAPPER_TRACING) {
-				Tracer.logInfo("[Java script bootstrap] Injecting :\n" + stringBuilder.toString());
-			}
+			stringBuilder.append("\");\n");
+
 			engine.executeAsync(new Script("Bootloader", stringBuilder.toString()));
 		}
 	}

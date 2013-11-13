@@ -12,15 +12,10 @@ package org.eclipse.ease.debug;
 
 import org.eclipse.core.runtime.Platform;
 
-
 /**
  * Store constant used to display or not trace
- * 
- * @author adaussy
- * 
  */
 public interface ITracingConstant {
-
 
 	/**
 	 * If true trace stuff about module wrapping
@@ -31,5 +26,4 @@ public interface ITracingConstant {
 	 * If true trace stuff about Environment Module
 	 */
 	public static final boolean ENVIRONEMENT_MODULE_WRAPPER_TRACING = org.eclipse.ease.Activator.getDefault().isDebugging() && "true".equalsIgnoreCase(Platform.getDebugOption("org.eclipse.ease/debug/EnvironementmoduleWrapper"));
-
 }

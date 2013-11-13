@@ -23,8 +23,6 @@ public interface IModuleWrapper {
 
     String getConstantDefinition(String name, Field field);
 
-    String getEnvironmentModuleName();
-
     String getVariableDefinition(String name, String content);
 
     String classInstantiation(Class<?> clazz, String[] parameters);

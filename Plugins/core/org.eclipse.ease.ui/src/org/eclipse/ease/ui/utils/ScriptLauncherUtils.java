@@ -15,31 +15,37 @@ import java.io.IOException;
 
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.IScriptEngine;
+import org.eclipse.ease.IScriptService;
 import org.eclipse.ease.log.Logger;
-import org.eclipse.ease.service.ScriptService;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
 import org.eclipse.ease.storedscript.storedscript.ScriptType;
 import org.eclipse.ease.ui.console.ScriptConsole;
 import org.eclipse.ease.ui.metadata.UIMetadataUtils;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
-
+import org.eclipse.ui.PlatformUI;
 
 public class ScriptLauncherUtils {
 
 	public static void launchStoredScript(IStoredScript script) {
 		ScriptType scriptType = script.getScriptType();
 
-		IScriptEngine engine = ScriptService.getInstance().createEngine(scriptType.getType());
-		if(engine == null) {
-			String message = "Unable to find a script engine for script " + script.getUri();
-			ErrorDialog.openError(Display.getDefault().getActiveShell(), "No engine found", message, Logger.createErrorStatus(message, Activator.PLUGIN_ID));
-			return;
+		IScriptEngine engine = null;
+		IScriptService scriptService = (IScriptService)PlatformUI.getWorkbench().getService(IScriptService.class);
+		if (scriptService != null) {
+			engine = scriptService.createEngine(scriptType.getType());
+
+			if (engine == null) {
+				String message = "Unable to find a script engine for script " + script.getUri();
+				ErrorDialog.openError(Display.getDefault().getActiveShell(), "No engine found", message, Logger.createErrorStatus(message, Activator.PLUGIN_ID));
+				return;
+			}
 		}
-		if(UIMetadataUtils.hasToBeLaunchInUI(script)) {
+
+		if (UIMetadataUtils.hasToBeLaunchInUI(script)) {
 			engine.setIsUI(true);
 		}
-		if(UIMetadataUtils.generateCodeInjectionFile(script)) {
+		if (UIMetadataUtils.generateCodeInjectionFile(script)) {
 			engine.addExecutionListener(new EffectiveScriptGenerator());
 		}
 		ScriptConsole console = ScriptConsole.create(engine.getName() + ": " + script.getUri(), engine);
@@ -49,7 +55,7 @@ public class ScriptLauncherUtils {
 		try {
 			//First try to run it as a file
 			File file = script.getFile();
-			if(file != null) {
+			if (file != null) {
 				engine.executeAsync(file);
 			} else {
 				//If is not file run from input stream
@@ -62,5 +68,4 @@ public class ScriptLauncherUtils {
 
 		engine.schedule();
 	}
-
 }

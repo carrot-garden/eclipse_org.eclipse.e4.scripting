@@ -19,11 +19,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.ease.modules.AbstractScriptModule;
-import org.eclipse.ease.modules.OptionalParameter;
-import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.ease.module.platform.modules.DialogModule;
+import org.eclipse.ease.modules.ScriptParameter;
+import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -31,7 +31,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.dialogs.ResourceSelectionDialog;
 
-public class InputModule extends AbstractScriptModule {
+public class InputModule {
 
 	/**
 	 * Opens a simple dialog box to ask the user a simple string.
@@ -45,13 +45,13 @@ public class InputModule extends AbstractScriptModule {
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
 	@WrapToScript
-	public String askSimpleString( String message,@OptionalParameter String title,@OptionalParameter String defaultValue) {
-		if(title == null){
-			 title="";
+	public String askSimpleString(String message, @ScriptParameter(optional = true) String title, @ScriptParameter(optional = true) String defaultValue) {
+		if (title == null) {
+			title = "";
 		}
 		InputDialog dlg = new InputDialog(getShell(), title, message, defaultValue, null);
 		int result = DialogModule.openDialog(dlg);
-		if(result == InputDialog.OK) {
+		if (result == Window.OK) {
 			return dlg.getValue();
 		} else {
 			return null;
@@ -136,7 +136,7 @@ public class InputModule extends AbstractScriptModule {
 		ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), null, true, title);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
-		if(DialogModule.openDialog(dialog) == ContainerSelectionDialog.OK) {
+		if (DialogModule.openDialog(dialog) == Window.OK) {
 			Object[] result = dialog.getResult();
 			return result;
 		}
@@ -156,7 +156,7 @@ public class InputModule extends AbstractScriptModule {
 	public Object selectResource(String title, String message) {
 		ResourceSelectionDialog dialog = new ResourceSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), message);
 		dialog.setTitle(title);
-		if(DialogModule.openDialog(dialog) == ResourceSelectionDialog.OK) {
+		if (DialogModule.openDialog(dialog) == Window.OK) {
 			return dialog.getResult();
 		}
 		return null;
@@ -185,15 +185,15 @@ public class InputModule extends AbstractScriptModule {
 	 */
 	@WrapToScript
 	public String readFile(Object loc) {
-		if(loc instanceof Object[]) {
-			if(((Object[])loc).length == 1) {
+		if (loc instanceof Object[]) {
+			if (((Object[])loc).length == 1) {
 				return readFile(((Object[])loc)[0]);
 			} else {
 				return null;
 			}
-		} else if(loc instanceof IFile) {
+		} else if (loc instanceof IFile) {
 			return readFile((IFile)loc);
-		} else if(loc instanceof String) {
+		} else if (loc instanceof String) {
 			return readFile((String)loc);
 		} else {
 			return null;
@@ -236,7 +236,7 @@ public class InputModule extends AbstractScriptModule {
 		} catch (IOException e) {
 			return null;
 		} finally {
-			if(input != null) {
+			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
@@ -249,9 +249,9 @@ public class InputModule extends AbstractScriptModule {
 
 	private Shell getShell() {
 		IWorkbench workbench = PlatformUI.getWorkbench();
-		if(workbench != null) {
+		if (workbench != null) {
 			IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
-			if(activeWorkbenchWindow != null) {
+			if (activeWorkbenchWindow != null) {
 				return activeWorkbenchWindow.getShell();
 			}
 		}
