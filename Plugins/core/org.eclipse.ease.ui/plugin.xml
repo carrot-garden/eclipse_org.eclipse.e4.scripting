@@ -19,6 +19,7 @@
       <view
             category="org.eclipse.ease.ui.scriptviewCategory"
             class="org.eclipse.ease.ui.view.ScriptEplorerView"
+            icon="icons/full/obj16/eclipse_monkey.png"
             id="org.eclipse.ease.ui.view.ScriptEplorerView"
             name="Script view explorer">
       </view>
