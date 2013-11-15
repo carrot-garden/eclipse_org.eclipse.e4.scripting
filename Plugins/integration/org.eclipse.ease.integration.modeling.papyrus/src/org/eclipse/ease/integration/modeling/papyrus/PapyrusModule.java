@@ -11,8 +11,7 @@ import org.eclipse.ease.integration.modeling.GMFtoEMFCommandWrapper;
 import org.eclipse.ease.integration.modeling.NotationModule;
 import org.eclipse.ease.integration.modeling.uml.modules.UMLModule;
 import org.eclipse.ease.log.Logger;
-import org.eclipse.ease.modules.NamedParameter;
-import org.eclipse.ease.modules.OptionalParameter;
+import org.eclipse.ease.modules.ScriptParameter;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -90,22 +89,22 @@ public class PapyrusModule extends UMLModule {
 	 * 
 	 * @param semanticElement
 	 *        UML or Sysml element of the diagram
-	 * @param diagramName
+	 * @param newDiagram
 	 *        The name of the diagram (default value = NewDiagram)
 	 * @param open
 	 *        True if the diagram shall be open (default = false)
 	 */
 	@WrapToScript
-	public void createDiagram(EObject semanticElement, @NamedParameter(name = "diagramType") String diagramType, @NamedParameter(name = "diagramName") @OptionalParameter(defaultValue = "NewDiagram") String diagramName, @NamedParameter(name = "open") boolean open) {
+	public void createDiagram(EObject semanticElement, @ScriptParameter(name = "diagramType") String diagramType, @ScriptParameter(name = "diagramName", defaultValue = "NewDiagram") String newDiagram, @ScriptParameter(name = "open") boolean open) {
 		if("Class".equals(diagramType)) {
-			createDiagram(getModelSet(), new CreateClassDiagramCommand(), new ClassDiagramCreationCondition(), semanticElement, diagramName, open);
+			createDiagram(getModelSet(), new CreateClassDiagramCommand(), new ClassDiagramCreationCondition(), semanticElement, newDiagram, open);
 		} else if("Package".equals(diagramType)) {
-			createDiagram(getModelSet(), new PackageDiagramCreateCommand(), new PackageDiagramCreationCondition(), semanticElement, diagramName, open);
+			createDiagram(getModelSet(), new PackageDiagramCreateCommand(), new PackageDiagramCreationCondition(), semanticElement, newDiagram, open);
 		}
 	}
 
 	@WrapToScript
-	public void control(EObject semanticElement, @OptionalParameter String fileName) {
+	public void control(EObject semanticElement, @ScriptParameter(name = "fileName") String fileName) {
 		if(fileName == null) {
 			fileName = semanticElement.eResource().getURIFragment(semanticElement);
 		}
@@ -187,7 +186,7 @@ public class PapyrusModule extends UMLModule {
 
 	@Override
 	@WrapToScript
-	public void save(@OptionalParameter Object object) {
+	public void save(@ScriptParameter(name = "object") Object object) {
 		save();
 	}
 }
