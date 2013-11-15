@@ -1,7 +1,7 @@
 /*
  * Menu: Examples > Modeling > UML > Count elements
  * License: EPL 1.0
- * EnableWhen::[And {
+ * EnableWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },
@@ -12,7 +12,7 @@
  *            }
  *        }
  *    }
- *}]::
+ *}]
  * Description: {This script shows how to navigate inside a model. It asks the user for a type
  * of element to look for (defaulting to "Class"), and starting from the current
  * selected element, counts all the elements of this type contained inside the

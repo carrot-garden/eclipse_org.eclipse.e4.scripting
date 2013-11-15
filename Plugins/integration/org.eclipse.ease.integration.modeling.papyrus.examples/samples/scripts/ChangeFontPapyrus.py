@@ -1,6 +1,6 @@
 # Menu: Examples > Modeling > Papyrus > Change Class font to Tahoma (Papyrus)
 # License: EPL 1.0
-# EnableWhen::[And {
+# EnableWhen:[And {
 #   With activeEditor {
 #        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
 #    },
@@ -11,7 +11,7 @@
 #            } 
 #        }
 #    } 
-#}]::
+#}]
 # Description: {Demonstrate how to modify the Notation model from a GMF Editor using NotationModule. In this script will we change the font of a selected node (From GMF editor) to Tahoma.}
 #
 

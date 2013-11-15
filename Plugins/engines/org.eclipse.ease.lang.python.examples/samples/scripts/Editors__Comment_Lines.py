@@ -2,10 +2,10 @@
 # Thread: UI
 # Menu: Examples > Editors > Comment Lines
 # Kudos: Jose Fonseca & Paul Colton & Arthur Daussy
-#EnableWhen::[With selection {
+#EnableWhen:[With selection {
 #        InstanceOf "org.eclipse.jface.text.TextSelection"{
 #            }
-#}]::
+#}]
 # Description: {You can use this script to comment a line in the current active editor.(Only work in text editor with a text selection)}
 # License: EPL 1.0
 #

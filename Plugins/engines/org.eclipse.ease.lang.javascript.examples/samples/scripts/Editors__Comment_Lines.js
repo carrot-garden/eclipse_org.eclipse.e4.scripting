@@ -5,10 +5,10 @@
  * Kudos: Paul Colton (Aptana, Inc.) & Arthur Daussy
  * Description: {You can use this script to comment a line in the current active editor.(Only work in text editor with a text selection)}
  * License: EPL 1.0
- * EnableWhen::[With selection {
+ * EnableWhen:[With selection {
  *        InstanceOf "org.eclipse.jface.text.TextSelection"{
  *            }
- * }]::
+ * }]
  */
  
 var comment = "//";

@@ -4,11 +4,11 @@
 # Kudos: Arthur Daussy.
 # License: EPL 1.0
 # Description : {This script is used to convert the selected IProject to script project.}
-# EnableWhen::[With selection {
+# EnableWhen:[With selection {
 #    Iterable {
 #        InstanceOf "org.eclipse.core.resources.IProject"
 #    }
-#}]::
+#}]
 
 import org.eclipse.core.resources.IProject
 

@@ -1,7 +1,7 @@
 /*
  * Menu: Examples > Modeling > UML > Find element by name
  * License: EPL 1.0
- * EnableWhen::[And {
+ * EnableWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },
@@ -12,7 +12,7 @@
  *            }
  *        }
  *    }
- *}]::
+ *}]
  * Description: {This script searches inside a model (starting from the current selection) for
  * all the elements whose name matches a string (or regular expression) provided
  * by the user. It reports the element it found on the Topcased Scripting

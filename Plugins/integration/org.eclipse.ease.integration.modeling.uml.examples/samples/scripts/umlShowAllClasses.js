@@ -1,7 +1,7 @@
 /*
  * Menu: Examples > Modeling > UML > Show all classes
  * License: EPL 1.0
- * EnableWhen::[And {
+ * EnableWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },
@@ -12,7 +12,7 @@
  *            }
  *        }
  *    }
- *}]::
+ *}]
  * Description:  {This script finds and prints all the UML classes contained inside the selected element, directly or indirectly.}
  */
 

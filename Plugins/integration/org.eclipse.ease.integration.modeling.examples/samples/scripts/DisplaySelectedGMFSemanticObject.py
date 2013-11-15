@@ -2,9 +2,9 @@
 # Menu: Examples > Modeling > Papyrus > Display Selection in MDT Papyrus
 # Kudos: Arthur Daussy
 # Description: {Demonstrate the use of Selection Modules  while selecting an element in MDT Papyrus.}
-#EnableWhen::[With activeEditor {
+#EnableWhen:[With activeEditor {
 #    Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
-#}]::
+#}]
 # License: EPL 1.0
 #
 loadModule("SelectionModule")

@@ -1,7 +1,7 @@
 /*
  * Menu: Examples > Modeling > UML > Rename element
  * License: EPL 1.0
- * EnableWhen::[And {
+ * EnableWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },
@@ -12,7 +12,7 @@
  *            }
  *        }
  *    }
- *}]::
+ *}]
  * Description: {This script expects a NamedElement to be selected, and asks the user for a new new to use.
  * This illustrates how a script can modify an existing model element when literal values can be used.}
  */

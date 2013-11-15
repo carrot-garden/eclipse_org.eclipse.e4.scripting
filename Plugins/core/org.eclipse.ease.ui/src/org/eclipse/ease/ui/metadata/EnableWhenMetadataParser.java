@@ -25,9 +25,11 @@ import org.eclipse.ease.storedscript.metada.AbstractRegexMetadataParser;
 public class EnableWhenMetadataParser extends AbstractRegexMetadataParser {
 
 
+	private static final Pattern ENABLE_WHEN_PATTERN = Pattern.compile("EnableWhen:(\\[[^\\]]*\\])", Pattern.DOTALL);
+
 	@Override
 	protected Pattern createPattern() {
-		return Pattern.compile("EnableWhen::(.*)::", Pattern.DOTALL);
+		return ENABLE_WHEN_PATTERN;
 	}
 
 	@Override

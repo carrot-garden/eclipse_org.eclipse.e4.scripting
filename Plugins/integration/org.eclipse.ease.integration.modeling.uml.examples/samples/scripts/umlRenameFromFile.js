@@ -1,7 +1,7 @@
 /*
  * Menu: Examples > Modeling > UML > Set element name from file
  * License: EPL 1.0
- * EnableWhen::[And {
+ * EnableWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },
@@ -12,7 +12,7 @@
  *            }
  *        }
  *    }
- *}]::
+ *}]
  * Description: {This script shows how to read the contents of a text file. It lets the user
  * select a file from the workspace, reads the contents, and use it to rename
  * the currently selected model element.}

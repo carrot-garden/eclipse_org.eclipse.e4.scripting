@@ -1,7 +1,7 @@
 /*
  * Menu: Examples > Modeling > UML > Add class
  * License: EPL 1.0
- * EnableWhen::[And {
+ * EnableWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },
@@ -12,7 +12,7 @@
  *            }
  *        }
  *    }
- *}]::
+ *}]
  * Description: {This script create a new UML class in the current package. A package must be
  * selected in the current UML editor. It illustrates how to create new
  * elements. It creates a new class, sets its name, and adds it

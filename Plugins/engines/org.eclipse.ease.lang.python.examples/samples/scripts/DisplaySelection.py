@@ -2,10 +2,10 @@
 # Menu: Examples > EnableWhen > Display Selection
 # Kudos: Arthur Daussy
 # Description: {Use this script to display the current selection}.
-#EnableWhen::[With selection {
+#EnableWhen:[With selection {
 #        InstanceOf "org.eclipse.jface.viewers.ISelection"{
 #            }
-#}]::
+#}]
 # License: EPL 1.0
 #
 

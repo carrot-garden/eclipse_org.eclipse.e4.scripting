@@ -1,7 +1,7 @@
 /*
  * Menu: Examples > Modeling > UML > Add class with N attributes
  * License: EPL 1.0
- * EnableWhen::[And {
+ * EnableWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },
@@ -12,7 +12,7 @@
  *            }
  *        }
  *    }
- *}]::
+ *}]
  * Description: {This script creates a new UML class (in the currently selected package) which
  * initially contains a user-specified number of attributes.}
  */

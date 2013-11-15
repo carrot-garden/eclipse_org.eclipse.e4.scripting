@@ -3,14 +3,14 @@
 # Menu: Examples > Modeling > Simple EMF API
 # Kudos: Arthur Daussy
 # Description: { Demonstrate how to a simple API for any generated EMF metamodel}
-# EnableWhen::[And {
+# EnableWhen:[And {
 # With selection {
 #        Iterable {
 #            AdaptTo "org.eclipse.emf.ecore.EObject"{
 #            }
 #        }
 #    }
-#}]::
+#}]
 # License: EPL 1.0
 #
 

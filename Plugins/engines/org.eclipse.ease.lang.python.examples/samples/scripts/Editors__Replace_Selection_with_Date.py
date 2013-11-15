@@ -2,10 +2,10 @@
 # Thread:UI
 # Menu: Examples >Editors > Replace Selection with Date
 # Kudos: Jose Fonseca & Paul Colton & Arthur Daussy
-# EnableWhen::[With selection {
+# EnableWhen:[With selection {
 #        InstanceOf "org.eclipse.jface.text.TextSelection"{
 #            }
-#}]::
+#}]
 # Description: {You can use this script to replace the current selection of the active text editor with the current date.}
 # License: EPL 1.0
 # 

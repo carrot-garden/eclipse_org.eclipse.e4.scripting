@@ -3,14 +3,14 @@
 # Menu: Examples > Modeling > Compute references
 # Kudos: Arthur Daussy
 # Description: { Demonstrate how to compute all model element referencing a target model element. Can Apply with any selection that is an EObject}
-# EnableWhen::[And {
+# EnableWhen:[And {
 #    With selection {
 #        Iterable {
 #            AdaptTo "org.eclipse.emf.ecore.EObject"{
 #            }
 #        }
 #    }
-#}]::
+#}]
 # License: EPL 1.0
 #
 
