@@ -12,7 +12,7 @@ package org.eclipse.ease.integration.modeling.uml.examples;
 
 import org.osgi.framework.Bundle;
 
-public class UMLScriptSamples extends org.eclipse.ease.ui.wizard.AbstractEScriptMonkeyNewSampleWizard {
+public class UMLScriptSamples extends org.eclipse.ease.ui.wizard.AbstractNewSampleWizard {
 
 	@Override
 	protected Bundle getBundle() {

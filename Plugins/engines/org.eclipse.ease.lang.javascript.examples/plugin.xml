@@ -4,16 +4,16 @@
  <extension
          point="org.eclipse.ui.newWizards">
     <category
-            id="org.eclipse.eclipsemonkey.newsamplecategory"
-            name="EScript Monkey Script Examples"
+            id="org.eclipse.newWizard.category.ease"
+            name="Scripting Examples"
             parentCategory="org.eclipse.ui.Examples">
       </category>
     <wizard
-          category="org.eclipse.ui.Examples/org.eclipse.eclipsemonkey.newsamplecategory"
+          category="org.eclipse.ui.Examples/org.eclipse.newWizard.category.ease"
           class="org.eclipse.ease.lang.javascript.examples.ExampleWizards"
           icon="icons/eclipse_monkey_js.png"
-          id="org.eclipse.eclipsemonkey.examples"
-          name="EScript Monkey Javascripts Examples">
+          id="org.eclipse.newWizard.javascriptExamples"
+          name="JavaScript Examples">
     </wizard>
    </extension>
 </plugin>

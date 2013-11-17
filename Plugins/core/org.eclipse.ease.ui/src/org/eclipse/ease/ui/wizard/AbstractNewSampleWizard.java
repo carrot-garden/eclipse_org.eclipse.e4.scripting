@@ -28,6 +28,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ease.ui.Activator;
@@ -44,22 +45,23 @@ import org.osgi.framework.Bundle;
  * @author adaussy
  * 
  */
-public abstract class AbstractEScriptMonkeyNewSampleWizard extends BasicNewProjectResourceWizard {
+public abstract class AbstractNewSampleWizard extends BasicNewProjectResourceWizard {
 
-	public AbstractEScriptMonkeyNewSampleWizard() {
+	public AbstractNewSampleWizard() {
 		super();
 	}
 
 	protected void openError(String message) {
-		ErrorDialog.openError(getShell(), "Eclipse Monkey example error", "Unable to create the Examples project\n" + message, new Status(Status.ERROR, Activator.PLUGIN_ID, message));
+		ErrorDialog.openError(getShell(), "EASE example error", "Unable to create the Examples project\n" + message, new Status(IStatus.ERROR,
+				Activator.PLUGIN_ID, message));
 	}
 
 	@Override
 	public void addPage(IWizardPage page) {
 		super.addPage(page);
 		IWizardPage mainPage = getPage("basicNewProjectPage");
-		if(mainPage instanceof WizardNewProjectCreationPage) {
-			((WizardNewProjectCreationPage)mainPage).setInitialProjectName(getInitalProjectName().replace(" ", "_"));
+		if (mainPage instanceof WizardNewProjectCreationPage) {
+			((WizardNewProjectCreationPage) mainPage).setInitialProjectName(getInitalProjectName().replace(" ", "_"));
 		}
 	}
 
@@ -74,6 +76,7 @@ public abstract class AbstractEScriptMonkeyNewSampleWizard extends BasicNewProje
 
 	protected abstract Bundle getBundle();
 
+	@Override
 	public boolean performFinish() {
 		super.performFinish();
 		IProject project = getNewProject();
@@ -82,7 +85,7 @@ public abstract class AbstractEScriptMonkeyNewSampleWizard extends BasicNewProje
 			Bundle bundle = getBundle();
 			URL url = FileLocator.find(bundle, new Path(getManifestPath()), null);
 			Object content = url.getContent();
-			InputStream ins = (InputStream)content;
+			InputStream ins = (InputStream) content;
 			int count = ins.available();
 			BufferedReader in = new BufferedReader(new InputStreamReader(ins));
 			char[] cbuf = new char[count];
@@ -90,32 +93,32 @@ public abstract class AbstractEScriptMonkeyNewSampleWizard extends BasicNewProje
 			in.close();
 			String[] lines = new String(cbuf).split("\n");
 			List<String> manifest = new ArrayList<String>();
-			for(int i = 0; i < lines.length; i++) {
+			for (int i = 0; i < lines.length; i++) {
 				String string = lines[i];
 				string = string.trim();
-				if(string.length() > 0)
+				if (string.length() > 0)
 					manifest.add(string);
 			}
 
-			if(!project.exists()) {
+			if (!project.exists()) {
 				project.create(null);
 			}
-			if(!project.isOpen()) {
+			if (!project.isOpen()) {
 				project.open(null);
 			}
 
 			String errors = "";
-			for(Iterator<String> iter = manifest.iterator(); iter.hasNext();) {
+			for (Iterator<String> iter = manifest.iterator(); iter.hasNext();) {
 				try {
-					String name = (String)iter.next();
+					String name = iter.next();
 					String[] words = name.split("/");
 					String pathName = "";
 					IFolder folder = null;
-					for(int i = 0; i < words.length - 1; i++) {
+					for (int i = 0; i < words.length - 1; i++) {
 						String string = words[i];
 						pathName = pathName + string + "/";
 						folder = project.getFolder(pathName);
-						if(!folder.exists())
+						if (!folder.exists())
 							folder.create(IResource.NONE, true, null);
 					}
 					IPath path = new Path(getScriptContainerFolder() + name);
@@ -130,7 +133,7 @@ public abstract class AbstractEScriptMonkeyNewSampleWizard extends BasicNewProje
 					errors += x.toString() + "\n";
 				}
 			}
-			if(errors.length() > 0) {
+			if (errors.length() > 0) {
 				openError(errors);
 			}
 		} catch (CoreException x) {
