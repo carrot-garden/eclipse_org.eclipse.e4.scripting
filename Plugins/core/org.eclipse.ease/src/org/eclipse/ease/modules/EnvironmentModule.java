@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,10 +33,12 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ExitException;
 import org.eclipse.ease.IScriptEngine;
+import org.eclipse.ease.IScriptService;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.log.Tracer;
 import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * The Environment provides base functions for all script interpreters. It is automatically loaded by any interpreter upon startup.
@@ -86,6 +89,8 @@ public class EnvironmentModule extends AbstractScriptModule {
 				module = definition.getModuleInstance();
 				if (module instanceof IScriptModule)
 					((IScriptModule) module).initialize(getScriptEngine(), this);
+
+				mModuleNames.put(identifier, module);
 			}
 		}
 
@@ -133,44 +138,6 @@ public class EnvironmentModule extends AbstractScriptModule {
 		fireModuleEvent(toBeWrapped, reloaded ? IModuleListener.RELOADED : IModuleListener.LOADED);
 	}
 
-	// public static String getRegisteredModuleName(final String moduleName) {
-	// return "__MOD_" + moduleName;
-	// }
-
-	// /**
-	// * Get a map of all available extension modules. This includes both loaded
-	// and unloaded modules. The map contains of paisr
-	// *
-	// * @return list of extension modules
-	// */
-	// public static Map<String, Class<? extends IScriptModule>>
-	// getAvailableModules(final boolean findHidden) {
-	// final Map<String, Class<? extends IScriptModule>> modules = new
-	// HashMap<String, Class<? extends IScriptModule>>();
-	//
-	// final IConfigurationElement[] elements =
-	// Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_MODULE_ID);
-	// for (final IConfigurationElement element : elements) {
-	//
-	// // only add items marked as visible
-	// if (Boolean.parseBoolean(element.getAttribute("visible")) || findHidden)
-	// {
-	// try {
-	// final Object o = element.createExecutableExtension("class");
-	// if (o instanceof IScriptModule) {
-	// final String name = element.getAttribute("name");
-	// modules.put(name, ((IScriptModule) o).getClass());
-	// }
-	// } catch (final CoreException e) {
-	// // FIXME add log message
-	// // Logger.warning("Could not load module.", e);
-	// }
-	// }
-	// }
-	//
-	// return modules;
-	// }
-
 	/**
 	 * Create JavaScript wrapper functions for autoload methods. Adds code of following style: <code>function {name} (a, b, c, ...) {
 	 * __module.{name}(a, b, c, ...);
@@ -185,30 +152,44 @@ public class EnvironmentModule extends AbstractScriptModule {
 		// script code to inject
 		StringBuilder scriptCode = new StringBuilder();
 
+		// get methods with annotation
+		List<Method> methods = new ArrayList<Method>();
+		for (Method method : instance.getClass().getMethods()) {
+			if (useAutoLoader(method))
+				methods.add(method);
+		}
+
+		if (methods.isEmpty()) {
+			// no annotated methods, use all declared public methods
+			for (Method method : instance.getClass().getDeclaredMethods()) {
+				if (Modifier.isPublic(method.getModifiers()))
+					methods.add(method);
+			}
+		}
+
 		// use reflection to access methods
-		for (final Method method : instance.getClass().getMethods()) {
-			if (useAutoLoader(method)) {
+		for (final Method method : methods) {
+			String preExecutionCode = getPreExecutionCode(method);
+			String postExecutionCode = getPostExecutionCode(method);
 
-				String preExecutionCode = getPreExecutionCode(method);
-				String postExecutionCode = getPostExecutionCode(method);
+			Set<String> methodNames = new HashSet<String>();
+			methodNames.add(method.getName());
 
-				Set<String> methodNames = new HashSet<String>();
-				methodNames.add(method.getName());
-				String alias = method.getAnnotation(WrapToScript.class).alias();
-				methodNames.addAll(Arrays.asList(alias.split(WrapToScript.DELIMITER)));
+			WrapToScript wrapAnnotation = method.getAnnotation(WrapToScript.class);
+			if (wrapAnnotation != null)
+				methodNames.addAll(Arrays.asList(wrapAnnotation.alias().split(WrapToScript.DELIMITER)));
 
-				// prevent from null and empty string to pass to module wrapper
-				methodNames.remove(null);
-				for (String name : new HashSet<String>(methodNames))
-					if (name.trim().isEmpty())
-						methodNames.remove(name);
+			// prevent from null and empty string to pass to module wrapper
+			methodNames.remove(null);
+			for (String name : new HashSet<String>(methodNames))
+				if (name.trim().isEmpty())
+					methodNames.remove(name);
 
-				String code = getWrapper().createFunctionWrapper(identifier, method, methodNames, IScriptFunctionModifier.RESULT_NAME, preExecutionCode,
-						postExecutionCode);
-				if ((code != null) && !code.isEmpty()) {
-					scriptCode.append(code);
-					scriptCode.append('\n');
-				}
+			String code = getWrapper().createFunctionWrapper(identifier, method, methodNames, IScriptFunctionModifier.RESULT_NAME, preExecutionCode,
+					postExecutionCode);
+			if ((code != null) && !code.isEmpty()) {
+				scriptCode.append(code);
+				scriptCode.append('\n');
 			}
 		}
 
@@ -225,6 +206,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 		// execute code
 		String codeToInject = scriptCode.toString();
+		// FIXME move log to script engine
 		if (ITracingConstant.ENVIRONEMENT_MODULE_WRAPPER_TRACING) {
 			Tracer.logInfo("[Environement Module] Injecting code:\n" + codeToInject);
 		}
@@ -239,7 +221,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 	 * @return true when autoloader should handle this method
 	 */
 	private static boolean useAutoLoader(final Method method) {
-		return (method.getAnnotation(WrapToScript.class) != null);
+		return (Modifier.isPublic(method.getModifiers())) && (method.getAnnotation(WrapToScript.class) != null);
 	}
 
 	/**
@@ -371,39 +353,42 @@ public class EnvironmentModule extends AbstractScriptModule {
 		throw new RuntimeException("cannot resolve \"" + filename + "\"");
 	}
 
-	// /**
-	// * List all available (visible) modules. Returns a list of visible
-	// modules. Loaded modules are indicated.
-	// *
-	// * @return string containing module information
-	// */
-	// @WrapToScript
-	// public final String listModules() {
-	// final Map<String, Class<? extends IScriptModule>> modules =
-	// getAvailableModules(false);
-	//
-	// final StringBuffer output = new StringBuffer();
-	//
-	// // add header
-	// output.append("available modules\n=================\n\n");
-	//
-	// // add modules
-	// for (final String moduleName : modules.keySet()) {
-	// output.append('\t');
-	//
-	// output.append(moduleName);
-	// if (findModule(moduleName) != null)
-	// output.append(" [LOADED]");
-	//
-	// output.append('\n');
-	// }
-	//
-	// // write to default output
-	// getScriptEngine().getOutputStream().print(output);
-	//
-	// return output.toString();
-	// }
-	//
+	/**
+	 * List all available (visible) modules. Returns a list of visible modules. Loaded modules are indicated.
+	 * 
+	 * @return string containing module information
+	 */
+	@WrapToScript
+	public final String listModules() {
+
+		IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		Collection<ModuleDefinition> modules = scriptService.getAvailableModules().values();
+
+		final StringBuilder output = new StringBuilder();
+
+		// add header
+		output.append("available modules\n=================\n\n");
+
+		// add modules
+		for (final ModuleDefinition module : modules) {
+
+			if (module.isVisible()) {
+				output.append('\t');
+
+				output.append(module.getName());
+				if (findModule(module.getName()) != null)
+					output.append(" [LOADED]");
+
+				output.append('\n');
+			}
+		}
+
+		// write to default output
+		print(output);
+
+		return output.toString();
+	}
+
 	private String getPreExecutionCode(final Method method) {
 		final StringBuffer code = new StringBuffer();
 

@@ -33,7 +33,8 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 	}
 
 	@Override
-	public String createFunctionWrapper(final String moduleVariable, final Method method, final Set<String> functionNames, final String resultName, final String preExecutionCode, final String postExecutionCode) {
+	public String createFunctionWrapper(final String moduleVariable, final Method method, final Set<String> functionNames, final String resultName,
+			final String preExecutionCode, final String postExecutionCode) {
 
 		StringBuilder javaScriptCode = new StringBuilder();
 
@@ -49,7 +50,7 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		final StringBuilder parameters = new StringBuilder();
 		for (int i = 0; i < method.getParameterTypes().length; i++) {
 			parameters.append(", ");
-			parameters.append((char)('a' + i));
+			parameters.append((char) ('a' + i));
 		}
 		if (parameters.length() > 0)
 			parameters.replace(0, 2, "");
@@ -69,7 +70,8 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
 		for (String name : functionNames) {
 			if (!isCorrectMethodName(name)) {
-				Logger.logError("The method name " + name + " from the module " + moduleVariable + " can not be used because it's name is not correct", Activator.PLUGIN_ID);
+				Logger.logError("The method name " + name + " from the module " + moduleVariable + " can not be used because it's name is not correct",
+						Activator.PLUGIN_ID);
 				return "";
 			}
 			if (!name.isEmpty()) {
@@ -81,16 +83,8 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 	}
 
 	/**
-	 * Generate a part of a the body which handle optional argument.
-	 * It will generate for example
-	 * function name(a,b,c){
-	 * a = a || null;
-	 * b = b || "defaultStringValue";
-	 * c = c || 16
-	 * ...
-	 * body
-	 * ...
-	 * }
+	 * Generate a part of a the body which handle optional argument. It will generate for example function name(a,b,c){ a = a || null; b = b ||
+	 * "defaultStringValue"; c = c || 16 ... body ... }
 	 * 
 	 * @param method
 	 * @return
@@ -114,7 +108,7 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 						defaultValueParameters.append(" = ");
 						defaultValueParameters.append(parameterName);
 						defaultValueParameters.append(" || ");
-						CharSequence setOptionalParameterValue = setOptionalParameterValue(type, (ScriptParameter)a);
+						CharSequence setOptionalParameterValue = setOptionalParameterValue(type, (ScriptParameter) a);
 						if (setOptionalParameterValue != null) {
 							defaultValueParameters.append(setOptionalParameterValue);
 						} else {
@@ -153,32 +147,28 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		return UNDIFINED_KEYWORD;
 	}
 
-	public static List<String> forbidenKeywork = new ArrayList<String>();
+	public static List<String> RESERVED_KEYWORDS = new ArrayList<String>();
 
 	public boolean isCorrectMethodName(String methodName) {
-		return RhinoScriptEngine.isSaveName(methodName) && !forbidenKeywork.contains(methodName);
+		return RhinoScriptEngine.isSaveName(methodName) && !RESERVED_KEYWORDS.contains(methodName);
 	}
 
 	static {
-		forbidenKeywork.add("for");
-		forbidenKeywork.add("while");
-		//Complete this list
+		RESERVED_KEYWORDS.add("for");
+		RESERVED_KEYWORDS.add("while");
+		RESERVED_KEYWORDS.add("delete");
+		// TODO Complete this list
 	}
 
 	/**
-	 * Generate method definition.
-	 * function name (parametersSignature){
-	 * ...
-	 * body
-	 * ...
-	 * }
+	 * Generate method definition. function name (parametersSignature){ ... body ... }
 	 * 
 	 * @param body
-	 *        the body
+	 *            the body
 	 * @param parametersSignature
-	 *        the parameters signature
+	 *            the parameters signature
 	 * @param name
-	 *        the name
+	 *            the name
 	 * @return the char sequence
 	 */
 	protected CharSequence generateMethodDefinition(CharSequence body, CharSequence parametersSignature, String name) {
