@@ -45,13 +45,13 @@ public class InputModule {
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
 	@WrapToScript
-	public String askSimpleString(String message, @ScriptParameter(optional = true) String title, @ScriptParameter(optional = true) String defaultValue) {
-		if (title == null) {
+	public String askSimpleString(String message, @ScriptParameter(optional = true, name = "title") String title, @ScriptParameter(optional = true, name = "defaultValue") String defaultValue) {
+		if(title == null) {
 			title = "";
 		}
 		InputDialog dlg = new InputDialog(getShell(), title, message, defaultValue, null);
 		int result = DialogModule.openDialog(dlg);
-		if (result == Window.OK) {
+		if(result == Window.OK) {
 			return dlg.getValue();
 		} else {
 			return null;
@@ -136,7 +136,7 @@ public class InputModule {
 		ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), null, true, title);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
-		if (DialogModule.openDialog(dialog) == Window.OK) {
+		if(DialogModule.openDialog(dialog) == Window.OK) {
 			Object[] result = dialog.getResult();
 			return result;
 		}
@@ -156,7 +156,7 @@ public class InputModule {
 	public Object selectResource(String title, String message) {
 		ResourceSelectionDialog dialog = new ResourceSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), message);
 		dialog.setTitle(title);
-		if (DialogModule.openDialog(dialog) == Window.OK) {
+		if(DialogModule.openDialog(dialog) == Window.OK) {
 			return dialog.getResult();
 		}
 		return null;
@@ -185,15 +185,15 @@ public class InputModule {
 	 */
 	@WrapToScript
 	public String readFile(Object loc) {
-		if (loc instanceof Object[]) {
-			if (((Object[])loc).length == 1) {
+		if(loc instanceof Object[]) {
+			if(((Object[])loc).length == 1) {
 				return readFile(((Object[])loc)[0]);
 			} else {
 				return null;
 			}
-		} else if (loc instanceof IFile) {
+		} else if(loc instanceof IFile) {
 			return readFile((IFile)loc);
-		} else if (loc instanceof String) {
+		} else if(loc instanceof String) {
 			return readFile((String)loc);
 		} else {
 			return null;
@@ -236,7 +236,7 @@ public class InputModule {
 		} catch (IOException e) {
 			return null;
 		} finally {
-			if (input != null) {
+			if(input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
@@ -249,9 +249,9 @@ public class InputModule {
 
 	private Shell getShell() {
 		IWorkbench workbench = PlatformUI.getWorkbench();
-		if (workbench != null) {
+		if(workbench != null) {
 			IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
-			if (activeWorkbenchWindow != null) {
+			if(activeWorkbenchWindow != null) {
 				return activeWorkbenchWindow.getShell();
 			}
 		}

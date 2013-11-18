@@ -14,9 +14,9 @@ import org.eclipse.ease.IScriptEngine;
 @Documented
 public @interface ScriptParameter {
 
-	String name() default "";
+	String name();
 
-	String defaultValue() default "";
+	String defaultValue() default IScriptEngine.UNDEFINED;
 
 	boolean optional() default false;
 
@@ -29,7 +29,7 @@ public @interface ScriptParameter {
 					Method method = ScriptParameter.class.getMethod("defaultValue", null);
 					Object defaultV = method.getDefaultValue();
 					if (defaultV instanceof String) {
-						defaultValue = (String)defaultV;
+						defaultValue = (String) defaultV;
 					}
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();

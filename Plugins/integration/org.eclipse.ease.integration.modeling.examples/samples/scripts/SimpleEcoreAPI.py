@@ -53,7 +53,7 @@ initEPackage("http://www.eclipse.org/uml2/4.0.0/UML")
 print "Get selection using priority order of the Custom Selector Service\n"
 selection =  getCustomSelection()
 if (not eInstanceOf(selection,"Model")):
-    raise Exception("Please select a class") 
+    raise Exception("Please select a Model") 
 op = MyRunnable()
 runOperation(op,"Run modification in a transaction")
 save()
