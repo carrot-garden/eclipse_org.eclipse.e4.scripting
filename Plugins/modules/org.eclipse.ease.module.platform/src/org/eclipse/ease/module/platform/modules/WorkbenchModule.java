@@ -81,14 +81,14 @@ public class WorkbenchModule extends AbstractScriptModule {
 	 * @return
 	 */
 	@WrapToScript
-	public IViewPart showView(@ScriptParameter(optional = true) String viewID) {
-		if ((viewID == null) || (viewID.trim().isEmpty())) {
+	public IViewPart showView(@ScriptParameter(name = "viewID", optional = true) String viewID) {
+		if((viewID == null) || (viewID.trim().isEmpty())) {
 			ShowViewDialog dialog = new ShowViewDialog(getActiveWindow(), WorkbenchPlugin.getDefault().getViewRegistry());
-			if (dialog.open() != Window.OK) {
+			if(dialog.open() != Window.OK) {
 				return null;
 			}
 			IViewDescriptor[] result = dialog.getSelection();
-			if (result == null || result.length == 0) {
+			if(result == null || result.length == 0) {
 				return null;
 			}
 			viewID = result[0].getId();
