@@ -12,7 +12,7 @@ package org.eclipse.ease.lang.python.examples;
 
 import org.osgi.framework.Bundle;
 
-public class PythonMonkeyExamplesWizard extends org.eclipse.ease.ui.wizard.AbstractEScriptMonkeyNewSampleWizard {
+public class PythonMonkeyExamplesWizard extends org.eclipse.ease.ui.wizard.AbstractNewSampleWizard {
 
 	@Override
 	protected Bundle getBundle() {
@@ -31,7 +31,7 @@ public class PythonMonkeyExamplesWizard extends org.eclipse.ease.ui.wizard.Abstr
 
 	@Override
 	protected String getInitalProjectName() {
-		return "EScript Monkey Python scripts Example";
+		return "Python Script Examples";
 	}
 
 }

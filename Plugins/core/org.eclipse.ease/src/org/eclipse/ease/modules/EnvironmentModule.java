@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,14 +33,15 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ExitException;
 import org.eclipse.ease.IScriptEngine;
+import org.eclipse.ease.IScriptService;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.log.Tracer;
 import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ui.PlatformUI;
 
 /**
- * The RhinoEnvironment provides base functions for all JavaScript interpreters.
- * It is automatically loaded by any interpreter upon startup.
+ * The Environment provides base functions for all script interpreters. It is automatically loaded by any interpreter upon startup.
  */
 public class EnvironmentModule extends AbstractScriptModule {
 
@@ -58,14 +60,12 @@ public class EnvironmentModule extends AbstractScriptModule {
 	private final ListenerList mModuleListeners = new ListenerList();
 
 	/**
-	 * Load a module. Loading a module generally enhances the JavaScript
-	 * environment with new functions and variables. If a module was already
-	 * loaded before, it gets refreshed and moved to the top of the module
-	 * stack. When a module is loaded, all its dependencies are loaded too. So
-	 * loading one module might change the whole module stack.
+	 * Load a module. Loading a module generally enhances the JavaScript environment with new functions and variables. If a module was already loaded before, it
+	 * gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
+	 * the whole module stack.
 	 * 
 	 * @param name
-	 *        name of module to load
+	 *            name of module to load
 	 * @return loaded module instance
 	 */
 	@WrapToScript
@@ -88,16 +88,27 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 				module = definition.getModuleInstance();
 				if (module instanceof IScriptModule)
-					((IScriptModule)module).initialize(getScriptEngine(), this);
+					((IScriptModule) module).initialize(getScriptEngine(), this);
+
+				mModuleNames.put(identifier, module);
 			}
 		}
 
 		// create function wrappers
-		return wrap(module);
+		wrap(module);
+
+		return module;
 	}
 
+	/**
+	 * Creates wrapper functions for a given java instance. Searches for members and methods annotated with {@link WrapToScript} and creates wrapping code in
+	 * the target script language. A method named &lt;instance&gt;.myMethod() will be made available by calling myMethod().
+	 * 
+	 * @param toBeWrapped
+	 *            instance to be wrapped
+	 */
 	@WrapToScript
-	public Object wrap(Object toBeWrapped) {
+	public void wrap(Object toBeWrapped) {
 		// register new variable in script engine
 		String identifier = getScriptEngine().getSaveVariableName(toBeWrapped.toString());
 
@@ -125,86 +136,60 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 		// notify listeners
 		fireModuleEvent(toBeWrapped, reloaded ? IModuleListener.RELOADED : IModuleListener.LOADED);
-
-		return toBeWrapped;
 	}
 
-	//	public static String getRegisteredModuleName(final String moduleName) {
-	//		return "__MOD_" + moduleName;
-	//	}
-
-	// /**
-	// * Get a map of all available extension modules. This includes both loaded
-	// and unloaded modules. The map contains of paisr
-	// *
-	// * @return list of extension modules
-	// */
-	// public static Map<String, Class<? extends IScriptModule>>
-	// getAvailableModules(final boolean findHidden) {
-	// final Map<String, Class<? extends IScriptModule>> modules = new
-	// HashMap<String, Class<? extends IScriptModule>>();
-	//
-	// final IConfigurationElement[] elements =
-	// Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_MODULE_ID);
-	// for (final IConfigurationElement element : elements) {
-	//
-	// // only add items marked as visible
-	// if (Boolean.parseBoolean(element.getAttribute("visible")) || findHidden)
-	// {
-	// try {
-	// final Object o = element.createExecutableExtension("class");
-	// if (o instanceof IScriptModule) {
-	// final String name = element.getAttribute("name");
-	// modules.put(name, ((IScriptModule) o).getClass());
-	// }
-	// } catch (final CoreException e) {
-	// // FIXME add log message
-	// // Logger.warning("Could not load module.", e);
-	// }
-	// }
-	// }
-	//
-	// return modules;
-	// }
-
 	/**
-	 * Create JavaScript wrapper functions for autoload methods. Adds code of
-	 * following style: <code>function {name} (a, b, c, ...) {
+	 * Create JavaScript wrapper functions for autoload methods. Adds code of following style: <code>function {name} (a, b, c, ...) {
 	 * __module.{name}(a, b, c, ...);
 	 * }</code>
 	 * 
 	 * @param instance
-	 *        module instance to create wrappers for
+	 *            module instance to create wrappers for
 	 * @param reload
-	 *        flag indicating that the module was already loaded
+	 *            flag indicating that the module was already loaded
 	 */
 	private void createWrappers(final Object instance, String identifier, final boolean reload) {
 		// script code to inject
 		StringBuilder scriptCode = new StringBuilder();
 
+		// get methods with annotation
+		List<Method> methods = new ArrayList<Method>();
+		for (Method method : instance.getClass().getMethods()) {
+			if (useAutoLoader(method))
+				methods.add(method);
+		}
+
+		if (methods.isEmpty()) {
+			// no annotated methods, use all declared public methods
+			for (Method method : instance.getClass().getDeclaredMethods()) {
+				if (Modifier.isPublic(method.getModifiers()))
+					methods.add(method);
+			}
+		}
+
 		// use reflection to access methods
-		for (final Method method : instance.getClass().getMethods()) {
-			if (useAutoLoader(method)) {
+		for (final Method method : methods) {
+			String preExecutionCode = getPreExecutionCode(method);
+			String postExecutionCode = getPostExecutionCode(method);
 
-				String preExecutionCode = getPreExecutionCode(method);
-				String postExecutionCode = getPostExecutionCode(method);
+			Set<String> methodNames = new HashSet<String>();
+			methodNames.add(method.getName());
 
-				Set<String> methodNames = new HashSet<String>();
-				methodNames.add(method.getName());
-				String alias = method.getAnnotation(WrapToScript.class).alias();
-				methodNames.addAll(Arrays.asList(alias.split(WrapToScript.DELIMITER)));
+			WrapToScript wrapAnnotation = method.getAnnotation(WrapToScript.class);
+			if (wrapAnnotation != null)
+				methodNames.addAll(Arrays.asList(wrapAnnotation.alias().split(WrapToScript.DELIMITER)));
 
-				// prevent from null and empty string to pass to module wrapper
-				methodNames.remove(null);
-				for (String name : new HashSet<String>(methodNames))
-					if (name.trim().isEmpty())
-						methodNames.remove(name);
+			// prevent from null and empty string to pass to module wrapper
+			methodNames.remove(null);
+			for (String name : new HashSet<String>(methodNames))
+				if (name.trim().isEmpty())
+					methodNames.remove(name);
 
-				String code = getWrapper().createFunctionWrapper(identifier, method, methodNames, IScriptFunctionModifier.RESULT_NAME, preExecutionCode, postExecutionCode);
-				if ((code != null) && !code.isEmpty()) {
-					scriptCode.append(code);
-					scriptCode.append('\n');
-				}
+			String code = getWrapper().createFunctionWrapper(identifier, method, methodNames, IScriptFunctionModifier.RESULT_NAME, preExecutionCode,
+					postExecutionCode);
+			if ((code != null) && !code.isEmpty()) {
+				scriptCode.append(code);
+				scriptCode.append('\n');
 			}
 		}
 
@@ -221,6 +206,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 		// execute code
 		String codeToInject = scriptCode.toString();
+		// FIXME move log to script engine
 		if (ITracingConstant.ENVIRONEMENT_MODULE_WRAPPER_TRACING) {
 			Tracer.logInfo("[Environement Module] Injecting code:\n" + codeToInject);
 		}
@@ -228,23 +214,21 @@ public class EnvironmentModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Verify that a method is treated by the autoloader. This is the case when
-	 * the method is marked by an @WrapToJavaScript annotation.
+	 * Verify that a method is treated by the autoloader. This is the case when the method is marked by an @WrapToJavaScript annotation.
 	 * 
 	 * @param method
-	 *        method to be evaluated
+	 *            method to be evaluated
 	 * @return true when autoloader should handle this method
 	 */
 	private static boolean useAutoLoader(final Method method) {
-		return (method.getAnnotation(WrapToScript.class) != null);
+		return (Modifier.isPublic(method.getModifiers())) && (method.getAnnotation(WrapToScript.class) != null);
 	}
 
 	/**
-	 * Resolves a loaded module and returns the Java instance. Will only query
-	 * previously loaded modules.
+	 * Resolves a loaded module and returns the Java instance. Will only query previously loaded modules.
 	 * 
 	 * @param name
-	 *        name of the module to resolve
+	 *            name of the module to resolve
 	 */
 	@WrapToScript
 	public final Object findModule(final String name) {
@@ -252,12 +236,10 @@ public class EnvironmentModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Execute script code. This method executes script code directly in the
-	 * running interpreter. Execution is done in the same thread as the caller
-	 * thread.
+	 * Execute script code. This method executes script code directly in the running interpreter. Execution is done in the same thread as the caller thread.
 	 * 
 	 * @param data
-	 *        code to be interpreted
+	 *            code to be interpreted
 	 * @return result of code execution
 	 */
 	@WrapToScript
@@ -266,11 +248,10 @@ public class EnvironmentModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Terminates script execution immediately. Code following this command will
-	 * not be executed anymore.
+	 * Terminates script execution immediately. Code following this command will not be executed anymore.
 	 * 
 	 * @param value
-	 *        return code
+	 *            return code
 	 */
 	@WrapToScript
 	public final void exit(final Object value) {
@@ -290,14 +271,12 @@ public class EnvironmentModule extends AbstractScriptModule {
 	// }
 	//
 	/**
-	 * Include and execute a script file. Quite similar to eval(Object) a source
-	 * file is opened and its content is executed. Multiple sources are
-	 * available: "workspace://" opens a file relative to the workspace root,
-	 * "project://" opens a file relative to the current project, "file://"
-	 * opens a file from the file system.
+	 * Include and execute a script file. Quite similar to eval(Object) a source file is opened and its content is executed. Multiple sources are available:
+	 * "workspace://" opens a file relative to the workspace root, "project://" opens a file relative to the current project, "file://" opens a file from the
+	 * file system.
 	 * 
 	 * @param filename
-	 *        name of file to be included
+	 *            name of file to be included
 	 * @return result of include operation
 	 * @throws Throwable
 	 */
@@ -310,7 +289,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 				// project relative link
 				Object currentFile = getScriptEngine().getExecutedFile();
 				if (currentFile instanceof IFile) {
-					IFile file = ((IFile)currentFile).getProject().getFile(new Path(filename.substring(PROJECT.length())));
+					IFile file = ((IFile) currentFile).getProject().getFile(new Path(filename.substring(PROJECT.length())));
 					if (file.exists())
 						return getScriptEngine().inject(file);
 				}
@@ -359,12 +338,12 @@ public class EnvironmentModule extends AbstractScriptModule {
 			// maybe a relative filename
 			Object currentFile = getScriptEngine().getExecutedFile();
 			if (currentFile instanceof IFile) {
-				workspaceFile = ((IFile)currentFile).getParent().getFile(new Path(filename));
+				workspaceFile = ((IFile) currentFile).getParent().getFile(new Path(filename));
 				if (workspaceFile.exists())
 					return getScriptEngine().inject(workspaceFile);
 
 			} else if (currentFile instanceof File) {
-				systemFile = new File(((File)currentFile).getParentFile().getAbsolutePath() + File.pathSeparator + filename);
+				systemFile = new File(((File) currentFile).getParentFile().getAbsolutePath() + File.pathSeparator + filename);
 				if (systemFile.exists())
 					return getScriptEngine().inject(systemFile);
 			}
@@ -374,45 +353,48 @@ public class EnvironmentModule extends AbstractScriptModule {
 		throw new RuntimeException("cannot resolve \"" + filename + "\"");
 	}
 
-	// /**
-	// * List all available (visible) modules. Returns a list of visible
-	// modules. Loaded modules are indicated.
-	// *
-	// * @return string containing module information
-	// */
-	// @WrapToScript
-	// public final String listModules() {
-	// final Map<String, Class<? extends IScriptModule>> modules =
-	// getAvailableModules(false);
-	//
-	// final StringBuffer output = new StringBuffer();
-	//
-	// // add header
-	// output.append("available modules\n=================\n\n");
-	//
-	// // add modules
-	// for (final String moduleName : modules.keySet()) {
-	// output.append('\t');
-	//
-	// output.append(moduleName);
-	// if (findModule(moduleName) != null)
-	// output.append(" [LOADED]");
-	//
-	// output.append('\n');
-	// }
-	//
-	// // write to default output
-	// getScriptEngine().getOutputStream().print(output);
-	//
-	// return output.toString();
-	// }
-	//
+	/**
+	 * List all available (visible) modules. Returns a list of visible modules. Loaded modules are indicated.
+	 * 
+	 * @return string containing module information
+	 */
+	@WrapToScript
+	public final String listModules() {
+
+		IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		Collection<ModuleDefinition> modules = scriptService.getAvailableModules().values();
+
+		final StringBuilder output = new StringBuilder();
+
+		// add header
+		output.append("available modules\n=================\n\n");
+
+		// add modules
+		for (final ModuleDefinition module : modules) {
+
+			if (module.isVisible()) {
+				output.append('\t');
+
+				output.append(module.getName());
+				if (findModule(module.getName()) != null)
+					output.append(" [LOADED]");
+
+				output.append('\n');
+			}
+		}
+
+		// write to default output
+		print(output);
+
+		return output.toString();
+	}
+
 	private String getPreExecutionCode(final Method method) {
 		final StringBuffer code = new StringBuffer();
 
 		for (final Object module : mModules) {
 			if (module instanceof IScriptFunctionModifier)
-				code.append(((IScriptFunctionModifier)module).getPreExecutionCode(method));
+				code.append(((IScriptFunctionModifier) module).getPreExecutionCode(method));
 		}
 
 		return code.toString();
@@ -423,7 +405,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 		for (final Object module : mModules) {
 			if (module instanceof IScriptFunctionModifier)
-				code.append(((IScriptFunctionModifier)module).getPostExecutionCode(method));
+				code.append(((IScriptFunctionModifier) module).getPostExecutionCode(method));
 		}
 
 		return code.toString();
@@ -454,7 +436,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 	 * Print to standard output.
 	 * 
 	 * @param text
-	 *        text to write to standard output
+	 *            text to write to standard output
 	 */
 	@WrapToScript
 	public final void print(final Object text) {
@@ -509,7 +491,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 	private void fireModuleEvent(final Object module, final int type) {
 		for (Object listener : mModuleListeners.getListeners())
-			((IModuleListener)listener).notifyModule(module, type);
+			((IModuleListener) listener).notifyModule(module, type);
 	}
 
 	/**
@@ -522,7 +504,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 		if (engine == null) {
 			final Job currentJob = Job.getJobManager().currentJob();
 			if (currentJob instanceof IScriptEngine)
-				return (IScriptEngine)currentJob;
+				return (IScriptEngine) currentJob;
 		}
 
 		return engine;

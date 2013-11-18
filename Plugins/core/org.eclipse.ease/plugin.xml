@@ -1,55 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.4"?>
 <plugin>
    <extension-point id="language" name="Language" schema="schema/language.exsd"/>
    <extension-point id="modules" name="Modules" schema="schema/modules.exsd"/>
-   <extension
-         point="org.eclipse.ui.services">
-      <serviceFactory
-            factoryClass="org.eclipse.ease.service.ScriptServiceFactory">
-         <service
-               serviceClass="org.eclipse.ease.IScriptService"></service>
+   <extension point="org.eclipse.ui.services">
+      <serviceFactory factoryClass="org.eclipse.ease.service.ScriptServiceFactory">
+         <service serviceClass="org.eclipse.ease.IScriptService"/>
       </serviceFactory>
    </extension>
-   <extension
-         point="org.eclipse.core.runtime.adapters">
-      <factory
-            adaptableType="org.eclipse.core.resources.IFile"
-            class="org.eclipse.ease.adapters.ScriptableAdapter">
-         <adapter
-               type="org.eclipse.ease.IScriptable">
+   <extension point="org.eclipse.core.runtime.adapters">
+      <factory adaptableType="org.eclipse.core.resources.IFile" class="org.eclipse.ease.adapters.ScriptableAdapter">
+         <adapter type="org.eclipse.ease.IScriptable">
          </adapter>
       </factory>
-      <factory
-            adaptableType="java.io.File"
-            class="org.eclipse.ease.adapters.ScriptableAdapter">
-         <adapter
-               type="org.eclipse.ease.IScriptable">
+      <factory adaptableType="java.io.File" class="org.eclipse.ease.adapters.ScriptableAdapter">
+         <adapter type="org.eclipse.ease.IScriptable">
          </adapter>
       </factory>
    </extension>
-   <extension
-         point="org.eclipse.ecf.filetransfer.urlStreamHandlerService">
-      <urlStreamHandlerService
-            protocol="workspace"
-            serviceClass="org.eclipse.ease.urlhandler.WorkspaceURLStreamHandlerService">
+   <extension point="org.eclipse.ecf.filetransfer.urlStreamHandlerService">
+      <urlStreamHandlerService protocol="workspace" serviceClass="org.eclipse.ease.urlhandler.WorkspaceURLStreamHandlerService">
       </urlStreamHandlerService>
    </extension>
-   <extension
-         point="org.eclipse.debug.core.sourceLocators">
-      <sourceLocator
-            class="org.eclipse.ease.debugging.ScriptSourceLocator"
-            id="org.eclipse.ease.sourceLocator.generic"
-            name="Generic Script Source Locator">
+   <extension point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator class="org.eclipse.ease.debugging.ScriptSourceLocator" id="org.eclipse.ease.sourceLocator.generic" name="Generic Script Source Locator">
       </sourceLocator>
    </extension>
-   <extension
-         point="org.eclipse.ease.modules">
-      <module
-            class="org.eclipse.ease.modules.EnvironmentModule"
-            name="Environment"
-            visible="false">
+   <extension point="org.eclipse.ease.modules">
+      <module class="org.eclipse.ease.modules.EnvironmentModule" name="Environment" visible="false">
       </module>
    </extension>
+   <extension point="org.eclipse.help.toc">
+      <toc file="help/scripting_book.xml" primary="true">
+      </toc>
+   </extension>
 
+<extension point="org.eclipse.help.toc">
+<toc file="help/modules_toc.xml" primary="false"/>
+</extension>
 </plugin>

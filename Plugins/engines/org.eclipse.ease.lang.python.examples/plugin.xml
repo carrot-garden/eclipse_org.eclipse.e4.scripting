@@ -4,11 +4,11 @@
  <extension
          point="org.eclipse.ui.newWizards">
     <wizard
-          category="org.eclipse.ui.Examples/org.eclipse.eclipsemonkey.newsamplecategory"
+          category="org.eclipse.ui.Examples/org.eclipse.newWizard.category.ease"
           class="org.eclipse.ease.lang.python.examples.PythonMonkeyExamplesWizard"
           icon="icons/escript_monkey_py.png"
-          id="org.eclipse.ease.lang.python.examples"
-          name="EScript Monkey Pyton Scripts Examples">
+          id="org.eclipse.newWizard.pythonExamples"
+          name="Python Examples">
     </wizard>
    </extension>
 </plugin>

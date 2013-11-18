@@ -12,7 +12,7 @@ package org.eclipse.ease.integration.modeling.papyrus.examples;
 
 import org.osgi.framework.Bundle;
 
-public class PapyrusScriptSamples extends org.eclipse.ease.ui.wizard.AbstractEScriptMonkeyNewSampleWizard {
+public class PapyrusScriptSamples extends org.eclipse.ease.ui.wizard.AbstractNewSampleWizard {
 
 	@Override
 	protected Bundle getBundle() {

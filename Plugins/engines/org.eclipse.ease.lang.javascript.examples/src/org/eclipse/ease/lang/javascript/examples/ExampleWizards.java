@@ -12,7 +12,7 @@
  */
 package org.eclipse.ease.lang.javascript.examples;
 
-import org.eclipse.ease.ui.wizard.AbstractEScriptMonkeyNewSampleWizard;
+import org.eclipse.ease.ui.wizard.AbstractNewSampleWizard;
 import org.eclipse.ui.INewWizard;
 import org.osgi.framework.Bundle;
 
@@ -22,7 +22,7 @@ import org.osgi.framework.Bundle;
  * @author adaussy
  * 
  */
-public class ExampleWizards extends AbstractEScriptMonkeyNewSampleWizard implements INewWizard {
+public class ExampleWizards extends AbstractNewSampleWizard implements INewWizard {
 
 	public ExampleWizards() {
 	}
@@ -44,7 +44,6 @@ public class ExampleWizards extends AbstractEScriptMonkeyNewSampleWizard impleme
 
 	@Override
 	protected String getInitalProjectName() {
-		return "EScript Monkey Java Script Example";
+		return "JavaScript Script Examples";
 	}
-
 }

@@ -4,9 +4,9 @@
  <extension
          point="org.eclipse.ui.newWizards">
     <wizard
-          category="org.eclipse.ui.Examples/org.eclipse.eclipsemonkey.newsamplecategory"
+          category="org.eclipse.ui.Examples/org.eclipse.newWizard.category.ease"
           class="org.eclipse.ease.integration.modeling.examples.ModelingIntegrationScriptSamples"
-          id="org.eclipse.ease.integration.modeling.examples.examples"
+          id="org.eclipse.newWizard.modelingExamples"
           name="Modeling integration into EASE">
     </wizard>
    </extension>
