@@ -300,16 +300,12 @@
            name="Menu">
      </metadata>
       <metadata
-            impl="org.eclipse.ease.ui.metadata.EnableWhenMetadataParser"
-            name="EnableWhen">
+            impl="org.eclipse.ease.ui.metadata.VisibleWhenMetadataParser"
+            name="VisibleWhen">
       </metadata>
       <metadata
             impl="org.eclipse.ease.ui.metadata.ThreadMetadataParser"
             name="Thread">
-      </metadata>
-      <metadata
-            impl="org.eclipse.ease.ui.metadata.AvailableFromMetadataParser"
-            name="AvailableFrom">
       </metadata>
       <metadata
             impl="org.eclipse.ease.ui.metadata.EffectiveScriptGenerationMetadata"

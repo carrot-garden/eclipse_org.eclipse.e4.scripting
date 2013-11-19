@@ -1,5 +1,9 @@
 package org.eclipse.ease.integration.modeling.uml.modules;
 
+import org.eclipse.ease.IScriptEngine;
+import org.eclipse.ease.integration.modeling.EcoreModule;
+import org.eclipse.ease.module.platform.modules.DialogModule;
+import org.eclipse.ease.modules.EnvironmentModule;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -7,8 +11,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.ease.integration.modeling.EcoreModule;
-import org.eclipse.ease.module.platform.modules.DialogModule;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.UMLPackage;
 
@@ -21,7 +23,10 @@ import org.eclipse.uml2.uml.UMLPackage;
  */
 public class UMLModule extends EcoreModule {
 
-	public UMLModule() {
+
+	@Override
+	public void initialize(IScriptEngine engine, EnvironmentModule environment) {
+		super.initialize(engine, environment);
 		initEPackage(UMLPackage.eNS_URI);
 	}
 

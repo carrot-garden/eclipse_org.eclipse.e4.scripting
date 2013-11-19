@@ -38,7 +38,7 @@ public interface IUIMetadata {
 	/**
 	 * Metadata used to specify a Core Expression for unable a script in the contextual menu
 	 */
-	public static final String ENABLE_WHEN = "EnableWhen";
+	public static final String VISIBLE_WHEN = "VisibleWhen";
 
 	/**
 	 * Metadata used to specified from where the script should be available

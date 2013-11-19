@@ -8,6 +8,6 @@ scripts/DisplayLocation.py
 scripts/DisplaySelection.py
 scripts/ConvertToScriptingProject.py
 scripts/Script__Create_new_script_project.py
-editor/CreateYourEnableWhenExpressionHere.coreexpression
+editor/CreateYourVisibleWhenExpressionHere.coreexpression
 
 

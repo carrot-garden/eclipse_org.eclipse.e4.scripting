@@ -7,13 +7,16 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.integration.modeling.GMFtoEMFCommandWrapper;
 import org.eclipse.ease.integration.modeling.NotationModule;
 import org.eclipse.ease.integration.modeling.uml.modules.UMLModule;
 import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.modules.EnvironmentModule;
 import org.eclipse.ease.modules.ScriptParameter;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -63,7 +66,11 @@ public class PapyrusModule extends UMLModule {
 		return null;
 	}
 
-
+	@Override
+	public void initialize(IScriptEngine engine, EnvironmentModule environment) {
+		super.initialize(engine, environment);
+		notationModule.initialize(engine, environment);
+	}
 
 	@WrapToScript
 	public View getSelectionView() {
@@ -183,10 +190,19 @@ public class PapyrusModule extends UMLModule {
 		return compositeCommand;
 	}
 
+	@WrapToScript
+	@Override
+	public boolean eInstanceOf(@ScriptParameter(name = "eObject") EObject eObject, @ScriptParameter(name = "type") String type) {
+		EClassifier classifier = getEPackage().getEClassifier(type);
+		if(classifier == null) {
+			classifier = notationModule.getEPackage().getEClassifier(type);
+		}
+		return classifier.isInstance(eObject);
+	}
 
 	@Override
 	@WrapToScript
-	public void save(@ScriptParameter(name = "object") Object object) {
+	public void save(@ScriptParameter(name = "object", optional = true) Object object) {
 		save();
 	}
 }

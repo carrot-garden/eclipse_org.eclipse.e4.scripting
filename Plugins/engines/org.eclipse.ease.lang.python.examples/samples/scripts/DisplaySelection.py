@@ -1,8 +1,8 @@
 #
-# Menu: Examples > EnableWhen > Display Selection
+# Menu: Examples > VisibleWhen > Display Selection
 # Kudos: Arthur Daussy
 # Description: {Use this script to display the current selection}.
-#EnableWhen:[With selection {
+#VisibleWhen:[With selection {
 #        InstanceOf "org.eclipse.jface.viewers.ISelection"{
 #            }
 #}]
