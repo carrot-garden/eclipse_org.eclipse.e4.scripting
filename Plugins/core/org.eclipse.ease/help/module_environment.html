@@ -11,7 +11,7 @@
 	<table class="functions">
 		<tr>
 			<th><a href="#loadModule">loadModule</a></th>
-			<td>Load a module. Loading a module generally enhances the JavaScript environment with new functions and variables. If a module was already loaded before, it
+			<td>Load a module. Loading a module generally enhances the script environment with new functions and variables. If a module was already loaded before, it
  gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
  the whole module stack.</td>
 		</tr>
@@ -36,7 +36,8 @@
 			<th><a href="#include">include</a></th>
 			<td>Include and execute a script file. Quite similar to eval(Object) a source file is opened and its content is executed. Multiple sources are available:
  "workspace://" opens a file relative to the workspace root, "project://" opens a file relative to the current project, "file://" opens a file from the
- file system.</td>
+ file system. All other types of URIs are supported too (like http:// ...). You may also use absolute and relative paths as defined by your local file
+ system.</td>
 		</tr>
 		<tr>
 			<th><a href="#listModules">listModules</a></th>
@@ -52,7 +53,7 @@
 
 	<h3><a id="loadModule">loadModule</a></h3>
 	<p class="synopsis">java.lang.Object loadModule(java.lang.String identifier)</p>
-	<p class="description">Load a module. Loading a module generally enhances the JavaScript environment with new functions and variables. If a module was already loaded before, it
+	<p class="description">Load a module. Loading a module generally enhances the script environment with new functions and variables. If a module was already loaded before, it
  gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
  the whole module stack.</p>
 		<table class="parameters">
@@ -140,7 +141,8 @@
 	<p class="synopsis">java.lang.Object include(java.lang.String filename)</p>
 	<p class="description">Include and execute a script file. Quite similar to eval(Object) a source file is opened and its content is executed. Multiple sources are available:
  "workspace://" opens a file relative to the workspace root, "project://" opens a file relative to the current project, "file://" opens a file from the
- file system.</p>
+ file system. All other types of URIs are supported too (like http:// ...). You may also use absolute and relative paths as defined by your local file
+ system.</p>
 		<table class="parameters">
 			<tr>
 				<th>Parameter</th>

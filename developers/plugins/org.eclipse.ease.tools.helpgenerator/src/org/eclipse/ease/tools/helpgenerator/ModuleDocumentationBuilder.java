@@ -37,7 +37,8 @@ public class ModuleDocumentationBuilder extends IncrementalProjectBuilder {
 			parameters.add("-docletpath");
 			parameters.add(FileLocator.toFileURL(FrameworkUtil.getBundle(this.getClass()).getEntry("/")).getPath());
 			parameters.add("-classpath");
-			parameters.add(FileLocator.toFileURL(FrameworkUtil.getBundle(this.getClass()).getEntry("/lib/tools.jar")).getPath());
+			parameters.add(FileLocator.toFileURL(FrameworkUtil.getBundle(this.getClass()).getEntry("/lib/tools.jar")).getPath() + ";"
+					+ FileLocator.toFileURL(FrameworkUtil.getBundle(this.getClass()).getEntry(".")).getPath());
 			for (final String param : parameters)
 				System.out.println("\tP: " + param);
 

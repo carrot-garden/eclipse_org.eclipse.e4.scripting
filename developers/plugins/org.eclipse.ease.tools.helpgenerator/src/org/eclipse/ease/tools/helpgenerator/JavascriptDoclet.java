@@ -35,7 +35,8 @@ import com.sun.javadoc.RootDoc;
 
 public class JavascriptDoclet extends Doclet {
 
-	private static final String WRAP_TO_SCRIPT = "org.eclipse.ease.modules.WrapToScript";
+	private static final String QUALIFIED_WRAP_TO_SCRIPT = "org.eclipse.ease.modules.WrapToScript";
+	private static final String WRAP_TO_SCRIPT = "WrapToScript";
 	private static final String LINE_DELIMITER = "\n";
 
 	public static boolean start(final RootDoc root) {
@@ -346,7 +347,7 @@ public class JavascriptDoclet extends Doclet {
 
 	private String getSynonyms(final MethodDoc method) {
 		for (AnnotationDesc annotation : method.annotations()) {
-			if (WRAP_TO_SCRIPT.equals(annotation.annotationType().qualifiedName())) {
+			if (isWrapToScriptAnnotation(annotation)) {
 				for (ElementValuePair pair : annotation.elementValues()) {
 					if ("alias".equals(pair.element().name()))
 						return pair.value().toString();
@@ -417,11 +418,16 @@ public class JavascriptDoclet extends Doclet {
 	 */
 	private boolean isExported(final MethodDoc method) {
 		for (final AnnotationDesc annotation : method.annotations()) {
-			if (WRAP_TO_SCRIPT.equals(annotation.annotationType().qualifiedName()))
+			if (isWrapToScriptAnnotation(annotation))
 				return true;
 		}
 
 		return false;
+	}
+
+	private static boolean isWrapToScriptAnnotation(AnnotationDesc annotation) {
+		return (QUALIFIED_WRAP_TO_SCRIPT.equals(annotation.annotationType().qualifiedName()))
+				|| (WRAP_TO_SCRIPT.equals(annotation.annotationType().qualifiedName()));
 	}
 
 	private static StringBuffer readResourceFile(final String path) throws IOException {

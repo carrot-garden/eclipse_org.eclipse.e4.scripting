@@ -60,7 +60,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 	private final ListenerList mModuleListeners = new ListenerList();
 
 	/**
-	 * Load a module. Loading a module generally enhances the JavaScript environment with new functions and variables. If a module was already loaded before, it
+	 * Load a module. Loading a module generally enhances the script environment with new functions and variables. If a module was already loaded before, it
 	 * gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
 	 * the whole module stack.
 	 * 
@@ -273,7 +273,8 @@ public class EnvironmentModule extends AbstractScriptModule {
 	/**
 	 * Include and execute a script file. Quite similar to eval(Object) a source file is opened and its content is executed. Multiple sources are available:
 	 * "workspace://" opens a file relative to the workspace root, "project://" opens a file relative to the current project, "file://" opens a file from the
-	 * file system.
+	 * file system. All other types of URIs are supported too (like http:// ...). You may also use absolute and relative paths as defined by your local file
+	 * system.
 	 * 
 	 * @param filename
 	 *            name of file to be included
