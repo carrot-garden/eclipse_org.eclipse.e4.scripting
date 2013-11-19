@@ -93,7 +93,9 @@ public class EnvironmentModule extends AbstractScriptModule {
 				mModuleNames.put(identifier, module);
 			}
 		}
-
+		if (module == null) {
+			getScriptEngine().getErrorStream().append("Unable to find module with id " + identifier);
+		}
 		// create function wrappers
 		wrap(module);
 

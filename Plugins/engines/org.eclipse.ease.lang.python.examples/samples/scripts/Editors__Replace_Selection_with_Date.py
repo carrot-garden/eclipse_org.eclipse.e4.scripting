@@ -2,7 +2,7 @@
 # Thread:UI
 # Menu: Examples >Editors > Replace Selection with Date
 # Kudos: Jose Fonseca & Paul Colton & Arthur Daussy
-# EnableWhen:[With selection {
+# VisibleWhen:[With selection {
 #        InstanceOf "org.eclipse.jface.text.TextSelection"{
 #            }
 #}]

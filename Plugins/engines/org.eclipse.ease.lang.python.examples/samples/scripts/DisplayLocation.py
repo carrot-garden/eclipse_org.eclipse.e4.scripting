@@ -1,8 +1,8 @@
 #
-# Menu: Examples > EnableWhen > Display Files Location
+# Menu: Examples > VisibleWhen > Display Files Location
 # Kudos: Arthur Daussy
 # Description: {This script can be use to display the location of script into the workspace.}
-#EnableWhen:[With selection {
+#VisibleWhen:[With selection {
 #    Iterable {
 #        InstanceOf "org.eclipse.core.resources.IFile"
 #    }

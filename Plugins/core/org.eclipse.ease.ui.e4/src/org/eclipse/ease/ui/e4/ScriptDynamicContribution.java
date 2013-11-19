@@ -146,7 +146,7 @@ public class ScriptDynamicContribution {
 	CoreExpressionParser parser;
 
 	protected boolean visible(IStoredScript script, IEvaluationContext context) {
-		ScriptMetadata metadata = script.getMetadata(IUIMetadata.ENABLE_WHEN);
+		ScriptMetadata metadata = script.getMetadata(IUIMetadata.VISIBLE_WHEN);
 		if(metadata == null) {
 			return false;
 		}

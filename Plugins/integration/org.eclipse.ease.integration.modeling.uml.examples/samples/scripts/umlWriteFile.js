@@ -2,7 +2,7 @@
  * Menu: Examples > Modeling > UML > Write element name to file
  * License: EPL 1.0
  * Description : {This script illustrates how to write the result of a script into a text file.}
- * EnableWhen:[And {
+ * VisibleWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },

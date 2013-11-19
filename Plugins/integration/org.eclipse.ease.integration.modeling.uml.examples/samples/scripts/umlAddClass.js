@@ -1,7 +1,7 @@
 /*
  * Menu: Examples > Modeling > UML > Add class
  * License: EPL 1.0
- * EnableWhen:[And {
+ * VisibleWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
  *    },
