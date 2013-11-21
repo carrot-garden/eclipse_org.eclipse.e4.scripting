@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 Atos
+F * Copyright (c) 2013 Atos
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,16 +29,32 @@ import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.internal.dialogs.ShowViewDialog;
 import org.eclipse.ui.views.IViewDescriptor;
 
+/**
+ * Module used to interact with the workbench
+ * 
+ * @author adaussy
+ * 
+ */
 public class WorkbenchModule extends AbstractScriptModule {
 
 	public WorkbenchModule() {
 	}
 
+	/**
+	 * Return the active workbench
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public static IWorkbench getActiveWorkbench() {
 		return PlatformUI.getWorkbench();
 	}
 
+	/**
+	 * Return the Active Window {@link IWorkbench#getActiveWorkbenchWindow()}
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public static IWorkbenchWindow getActiveWindow() {
 		RunnableWithResult<IWorkbenchWindow> runnable = new RunnableWithResult<IWorkbenchWindow>() {
@@ -59,16 +75,31 @@ public class WorkbenchModule extends AbstractScriptModule {
 		return runnable.getResult();
 	}
 
+	/**
+	 * Return the active shell
+	 * 
+	 * @return The active shell
+	 */
 	@WrapToScript
 	public static Shell getActiveShell() {
 		return getActiveWindow().getShell();
 	}
 
+	/**
+	 * Return the active page {@link IWorkbenchWindow#getActivePage()}
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public static IWorkbenchPage getActivePage() {
 		return getActiveWindow().getActivePage();
 	}
 
+	/**
+	 * Return the current editor
+	 * 
+	 * @return The current editor
+	 */
 	@WrapToScript
 	public static IEditorPart getActiveEditor() {
 		return getActiveWindow().getActivePage().getActiveEditor();
@@ -78,6 +109,7 @@ public class WorkbenchModule extends AbstractScriptModule {
 	 * Display the view with the specific in the workbench
 	 * 
 	 * @param viewID
+	 *        The id of the view to show
 	 * @return
 	 */
 	@WrapToScript

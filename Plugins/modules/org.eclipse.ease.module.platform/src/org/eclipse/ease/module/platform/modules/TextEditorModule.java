@@ -10,18 +10,27 @@
  *******************************************************************************/
 package org.eclipse.ease.module.platform.modules;
 
+import org.eclipse.ease.module.platform.modules.editors.Editor;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
-import org.eclipse.ease.module.platform.modules.editors.Editor;
 import org.eclipse.ui.PlatformUI;
 
 
+/**
+ * A Example module for interacting with a Simplify text editor
+ * 
+ * @author adaussy
+ * 
+ */
 public class TextEditorModule extends AbstractScriptModule {
 
 
 	public TextEditorModule() {
 	}
 
+	/**
+	 * @return A simplification of a text {@link Editor}
+	 */
 	@WrapToScript
 	public Editor getActiveEditor() {
 		return new Editor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor());

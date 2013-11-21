@@ -24,34 +24,13 @@ import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
 
 /**
- * This DOM provides services for Topcased scripts to show information to the user.
+ * This module provides services to give information back to the user in files
  * 
  * @author <a href="mailto:pierre-charles.david@obeo.fr">Pierre-Charles David</a>
  */
 public class OutputModule extends AbstractScriptModule {
 
 
-	/**
-	 * Create a new text file in the workspace with the specified contents. This method is provided for convenience to
-	 * directly handle the result of <code>input.selectContainer()</code>.
-	 * 
-	 * @param location
-	 *        an array of one element which denotes the the container (project or folder) where to put the new
-	 *        file. It can be either an IFile or an IPath.
-	 * @param name
-	 *        the name of the new file.
-	 * @param contents
-	 *        the textual contents to store in the new file.
-	 * @return <code>true</code> if the file was successfully created, <code>false</code> if there was en error.
-	 */
-	//	@WrapToScript
-	//	public boolean createNewFile(Object[] location, String name, String contents) {
-	//		if(location != null && location.length != 1) {
-	//			return false;
-	//		} else {
-	//			return createNewFile(location[0], name, contents);
-	//		}
-	//	}
 
 	/**
 	 * Create a new text file in the workspace with the specified contents.
@@ -76,20 +55,6 @@ public class OutputModule extends AbstractScriptModule {
 		return createNewfile(eclipseFile, contents);
 	}
 
-	/**
-	 * Create a new text file in the workspace with the specified contents.
-	 * 
-	 * @param workspacePath
-	 *        the workspace-relative path of the new file to create (e.g. <code>"MyProject/myfile.txt"</code>).
-	 * @param contents
-	 *        the textual contents to store in the new file.
-	 * @return <code>true</code> if the file was successfuly created, <code>false</code> if there was en error.
-	 */
-	//	@WrapToScript
-	//	public boolean createNewFile(String workspacePath, String contents) {
-	//		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(workspacePath));
-	//		return createNewfile(file, contents);
-	//	}
 
 	private boolean createNewfile(IFile eclipseFile, String contents) {
 		if(eclipseFile.exists()) {

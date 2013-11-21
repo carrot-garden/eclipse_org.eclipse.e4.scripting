@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="Modules" link_to="../org.eclipse.ease/help/scripting_book.xml#modules_anchor">
+<topic href="help/module_workbenchmodule.html" label="WorkbenchModule"/>
+<topic href="help/module_selectionmodule.html" label="SelectionModule"/>
+<topic href="help/module_dialogmodule.html" label="DialogModule"/>
+<topic href="help/module_texteditormodule.html" label="TextEditorModule"/>
+</toc>

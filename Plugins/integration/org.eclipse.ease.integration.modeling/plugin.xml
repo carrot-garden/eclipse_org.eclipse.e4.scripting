@@ -1,31 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.ease.module.platform.Selector">
-      <Selector
-            id="GMFSemanticSeletor"
-            impl="org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor"
-            priority="50">
+   <extension point="org.eclipse.ease.module.platform.Selector">
+      <Selector id="GMFSemanticSeletor" impl="org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor" priority="50">
       </Selector>
-      <Selector
-            id="GMFNotationSelector"
-            impl="org.eclipse.ease.integration.modeling.selector.GMFNotationSelector"
-            priority="45">
+      <Selector id="GMFNotationSelector" impl="org.eclipse.ease.integration.modeling.selector.GMFNotationSelector" priority="45">
       </Selector>
    </extension>
-   <extension
-         point="org.eclipse.ease.modules">
-      <module
-            class="org.eclipse.ease.integration.modeling.EcoreModule"
-            name="EcoreModule"
-            visible="true">
+   <extension point="org.eclipse.ease.modules">
+      <module class="org.eclipse.ease.integration.modeling.EcoreModule" name="EcoreModule" visible="true">
       </module>
-      <module
-            class="org.eclipse.ease.integration.modeling.NotationModule"
-            name="NotationModule"
-            visible="true">
+      <module class="org.eclipse.ease.integration.modeling.NotationModule" name="NotationModule" visible="true">
       </module>
    </extension>
 
+<extension point="org.eclipse.help.toc">
+<toc file="help/modules_toc.xml" primary="false"/>
+</extension>
 </plugin>

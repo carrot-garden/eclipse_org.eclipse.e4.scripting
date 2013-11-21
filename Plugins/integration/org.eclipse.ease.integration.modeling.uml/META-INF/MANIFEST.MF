@@ -1,17 +1,16 @@
 Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Integration Uml
-Bundle-SymbolicName: org.eclipse.ease.integration.modeling.uml;singleton:=true
-Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: org.eclipse.ease.integration.modeling.uml.Activator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.ease,
- org.eclipse.ease.integration.modeling.examples,
- org.eclipse.ease.integration.modeling,
- org.eclipse.uml2.uml;bundle-version="4.1.0",
- org.eclipse.emf.edit,
- org.eclipse.ease.module.platform
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.ease.integration.modeling.uml.modules
+Require-Bundle: org.eclipse.help;bundle-version="[3.6.0,4.0.0)",org.ec
+ lipse.ui,org.eclipse.core.runtime,org.eclipse.ease,org.eclipse.ease.i
+ ntegration.modeling.examples,org.eclipse.ease.integration.modeling,or
+ g.eclipse.uml2.uml;bundle-version="4.1.0",org.eclipse.emf.edit,org.ec
+ lipse.ease.module.platform
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 0.1.0.qualifier
+Bundle-Name: Integration Uml
+Bundle-Activator: org.eclipse.ease.integration.modeling.uml.Activator
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.eclipse.ease.integration.modeling.uml;singlet
+ on:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
