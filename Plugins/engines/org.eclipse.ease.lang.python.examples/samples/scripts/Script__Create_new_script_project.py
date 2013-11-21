@@ -35,7 +35,7 @@ def createScript(project,scriptName) :
 
 def main() :
 	
-	project = openProjectWizard();
+	project = openNewProjectWizard();
 	addProjectNature(project,"org.eclipse.ease.storedscript.EScript_Monkey_Nature");
 
 	if project != None :

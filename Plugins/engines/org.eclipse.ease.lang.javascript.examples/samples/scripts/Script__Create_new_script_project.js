@@ -33,7 +33,7 @@ function createScript(project,scriptName) {
 
 function main() {
 	
-	var project = openProjectWizard();
+	var project = openNewProjectWizard();
 	addProjectNature(project,
 			"org.eclipse.ease.storedscript.EScript_Monkey_Nature");
 
