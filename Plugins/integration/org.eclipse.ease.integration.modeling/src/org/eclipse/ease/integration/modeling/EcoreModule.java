@@ -178,7 +178,7 @@ public class EcoreModule extends AbstractScriptModule {
 	 */
 	@WrapToScript
 	public void initEPackage(@ScriptParameter(name = "nsURI") String nsURI) {
-		if(uri == null) {
+		if(nsURI == null) {
 			initEPackageFromDialog();
 		} else {
 			this.uri = nsURI;

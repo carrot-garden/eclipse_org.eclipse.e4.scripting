@@ -58,7 +58,8 @@ public class PapyrusModule extends UMLModule {
 
 	/**
 	 * Return the model set (ResourceSet) of the current model open in Papyrus
-	 * @return 
+	 * 
+	 * @return
 	 */
 	@WrapToScript
 	public ModelSet getModelSet() {
@@ -84,7 +85,8 @@ public class PapyrusModule extends UMLModule {
 
 	/**
 	 * Return the select view element (Notation metamodel)
-	 * @return 
+	 * 
+	 * @return
 	 */
 	@WrapToScript
 	public View getSelectionView() {
@@ -97,7 +99,8 @@ public class PapyrusModule extends UMLModule {
 
 	/**
 	 * Return the UML element from the selection
-	 * @return 
+	 * 
+	 * @return
 	 */
 	@WrapToScript
 	public Element getSelectionElement() {

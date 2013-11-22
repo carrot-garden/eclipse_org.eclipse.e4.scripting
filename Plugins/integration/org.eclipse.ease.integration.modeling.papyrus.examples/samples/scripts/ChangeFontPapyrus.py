@@ -16,7 +16,6 @@
 #
 
 from java.lang import Runnable
-from org.eclipse.gmf.runtime.notation import Node
 from org.eclipse.gmf.runtime.diagram.core.util import ViewUtil
 from org.eclipse.gmf.runtime.notation import NotationPackage
 from org.eclipse.swt.graphics import FontData
@@ -27,31 +26,32 @@ from org.eclipse.uml2.uml import Class
 
 
 def main():
-    selection = notation.getSelection("Node")
+    selection = getSelectionView()
     if selection == None:
         print "[ERROR] Please select a graphical node."
         return
     GMFresource = selection.eResource()
+    print GMFresource
             
     class MyRunnable(Runnable) :
         def run(self):
-            print "[INFO] Update Fonts"
             font = FontData("Tahoma", 8, NORMAL) 
-            
             for elt in GMFresource.getAllContents():
-                if isinstance(elt, Node):
+                if eInstanceOf(elt, "Shape"):
                     object = elt.getElement()
-                    
-                    if isinstance(object, Class):
-                        print "[INFO] " + object.eContainer().getName() + "::" + object.getName() + " has been updated."
-                        
-                        ViewUtil.setStructuralFeatureValue(elt, NotationPackage.eINSTANCE.getFontStyle_FontName(), StringConverter.asString(font))
+                    print Class
+                    if eInstanceOf(object, "Class"):
+                        print "[INFO] Update Fonts"
+                        print "Currently in "+str(elt)
+                        fontNameFeature = NotationPackage.eINSTANCE.getFontStyle_FontName()
+                        fontAsString = StringConverter.asString(font)
+                        ViewUtil.setStructuralFeatureValue(elt,fontNameFeature ,fontAsString)
     
     op = MyRunnable()
-    notation.runOperation(op, "Change Class font to Tahoma")
-    notation.save()
+    runOperation(op, "Change Class font to Tahoma")
+    save()
     print "[INFO] file " + GMFresource.getURI().toString() + " has been saved."
 
 
-notation = loadModule("NotationModule")
+loadModule("PapyrusModule")
 main()
