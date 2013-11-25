@@ -5,6 +5,15 @@
  * have a specified type. It illustrates how to obtain the top-level Model, how to navigate inside a whole model
  * (recursively) and detect elements which match some criterion, and how to
  * report results in the console.}
+ * VisibleWhen:[And {
+ * With selection {
+ *        Iterable {
+ *            AdaptTo "org.eclipse.emf.ecore.EObject"{
+ *                InstanceOf "org.eclipse.uml2.uml.Element"
+ *            }
+ *        }
+ *    }
+ *}]
  */
 
 function main() {
@@ -18,7 +27,7 @@ function main() {
 
 function run() {
 	var attributes;
-	var current = uml.getModel();
+	var current = uml.getSelection().getModel();
 	if (current == null) {
 		output.error("Unable to retreive the model element");
 		return;

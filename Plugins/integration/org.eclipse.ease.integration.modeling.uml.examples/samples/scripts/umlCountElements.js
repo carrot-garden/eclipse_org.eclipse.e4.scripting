@@ -57,7 +57,7 @@ function countElements(elt, kind) {
 	var children;
 	var i;
 
-	if (uml.isA(elt, kind)) {
+	if (eInstanceOf(elt, kind)) {
 		count = 1;
 	}
 	children = elt.getOwnedElements();

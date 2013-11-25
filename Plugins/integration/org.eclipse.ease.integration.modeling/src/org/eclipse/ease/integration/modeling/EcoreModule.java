@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.internal.runtime.AdapterManager;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -441,6 +442,12 @@ public class EcoreModule extends AbstractScriptModule {
 			if(domain instanceof EditingDomain) {
 				return (EditingDomain)domain;
 			}
+			domain = AdapterManager.getDefault().getAdapter(currentEditorPart, EditingDomain.class);
+			if(domain instanceof EditingDomain) {
+				return (EditingDomain)domain;
+			}
+
+
 		} else {
 			Logger.logWarning("Unable to retreive editing domain. There is not opened editor");
 		}
