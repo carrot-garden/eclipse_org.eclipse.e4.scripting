@@ -31,7 +31,7 @@
             description="Run a JavaScript file"
             icon="images/rhino.gif"
             id="org.eclipse.ease.launchShortcut.rhino"
-            label="EScript JavaScript (Rhino)"
+            label="EASE JavaScript (Rhino)"
             modes="run,debug">
          <contextualLaunch>
             <enablement>
@@ -62,7 +62,7 @@
             delegate="org.eclipse.ease.engine.javascript.rhino.ui.launching.Launcher"
             id="org.eclipse.ease.launchConfigurationType.rhino"
             modes="run,debug"
-            name="EScript JavaScript (Rhino)"
+            name="EASE JavaScript (Rhino)"
             sourceLocatorId="org.eclipse.ease.sourceLocator.generic">
       </launchConfigurationType>
    </extension>
