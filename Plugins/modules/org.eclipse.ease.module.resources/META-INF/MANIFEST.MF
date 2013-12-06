@@ -6,7 +6,7 @@ Require-Bundle: org.eclipse.help;bundle-version="[3.6.0,4.0.0)",org.ec
  t;bundle-version="3.8.100",org.eclipse.ease.storedscript,org.eclipse.
  ui.editors;bundle-version="3.8.100"
 Bundle-Vendor: Code & me
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.1.1.qualifier
 Bundle-Name: EASE - Sample module
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.ease.module.resources;singleton:=true
