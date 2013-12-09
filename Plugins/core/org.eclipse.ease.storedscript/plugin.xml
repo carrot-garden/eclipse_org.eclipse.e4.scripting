@@ -8,7 +8,7 @@
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
-               class="org.eclipse.ease.storedscript.EScriptMonkeyMonkeyProjectNature">
+               class="org.eclipse.ease.storedscript.EASEProjectNature">
          </run>
       </runtime>
    </extension>
