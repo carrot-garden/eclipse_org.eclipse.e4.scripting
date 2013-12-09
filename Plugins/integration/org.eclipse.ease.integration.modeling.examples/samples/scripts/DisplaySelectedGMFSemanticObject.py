@@ -5,7 +5,7 @@
 #VisibleWhen:[With activeEditor {
 #    Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
 #}]
-# License: EPL 1.0
+# License: EDL 1.0
 #
 loadModule("SelectionModule")
 

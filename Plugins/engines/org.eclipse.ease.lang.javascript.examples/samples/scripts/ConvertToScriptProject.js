@@ -2,7 +2,7 @@
  * Thread: UI
  * Menu: ScriptUtils > Resource > Convert to scripting project
  * Kudos: Arthur Daussy.
- * License: EPL 1.0
+ * License: EDL 1.0
  * Description : {This script is used to convert the selected IProject to script project.}
  * EnableWhen::[With selection {
  *    Iterable {

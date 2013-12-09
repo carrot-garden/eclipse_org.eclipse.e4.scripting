@@ -2,7 +2,7 @@
 # Menu: Examples > Modeling > Create resources
 # Kudos: Arthur Daussy
 # Description: { Demonstrate how to create and fill a resource.}
-# License: EPL 1.0
+# License: EDL 1.0
 #
 
 import  org.eclipse.uml2.uml.Class as Clazz

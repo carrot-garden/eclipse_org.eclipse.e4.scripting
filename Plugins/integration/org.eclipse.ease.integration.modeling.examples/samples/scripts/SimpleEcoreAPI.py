@@ -11,7 +11,7 @@
 #        }
 #    }
 #}]
-# License: EPL 1.0
+# License: EDL 1.0
 #
 
 import  org.eclipse.uml2.uml.Class as Clazz

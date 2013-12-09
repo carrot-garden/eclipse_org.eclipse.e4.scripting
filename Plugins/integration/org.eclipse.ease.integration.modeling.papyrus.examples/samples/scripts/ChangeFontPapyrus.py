@@ -1,5 +1,5 @@
 # Menu: Examples > Modeling > Papyrus > Change Class font to Tahoma (Papyrus)
-# License: EPL 1.0
+# License: EDL 1.0
 # VisibleWhen:[And {
 #   With activeEditor {
 #        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"

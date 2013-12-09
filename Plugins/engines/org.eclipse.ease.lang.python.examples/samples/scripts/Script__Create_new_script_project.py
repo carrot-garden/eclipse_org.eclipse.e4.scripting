@@ -2,7 +2,7 @@
 # Thread: UI
 # Menu: ScriptUtils > Create new Script Project
 # Kudos: Arthur Daussy.
-# License: EPL 1.0
+# License: EDL 1.0
 # Description: {This script is used to show an example for Workspace basic manipulation.}
 # VisibleWhen:[With activePartId {
 #	Equal "org.eclipse.ui.navigator.ProjectExplorer"

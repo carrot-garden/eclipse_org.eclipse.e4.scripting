@@ -1,6 +1,6 @@
 /*
  * Menu: Examples > Modeling > UML > Write element name to file
- * License: EPL 1.0
+ * License: EDL 1.0
  * Description : {This script illustrates how to write the result of a script into a text file.}
  * VisibleWhen:[And {
  *   With activeEditor {

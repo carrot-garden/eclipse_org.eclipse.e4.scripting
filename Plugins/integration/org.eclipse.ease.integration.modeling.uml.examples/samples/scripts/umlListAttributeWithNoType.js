@@ -1,6 +1,6 @@
 /*
  * Menu: Examples > Modeling > UML > List attribute with no type
- * License: EPL 1.0
+ * License: EDL 1.0
  * Description: {This script lists the attribute anywhere in the current model which do not
  * have a specified type. It illustrates how to obtain the top-level Model, how to navigate inside a whole model
  * (recursively) and detect elements which match some criterion, and how to
