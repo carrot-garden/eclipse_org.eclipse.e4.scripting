@@ -17,4 +17,4 @@ selection = selectionHelper.getIterableSelection();
 iterator = selection.iterator();
 
 while(iterator.hasNext())
-	addProjectNature(iterator.next(),"org.eclipse.ease.storedscript.EScript_Monkey_Nature");
+	addProjectNature(iterator.next(),"org.eclipse.ease.storedscript.EASE_Nature");

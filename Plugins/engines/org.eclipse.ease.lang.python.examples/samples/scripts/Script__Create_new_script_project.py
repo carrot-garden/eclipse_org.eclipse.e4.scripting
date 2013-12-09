@@ -36,7 +36,7 @@ def createScript(project,scriptName) :
 def main() :
 	
 	project = openNewProjectWizard();
-	addProjectNature(project,"org.eclipse.ease.storedscript.EScript_Monkey_Nature");
+	addProjectNature(project,"org.eclipse.ease.storedscript.EASE_Nature");
 
 	if project != None :
 		createFolder("/" + project.getName() + "/scripts");

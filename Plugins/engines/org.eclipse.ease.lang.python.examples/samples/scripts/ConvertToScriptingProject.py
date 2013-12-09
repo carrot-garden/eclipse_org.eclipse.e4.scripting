@@ -19,6 +19,6 @@ print selection
 for s in selection:
 	if isinstance(s,org.eclipse.core.resources.IProject):
 		print "Add script nature to "+ s.getName()
-		addProjectNature(s,"org.eclipse.ease.storedscript.EScript_Monkey_Nature")
+		addProjectNature(s,"org.eclipse.ease.storedscript.EASE_Nature")
 	else:
 		print s +" is not a IProject"
