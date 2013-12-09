@@ -189,6 +189,8 @@ public class EcoreModule extends AbstractScriptModule {
 			String factoryName = getFactoryVariableName();
 			CodeInjectorUtils.injectJavaVariable(factoryName, factory, getScriptEngine());
 			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName, getScriptEngine(), "[UML Module] Injecting class " + factory.getClass().getName());
+		} else {
+			output.error("Unable to find metamodel with URI : " + this.uri);
 		}
 	}
 
