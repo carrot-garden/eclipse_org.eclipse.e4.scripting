@@ -12,8 +12,8 @@ package org.eclipse.ease.ui.expression.xtext.ui.contentassist
 
 import org.eclipse.ease.ui.expression.xtext.ui.contentassist.AbstractCoreExpressionProposalProvider
 
-/**
- * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
+/** 
+ * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant  
  */
 class CoreExpressionProposalProvider extends AbstractCoreExpressionProposalProvider {
 }
