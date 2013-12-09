@@ -33,7 +33,6 @@ import org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor;
 import org.eclipse.ease.integration.modeling.ui.UriSelectionDialog;
 import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.module.interaction.InputModule;
-import org.eclipse.ease.module.interaction.OutputModule;
 import org.eclipse.ease.module.platform.modules.DialogModule;
 import org.eclipse.ease.module.platform.modules.SelectionModule;
 import org.eclipse.ease.modules.AbstractScriptModule;
@@ -85,7 +84,6 @@ public class EcoreModule extends AbstractScriptModule {
 
 	protected SelectionModule selectionModule = new SelectionModule();
 
-	protected OutputModule output = new OutputModule();
 
 	protected InputModule input = new InputModule();
 
@@ -184,13 +182,18 @@ public class EcoreModule extends AbstractScriptModule {
 		} else {
 			this.uri = nsURI;
 		}
+		EPackage ePack = getEPackage();
+		if(ePack == null) {
+			DialogModule.error("Unable to find metamodel with URI : " + this.uri);
+			return;
+		}
 		EFactory factory = getFactory();
 		if(factory != null) {
 			String factoryName = getFactoryVariableName();
 			CodeInjectorUtils.injectJavaVariable(factoryName, factory, getScriptEngine());
 			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName, getScriptEngine(), "[UML Module] Injecting class " + factory.getClass().getName());
 		} else {
-			output.error("Unable to find metamodel with URI : " + this.uri);
+			DialogModule.error("Unable to find metamodel with URI : " + this.uri);
 		}
 	}
 
@@ -234,17 +237,33 @@ public class EcoreModule extends AbstractScriptModule {
 		URI container = null;
 		if(containerURI == null) {
 			//Launch dialog to get an URI
-			ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), false, "Select where you want to add your resource");
-			if(dialog.open() != Window.OK) {
-				return null;
-			}
-			Object[] result = dialog.getResult();
-			if(result == null || result.length == 0) {
-				output.error("Unable to retreive a container for the new resource from your selestion");
-				return null;
-			}
-			IPath containerPath = (IPath)result[0];
-			container = URI.createPlatformResourceURI(containerPath.toString(), true);
+			RunnableWithResult<IPath> getPathRunnable = new RunnableWithResult<IPath>() {
+
+				private IPath path = null;
+
+				@Override
+				public void run() {
+					ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), false, "Select where you want to add your resource");
+					if(dialog.open() != Window.OK) {
+						return;
+					}
+					Object[] result = dialog.getResult();
+					if(result == null || result.length == 0) {
+						DialogModule.error("Unable to retreive a container for the new resource from your selestion");
+						return;
+					}
+					path = (IPath)result[0];
+
+				}
+
+				@Override
+				public IPath getResult() {
+					return path;
+				}
+
+			};
+			Display.getDefault().syncExec(getPathRunnable);
+			container = URI.createPlatformResourceURI(getPathRunnable.toString(), true);
 		} else {
 			container = URI.createFileURI(containerURI);
 		}
@@ -267,7 +286,11 @@ public class EcoreModule extends AbstractScriptModule {
 		if(this.uri == null) {
 			initEPackageFromDialog();
 		}
-		return EPackage.Registry.INSTANCE.getEFactory(uri);
+		EPackage ePackage = getEPackage();
+		if(ePackage == null) {
+			throw new RuntimeException("Unable to retreive EPackage with URI " + this.uri);
+		}
+		return ePackage.getEFactoryInstance();
 	}
 
 	/**
@@ -280,7 +303,8 @@ public class EcoreModule extends AbstractScriptModule {
 		if(this.uri == null) {
 			initEPackageFromDialog();
 		}
-		return EPackage.Registry.INSTANCE.getEPackage(uri);
+		EPackage ePack = EPackage.Registry.INSTANCE.getEPackage(uri);
+		return ePack;
 	}
 
 	private void initEPackageFromDialog() {
@@ -401,7 +425,7 @@ public class EcoreModule extends AbstractScriptModule {
 				toSave.save(null);
 			} catch (IOException e) {
 				e.printStackTrace();
-				output.error(e.getMessage());
+				DialogModule.error(e.getMessage());
 				return;
 			}
 		} else {
