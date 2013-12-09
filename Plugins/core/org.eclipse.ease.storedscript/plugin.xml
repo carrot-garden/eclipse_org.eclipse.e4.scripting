@@ -3,8 +3,8 @@
 <plugin>
  <extension-point id="metadata" name="metadata" schema="schema/metadata_parser.exsd"/>
   <extension
-         id="EScript_Monkey_Nature"
-         name="EScript_Monkey_Nature"
+         id="EASE_Nature"
+         name="EASE_Nature"
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
