@@ -1,5 +1,4 @@
 #
-# Thread: UI
 # Menu: Examples > Modeling > Create resources
 # Kudos: Arthur Daussy
 # Description: { Demonstrate how to create and fill a resource.}
@@ -18,27 +17,25 @@ class MyRunnable(Runnable) :
             newClass = createClass();
             newClass.setName("class_"+str(i));
             model.getPackagedElements().add(newClass)
+        print "Saing the resource..."
         save(resource)
     
     def run(self):
-        #Create resource dynamically
+        print "Creating resource dynamically"
         newResource = createResource()
+        print "Filling the resource...."
         self.fillModel(newResource)
-        print newResource.getURI().toString()
-         #Create resource semi automatically
+        print "Creating resource semi dynamically"
         newResource = createResource(name="semeAutomatically.uml")
         self.fillModel(newResource)
-        print newResource.getURI().toString()
+        print "Filling the resource...."
                 
         
-loadModule("EcoreModule")
+uml = loadModule("EcoreModule")
 initEPackage("http://www.eclipse.org/uml2/4.0.0/UML")
+print str(uml.getFactory())
 # Get the selected EObject
 op = MyRunnable()
 runOperation(op,"Create resources")
-
-
-
-         
 
 

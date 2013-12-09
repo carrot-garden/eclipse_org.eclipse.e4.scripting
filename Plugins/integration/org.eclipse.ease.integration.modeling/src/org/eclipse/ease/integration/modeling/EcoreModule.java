@@ -191,7 +191,7 @@ public class EcoreModule extends AbstractScriptModule {
 		if(factory != null) {
 			String factoryName = getFactoryVariableName();
 			CodeInjectorUtils.injectJavaVariable(factoryName, factory, getScriptEngine());
-			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName, getScriptEngine(), "[UML Module] Injecting class " + factory.getClass().getName());
+			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName, getScriptEngine(), "[Ecore Module] Injecting class " + factory.getClass().getName());
 		} else {
 			DialogModule.error("Unable to find metamodel with URI : " + this.uri);
 		}
@@ -239,7 +239,7 @@ public class EcoreModule extends AbstractScriptModule {
 			//Launch dialog to get an URI
 			RunnableWithResult<IPath> getPathRunnable = new RunnableWithResult<IPath>() {
 
-				private IPath path = null;
+				private IPath tt = null;
 
 				@Override
 				public void run() {
@@ -252,18 +252,19 @@ public class EcoreModule extends AbstractScriptModule {
 						DialogModule.error("Unable to retreive a container for the new resource from your selestion");
 						return;
 					}
-					path = (IPath)result[0];
+					tt = (IPath)result[0];
 
 				}
 
 				@Override
 				public IPath getResult() {
-					return path;
+					return tt;
 				}
 
 			};
 			Display.getDefault().syncExec(getPathRunnable);
-			container = URI.createPlatformResourceURI(getPathRunnable.toString(), true);
+			IPath containerPath = getPathRunnable.getResult();
+			container = URI.createPlatformResourceURI(containerPath.toString(), true);
 		} else {
 			container = URI.createFileURI(containerURI);
 		}
