@@ -28,7 +28,7 @@ public class RhinoDebugTarget extends ScriptDebugTarget {
 
 	@Override
 	public String getName() throws DebugException {
-		return "eScriptMonkey Rhino Debugger";
+		return "EASE Rhino Debugger";
 	}
 
 	// ************************************************************

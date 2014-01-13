@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../../org.eclipse.ease/help/scripting_book.css">
+	</head>
+	<body>
+	<h1>Module SelectionModule</h1>
+	<p>Module to interact with selection</p>
+	<p class="dependencies"></p>
+
+	<h2>Function Overview</h2>
+	<table class="functions">
+		<tr>
+			<th><a href="#getSelection">getSelection</a></th>
+			<td>Return the current selection {@link ISelection}</td>
+		</tr>
+		<tr>
+			<th><a href="#getCustomSelection">getCustomSelection</a></th>
+			<td>Return the current selection using the selection service.
+ The selection service return transformed selection using some rules define in the platform. This method use the selector with the
+ Highest priority</td>
+		</tr>
+		<tr>
+			<th><a href="#getCustomSelectionFromSelector">getCustomSelectionFromSelector</a></th>
+			<td>Return the current selection using the selection service.
+ The selection service return transformed selection using some rules define in the platform.</td>
+		</tr>
+		<tr>
+			<th><a href="#getIterableSelection">getIterableSelection</a></th>
+			<td>Return the selection after being adapter to {@link IIterable}</td>
+		</tr>
+	</table>
+
+	<h2>Functions</h2>
+
+	<h3><a id="getSelection">getSelection</a></h3>
+	<p class="synopsis">ISelection getSelection()</p>
+	<p class="description">Return the current selection {@link ISelection}</p>
+	<p class="return">ISelection ... </p>
+
+	<h3><a id="getCustomSelection">getCustomSelection</a></h3>
+	<p class="synopsis">java.lang.Object getCustomSelection()</p>
+	<p class="description">Return the current selection using the selection service.
+ The selection service return transformed selection using some rules define in the platform. This method use the selector with the
+ Highest priority</p>
+	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a> ... </p>
+
+	<h3><a id="getCustomSelectionFromSelector">getCustomSelectionFromSelector</a></h3>
+	<p class="synopsis">java.lang.Object getCustomSelectionFromSelector(java.lang.String selectorID)</p>
+	<p class="description">Return the current selection using the selection service.
+ The selection service return transformed selection using some rules define in the platform.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>selectorID</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
+			<td>The if of the selector to use</td>
+		</tr>
+	</table>
+	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a> ... </p>
+
+	<h3><a id="getIterableSelection">getIterableSelection</a></h3>
+	<p class="synopsis">java.lang.Iterable getIterableSelection()</p>
+	<p class="description">Return the selection after being adapter to {@link IIterable}</p>
+	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Iterable.html">java.lang.Iterable</a> ... </p>
+	</body>
+</html>

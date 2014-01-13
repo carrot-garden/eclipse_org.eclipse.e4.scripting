@@ -20,6 +20,7 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 
 /**
  * This module help to handle Notation models
+ * This extends {@link EcoreModule}
  * 
  * @author adaussy
  * 

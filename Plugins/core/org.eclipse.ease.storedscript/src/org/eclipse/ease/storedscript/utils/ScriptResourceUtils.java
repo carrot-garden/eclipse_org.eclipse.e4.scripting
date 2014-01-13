@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ease.EngineDescription;
 import org.eclipse.ease.ScriptType;
 import org.eclipse.ease.service.ScriptService;
-import org.eclipse.ease.storedscript.EScriptMonkeyMonkeyProjectNature;
+import org.eclipse.ease.storedscript.EASEProjectNature;
 
 /**
  * Helper to handle script resources
@@ -34,7 +34,7 @@ public class ScriptResourceUtils {
 	public static boolean isEclipseMonkeyProject(IProject project) {
 		if(project != null && project.isAccessible()) {
 			try {
-				return project.hasNature(EScriptMonkeyMonkeyProjectNature.ESCRIPT_MONKEY_NATURE);
+				return project.hasNature(EASEProjectNature.ESCRIPT_MONKEY_NATURE);
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
@@ -72,7 +72,7 @@ public class ScriptResourceUtils {
 	public static void addEclipseMoneyNature(IProject project) throws CoreException {
 		if(project != null) {
 			if(!isEclipseMonkeyProject(project)) {
-				addNature(project, EScriptMonkeyMonkeyProjectNature.ESCRIPT_MONKEY_NATURE);
+				addNature(project, EASEProjectNature.ESCRIPT_MONKEY_NATURE);
 			}
 		}
 	}

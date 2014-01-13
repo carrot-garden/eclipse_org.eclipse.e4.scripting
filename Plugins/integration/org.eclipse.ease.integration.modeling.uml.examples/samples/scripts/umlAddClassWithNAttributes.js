@@ -1,6 +1,6 @@
 /*
  * Menu: Examples > Modeling > UML > Add class with N attributes
- * License: EPL 1.0
+ * License: EDL 1.0
  * VisibleWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"

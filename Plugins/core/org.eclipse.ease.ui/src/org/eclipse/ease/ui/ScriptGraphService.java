@@ -10,11 +10,19 @@
  */
 package org.eclipse.ease.ui;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.storedscript.notification.IStoredScriptListener;
+import org.eclipse.ease.storedscript.service.IStoredScriptService;
+import org.eclipse.ease.storedscript.storedscript.IStoredScript;
+import org.eclipse.ease.storedscript.storedscript.ScriptMetadata;
+import org.eclipse.ease.storedscript.storedscript.StoredScriptRegistry;
+import org.eclipse.ease.storedscript.storedscript.StoredscriptPackage;
 import org.eclipse.ease.ui.metadata.IUIMetadata;
 import org.eclipse.ease.ui.metadata.UIMetadataUtils;
 import org.eclipse.ease.ui.scriptuigraph.Node;
@@ -28,13 +36,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.ease.log.Logger;
-import org.eclipse.ease.storedscript.notification.IStoredScriptListener;
-import org.eclipse.ease.storedscript.service.IStoredScriptService;
-import org.eclipse.ease.storedscript.storedscript.IStoredScript;
-import org.eclipse.ease.storedscript.storedscript.ScriptMetadata;
-import org.eclipse.ease.storedscript.storedscript.StoredScriptRegistry;
-import org.eclipse.ease.storedscript.storedscript.StoredscriptPackage;
 
 
 public class ScriptGraphService implements IStoredScriptListener {
@@ -124,6 +125,18 @@ public class ScriptGraphService implements IStoredScriptListener {
 					addUIScript((IStoredScript)scriptNotif.getNewValue());
 				} else if(Notification.REMOVE == scriptNotif.getEventType()) {
 					removeUIScript((IStoredScript)scriptNotif.getOldValue());
+				} else if(Notification.REMOVE_MANY == scriptNotif.getEventType()) {
+					Collection<IStoredScript> toRemove = (Collection<IStoredScript>)scriptNotif.getOldValue();
+					for(IStoredScript script : toRemove) {
+						removeUIScript(script);
+					}
+
+				} else if(Notification.ADD_MANY == scriptNotif.getEventType()) {
+					Collection<IStoredScript> toRemove = (Collection<IStoredScript>)scriptNotif.getOldValue();
+					for(IStoredScript script : toRemove) {
+						addUIScript(script);
+					}
+
 				}
 			}
 		} else if(notifier instanceof ScriptMetadata) {

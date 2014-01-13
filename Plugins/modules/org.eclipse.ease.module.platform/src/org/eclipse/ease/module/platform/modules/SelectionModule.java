@@ -14,9 +14,9 @@ import org.eclipse.core.expressions.IIterable;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IAdapterManager;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
-import org.eclipse.ease.log.Logger;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISelectionService;
@@ -38,6 +38,11 @@ public class SelectionModule extends AbstractScriptModule {
 		super();
 	}
 
+	/**
+	 * Return the current selection {@link ISelection}
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public ISelection getSelection() {
 		GetSelectionRunnable runnable = new GetSelectionRunnable();
@@ -46,6 +51,13 @@ public class SelectionModule extends AbstractScriptModule {
 		return selection;
 	}
 
+	/**
+	 * Return the current selection using the selection service.
+	 * The selection service return transformed selection using some rules define in the platform. This method use the selector with the
+	 * Highest priority
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public Object getCustomSelection() {
 		ISelection selection = getSelection();
@@ -58,12 +70,25 @@ public class SelectionModule extends AbstractScriptModule {
 		return selection;
 	}
 
+	/**
+	 * Return the current selection using the selection service.
+	 * The selection service return transformed selection using some rules define in the platform.
+	 * 
+	 * @param selectorID
+	 *        The if of the selector to use
+	 * @return
+	 */
 	@WrapToScript
 	public Object getCustomSelectionFromSelector(String selectorID) {
 		ISelection selection = getSelection();
 		return SelectorService.getInstance().getSelectionFromSelector(selection, selectorID);
 	}
 
+	/**
+	 * Return the selection after being adapter to {@link IIterable}
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public Iterable<Object> getIterableSelection() {
 		ISelection selection = getSelection();

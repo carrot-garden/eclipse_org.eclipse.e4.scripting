@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.internal.runtime.AdapterManager;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -32,7 +33,6 @@ import org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor;
 import org.eclipse.ease.integration.modeling.ui.UriSelectionDialog;
 import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.module.interaction.InputModule;
-import org.eclipse.ease.module.interaction.OutputModule;
 import org.eclipse.ease.module.platform.modules.DialogModule;
 import org.eclipse.ease.module.platform.modules.SelectionModule;
 import org.eclipse.ease.modules.AbstractScriptModule;
@@ -72,18 +72,18 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
 /**
- * A base class which provides access to meta-model independent objects and services for Modeling scripts. This class is
- * not exposed directly as a DOM in this plug-in. It is made to be extended and customized by meta-model specific DOMs
- * in other plug-ins.
+ * This offer to user means to handle EMF models (Create EObject, Select element, Handle resources etc..).
+ * This module need to be initialized with an nsURI referencing a metamodel usin {@link EcoreModule#initEPackage(String)}.Once this module has been
+ * initialized all creation method of the factory is injected in the script.
  * 
  * @author <a href="mailto:pierre-charles.david@obeo.fr">Pierre-Charles David</a>
  * @author <a href="mailto:laurent.redor@obeo.fr">Laurent Redor</a>
+ * @author <a href="mailto:arthur.daussy@atos.net">Laurent Redor</a>
  */
 public class EcoreModule extends AbstractScriptModule {
 
 	protected SelectionModule selectionModule = new SelectionModule();
 
-	protected OutputModule output = new OutputModule();
 
 	protected InputModule input = new InputModule();
 
@@ -111,8 +111,10 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Return if the current instance is a instance of an EClass define by its name.
 	 * 
 	 * @param eObject
+	 *        The {@link EObject} you want to test.
 	 * @param typeName
-	 * @return
+	 *        The name of the EClass defined in the metamodel
+	 * @return true if the {@link EObject} is instance of typeName
 	 */
 	@WrapToScript
 	public boolean eInstanceOf(@ScriptParameter(name = "eObject") EObject eObject, @ScriptParameter(name = "type") String type) {
@@ -128,12 +130,12 @@ public class EcoreModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Returns the currently selected model element in the current UML editor if it is an instance of the named
+	 * Returns the currently selected model element in the current editor if it is an instance of the named
 	 * meta-class (or a sub-class).
 	 * 
-	 * @param umlTypeName
-	 *        the name of a UML meta-class (e.g. "Property" or "Package")
-	 * @return the first element selected in the current UML editor if there is one and it is an instance of the named
+	 * @param type
+	 *        the name of a meta-class (e.g. "Property" or "Package")
+	 * @return the first element selected in the current editor if there is one and it is an instance of the named
 	 *         meta-class or a sub-class of it.
 	 */
 	@WrapToScript
@@ -167,38 +169,51 @@ public class EcoreModule extends AbstractScriptModule {
 		}
 	};
 
+	/**
+	 * Initialized the module with the correct metamodèle. If this method is not called the module will at runtime ask with metamodel shall be used.
+	 * 
+	 * @param nsURI
+	 *        of the metamodel
+	 */
 	@WrapToScript
-	public void initEPackage(@ScriptParameter(name = "uri") String uri) {
-		if(uri == null) {
+	public void initEPackage(@ScriptParameter(name = "nsURI") String nsURI) {
+		if(nsURI == null) {
 			initEPackageFromDialog();
 		} else {
-			this.uri = uri;
+			this.uri = nsURI;
+		}
+		EPackage ePack = getEPackage();
+		if(ePack == null) {
+			DialogModule.error("Unable to find metamodel with URI : " + this.uri);
+			return;
 		}
 		EFactory factory = getFactory();
 		if(factory != null) {
 			String factoryName = getFactoryVariableName();
 			CodeInjectorUtils.injectJavaVariable(factoryName, factory, getScriptEngine());
-			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName, getScriptEngine(), "[UML Module] Injecting class " + factory.getClass().getName());
+			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName, getScriptEngine(), "[Ecore Module] Injecting class " + factory.getClass().getName());
+		} else {
+			DialogModule.error("Unable to find metamodel with URI : " + this.uri);
 		}
 	}
 
 	/**
-	 * Create a new resource
+	 * Create a new resource to hold model elements
 	 * 
-	 * @param modelName
-	 *        Name of the resource or null is set dynamically
+	 * @param name
+	 *        Name of the resource (Optional parameter ask dynamically to the user)
 	 * @param uri
-	 *        URI locating the container
+	 *        URI locating the container of the resource (Optional parameter ask dynamically to the user)
 	 * @return
 	 */
 	@WrapToScript
-	public Resource createResource(@ScriptParameter(name = "name", optional = true) String modelName, @ScriptParameter(name = "uri", optional = true) String uri) {
+	public Resource createResource(@ScriptParameter(name = "name", optional = true) String name, @ScriptParameter(name = "uri", optional = true) String uri) {
 		ResourceSet resourceSet = getResourceSet();
 		if(resourceSet == null) {
 			Logger.logWarning("Unable to get the current resourceSet. Creating a new one...");
 			resourceSet = new ResourceSetImpl();
 		}
-		URI resourceURI = createURI(uri, modelName);
+		URI resourceURI = createURI(uri, name);
 		Resource resource = null;
 		try {
 			resource = resourceSet.getResource(resourceURI, true);
@@ -209,12 +224,12 @@ public class EcoreModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Create a new URI. This URI is use to create of located a resource.
+	 * Create a new URI. This URI is use to locate a resource.
 	 * 
 	 * @param containerURI
-	 *        path of the container of the new resource. Optional
+	 *        path of the container of the new resource. (Optional Ask dynamically to the user)
 	 * @param fileName
-	 *        name of the new resource. Optional
+	 *        name of the new resource. (Optional Ask dynamically to the user)
 	 * @return
 	 */
 	@WrapToScript
@@ -222,16 +237,33 @@ public class EcoreModule extends AbstractScriptModule {
 		URI container = null;
 		if(containerURI == null) {
 			//Launch dialog to get an URI
-			ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), false, "Select where you want to add your resource");
-			if(dialog.open() != Window.OK) {
-				return null;
-			}
-			Object[] result = dialog.getResult();
-			if(result == null || result.length == 0) {
-				output.error("Unable to retreive a container for the new resource from your selestion");
-				return null;
-			}
-			IPath containerPath = (IPath)result[0];
+			RunnableWithResult<IPath> getPathRunnable = new RunnableWithResult<IPath>() {
+
+				private IPath tt = null;
+
+				@Override
+				public void run() {
+					ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), false, "Select where you want to add your resource");
+					if(dialog.open() != Window.OK) {
+						return;
+					}
+					Object[] result = dialog.getResult();
+					if(result == null || result.length == 0) {
+						DialogModule.error("Unable to retreive a container for the new resource from your selestion");
+						return;
+					}
+					tt = (IPath)result[0];
+
+				}
+
+				@Override
+				public IPath getResult() {
+					return tt;
+				}
+
+			};
+			Display.getDefault().syncExec(getPathRunnable);
+			IPath containerPath = getPathRunnable.getResult();
 			container = URI.createPlatformResourceURI(containerPath.toString(), true);
 		} else {
 			container = URI.createFileURI(containerURI);
@@ -255,15 +287,25 @@ public class EcoreModule extends AbstractScriptModule {
 		if(this.uri == null) {
 			initEPackageFromDialog();
 		}
-		return EPackage.Registry.INSTANCE.getEFactory(uri);
+		EPackage ePackage = getEPackage();
+		if(ePackage == null) {
+			throw new RuntimeException("Unable to retreive EPackage with URI " + this.uri);
+		}
+		return ePackage.getEFactoryInstance();
 	}
 
+	/**
+	 * Get the {@link EPackage} of the selected meta model
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public EPackage getEPackage() {
 		if(this.uri == null) {
 			initEPackageFromDialog();
 		}
-		return EPackage.Registry.INSTANCE.getEPackage(uri);
+		EPackage ePack = EPackage.Registry.INSTANCE.getEPackage(uri);
+		return ePack;
 	}
 
 	private void initEPackageFromDialog() {
@@ -282,7 +324,9 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Add an error marker on a EObject
 	 * 
 	 * @param eObject
+	 *        The Object you want to add a error marker
 	 * @param message
+	 *        Message of the marker
 	 * @throws CoreException
 	 */
 	@WrapToScript
@@ -295,7 +339,9 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Add an Information marker on a EObject
 	 * 
 	 * @param eObject
+	 *        The Object you want to add a error marker
 	 * @param message
+	 *        Message of the marker
 	 * @throws CoreException
 	 */
 	@WrapToScript
@@ -307,7 +353,9 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Add a Warning marker on a EObject
 	 * 
 	 * @param eObject
+	 *        The Object you want to add a error marker
 	 * @param message
+	 *        Message of the marker
 	 * @throws CoreException
 	 */
 	@WrapToScript
@@ -362,6 +410,7 @@ public class EcoreModule extends AbstractScriptModule {
 	 * The resource containing the eObject passed in argument
 	 * 
 	 * @param eObject
+	 *        Help to locate the resource to save (Optional save the current editor)
 	 */
 	@WrapToScript
 	public void save(@ScriptParameter(optional = true, name = "target") Object target) {
@@ -377,7 +426,7 @@ public class EcoreModule extends AbstractScriptModule {
 				toSave.save(null);
 			} catch (IOException e) {
 				e.printStackTrace();
-				output.error(e.getMessage());
+				DialogModule.error(e.getMessage());
 				return;
 			}
 		} else {
@@ -389,6 +438,9 @@ public class EcoreModule extends AbstractScriptModule {
 		getCurrentEditorPart().doSave(new NullProgressMonitor());
 	}
 
+	/**
+	 * @return a {@link Shell}
+	 */
 	@WrapToScript
 	protected Shell getShell() {
 		RunnableWithResult<Shell> getShellRunnable = new RunnableWithResult<Shell>() {
@@ -417,6 +469,12 @@ public class EcoreModule extends AbstractScriptModule {
 			if(domain instanceof EditingDomain) {
 				return (EditingDomain)domain;
 			}
+			domain = AdapterManager.getDefault().getAdapter(currentEditorPart, EditingDomain.class);
+			if(domain instanceof EditingDomain) {
+				return (EditingDomain)domain;
+			}
+
+
 		} else {
 			Logger.logWarning("Unable to retreive editing domain. There is not opened editor");
 		}
@@ -481,6 +539,7 @@ public class EcoreModule extends AbstractScriptModule {
 
 	/**
 	 * Run an operation in the current editor's command stack
+	 * This is really help ful to manipulate a model using transaction
 	 * 
 	 * @param operation
 	 *        the operation to run
@@ -537,6 +596,13 @@ public class EcoreModule extends AbstractScriptModule {
 		}
 	}
 
+	/**
+	 * Display a dialog which ask the user to select between a list of Object
+	 * 
+	 * @param inputs
+	 *        List of choice for the user
+	 * @return The selected object
+	 */
 	@WrapToScript
 	public Object[] selectFromList(List<? extends Object> inputs) {
 		return DialogModule.selectFromList(inputs.toArray(), new LabelProvider() {
@@ -554,6 +620,12 @@ public class EcoreModule extends AbstractScriptModule {
 
 	private static ComposedAdapterFactory adapter = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
+	/**
+	 * Print an {@link EObject} using label providers
+	 * 
+	 * @param target
+	 * @return
+	 */
 	@WrapToScript
 	public String ePrint(EObject target) {
 		IItemLabelProvider labelProvider = getLabelProvider(target);

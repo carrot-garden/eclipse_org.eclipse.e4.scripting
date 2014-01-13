@@ -15,7 +15,7 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.ease.storedscript.EScriptMonkeyMonkeyProjectNature;
+import org.eclipse.ease.storedscript.EASEProjectNature;
 
 /**
  * Helper to handle script resources
@@ -31,7 +31,7 @@ public class ScriptResourceUtils {
 	public static boolean isScriptMonkeyProject(IProject project) {
 		if(project != null && project.exists()) {
 			try {
-				return project.hasNature(EScriptMonkeyMonkeyProjectNature.ESCRIPT_MONKEY_NATURE);
+				return project.hasNature(EASEProjectNature.ESCRIPT_MONKEY_NATURE);
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
@@ -67,7 +67,7 @@ public class ScriptResourceUtils {
 				String[] natures = description.getNatureIds();
 				String[] newNatures = new String[natures.length + 1];
 				System.arraycopy(natures, 0, newNatures, 0, natures.length);
-				newNatures[natures.length] = EScriptMonkeyMonkeyProjectNature.ESCRIPT_MONKEY_NATURE;
+				newNatures[natures.length] = EASEProjectNature.ESCRIPT_MONKEY_NATURE;
 				description.setNatureIds(newNatures);
 				project.setDescription(description, new NullProgressMonitor());
 			}

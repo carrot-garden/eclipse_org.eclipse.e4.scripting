@@ -31,6 +31,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.dialogs.ResourceSelectionDialog;
 
+/**
+ * This module help to ask the user informations
+ * 
+ * @author adaussy
+ * 
+ */
 public class InputModule {
 
 	/**

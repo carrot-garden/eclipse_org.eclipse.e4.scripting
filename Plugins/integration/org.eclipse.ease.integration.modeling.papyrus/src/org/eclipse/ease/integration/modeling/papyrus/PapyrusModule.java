@@ -45,11 +45,22 @@ import org.eclipse.papyrus.uml.diagram.pkg.PackageDiagramCreationCondition;
 import org.eclipse.uml2.uml.Element;
 
 
+/**
+ * Module used to interact with Papyrus Editor.
+ * 
+ * @author adaussy
+ * 
+ */
 public class PapyrusModule extends UMLModule {
 
 
 	private NotationModule notationModule = new NotationModule();
 
+	/**
+	 * Return the model set (ResourceSet) of the current model open in Papyrus
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public ModelSet getModelSet() {
 		EditingDomain editingDomain = TransactionUtil.getEditingDomain(getModel());
@@ -72,6 +83,11 @@ public class PapyrusModule extends UMLModule {
 		notationModule.initialize(engine, environment);
 	}
 
+	/**
+	 * Return the select view element (Notation metamodel)
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public View getSelectionView() {
 		EObject v = notationModule.getSelection();
@@ -81,6 +97,11 @@ public class PapyrusModule extends UMLModule {
 		return null;
 	}
 
+	/**
+	 * Return the UML element from the selection
+	 * 
+	 * @return
+	 */
 	@WrapToScript
 	public Element getSelectionElement() {
 		EObject elem = getSelection();
@@ -91,15 +112,15 @@ public class PapyrusModule extends UMLModule {
 	}
 
 	/**
-	 * Create a new diagram
-	 * For now only Package and class diagram are implemented
+	 * Create a new empty diagram
+	 * WARNING: For now only Package and class diagram are implemented.
 	 * 
 	 * @param semanticElement
 	 *        UML or Sysml element of the diagram
 	 * @param newDiagram
-	 *        The name of the diagram (default value = NewDiagram)
+	 *        The name of the diagram (Optional set the name to newDiagram)
 	 * @param open
-	 *        True if the diagram shall be open (default = false)
+	 *        True if the diagram shall be open (Optional default = false)
 	 */
 	@WrapToScript
 	public void createDiagram(EObject semanticElement, @ScriptParameter(name = "diagramType") String diagramType, @ScriptParameter(name = "diagramName", defaultValue = "NewDiagram") String newDiagram, @ScriptParameter(name = "open") boolean open) {
@@ -110,6 +131,15 @@ public class PapyrusModule extends UMLModule {
 		}
 	}
 
+	/**
+	 * Use the control function of papyrus.
+	 * That is to say that all contained element diagrams will be stored in a different resource.
+	 * 
+	 * @param semanticElement
+	 *        The semantic element to control (That is to say an UML element)
+	 * @param fileName
+	 *        The name of the new file
+	 */
 	@WrapToScript
 	public void control(EObject semanticElement, @ScriptParameter(name = "fileName") String fileName) {
 		if(fileName == null) {
@@ -190,6 +220,9 @@ public class PapyrusModule extends UMLModule {
 		return compositeCommand;
 	}
 
+	/**
+	 * The same as eInstanceOf of the Ecore model. However it will look into UML and Notation metamodel
+	 */
 	@WrapToScript
 	@Override
 	public boolean eInstanceOf(@ScriptParameter(name = "eObject") EObject eObject, @ScriptParameter(name = "type") String type) {
@@ -200,6 +233,10 @@ public class PapyrusModule extends UMLModule {
 		return classifier.isInstance(eObject);
 	}
 
+	/**
+	 * The the current Papyrus editor.
+	 * The object parameter is useless
+	 */
 	@Override
 	@WrapToScript
 	public void save(@ScriptParameter(name = "object", optional = true) Object object) {

@@ -24,7 +24,7 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 
 /**
- * Module to display dialog
+ * Module to display dialogs
  * 
  * @author adaussy
  * 
@@ -35,11 +35,23 @@ public class DialogModule extends AbstractScriptModule {
 		super();
 	}
 
+	/**
+	 * Return the active {@link Shell}
+	 * 
+	 * @return
+	 */
 	@WrapToScript
-	public static Shell getActiveShel() {
+	public static Shell getActiveShell() {
 		return Display.getDefault().getActiveShell();
 	}
 
+	/**
+	 * Open a dialog
+	 * 
+	 * @param window
+	 *        A Window to open
+	 * @return window.open().
+	 */
 	@WrapToScript
 	public static int openDialog(final Window window) {
 		RunnableWithResult<Integer> run = new RunnableWithResult<Integer>() {
@@ -61,6 +73,12 @@ public class DialogModule extends AbstractScriptModule {
 		return run.getResult();
 	}
 
+	/**
+	 * Display a message to the user
+	 * 
+	 * @param message
+	 *        to display
+	 */
 	@WrapToScript
 	public static void info(final String message) {
 		Display.getDefault().syncExec(new Runnable() {
@@ -72,9 +90,18 @@ public class DialogModule extends AbstractScriptModule {
 		});
 
 	}
-	
 
 
+
+	/**
+	 * Display a confirm dialog
+	 * 
+	 * @param title
+	 *        of dialog
+	 * @param message
+	 *        Question to ask
+	 * @return
+	 */
 	@WrapToScript
 	public static boolean confirm(final String title, final String message) {
 		RunnableWithResult<Boolean> runnable = new RunnableWithResult<Boolean>() {
@@ -96,6 +123,15 @@ public class DialogModule extends AbstractScriptModule {
 
 	}
 
+	/**
+	 * Open a question dialog to the user
+	 * 
+	 * @param title
+	 *        of dialog
+	 * @param message
+	 *        Question to ask
+	 * @return
+	 */
 	@WrapToScript
 	public static boolean question(final String title, final String message) {
 		RunnableWithResult<Boolean> runnable = new RunnableWithResult<Boolean>() {
@@ -118,6 +154,12 @@ public class DialogModule extends AbstractScriptModule {
 	}
 
 
+	/**
+	 * Display a error dialog
+	 * 
+	 * @param message
+	 *        Error message
+	 */
 	@WrapToScript
 	public static void error(final String message) {
 		Display.getDefault().syncExec(new Runnable() {
@@ -129,20 +171,30 @@ public class DialogModule extends AbstractScriptModule {
 		});
 
 	}
+
+	/**
+	 * Open a dialog and ask to the user to select from a list of element
+	 * 
+	 * @param selectionOption
+	 *        The list element from which the user shall choose
+	 * @param labelProvider
+	 *        The label provider used to display the elements
+	 * @return An array of the selected objects
+	 */
 	@WrapToScript
-	public static Object[] selectFromList(final Object[] selectionOption,final ILabelProvider labelProvider){
+	public static Object[] selectFromList(final Object[] selectionOption, final ILabelProvider labelProvider) {
 		RunnableWithResult<Object[]> runnable = new RunnableWithResult<Object[]>() {
 
 			private Object[] result;
 
 			@Override
 			public void run() {
-				ElementListSelectionDialog dialog =new ElementListSelectionDialog(Display.getDefault().getActiveShell(), labelProvider);
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(Display.getDefault().getActiveShell(), labelProvider);
 				dialog.setElements(selectionOption);
-				if (dialog.open() == ElementListSelectionDialog.OK){
+				if(dialog.open() == ElementListSelectionDialog.OK) {
 					this.result = dialog.getResult();
 				}
-				
+
 			}
 
 			@Override

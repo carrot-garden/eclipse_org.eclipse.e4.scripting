@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.ease.modules">
-      <module
-            class="org.eclipse.ease.module.resources.WorkspaceResourceModule"
-            name="WorkspaceResourceModule"
-            visible="true">
+   <extension point="org.eclipse.ease.modules">
+      <module class="org.eclipse.ease.module.resources.WorkspaceResourceModule" name="WorkspaceResourceModule" visible="true">
       </module>
-      <module
-            class="org.eclipse.ease.module.resources.ResourcesModule"
-            name="ResourcesModule"
-            visible="true">
+      <module class="org.eclipse.ease.module.resources.ResourcesModule" name="ResourcesModule" visible="true">
       </module>
    </extension>
+<extension point="org.eclipse.help.toc">
+<toc file="help/modules_toc.xml" primary="false"/>
+</extension>
 </plugin>

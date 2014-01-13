@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../../org.eclipse.ease/help/scripting_book.css">
+	</head>
+	<body>
+	<h1>Module OutputModule</h1>
+	<p>This module provides services to give information back to the user in files</p>
+	<p class="dependencies"></p>
+
+	<h2>Function Overview</h2>
+	<table class="functions">
+		<tr>
+			<th><a href="#createNewFile">createNewFile</a></th>
+			<td>Create a new text file in the workspace with the specified contents.</td>
+		</tr>
+		<tr>
+			<th><a href="#console">console</a></th>
+			<td>Appends a message to the Topcased Scripts console.</td>
+		</tr>
+		<tr>
+			<th><a href="#error">error</a></th>
+			<td>Generate and error message in the console</td>
+		</tr>
+	</table>
+
+	<h2>Functions</h2>
+
+	<h3><a id="createNewFile">createNewFile</a></h3>
+	<p class="synopsis">boolean createNewFile(java.lang.Object dest, java.lang.String name, java.lang.String contents)</p>
+	<p class="description">Create a new text file in the workspace with the specified contents.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>dest</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a></td>
+			<td>the container (project or folder) where to put the new file. It can be either an IFile or an IPath.</td>
+		</tr>
+		<tr>
+			<td>name</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
+			<td>the name of the new file.</td>
+		</tr>
+		<tr>
+			<td>contents</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
+			<td>the textual contents to store in the new file.</td>
+		</tr>
+	</table>
+	<p class="return">boolean ... </p>
+
+	<h3><a id="console">console</a></h3>
+	<p class="synopsis">void console(java.lang.String message)</p>
+	<p class="description">Appends a message to the Topcased Scripts console.</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>message</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
+			<td>the message to append to the console.</td>
+		</tr>
+	</table>
+
+	<h3><a id="error">error</a></h3>
+	<p class="synopsis">void error(java.lang.String message)</p>
+	<p class="description">Generate and error message in the console</p>
+		<table class="parameters">
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+		<tr>
+			<td>message</td>
+			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
+			<td>the message to append to the console.</td>
+		</tr>
+	</table>
+	</body>
+</html>

@@ -20,9 +20,9 @@ import org.eclipse.core.runtime.CoreException;
  * @author adaussy
  * 
  */
-public class EScriptMonkeyMonkeyProjectNature implements IProjectNature {
+public class EASEProjectNature implements IProjectNature {
 
-	public static String ESCRIPT_MONKEY_NATURE = "org.eclipse.ease.storedscript.EScript_Monkey_Nature";
+	public static String ESCRIPT_MONKEY_NATURE = "org.eclipse.ease.storedscript.EASE_Nature";
 
 	private IProject project;
 

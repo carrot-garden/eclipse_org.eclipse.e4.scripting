@@ -2,7 +2,7 @@
  * Thread: UI
  * Menu: ScriptUtils > Create new Script Project
  * Kudos: Arthur Daussy.
- * License: EPL 1.0
+ * License: EDL 1.0
  * Description : {This script can be use to create a new Script Project with a new Script.
  * This script also initialize the basics metadata of the script.}
  */
@@ -33,9 +33,9 @@ function createScript(project,scriptName) {
 
 function main() {
 	
-	var project = openProjectWizard();
+	var project = openNewProjectWizard();
 	addProjectNature(project,
-			"org.eclipse.ease.storedscript.EScript_Monkey_Nature");
+			"org.eclipse.ease.storedscript.EASE_Nature");
 
 	if (project != null) {
 		createFolder("/" + project.getName() + "/scripts");

@@ -15,9 +15,9 @@
             targetID="org.eclipse.debug.ui.VariableView">
          <menu
                id="org.eclipse.ease.debug.ui.variableview.menu"
-               label="EScript">
+               label="EASE">
             <groupMarker
-                  name="escript">
+                  name="ease">
             </groupMarker>
          </menu>
          <action
@@ -25,7 +25,7 @@
                helpContextId="show_functions_variable_help_context"
                id="org.eclipse.ease.ui.variableview.show.functions"
                label="Show functions"
-               menubarPath="org.eclipse.ease.debug.ui.variableview.menu/escript"
+               menubarPath="org.eclipse.ease.debug.ui.variableview.menu/ease"
                style="toggle"
                tooltip="Tooltip text">
          </action>
@@ -34,7 +34,7 @@
                helpContextId="show_functions_variable_help_context"
                id="org.eclipse.ease.ui.variableview.show.modules"
                label="Show modules"
-               menubarPath="org.eclipse.ease.debug.ui.variableview.menu/escript"
+               menubarPath="org.eclipse.ease.debug.ui.variableview.menu/ease"
                style="toggle"
                tooltip="Tooltip text">
          </action>

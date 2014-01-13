@@ -1,6 +1,6 @@
 /*
  * Menu: Examples > Modeling > UML > Count elements
- * License: EPL 1.0
+ * License: EDL 1.0
  * VisibleWhen:[And {
  *   With activeEditor {
  *        Equal "org.eclipse.papyrus.infra.core.papyrusEditor"
@@ -57,7 +57,7 @@ function countElements(elt, kind) {
 	var children;
 	var i;
 
-	if (uml.isA(elt, kind)) {
+	if (eInstanceOf(elt, kind)) {
 		count = 1;
 	}
 	children = elt.getOwnedElements();

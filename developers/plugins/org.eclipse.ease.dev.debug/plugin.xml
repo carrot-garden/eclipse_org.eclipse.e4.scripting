@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            name="EScript Monkey Debug"
+            name="EASE Debug"
             id="org.eclipse.ease.dev.debug.commandcategory">
       </category>
       <command
@@ -26,7 +26,7 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               label="EScript monkey debug"
+               label="EASE debug"
                mnemonic="M"
                id="org.eclipse.ease.dev.debug.menuid">
             <command

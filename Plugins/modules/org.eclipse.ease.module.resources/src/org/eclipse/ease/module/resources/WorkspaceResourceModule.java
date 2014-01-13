@@ -11,25 +11,20 @@
 package org.eclipse.ease.module.resources;
 
 import java.io.ByteArrayInputStream;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.ease.storedscript.utils.ScriptResourceUtils;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
@@ -38,7 +33,7 @@ import org.eclipse.ui.wizards.IWizardDescriptor;
 import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 
 /**
- * Is module is an helper to interact with the workspace
+ * This module is an helper to interact with the workspace
  * 
  * @author adaussy
  * 
@@ -84,58 +79,70 @@ public class WorkspaceResourceModule extends AbstractScriptModule {
 	public WorkspaceResourceModule() {
 	}
 
+	//	@WrapToScript
+	//	public void displayMessage(final String title, final String message) {
+	//		Display.getDefault().asyncExec(new Runnable() {
+	//
+	//			@Override
+	//			public void run() {
+	//				MessageDialog.openInformation(Display.getDefault().getActiveShell(), title, message);
+	//			}
+	//		});
+	//	}
+	//
+	//	@WrapToScript
+	//	public void openView(final String identifier) {
+	//
+	//		Display.getDefault().asyncExec(new Runnable() {
+	//
+	//			@Override
+	//			public void run() {
+	//				// try to open view with matching ID
+	//				try {
+	//					IViewPart view = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(identifier);
+	//
+	//				} catch (PartInitException ex) {
+	//					// not found, try to match pattern
+	//					Pattern pattern = Pattern.compile(identifier);
+	//
+	//					final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_VIEWS_ID);
+	//					for(final IConfigurationElement e : config) {
+	//						if(EXTENSION_VIEW.equals(e.getName())) {
+	//							String id = e.getAttribute(EXTENSION_ID);
+	//							String name = e.getAttribute(EXTENSION_NAME);
+	//
+	//							try {
+	//								if((pattern.matcher(id).matches()) || (pattern.matcher(name).matches()))
+	//									PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(id);
+	//							} catch (PartInitException e1) {
+	//							}
+	//						}
+	//					}
+	//				}
+	//			}
+	//		});
+	//	}
+
+	/**
+	 * Open the wizard to create a new project
+	 * 
+	 * @return
+	 */
 	@WrapToScript
-	public void displayMessage(final String title, final String message) {
-		Display.getDefault().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				MessageDialog.openInformation(Display.getDefault().getActiveShell(), title, message);
-			}
-		});
-	}
-
-	@WrapToScript
-	public void openView(final String identifier) {
-
-		Display.getDefault().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				// try to open view with matching ID
-				try {
-					IViewPart view = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(identifier);
-
-				} catch (PartInitException ex) {
-					// not found, try to match pattern
-					Pattern pattern = Pattern.compile(identifier);
-
-					final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_VIEWS_ID);
-					for(final IConfigurationElement e : config) {
-						if(EXTENSION_VIEW.equals(e.getName())) {
-							String id = e.getAttribute(EXTENSION_ID);
-							String name = e.getAttribute(EXTENSION_NAME);
-
-							try {
-								if((pattern.matcher(id).matches()) || (pattern.matcher(name).matches()))
-									PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(id);
-							} catch (PartInitException e1) {
-							}
-						}
-					}
-				}
-			}
-		});
-	}
-
-	@WrapToScript
-	public IProject openProjectWizard() {
+	public IProject openNewProjectWizard() {
 		WizardRunnable runnable = new WizardRunnable();
 		Display.getDefault().syncExec(runnable);
 
 		return runnable.getProject();
 	}
 
+	/**
+	 * Create a folder into the workbench
+	 * 
+	 * @param path
+	 *        Path of the new folder
+	 * @return The {@link IFolder}
+	 */
 	@WrapToScript
 	public IFolder createFolder(final String path) {
 		IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(path));
@@ -151,6 +158,14 @@ public class WorkspaceResourceModule extends AbstractScriptModule {
 		return null;
 	}
 
+	/**
+	 * Add a nature to the project
+	 * 
+	 * @param project
+	 *        IProject on which the new nature shall be applied
+	 * @param nature
+	 *        Of of the nature
+	 */
 	@WrapToScript
 	public void addProjectNature(IProject project, String nature) {
 		if(project != null && project.exists()) {
@@ -164,6 +179,15 @@ public class WorkspaceResourceModule extends AbstractScriptModule {
 		}
 	}
 
+	/**
+	 * Create a new file into the workspace
+	 * 
+	 * @param path
+	 *        Location of the new file
+	 * @param content
+	 *        Content of the file
+	 * @return {@link IFile}
+	 */
 	@WrapToScript
 	public IFile createFile(final String path, final String content) {
 		IFile file = getFile(path);
@@ -181,11 +205,24 @@ public class WorkspaceResourceModule extends AbstractScriptModule {
 		return null;
 	}
 
+	/**
+	 * Return a {@link IFile}
+	 * 
+	 * @param path
+	 *        Location to the file to return
+	 * @return {@link IFile}
+	 */
 	@WrapToScript
 	public IFile getFile(final String path) {
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(path));
 	}
 
+	/**
+	 * Open a file using the default editor
+	 * 
+	 * @param file
+	 *        Location of the file
+	 */
 	@WrapToScript
 	public void openFile(final IFile file) {
 		Display.getDefault().asyncExec(new Runnable() {

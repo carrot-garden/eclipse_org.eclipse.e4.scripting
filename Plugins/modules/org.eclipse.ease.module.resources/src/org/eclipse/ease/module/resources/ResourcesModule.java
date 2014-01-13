@@ -41,6 +41,13 @@ public class ResourcesModule extends AbstractScriptModule {
 
 
 
+	/**
+	 * Return all the file of a workspace matching a pattern
+	 * 
+	 * @param patternString
+	 *        A pattern as define in {@link Pattern}
+	 * @return An array of all the file into the workspace matching this pattern
+	 */
 	@WrapToScript
 	public Object[] filesMatching(String patternString) {
 		Pattern pattern = Pattern.compile(patternString);
