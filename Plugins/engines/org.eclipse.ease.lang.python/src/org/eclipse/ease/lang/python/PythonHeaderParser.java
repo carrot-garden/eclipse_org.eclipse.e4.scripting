@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.storedscript.metada.AbstractFileHeaderParser;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
 

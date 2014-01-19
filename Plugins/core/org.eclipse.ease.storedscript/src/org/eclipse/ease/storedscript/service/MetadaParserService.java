@@ -23,6 +23,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.storedscript.metada.IHeaderParser;
 import org.eclipse.ease.storedscript.metada.IMetadataParser;
 import org.eclipse.ease.storedscript.metada.Metadata;
@@ -32,7 +33,6 @@ import org.eclipse.ease.storedscript.storedscript.ScriptMetadata;
 import org.eclipse.ease.storedscript.storedscript.ScriptType;
 import org.eclipse.ease.storedscript.storedscript.StoredscriptFactory;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.ease.log.Logger;
 
 
 /**

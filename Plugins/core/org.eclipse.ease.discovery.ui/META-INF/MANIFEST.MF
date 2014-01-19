@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.ui.forms,
  org.eclipse.ease.discovery,
- org.eclipse.ease.log
+ org.eclipse.ease;bundle-version="0.1.1"
 Bundle-Vendor: %providerName
 Bundle-Version: 0.1.1.qualifier
 Bundle-ManifestVersion: 2

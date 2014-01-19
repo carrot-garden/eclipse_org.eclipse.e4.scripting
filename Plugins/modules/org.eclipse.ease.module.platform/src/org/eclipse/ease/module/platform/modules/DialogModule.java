@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ease.module.platform.modules;
 
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.common.RunnableWithResult;
-import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.jface.dialogs.ErrorDialog;

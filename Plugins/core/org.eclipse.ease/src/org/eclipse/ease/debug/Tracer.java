@@ -8,10 +8,11 @@
  * Contributors:
  *     Arthur Daussy <a href="mailto:arthur.daussy@atos.net"> - initial API and implementation
  ******************************************************************************/
-package org.eclipse.ease.log;
+package org.eclipse.ease.debug;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.ease.Activator;
 
 /**
  * Utils class used to trace element
@@ -37,11 +38,11 @@ public final class Tracer {
 	 * Log info if the plugin is tracing
 	 * 
 	 * @param info
-	 *        Info you want to log
+	 *            Info you want to log
 	 * @param raisedException
-	 *        if true the the trace raise an exception
+	 *            if true the the trace raise an exception
 	 */
-	public static void logInfo(String info, boolean raisedException) {
+	public static void logInfo(final String info, final boolean raisedException) {
 		log(Status.OK, info, raisedException);
 	}
 
@@ -49,9 +50,9 @@ public final class Tracer {
 	 * Log an info
 	 * 
 	 * @param info
-	 *        Info you want to log
+	 *            Info you want to log
 	 */
-	public static void logInfo(String info) {
+	public static void logInfo(final String info) {
 		logInfo("\n" + info, false);
 	}
 
@@ -59,11 +60,11 @@ public final class Tracer {
 	 * Log an error
 	 * 
 	 * @param error
-	 *        Message you want to log
+	 *            Message you want to log
 	 * @param raisedException
-	 *        if true the the trace raise an exception
+	 *            if true the the trace raise an exception
 	 */
-	public static void logError(String error, boolean raisedException) {
+	public static void logError(final String error, final boolean raisedException) {
 		log(Status.ERROR, error, raisedException);
 	}
 
@@ -71,15 +72,15 @@ public final class Tracer {
 	 * Log something
 	 * 
 	 * @param severity
-	 *        Severity of what is going to be logged see {@link IStatus} constants
+	 *            Severity of what is going to be logged see {@link IStatus} constants
 	 * @param message
-	 *        Message to log
+	 *            Message to log
 	 * @param raisedException
-	 *        if true raise an exception
+	 *            if true raise an exception
 	 */
-	public static void log(int severity, String message, boolean raisedException) {
-		if(Activator.getDefault() != null) {
-			if(raisedException) {
+	public static void log(final int severity, final String message, final boolean raisedException) {
+		if (Activator.getDefault() != null) {
+			if (raisedException) {
 				Activator.getDefault().getLog().log(new Status(severity, Activator.PLUGIN_ID, message, new Exception()));
 			} else {
 				Activator.getDefault().getLog().log(new Status(severity, Activator.PLUGIN_ID, message));
@@ -91,11 +92,11 @@ public final class Tracer {
 	 * Log an error
 	 * 
 	 * @param message
-	 *        Message you want to log
+	 *            Message you want to log
 	 * @param raisedException
-	 *        the exception to raise
+	 *            the exception to raise
 	 */
-	public static void logExceptionError(String message, Exception raisedException) {
+	public static void logExceptionError(final String message, final Exception raisedException) {
 		Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, raisedException));
 	}
 
@@ -103,11 +104,11 @@ public final class Tracer {
 	 * Log warning
 	 * 
 	 * @param message
-	 *        Message you want to log
+	 *            Message you want to log
 	 * @param raisedException
-	 *        the exception to raise
+	 *            the exception to raise
 	 */
-	public static void logExceptionWarning(String message, Exception raisedException) {
+	public static void logExceptionWarning(final String message, final Exception raisedException) {
 		Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, message, raisedException));
 	}
 }

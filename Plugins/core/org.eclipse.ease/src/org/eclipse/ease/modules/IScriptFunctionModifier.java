@@ -19,28 +19,32 @@ import java.lang.reflect.Method;
  */
 public interface IScriptFunctionModifier {
 
-    /** intermediate name of original method call return value. */
-    String RESULT_NAME = "__result";
+	/** intermediate name of original method call return value. */
+	String RESULT_NAME = "__result";
 
-    /**
-     * Get code that shall be executed before actual method gets called. As multiple modules might want to inject code make sure to avoid interactions by using
-     * commonly used variable names.
-     * 
-     * @param method
-     *            method that will be called afterwards.
-     * 
-     * @return JavaScript code to be inserted before method call
-     */
-    String getPreExecutionCode(Method method);
+	/**
+	 * Get code that shall be executed before actual method gets called. As multiple modules might want to inject code make sure to avoid interactions by using
+	 * commonly used variable names.
+	 * 
+	 * @param module
+	 *            module providing function
+	 * @param method
+	 *            method that will be called afterwards.
+	 * 
+	 * @return JavaScript code to be inserted before method call
+	 */
+	String getPreExecutionCode(Object module, Method method);
 
-    /**
-     * Get code that shall be executed after actual method gets called. As multiple modules might want to inject code make sure to avoid interactions by using
-     * commonly used variable names.
-     * 
-     * @param method
-     *            method that will be called before.
-     * 
-     * @return JavaScript code to be inserted after method call
-     */
-    String getPostExecutionCode(Method method);
+	/**
+	 * Get code that shall be executed after actual method gets called. As multiple modules might want to inject code make sure to avoid interactions by using
+	 * commonly used variable names.
+	 * 
+	 * @param module
+	 *            module providing function
+	 * @param method
+	 *            method that will be called before.
+	 * 
+	 * @return JavaScript code to be inserted after method call
+	 */
+	String getPostExecutionCode(Object module, Method method);
 }

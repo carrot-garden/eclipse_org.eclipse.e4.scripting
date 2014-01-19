@@ -10,8 +10,8 @@ F * Copyright (c) 2013 Atos
  *******************************************************************************/
 package org.eclipse.ease.module.platform.modules;
 
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.common.RunnableWithResult;
-import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.ScriptParameter;
 import org.eclipse.ease.modules.WrapToScript;

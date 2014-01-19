@@ -16,6 +16,10 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.ease.Activator;
+import org.osgi.service.prefs.Preferences;
 
 public class ModuleDefinition {
 
@@ -69,6 +73,13 @@ public class ModuleDefinition {
 	}
 
 	public boolean isVisible() {
-		return Boolean.parseBoolean(mConfig.getAttribute(VISIBLE));
+		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		Preferences node = prefs.node("modules");
+		return node.getBoolean(getAbsoluteName(), Boolean.parseBoolean(mConfig.getAttribute(VISIBLE)));
+	}
+
+	public String getAbsoluteName() {
+		// TODO implement categories
+		return "/" + getName();
 	}
 }

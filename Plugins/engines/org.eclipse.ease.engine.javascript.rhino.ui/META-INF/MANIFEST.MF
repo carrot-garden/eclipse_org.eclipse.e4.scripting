@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EASE - Rhino engine UI
-Bundle-SymbolicName: org.eclipse.ease.javascript.rhino.ui;singleton:=true
+Bundle-SymbolicName: org.eclipse.ease.engine.javascript.rhino.ui;singleton:=true
 Bundle-Version: 0.1.1.qualifier
 Bundle-Vendor: Code & me
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -15,13 +15,13 @@ Require-Bundle: org.eclipse.debug.core;bundle-version="3.7.100",
  org.mozilla.javascript;bundle-version="1.7.2",
  org.eclipse.wst.jsdt.core;bundle-version="1.1.201",
  org.eclipse.jdt.launching;bundle-version="3.6.100",
- org.eclipse.ease.javascript.rhino,
  org.eclipse.ease,
  org.eclipse.wst.jsdt.debug.rhino.debugger;bundle-version="1.0.300",
  org.eclipse.ui.workbench;bundle-version="3.103.0",
  org.eclipse.ui.ide;bundle-version="3.8.0",
  org.eclipse.ease.ui,
  org.eclipse.core.expressions;bundle-version="3.4.500",
- org.eclipse.ease.engine.javascript.rhino.debugger
+ org.eclipse.ease.engine.javascript.rhino.debugger,
+ org.eclipse.ease.engine.javascript.rhino;bundle-version="0.1.1"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.ease.engine.javascript.rhino.ui.Activator

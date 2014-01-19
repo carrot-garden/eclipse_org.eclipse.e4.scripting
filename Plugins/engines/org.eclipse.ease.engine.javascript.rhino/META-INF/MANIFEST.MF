@@ -1,14 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EASE Rhino Interpreter (Incubation)
-Bundle-SymbolicName: org.eclipse.ease.javascript.rhino;singleton:=true
+Bundle-SymbolicName: org.eclipse.ease.engine.javascript.rhino;singleton:=true
 Bundle-Version: 0.1.1.qualifier
 Bundle-Vendor: Eclipse.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.ease;bundle-version="[0.1.0,1.0.0)",
  org.mozilla.javascript;bundle-version="[1.7.2,2.0.0)",
- org.eclipse.ease.storedscript;bundle-version="[0.1.0,1.0.0)",
- org.eclipse.ease.log;bundle-version="[0.1.0,1.0.0)"
+ org.eclipse.ease.storedscript;bundle-version="0.1.1"
 Eclipse-BuddyPolicy: global
 Export-Package: org.eclipse.ease.engine.javascript.rhino,
  org.eclipse.ease.engine.javascript.rhino.debugger

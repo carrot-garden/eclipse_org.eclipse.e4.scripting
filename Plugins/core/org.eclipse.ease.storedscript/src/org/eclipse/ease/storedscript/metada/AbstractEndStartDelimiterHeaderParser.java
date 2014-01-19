@@ -18,9 +18,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.storedscript.Activator;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
-import org.eclipse.ease.log.Logger;
 
 /**
  * Abstract class for parser used for header which can be match with a single pattern

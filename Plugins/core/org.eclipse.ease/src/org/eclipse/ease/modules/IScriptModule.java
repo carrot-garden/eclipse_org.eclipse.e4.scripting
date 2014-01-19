@@ -17,14 +17,15 @@ import org.eclipse.ease.IScriptEngine;
  * Implementing this interface is optional for a module.
  */
 public interface IScriptModule {
+	Object UNDEFINED = new Object();
 
 	/**
 	 * Provides script engine and environment instances.
 	 * 
 	 * @param engine
-	 *        script engine this module is loaded in
+	 *            script engine this module is loaded in
 	 * @param environment
-	 *        environment module that tracks this module
+	 *            environment module that tracks this module
 	 */
 	void initialize(IScriptEngine engine, EnvironmentModule environment);
 }

@@ -16,7 +16,7 @@ import java.io.IOException;
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptService;
-import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
 import org.eclipse.ease.storedscript.storedscript.ScriptType;
 import org.eclipse.ease.ui.console.ScriptConsole;

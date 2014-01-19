@@ -11,8 +11,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ease.IExecutionListener;
 import org.eclipse.ease.IScriptEngine;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.Script;
-import org.eclipse.ease.log.Logger;
 
 
 public class EffectiveScriptGenerator implements IExecutionListener {

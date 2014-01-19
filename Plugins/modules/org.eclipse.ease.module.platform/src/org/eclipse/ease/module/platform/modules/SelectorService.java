@@ -22,8 +22,8 @@ import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.module.platform.modules.impl.SelectorWrapper;
-import org.eclipse.ease.log.Logger;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;

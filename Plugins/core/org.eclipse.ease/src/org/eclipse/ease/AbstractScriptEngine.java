@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.FileTrace.Trace;
 import org.eclipse.ease.debug.ITracingConstant;
-import org.eclipse.ease.log.Tracer;
+import org.eclipse.ease.debug.Tracer;
 import org.eclipse.ease.service.ScriptService;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
@@ -32,8 +32,7 @@ import org.eclipse.ui.internal.misc.UIStats;
 import org.eclipse.ui.internal.progress.ProgressMessages;
 
 /**
- * Base implementation for a script engine. Handles Job implementation of script engine, adding script code for execution, module loading support and
- * a basic
+ * Base implementation for a script engine. Handles Job implementation of script engine, adding script code for execution, module loading support and a basic
  * online help system.
  */
 public abstract class AbstractScriptEngine extends Job implements IScriptEngine {
@@ -62,9 +61,9 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	 * Constructor. Contains a name for the underlying job and an indicator for the presence of online help.
 	 * 
 	 * @param name
-	 *        name of script engine job
+	 *            name of script engine job
 	 * @param helpAvailable
-	 *        <code>true</code> when help code shall be generated on the fly
+	 *            <code>true</code> when help code shall be generated on the fly
 	 */
 	public AbstractScriptEngine(final String name) {
 		super(name);
@@ -77,7 +76,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	public final ScriptResult executeAsync(final Object content) {
 		final Script piece;
 		if (content instanceof Script)
-			piece = (Script)content;
+			piece = (Script) content;
 		else
 			piece = new Script(content);
 
@@ -106,26 +105,23 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	@Override
 	public final ScriptResult inject(final Object content) {
-		final Script piece;
-		if (content instanceof Script)
-			piece = (Script)content;
-		else
-			piece = new Script(content);
-
 		// injected code shall not trigger a new event, therefore notifyListerners needs to be false
-		return inject(piece, false);
+		if (content instanceof Script)
+			return inject((Script) content, false);
+		else
+			return inject(new Script(content), false);
 	}
 
 	/**
 	 * Inject script code to the script engine. Injected code is processed synchronous by the current thread. Therefore this is a blocking call.
 	 * 
 	 * @param script
-	 *        script to be executed
-	 * @param notifyListerners
-	 *        <code>true</code> when listeners should be informed of code fragment
+	 *            script to be executed
+	 * @param notifyListeners
+	 *            <code>true</code> when listeners should be informed of code fragment
 	 * @return script execution result
 	 */
-	private ScriptResult inject(final Script script, final boolean notifyListerners) {
+	private ScriptResult inject(final Script script, final boolean notifyListeners) {
 
 		synchronized (script.getResult()) {
 
@@ -136,7 +132,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				mFileTrace.push(script.getFile());
 
 				// execution
-				if (notifyListerners)
+				if (notifyListeners)
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_START);
 				else
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_INJECTION_START);
@@ -161,7 +157,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				}
 
 			} finally {
-				if (notifyListerners)
+				if (notifyListeners)
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_END);
 				else
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_INJECTION_END);
@@ -178,7 +174,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 			return Status.CANCEL_STATUS;
 		}
 		Display asyncDisplay = getDisplay();
-		if (asyncDisplay == null || asyncDisplay.isDisposed()) {
+		if ((asyncDisplay == null) || asyncDisplay.isDisposed()) {
 			return Status.CANCEL_STATUS;
 		}
 		asyncDisplay.asyncExec(new Runnable() {
@@ -188,8 +184,8 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				IStatus result = null;
 				Throwable throwable = null;
 				try {
-					//As we are in the UI Thread we can
-					//always know what to tell the job.
+					// As we are in the UI Thread we can
+					// always know what to tell the job.
 					setThread(Thread.currentThread());
 					if (monitor.isCanceled()) {
 						result = Status.CANCEL_STATUS;
@@ -213,7 +209,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	@Override
-	protected IStatus run(IProgressMonitor monitor) {
+	protected IStatus run(final IProgressMonitor monitor) {
 		IStatus status = null;
 		if (isUI()) {
 			status = runUIThread(monitor);
@@ -281,7 +277,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	@Override
 	public void setOutputStream(final OutputStream outputStream) {
 		if (outputStream instanceof PrintStream)
-			mOutStream = (PrintStream)outputStream;
+			mOutStream = (PrintStream) outputStream;
 
 		else
 			mOutStream = new PrintStream(outputStream);
@@ -305,7 +301,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	@Override
 	public void setErrorStream(final OutputStream errorStream) {
 		if (errorStream instanceof PrintStream)
-			mErrorStream = (PrintStream)errorStream;
+			mErrorStream = (PrintStream) errorStream;
 
 		else
 			mErrorStream = new PrintStream(errorStream);
@@ -352,7 +348,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	protected void notifyExecutionListeners(final Script script, final int status) {
 		for (final Object listener : mExecutionListeners.getListeners())
-			((IExecutionListener)listener).notify(this, script, status);
+			((IExecutionListener) listener).notify(this, script, status);
 	}
 
 	@Override
@@ -406,7 +402,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	@Override
-	public void setIsUI(boolean isUI) {
+	public void setIsUI(final boolean isUI) {
 		this.isUI = isUI;
 	}
 
@@ -416,8 +412,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	/**
-	 * Setup method for script engine. Run directly after the engine is activated. Needs to return <code>true</code>. Otherwise the engine will
-	 * terminate
+	 * Setup method for script engine. Run directly after the engine is activated. Needs to return <code>true</code>. Otherwise the engine will terminate
 	 * instantly.
 	 * 
 	 * @return <code>true</code> when setup succeeds
@@ -435,12 +430,12 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	 * Execute script code.
 	 * 
 	 * @param fileName
-	 *        name of file executed
+	 *            name of file executed
 	 * @param reader
-	 *        reader for script data to be executed
+	 *            reader for script data to be executed
 	 * @return execution result
 	 * @throws Exception
-	 *         any exception thrown during script execution
+	 *             any exception thrown during script execution
 	 */
 	protected abstract Object execute(Script script, Object reference, String fileName) throws Exception;
 }

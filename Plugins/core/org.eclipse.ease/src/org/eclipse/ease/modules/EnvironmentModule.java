@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,8 +37,9 @@ import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptService;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
-import org.eclipse.ease.log.Tracer;
+import org.eclipse.ease.debug.Tracer;
 import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ecf.filetransfer.FileTransferInfo;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -47,9 +49,9 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 	private static final String PROJECT = "project://";
 
-	private static final String WORKSPACE = "workspace://";
+	public static final String MODULE_NAME = "Environment";
 
-	public static final String ENVIRONMENT_MODULE_NAME = "Environment";
+	public static final String MODULE_PREFIX = "__MOD_";
 
 	/** Stores ordering of wrapped elements. */
 	private final List<Object> mModules = new ArrayList<Object>();
@@ -58,6 +60,12 @@ public class EnvironmentModule extends AbstractScriptModule {
 	private final Map<String, Object> mModuleNames = new HashMap<String, Object>();
 
 	private final ListenerList mModuleListeners = new ListenerList();
+
+	public EnvironmentModule() {
+		// we need to force loading of the org.eclipse.ecf.filetransfer plugin to correctly register extended URL protocols.
+		// therefore load a class from that plugin
+		Class<FileTransferInfo> foo = FileTransferInfo.class;
+	}
 
 	/**
 	 * Load a module. Loading a module generally enhances the script environment with new functions and variables. If a module was already loaded before, it
@@ -70,7 +78,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 	 */
 	@WrapToScript
 	public final Object loadModule(final String identifier) {
-		Object module = findModule(identifier);
+		Object module = getModule(identifier);
 		if (module == null) {
 			// not loaded yet
 			Map<String, ModuleDefinition> availableModules = ScriptService.getInstance().getAvailableModules();
@@ -110,9 +118,9 @@ public class EnvironmentModule extends AbstractScriptModule {
 	 *            instance to be wrapped
 	 */
 	@WrapToScript
-	public void wrap(Object toBeWrapped) {
+	public void wrap(final Object toBeWrapped) {
 		// register new variable in script engine
-		String identifier = getScriptEngine().getSaveVariableName(toBeWrapped.toString());
+		String identifier = getScriptEngine().getSaveVariableName(MODULE_PREFIX + toBeWrapped.toString());
 
 		// FIXME either remove or move to script engine
 		// if (getScriptEngine().isUI()) {
@@ -150,7 +158,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 	 * @param reload
 	 *            flag indicating that the module was already loaded
 	 */
-	private void createWrappers(final Object instance, String identifier, final boolean reload) {
+	private void createWrappers(final Object instance, final String identifier, final boolean reload) {
 		// script code to inject
 		StringBuilder scriptCode = new StringBuilder();
 
@@ -171,8 +179,8 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 		// use reflection to access methods
 		for (final Method method : methods) {
-			String preExecutionCode = getPreExecutionCode(method);
-			String postExecutionCode = getPostExecutionCode(method);
+			String preExecutionCode = getPreExecutionCode(instance, method);
+			String postExecutionCode = getPostExecutionCode(instance, method);
 
 			Set<String> methodNames = new HashSet<String>();
 			methodNames.add(method.getName());
@@ -231,10 +239,36 @@ public class EnvironmentModule extends AbstractScriptModule {
 	 * 
 	 * @param name
 	 *            name of the module to resolve
+	 * @return resolved module instance or <code>null</code>
 	 */
 	@WrapToScript
-	public final Object findModule(final String name) {
+	public final Object getModule(final String name) {
 		return mModuleNames.get(name);
+	}
+
+	/**
+	 * Retrieve a list of loaded modules. The returned list is read only.
+	 * 
+	 * @return list of modules (might be empty)
+	 */
+	public List<Object> getModules() {
+		return Collections.unmodifiableList(mModules);
+	}
+
+	/**
+	 * Resolves a loaded module by its class.
+	 * 
+	 * @param clazz
+	 *            module class to look resolve
+	 * @return resolved module instance or <code>null</code>
+	 */
+	public final <T extends Object, U extends Class<T>> T getModule(final U clazz) {
+		for (final Object module : getModules()) {
+			if (module.getClass().equals(clazz))
+				return (T) module;
+		}
+
+		return null;
 	}
 
 	/**
@@ -289,7 +323,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 			// seems to be a URL
 
 			if (filename.startsWith(PROJECT)) {
-				// project relative link
+				// project relative link, we cannot resolve this via URL as we need a relative file in the project
 				Object currentFile = getScriptEngine().getExecutedFile();
 				if (currentFile instanceof IFile) {
 					IFile file = ((IFile) currentFile).getProject().getFile(new Path(filename.substring(PROJECT.length())));
@@ -297,18 +331,12 @@ public class EnvironmentModule extends AbstractScriptModule {
 						return getScriptEngine().inject(file);
 				}
 
-			} else if (filename.startsWith(WORKSPACE)) {
-				// absolute path within workspace
-				IFile workspaceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(filename.substring(WORKSPACE.length())));
-				if (workspaceFile.exists())
-					return getScriptEngine().inject(workspaceFile);
-
 			} else {
 				// generic URL
 				try {
 					URL url = new URL(filename);
-
 					return getScriptEngine().inject(url.openStream());
+
 				} catch (MalformedURLException e) {
 					// TODO handle this exception (but for now, at least know it
 					// happened)
@@ -379,7 +407,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 				output.append('\t');
 
 				output.append(module.getName());
-				if (findModule(module.getName()) != null)
+				if (getModule(module.getName()) != null)
 					output.append(" [LOADED]");
 
 				output.append('\n');
@@ -392,23 +420,23 @@ public class EnvironmentModule extends AbstractScriptModule {
 		return output.toString();
 	}
 
-	private String getPreExecutionCode(final Method method) {
+	private String getPreExecutionCode(final Object instance, final Method method) {
 		final StringBuffer code = new StringBuffer();
 
-		for (final Object module : mModules) {
+		for (final Object module : getModules()) {
 			if (module instanceof IScriptFunctionModifier)
-				code.append(((IScriptFunctionModifier) module).getPreExecutionCode(method));
+				code.append(((IScriptFunctionModifier) module).getPreExecutionCode(instance, method));
 		}
 
 		return code.toString();
 	}
 
-	private String getPostExecutionCode(final Method method) {
+	private String getPostExecutionCode(final Object instance, final Method method) {
 		final StringBuffer code = new StringBuffer();
 
-		for (final Object module : mModules) {
+		for (final Object module : getModules()) {
 			if (module instanceof IScriptFunctionModifier)
-				code.append(((IScriptFunctionModifier) module).getPostExecutionCode(method));
+				code.append(((IScriptFunctionModifier) module).getPostExecutionCode(instance, method));
 		}
 
 		return code.toString();

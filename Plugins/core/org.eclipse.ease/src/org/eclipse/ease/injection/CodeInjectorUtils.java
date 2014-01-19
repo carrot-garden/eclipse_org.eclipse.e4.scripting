@@ -21,7 +21,7 @@ import java.util.Set;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
-import org.eclipse.ease.log.Tracer;
+import org.eclipse.ease.debug.Tracer;
 import org.eclipse.ease.modules.BootStrapper;
 import org.eclipse.ease.modules.IModuleWrapper;
 import org.eclipse.ease.modules.IScriptFunctionModifier;

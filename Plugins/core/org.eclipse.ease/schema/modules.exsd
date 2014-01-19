@@ -18,7 +18,8 @@
       </annotation>
       <complexType>
          <choice minOccurs="0" maxOccurs="unbounded">
-            <element ref="module"/>
+            <element ref="module" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="category" minOccurs="0" maxOccurs="unbounded"/>
          </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -55,7 +56,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.scripting.modules/module/@name"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.modules/module/@name"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -89,6 +90,38 @@
                <documentation>
                   Make this module visible for the user. If set to false, the module can still be loaded, but it will be hidden from the UI. Defaults to [true]
                </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="category" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.modules/category/@name"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="category">
+      <complexType>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Category name as used in the UI.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="parent" type="string">
+            <annotation>
+               <documentation>
+                  Refer to a parent category to nest categories. Empty for a root category.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.scripting.modules/category/@name"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>

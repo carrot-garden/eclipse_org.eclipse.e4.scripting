@@ -15,8 +15,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.ui.Activator;
-import org.eclipse.ease.log.Logger;
 import org.eclipse.ease.storedscript.service.IStoredScriptService;
 import org.eclipse.jface.action.Action;
 

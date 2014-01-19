@@ -28,7 +28,7 @@ public class BootStrapper implements IScriptEngineLaunchExtension {
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.append(wrapper.classInstantiation(EnvironmentModule.class, new String[0]));
 			stringBuilder.append(".loadModule(\"");
-			stringBuilder.append(EnvironmentModule.ENVIRONMENT_MODULE_NAME);
+			stringBuilder.append(EnvironmentModule.MODULE_NAME);
 			stringBuilder.append("\");\n");
 
 			engine.executeAsync(new Script("Bootloader", stringBuilder.toString()));

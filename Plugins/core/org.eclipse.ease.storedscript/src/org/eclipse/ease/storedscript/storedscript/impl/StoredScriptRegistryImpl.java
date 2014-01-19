@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.service.ScriptService;
 import org.eclipse.ease.storedscript.service.MetadaParserService;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
@@ -28,7 +29,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.ease.log.Logger;
 
 /**
  * <!-- begin-user-doc -->

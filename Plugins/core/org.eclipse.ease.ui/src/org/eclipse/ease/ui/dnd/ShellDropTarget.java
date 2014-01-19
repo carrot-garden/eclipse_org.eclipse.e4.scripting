@@ -14,7 +14,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.IScriptEngineProvider;
 import org.eclipse.ease.ui.macro.Macro;
-import org.eclipse.ease.ui.view.ScriptShell;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.DND;
@@ -44,10 +43,10 @@ public final class ShellDropTarget extends DropTargetAdapter {
      * @param javaScriptShell
      *            shell for DND action execution
      */
-    public static void addDropSupport(final Control parent, final ScriptShell scriptShell) {
+    public static void addDropSupport(final Control parent, final IScriptEngineProvider engineProvider) {
         final DropTarget target = new DropTarget(parent, DND.DROP_COPY | DND.DROP_MOVE);
         target.setTransfer(new Transfer[] { FileTransfer.getInstance(), TextTransfer.getInstance(), LocalSelectionTransfer.getTransfer() });
-        target.addDropListener(new ShellDropTarget(scriptShell));
+        target.addDropListener(new ShellDropTarget(engineProvider));
     }
 
     /**

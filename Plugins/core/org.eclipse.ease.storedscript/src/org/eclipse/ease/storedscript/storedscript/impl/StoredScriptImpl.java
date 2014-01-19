@@ -22,7 +22,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.storedscript.storedscript.ScriptMetadata;
 import org.eclipse.ease.storedscript.storedscript.ScriptType;
 import org.eclipse.ease.storedscript.storedscript.StoredScript;

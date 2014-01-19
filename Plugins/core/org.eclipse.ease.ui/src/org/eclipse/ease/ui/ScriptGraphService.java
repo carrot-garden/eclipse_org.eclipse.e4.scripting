@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.ease.log.Logger;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.storedscript.notification.IStoredScriptListener;
 import org.eclipse.ease.storedscript.service.IStoredScriptService;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;

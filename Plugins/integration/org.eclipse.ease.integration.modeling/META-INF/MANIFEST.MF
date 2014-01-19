@@ -1,13 +1,17 @@
 Manifest-Version: 1.0
 Export-Package: org.eclipse.ease.integration.modeling,org.eclipse.ease
  .integration.modeling.selector
-Require-Bundle: org.eclipse.help;bundle-version="[3.6.0,4.0.0)",org.ec
- lipse.ui,org.eclipse.core.runtime,org.eclipse.ease.module.platform,or
- g.eclipse.emf.ecore;bundle-version="2.9.0",org.eclipse.gmf.runtime.di
- agram.ui;bundle-version="1.7.0",org.eclipse.ease.log,org.eclipse.ease
- ,com.google.guava;bundle-version="11.0.2",org.eclipse.ease.module.int
- eraction,org.eclipse.ui.ide;bundle-version="3.9.0",org.eclipse.emf.ec
- ore.editor;bundle-version="2.9.0"
+Require-Bundle: org.eclipse.help;bundle-version="[3.6.0,4.0.0)",
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ease.module.platform,
+ org.eclipse.emf.ecore;bundle-version="2.9.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.7.0",
+ org.eclipse.ease,
+ com.google.guava;bundle-version="11.0.2",
+ org.eclipse.ease.module.interaction,
+ org.eclipse.ui.ide;bundle-version="3.9.0",
+ org.eclipse.emf.ecore.editor;bundle-version="2.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Version: 0.1.1.qualifier
 Bundle-Name: Modeling

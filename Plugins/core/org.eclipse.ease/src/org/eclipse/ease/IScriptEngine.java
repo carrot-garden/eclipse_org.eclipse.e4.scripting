@@ -78,10 +78,10 @@ public interface IScriptEngine {
 	/**
 	 * Set the default error stream for the interpreter.
 	 * 
-	 * @param outputStream
+	 * @param errorStream
 	 *        default error stream
 	 */
-	void setErrorStream(final OutputStream outputStream);
+	void setErrorStream(final OutputStream errorStream);
 
 	/**
 	 * Set the default input stream for the interpreter.
