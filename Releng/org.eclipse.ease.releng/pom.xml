@@ -39,9 +39,7 @@
 		<module>
 			../../developers/plugins/org.eclipse.ease.dev.debug
 		</module>
-		<module>
-			../../Plugins/core/org.eclipse.ease.log
-		</module>
+		
 		<module>
 			../../Plugins/core/org.eclipse.ease.storedscript
 		</module>
