@@ -104,12 +104,24 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	@Override
-	public final ScriptResult inject(final Object content) {
+	public final Object inject(final Object content) {
 		// injected code shall not trigger a new event, therefore notifyListerners needs to be false
+		ScriptResult result;
 		if (content instanceof Script)
-			return inject((Script) content, false);
+			result = inject((Script) content, false);
 		else
-			return inject(new Script(content), false);
+			result = inject(new Script(content), false);
+
+		if (result.hasException()) {
+			// re-throw previous exception
+
+			if (result.getException() instanceof RuntimeException)
+				throw (RuntimeException) result.getException();
+
+			throw new RuntimeException(result.getException().getMessage(), result.getException());
+		}
+
+		return result.getResult();
 	}
 
 	/**
@@ -148,10 +160,11 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 			} catch (final Exception e) {
 				script.setException(e);
 				String message = e.getMessage();
-				if (message != null) {
 
+				if (message != null)
 					getErrorStream().println("Message :" + message);
-				} else {
+
+				else {
 					getErrorStream().println("Stack trace");
 					e.printStackTrace(getErrorStream());
 				}
