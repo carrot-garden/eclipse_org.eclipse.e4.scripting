@@ -12,7 +12,7 @@ import org.eclipse.ease.Logger;
 import org.eclipse.ease.integration.modeling.GMFtoEMFCommandWrapper;
 import org.eclipse.ease.integration.modeling.NotationModule;
 import org.eclipse.ease.integration.modeling.uml.modules.UMLModule;
-import org.eclipse.ease.modules.EnvironmentModule;
+import org.eclipse.ease.modules.IEnvironment;
 import org.eclipse.ease.modules.ScriptParameter;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.emf.common.util.URI;
@@ -78,7 +78,7 @@ public class PapyrusModule extends UMLModule {
 	}
 
 	@Override
-	public void initialize(IScriptEngine engine, EnvironmentModule environment) {
+	public void initialize(IScriptEngine engine, IEnvironment environment) {
 		super.initialize(engine, environment);
 		notationModule.initialize(engine, environment);
 	}

@@ -3,7 +3,7 @@ package org.eclipse.ease.integration.modeling.uml.modules;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.integration.modeling.EcoreModule;
 import org.eclipse.ease.module.platform.modules.DialogModule;
-import org.eclipse.ease.modules.EnvironmentModule;
+import org.eclipse.ease.modules.IEnvironment;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -23,12 +23,11 @@ import org.eclipse.uml2.uml.UMLPackage;
  */
 public class UMLModule extends EcoreModule {
 
-
-	@Override
-	public void initialize(IScriptEngine engine, EnvironmentModule environment) {
-		super.initialize(engine, environment);
-		initEPackage(UMLPackage.eNS_URI);
-	}
+    @Override
+    public void initialize(final IScriptEngine engine, final IEnvironment environment) {
+        super.initialize(engine, environment);
+        initEPackage(UMLPackage.eNS_URI);
+    }
 
 	/**
 	 * Get the UML model from the current active editor

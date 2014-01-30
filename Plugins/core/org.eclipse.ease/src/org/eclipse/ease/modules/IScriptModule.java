@@ -27,5 +27,5 @@ public interface IScriptModule {
 	 * @param environment
 	 *            environment module that tracks this module
 	 */
-	void initialize(IScriptEngine engine, EnvironmentModule environment);
+	void initialize(IScriptEngine engine, IEnvironment environment);
 }

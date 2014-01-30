@@ -22,10 +22,10 @@ public abstract class AbstractScriptModule implements IScriptModule {
 	private IScriptEngine mEngine = null;
 
 	/** Environment module instance. */
-	private EnvironmentModule mEnvironment = null;
+	private IEnvironment mEnvironment = null;
 
 	@Override
-	public void initialize(IScriptEngine engine, EnvironmentModule environment) {
+	public void initialize(final IScriptEngine engine, final IEnvironment environment) {
 		mEngine = engine;
 		mEnvironment = environment;
 	}
@@ -35,7 +35,7 @@ public abstract class AbstractScriptModule implements IScriptModule {
 	 * 
 	 * @return script engine
 	 */
-	protected IScriptEngine getScriptEngine() {
+	public IScriptEngine getScriptEngine() {
 		return mEngine;
 	}
 
@@ -44,7 +44,7 @@ public abstract class AbstractScriptModule implements IScriptModule {
 	 * 
 	 * @return environment module
 	 */
-	protected EnvironmentModule getEnvironment() {
+	protected IEnvironment getEnvironment() {
 		return mEnvironment;
 	}
 

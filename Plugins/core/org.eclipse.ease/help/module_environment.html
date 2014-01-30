@@ -10,19 +10,9 @@
 	<h2>Function Overview</h2>
 	<table class="functions">
 		<tr>
-			<th><a href="#loadModule">loadModule</a></th>
-			<td>Load a module. Loading a module generally enhances the script environment with new functions and variables. If a module was already loaded before, it
- gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
- the whole module stack.</td>
-		</tr>
-		<tr>
 			<th><a href="#wrap">wrap</a></th>
 			<td>Creates wrapper functions for a given java instance. Searches for members and methods annotated with {@link WrapToScript} and creates wrapping code in
  the target script language. A method named &lt;instance&gt;.myMethod() will be made available by calling myMethod().</td>
-		</tr>
-		<tr>
-			<th><a href="#getModule">getModule</a></th>
-			<td>Resolves a loaded module and returns the Java instance. Will only query previously loaded modules.</td>
 		</tr>
 		<tr>
 			<th><a href="#eval">eval</a></th>
@@ -43,32 +33,9 @@
 			<th><a href="#listModules">listModules</a></th>
 			<td>List all available (visible) modules. Returns a list of visible modules. Loaded modules are indicated.</td>
 		</tr>
-		<tr>
-			<th><a href="#print">print</a></th>
-			<td>Print to standard output.</td>
-		</tr>
 	</table>
 
 	<h2>Functions</h2>
-
-	<h3><a id="loadModule">loadModule</a></h3>
-	<p class="synopsis">java.lang.Object loadModule(java.lang.String identifier)</p>
-	<p class="description">Load a module. Loading a module generally enhances the script environment with new functions and variables. If a module was already loaded before, it
- gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
- the whole module stack.</p>
-		<table class="parameters">
-			<tr>
-				<th>Parameter</th>
-				<th>Type</th>
-				<th>Description</th>
-			</tr>
-		<tr>
-			<td>identifier</td>
-			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
-			<td></td>
-		</tr>
-	</table>
-	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a> ... </p>
 
 	<h3><a id="wrap">wrap</a></h3>
 	<p class="synopsis">void wrap(java.lang.Object toBeWrapped)</p>
@@ -86,23 +53,6 @@
 			<td>instance to be wrapped</td>
 		</tr>
 	</table>
-
-	<h3><a id="getModule">getModule</a></h3>
-	<p class="synopsis">java.lang.Object getModule(java.lang.String name)</p>
-	<p class="description">Resolves a loaded module and returns the Java instance. Will only query previously loaded modules.</p>
-		<table class="parameters">
-			<tr>
-				<th>Parameter</th>
-				<th>Type</th>
-				<th>Description</th>
-			</tr>
-		<tr>
-			<td>name</td>
-			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a></td>
-			<td>name of the module to resolve</td>
-		</tr>
-	</table>
-	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a> ... </p>
 
 	<h3><a id="eval">eval</a></h3>
 	<p class="synopsis">java.lang.Object eval(java.lang.Object data)</p>
@@ -161,21 +111,5 @@
 	<p class="synopsis">java.lang.String listModules()</p>
 	<p class="description">List all available (visible) modules. Returns a list of visible modules. Loaded modules are indicated.</p>
 	<p class="return"><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">java.lang.String</a> ... </p>
-
-	<h3><a id="print">print</a></h3>
-	<p class="synopsis">void print(java.lang.Object text)</p>
-	<p class="description">Print to standard output.</p>
-		<table class="parameters">
-			<tr>
-				<th>Parameter</th>
-				<th>Type</th>
-				<th>Description</th>
-			</tr>
-		<tr>
-			<td>text</td>
-			<td><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">java.lang.Object</a></td>
-			<td>text to write to standard output</td>
-		</tr>
-	</table>
 	</body>
 </html>

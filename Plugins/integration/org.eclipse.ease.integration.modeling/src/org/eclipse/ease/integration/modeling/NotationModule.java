@@ -13,7 +13,7 @@ package org.eclipse.ease.integration.modeling;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.integration.modeling.selector.GMFNotationSelector;
 import org.eclipse.ease.module.platform.modules.DialogModule;
-import org.eclipse.ease.modules.EnvironmentModule;
+import org.eclipse.ease.modules.IEnvironment;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
@@ -32,11 +32,11 @@ public class NotationModule extends EcoreModule {
 
 	}
 
-	@Override
-	public void initialize(IScriptEngine engine, EnvironmentModule environment) {
-		super.initialize(engine, environment);
-		initEPackage(NotationPackage.eNS_URI);
-	}
+    @Override
+    public void initialize(final IScriptEngine engine, final IEnvironment environment) {
+        super.initialize(engine, environment);
+        initEPackage(NotationPackage.eNS_URI);
+    }
 
 	@Override
 	public EObject getSelection() {

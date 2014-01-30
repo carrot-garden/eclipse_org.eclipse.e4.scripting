@@ -20,16 +20,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ExitException;
@@ -38,14 +34,13 @@ import org.eclipse.ease.IScriptService;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
-import org.eclipse.ease.service.ScriptService;
 import org.eclipse.ecf.filetransfer.FileTransferInfo;
 import org.eclipse.ui.PlatformUI;
 
 /**
  * The Environment provides base functions for all script interpreters. It is automatically loaded by any interpreter upon startup.
  */
-public class EnvironmentModule extends AbstractScriptModule {
+public class EnvironmentModule extends AbstractEnvironment {
 
 	private static final String PROJECT = "project://";
 
@@ -53,61 +48,10 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 	public static final String MODULE_PREFIX = "__MOD_";
 
-	/** Stores ordering of wrapped elements. */
-	private final List<Object> mModules = new ArrayList<Object>();
-
-	/** Stores beautified names of loaded modules. */
-	private final Map<String, Object> mModuleNames = new HashMap<String, Object>();
-
-	private final ListenerList mModuleListeners = new ListenerList();
-
 	public EnvironmentModule() {
 		// we need to force loading of the org.eclipse.ecf.filetransfer plugin to correctly register extended URL protocols.
 		// therefore load a class from that plugin
 		Class<FileTransferInfo> foo = FileTransferInfo.class;
-	}
-
-	/**
-	 * Load a module. Loading a module generally enhances the script environment with new functions and variables. If a module was already loaded before, it
-	 * gets refreshed and moved to the top of the module stack. When a module is loaded, all its dependencies are loaded too. So loading one module might change
-	 * the whole module stack.
-	 * 
-	 * @param name
-	 *            name of module to load
-	 * @return loaded module instance
-	 */
-	@WrapToScript
-	public final Object loadModule(final String identifier) {
-		Object module = getModule(identifier);
-		if (module == null) {
-			// not loaded yet
-			Map<String, ModuleDefinition> availableModules = ScriptService.getInstance().getAvailableModules();
-
-			ModuleDefinition definition = availableModules.get(identifier);
-			if (definition != null) {
-				// module exists
-
-				// load dependencies; always load to bring dependencies on top of modules stack
-				for (String dependencyName : definition.getDependencies()) {
-					if (loadModule(dependencyName) == null)
-						// could not load dependency, bail out
-						return null;
-				}
-
-				module = definition.getModuleInstance();
-				if (module instanceof IScriptModule)
-					((IScriptModule) module).initialize(getScriptEngine(), this);
-
-				mModuleNames.put(identifier, module);
-			}
-		}
-		if (module == null) {
-			getScriptEngine().getErrorStream().append("Unable to find module with id " + identifier);
-		}
-		// create function wrappers
-		wrap(module);
-
-		return module;
 	}
 
 	/**
@@ -117,6 +61,7 @@ public class EnvironmentModule extends AbstractScriptModule {
 	 * @param toBeWrapped
 	 *            instance to be wrapped
 	 */
+	@Override
 	@WrapToScript
 	public void wrap(final Object toBeWrapped) {
 		// register new variable in script engine
@@ -139,10 +84,6 @@ public class EnvironmentModule extends AbstractScriptModule {
 
 		// create function wrappers
 		createWrappers(toBeWrapped, identifier, reloaded);
-
-		// move module up to first position
-		mModules.remove(toBeWrapped);
-		mModules.add(0, toBeWrapped);
 
 		// notify listeners
 		fireModuleEvent(toBeWrapped, reloaded ? IModuleListener.RELOADED : IModuleListener.LOADED);
@@ -232,43 +173,6 @@ public class EnvironmentModule extends AbstractScriptModule {
 	 */
 	private static boolean useAutoLoader(final Method method) {
 		return (Modifier.isPublic(method.getModifiers())) && (method.getAnnotation(WrapToScript.class) != null);
-	}
-
-	/**
-	 * Resolves a loaded module and returns the Java instance. Will only query previously loaded modules.
-	 * 
-	 * @param name
-	 *            name of the module to resolve
-	 * @return resolved module instance or <code>null</code>
-	 */
-	@WrapToScript
-	public final Object getModule(final String name) {
-		return mModuleNames.get(name);
-	}
-
-	/**
-	 * Retrieve a list of loaded modules. The returned list is read only.
-	 * 
-	 * @return list of modules (might be empty)
-	 */
-	public List<Object> getModules() {
-		return Collections.unmodifiableList(mModules);
-	}
-
-	/**
-	 * Resolves a loaded module by its class.
-	 * 
-	 * @param clazz
-	 *            module class to look resolve
-	 * @return resolved module instance or <code>null</code>
-	 */
-	public final <T extends Object, U extends Class<T>> T getModule(final U clazz) {
-		for (final Object module : getModules()) {
-			if (module.getClass().equals(clazz))
-				return (T) module;
-		}
-
-		return null;
 	}
 
 	/**
@@ -463,17 +367,6 @@ public class EnvironmentModule extends AbstractScriptModule {
 	// return null;
 	// }
 
-	/**
-	 * Print to standard output.
-	 * 
-	 * @param text
-	 *            text to write to standard output
-	 */
-	@WrapToScript
-	public final void print(final Object text) {
-		getScriptEngine().getOutputStream().println(text);
-	}
-
 	// // FIXME move to rhino bundle
 	// /**
 	// * Resolves a jar file and makes its classes available for the
@@ -511,19 +404,6 @@ public class EnvironmentModule extends AbstractScriptModule {
 	// //
 	// // throw new RuntimeException("Jar file \"" + location + "\" not found");
 	// // }
-
-	public void addModuleListener(final IModuleListener listener) {
-		mModuleListeners.add(listener);
-	}
-
-	public void removeModuleListener(final IModuleListener listener) {
-		mModuleListeners.remove(listener);
-	}
-
-	private void fireModuleEvent(final Object module, final int type) {
-		for (Object listener : mModuleListeners.getListeners())
-			((IModuleListener) listener).notifyModule(module, type);
-	}
 
 	/**
 	 * Re-implementation as we might not have initialized the engine on the first module load.

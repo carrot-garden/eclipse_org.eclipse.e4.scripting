@@ -51,4 +51,13 @@
          name="Scripting">
    </page>
 </extension>
+<extension
+      point="org.eclipse.ease.language">
+   <engine
+         class="org.eclipse.ease.engine.JavaEngine"
+         id="org.eclipse.ease.engine.native"
+         name="Native"
+         priority="0">
+   </engine>
+</extension>
 </plugin>
