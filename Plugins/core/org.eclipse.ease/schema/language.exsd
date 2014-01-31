@@ -20,7 +20,6 @@
          <choice minOccurs="0" maxOccurs="unbounded">
             <element ref="engine" minOccurs="0" maxOccurs="unbounded"/>
             <element ref="launchExtension" minOccurs="0" maxOccurs="unbounded"/>
-            <element ref="scriptType" minOccurs="0" maxOccurs="unbounded"/>
             <element ref="moduleWrapper" minOccurs="0" maxOccurs="unbounded"/>
          </choice>
          <attribute name="point" type="string" use="required">
@@ -51,9 +50,14 @@
    </element>
 
    <element name="engine">
+      <annotation>
+         <documentation>
+            Script interpreter. An engine capable of executing scripts.
+         </documentation>
+      </annotation>
       <complexType>
          <choice minOccurs="1" maxOccurs="unbounded">
-            <element ref="supportedScriptType"/>
+            <element ref="binding"/>
          </choice>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -72,7 +76,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  Implementation of script engine
+                  Implementation of script engine. Typically extends AbstractScriptEngine.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.ease.IScriptEngine"/>
@@ -82,53 +86,24 @@
          <attribute name="priority" type="string">
             <annotation>
                <documentation>
-                  
+                  Priority of this engine. If a script can be handled by multiple engines, the one with the highest priority will be chosen.
                </documentation>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="scriptType">
-      <complexType>
-         <attribute name="type" type="string" use="required">
-            <annotation>
-               <documentation>
-                  Identifier for a certain kind of scripts (eg.PHP, JS, Python)
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="extension_file" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="supportedScriptType">
-      <complexType>
-         <attribute name="type" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.language/scriptType/@type"/>
-               </appinfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <element name="launchExtension">
+      <annotation>
+         <documentation>
+            A generic class to be called when a script engine is launched.
+         </documentation>
+      </annotation>
       <complexType>
          <attribute name="engineID" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  Script engine to bind this extension to.
                </documentation>
                <appinfo>
                   <meta.attribute kind="identifier" basedOn="org.eclipse.ease.language/engine/@id"/>
@@ -138,7 +113,7 @@
          <attribute name="class" type="string">
             <annotation>
                <documentation>
-                  
+                  Class to be called when script engine is launched.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.ease.IScriptEngineLaunchExtension"/>
@@ -215,6 +190,26 @@
                <documentation>
                   URL of the update where this engine can be installed
                </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="binding">
+      <annotation>
+         <documentation>
+            Binding to a dedicated content type.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="scriptType" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Content type supported by the script engine.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.scriptType/scriptType/@name"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>

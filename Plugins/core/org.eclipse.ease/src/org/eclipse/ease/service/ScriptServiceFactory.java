@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ease.service;
 
-import org.eclipse.ease.IScriptService;
 import org.eclipse.ui.services.AbstractServiceFactory;
 import org.eclipse.ui.services.IServiceLocator;
 

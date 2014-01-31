@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.ease.IScriptService;
 import org.eclipse.ease.modules.ModuleDefinition;
+import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.handler.LoadModule;
 import org.eclipse.ui.PlatformUI;

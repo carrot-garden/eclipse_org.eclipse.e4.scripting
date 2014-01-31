@@ -30,10 +30,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ExitException;
 import org.eclipse.ease.IScriptEngine;
-import org.eclipse.ease.IScriptService;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
+import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ecf.filetransfer.FileTransferInfo;
 import org.eclipse.ui.PlatformUI;
 

@@ -26,9 +26,9 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ease.ScriptType;
-import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.storedscript.Activator;
 import org.eclipse.ease.storedscript.notification.IStoredScriptListener;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
@@ -42,10 +42,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.ui.PlatformUI;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-
 
 /**
  * Service that will handle all stored script (A stored script is an existing file script identify by its path)
@@ -62,19 +62,16 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 
 	private boolean init = false;;
 
-
-
 	public static StoredScriptService getInstance() {
-		if(!SingletonHolder.INSTANCE.init) {
+		if (!SingletonHolder.INSTANCE.init) {
 			SingletonHolder.INSTANCE.init();
 		}
 		return SingletonHolder.INSTANCE;
 	}
 
-	private List<IStoredScriptListener> listeners = new ArrayList<IStoredScriptListener>();
+	private final List<IStoredScriptListener> listeners = new ArrayList<IStoredScriptListener>();
 
-	private UpdateMonkeyActionsResourceChangeListener workspaceListener = new UpdateMonkeyActionsResourceChangeListener();
-
+	private final UpdateMonkeyActionsResourceChangeListener workspaceListener = new UpdateMonkeyActionsResourceChangeListener();
 
 	StoredScriptService() {
 
@@ -93,38 +90,39 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 			registry = StoredscriptFactory.eINSTANCE.createStoredScriptRegistry();
 			modelAdapter = new EContentAdapter() {
 
+				@Override
 				public void notifyChanged(Notification notification) {
 					super.notifyChanged(notification);
 					notifyScriptChanged(notification);
 				};
 			};
 
-
 			registry.eAdapters().add(modelAdapter);
 			resource.getContents().add(registry);
-			//Init type for extension point
-			for(ScriptType type : ScriptService.getInstance().getKownSwriptType().values()) {
+			// Init type for extension point
+			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+			for (org.eclipse.ease.service.ScriptType type : scriptService.getAvailableScriptTypes().values()) {
 				org.eclipse.ease.storedscript.storedscript.ScriptType scriptType = StoredscriptFactory.eINSTANCE.createScriptType();
-				scriptType.setType(type.getScritpType());
-				scriptType.setExtension(type.getExtension());
+				scriptType.setType(type.getName());
+				scriptType.setExtension(type.getDefaultExtension());
 				registry.getScriptTypes().add(scriptType);
 			}
 			rescanAllFiles();
 			ResourcesPlugin.getWorkspace().addResourceChangeListener(workspaceListener);
 		} catch (CoreException e) {
 			e.printStackTrace();
-			Activator.getDefault().getLog().log(new Status(Status.ERROR, Activator.PLUGIN_ID, e.getMessage()));
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage()));
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getStoredScript()
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getStoredScript ()
 	 */
 	@Override
 	public Set<IStoredScript> getStoredScript() {
-		if(registry != null) {
+		if (registry != null) {
 			return Collections.unmodifiableSet(new HashSet<IStoredScript>(registry.getScripts()));
 		}
 		return Collections.emptySet();
@@ -133,7 +131,7 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getStoreScript(java.lang.String)
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getStoreScript (java.lang.String)
 	 */
 	@Override
 	public IStoredScript getStoreScript(String uri) {
@@ -143,7 +141,7 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getFileStoredScript(org.eclipse.emf.common.util.URI)
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService# getFileStoredScript(org.eclipse.emf.common.util.URI)
 	 */
 	@Override
 	public IStoredScript getFileStoredScript(URI uri) {
@@ -151,7 +149,7 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	}
 
 	public void notifyScriptChanged(Notification msg) {
-		for(IStoredScriptListener l : listeners) {
+		for (IStoredScriptListener l : listeners) {
 			l.scriptChange(msg);
 		}
 	}
@@ -159,9 +157,7 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ease.storedscript.service.IStoredScriptService#addListener(org.eclipse.ease.storedscript.
-	 * notification.IStoredScriptListener)
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#addListener (org.eclipse.ease.storedscript. notification.IStoredScriptListener)
 	 */
 	@Override
 	public void addListener(IStoredScriptListener listener) {
@@ -171,9 +167,7 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ease.storedscript.service.IStoredScriptService#removeListener(org.eclipse.ease.storedscript
-	 * .notification.IStoredScriptListener)
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#removeListener (org.eclipse.ease.storedscript .notification.IStoredScriptListener)
 	 */
 	@Override
 	public void removeListener(IStoredScriptListener listener) {
@@ -183,25 +177,21 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ease.storedscript.service.IStoredScriptService#removeStoreScript(org.eclipse.ease.storedscript
-	 * .storedscript.IStoredScript)
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#removeStoreScript (org.eclipse.ease.storedscript .storedscript.IStoredScript)
 	 */
 	@Override
 	public void removeStoreScript(IStoredScript storeScript) {
-		if(registry != null) {
+		if (registry != null) {
 			registry.getScripts().remove(storeScript);
 		}
 	}
 
-
 	private StoredScriptRegistry registry = null;
-
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#processNewOrChangedScript(java.lang.String)
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService# processNewOrChangedScript(java.lang.String)
 	 */
 	@Override
 	public void processNewOrChangedScript(String uri) {
@@ -211,7 +201,7 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getScriptType(java.lang.String)
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getScriptType (java.lang.String)
 	 */
 	@Override
 	public org.eclipse.ease.storedscript.storedscript.ScriptType getScriptType(String type) {
@@ -221,55 +211,58 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getMatchingScriptType(org.eclipse.ease.
-	 * storedscript.storedscript.IStoredScript)
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService# getMatchingScriptType(org.eclipse.ease. storedscript.storedscript.IStoredScript)
 	 */
 	@Override
 	public org.eclipse.ease.storedscript.storedscript.ScriptType getMatchingScriptType(IStoredScript script) {
-		return ((StoredScriptRegistryImpl)registry).getMatchingScriptType(script);
+		return ((StoredScriptRegistryImpl) registry).getMatchingScriptType(script);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#rescanAllFiles()
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#rescanAllFiles ()
 	 */
 	@Override
 	public void rescanAllFiles() throws CoreException {
-		if(registry == null) {
+		if (registry == null) {
 			registry = StoredscriptFactory.eINSTANCE.createStoredScriptRegistry();
 		} else {
 			registry.getScripts().clear();
 		}
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		Collection<String> extensiontions = Collections2.transform(registry.getScriptTypes(), new Function<org.eclipse.ease.storedscript.storedscript.ScriptType, String>() {
+		Collection<String> extensiontions = Collections2.transform(registry.getScriptTypes(),
+				new Function<org.eclipse.ease.storedscript.storedscript.ScriptType, String>() {
 
-			@Override
-			public String apply(org.eclipse.ease.storedscript.storedscript.ScriptType arg0) {
-				return arg0.getExtension();
-			}
-		});
+					@Override
+					public String apply(org.eclipse.ease.storedscript.storedscript.ScriptType arg0) {
+						return arg0.getExtension();
+					}
+				});
 		findScriptsInContainer(extensiontions, workspace.getRoot(), false);
 		/*
 		 * TODO
 		 */
-		//		findScriptsInalternatePath(extensions, alternatePaths, false);
+		// findScriptsInalternatePath(extensions, alternatePaths, false);
 	}
 
 	public Collection<IFile> findScriptsInContainer(IContainer container, boolean notify) throws CoreException {
-		Collection<String> handleScriptType = Collections2.transform(ScriptService.getInstance().getHandleScriptType(), new ScriptType.ToExtensionFile());
+		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		Collection<String> handleScriptType = Collections2.transform(scriptService.getAvailableScriptTypes().values(),
+				new org.eclipse.ease.service.ScriptType.ToExtensionFile());
 		return findScriptsInContainer(handleScriptType, container, notify);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService#getHandleFileExtension()
+	 * @see org.eclipse.ease.storedscript.service.IStoredScriptService# getHandleFileExtension()
 	 */
 	@Override
 	public Collection<String> getHandleFileExtension() {
-		return Collections2.transform(ScriptService.getInstance().getHandleScriptType(), new ScriptType.ToExtensionFile());
+		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		return Collections2.transform(scriptService.getAvailableScriptTypes().values(), new org.eclipse.ease.service.ScriptType.ToExtensionFile());
 	}
 
 	protected Collection<IFile> findScriptsInContainer(final Collection<String> extensions, IContainer container, final boolean notify) throws CoreException {
@@ -279,12 +272,12 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 
 			@Override
 			public boolean visit(IResource resource) throws CoreException {
-				if(resource instanceof IProject) {
-					IProject p = (IProject)resource;
+				if (resource instanceof IProject) {
+					IProject p = (IProject) resource;
 					return org.eclipse.ease.storedscript.utils.ScriptResourceUtils.isEclipseMonkeyProject(p);
-				} else if(resource instanceof IFile) {
-					IFile file = (IFile)resource;
-					if(extensions.contains(file.getFileExtension())) {
+				} else if (resource instanceof IFile) {
+					IFile file = (IFile) resource;
+					if (extensions.contains(file.getFileExtension())) {
 						IPath location = file.getFullPath();
 						processNewOrChangedScript(URIScriptUtils.createPlatformString(location));
 						scripts.add(file);
@@ -304,32 +297,32 @@ public class StoredScriptService implements IStoredScriptServiceInternal {
 	 * TODO add extension point to add alternative path
 	 */
 
-
-
-	//	protected void findScriptsInalternatePath(Collection<String> extensions, Collection<URI> alternatePaths, boolean notify) {
-	//		for(Iterator<URI> iterator = alternatePaths.iterator(); iterator.hasNext();) {
-	//			URI path = (URI)iterator.next();
+	// protected void findScriptsInalternatePath(Collection<String> extensions,
+	// Collection<URI> alternatePaths, boolean notify) {
+	// for(Iterator<URI> iterator = alternatePaths.iterator();
+	// iterator.hasNext();) {
+	// URI path = (URI)iterator.next();
 	//
-	//			File folder = new File(path);
-	//			String[] files = folder.list();
+	// File folder = new File(path);
+	// String[] files = folder.list();
 	//
-	//			for(int j = 0; j < files.length; j++) {
+	// for(int j = 0; j < files.length; j++) {
 	//
-	//				String fullPath = folder.getAbsolutePath() + File.separator + files[j];
-	//				File f = new File(fullPath);
+	// String fullPath = folder.getAbsolutePath() + File.separator + files[j];
+	// File f = new File(fullPath);
 	//
-	//				if(f.isFile()) {
-	//					Iterator<String> extensionIterator = extensions.iterator();
-	//					while(extensionIterator.hasNext()) {
-	//						String ext = (String)extensionIterator.next();
-	//						if(f.getName().toLowerCase().endsWith("." + ext)) {
-	//							Path p = new Path(f.getAbsolutePath());
-	//							processNewOrChangedScript(p, notify);
-	//						}
-	//					}
-	//				}
-	//			}
-	//		}
-	//	}
+	// if(f.isFile()) {
+	// Iterator<String> extensionIterator = extensions.iterator();
+	// while(extensionIterator.hasNext()) {
+	// String ext = (String)extensionIterator.next();
+	// if(f.getName().toLowerCase().endsWith("." + ext)) {
+	// Path p = new Path(f.getAbsolutePath());
+	// processNewOrChangedScript(p, notify);
+	// }
+	// }
+	// }
+	// }
+	// }
+	// }
 
 }

@@ -15,8 +15,8 @@ import java.io.IOException;
 
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.IScriptEngine;
-import org.eclipse.ease.IScriptService;
 import org.eclipse.ease.Logger;
+import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
 import org.eclipse.ease.storedscript.storedscript.ScriptType;
 import org.eclipse.ease.ui.console.ScriptConsole;
@@ -31,13 +31,17 @@ public class ScriptLauncherUtils {
 		ScriptType scriptType = script.getScriptType();
 
 		IScriptEngine engine = null;
-		IScriptService scriptService = (IScriptService)PlatformUI.getWorkbench().getService(IScriptService.class);
+		IScriptService scriptService = (IScriptService) PlatformUI
+				.getWorkbench().getService(IScriptService.class);
 		if (scriptService != null) {
 			engine = scriptService.createEngine(scriptType.getType());
 
 			if (engine == null) {
-				String message = "Unable to find a script engine for script " + script.getUri();
-				ErrorDialog.openError(Display.getDefault().getActiveShell(), "No engine found", message, Logger.createErrorStatus(message, Activator.PLUGIN_ID));
+				String message = "Unable to find a script engine for script "
+						+ script.getUri();
+				ErrorDialog.openError(Display.getDefault().getActiveShell(),
+						"No engine found", message,
+						Logger.createErrorStatus(message, Activator.PLUGIN_ID));
 				return;
 			}
 		}
@@ -48,17 +52,18 @@ public class ScriptLauncherUtils {
 		if (UIMetadataUtils.generateCodeInjectionFile(script)) {
 			engine.addExecutionListener(new EffectiveScriptGenerator());
 		}
-		ScriptConsole console = ScriptConsole.create(engine.getName() + ": " + script.getUri(), engine);
+		ScriptConsole console = ScriptConsole.create(engine.getName() + ": "
+				+ script.getUri(), engine);
 		engine.setOutputStream(console.getOutputStream());
 		engine.setErrorStream(console.getErrorStream());
 		engine.setTerminateOnIdle(true);
 		try {
-			//First try to run it as a file
+			// First try to run it as a file
 			File file = script.getFile();
 			if (file != null) {
 				engine.executeAsync(file);
 			} else {
-				//If is not file run from input stream
+				// If is not file run from input stream
 				engine.executeAsync(script.getInputStream());
 			}
 		} catch (IOException e2) {

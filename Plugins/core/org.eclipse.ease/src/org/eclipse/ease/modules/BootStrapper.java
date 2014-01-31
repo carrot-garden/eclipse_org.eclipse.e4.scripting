@@ -13,7 +13,8 @@ package org.eclipse.ease.modules;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.Script;
-import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Loads basic module support for script engines. The {@link EnvironmentModule} provides basic functionality to manage modules, include other source files and
@@ -36,6 +37,7 @@ public class BootStrapper implements IScriptEngineLaunchExtension {
 	}
 
 	public static IModuleWrapper getWrapper(final String engineID) {
-		return ScriptService.getInstance().getModuleWrapper(engineID);
+		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		return scriptService.getModuleWrapper(engineID);
 	}
 }

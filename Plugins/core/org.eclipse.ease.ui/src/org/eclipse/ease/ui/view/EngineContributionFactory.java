@@ -17,8 +17,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import org.eclipse.ease.EngineDescription;
-import org.eclipse.ease.IScriptService;
+import org.eclipse.ease.service.EngineDescription;
+import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.ui.handler.SwitchEngine;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.AbstractContributionFactory;

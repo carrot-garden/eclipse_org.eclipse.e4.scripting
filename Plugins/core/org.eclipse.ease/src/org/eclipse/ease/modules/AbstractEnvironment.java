@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.ListenerList;
-import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ui.PlatformUI;
 
 public abstract class AbstractEnvironment extends AbstractScriptModule implements IEnvironment {
 
@@ -34,7 +35,8 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 		Object module = getModule(identifier);
 		if (module == null) {
 			// not loaded yet
-			Map<String, ModuleDefinition> availableModules = ScriptService.getInstance().getAvailableModules();
+			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+			Map<String, ModuleDefinition> availableModules = scriptService.getAvailableModules();
 
 			ModuleDefinition definition = availableModules.get(identifier);
 			if (definition != null) {

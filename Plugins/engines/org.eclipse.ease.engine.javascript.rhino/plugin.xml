@@ -3,18 +3,14 @@
 <plugin>
    <extension
          point="org.eclipse.ease.language">
-      <scriptType
-            extension_file="js"
-            type="JavaScript">
-      </scriptType>
       <engine
             class="org.eclipse.ease.engine.javascript.rhino.RhinoScriptEngine"
             id="org.eclipse.ease.javascript.rhino"
             name="JavaScript (Rhino)"
             priority="10">
-         <supportedScriptType
-               type="JavaScript">
-         </supportedScriptType>
+         <binding
+               scriptType="JavaScript">
+         </binding>
       </engine>
       <moduleWrapper
             class="org.eclipse.ease.engine.javascript.rhino.RhinoModuleWrapper"

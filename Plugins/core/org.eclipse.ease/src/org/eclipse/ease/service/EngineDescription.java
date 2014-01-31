@@ -8,17 +8,16 @@
  * Contributors:
  *     Christian Pontesegger - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ease;
+package org.eclipse.ease.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.ease.service.ScriptService;
-
-import com.google.common.collect.Collections2;
+import org.eclipse.ease.IScriptEngine;
+import org.eclipse.ease.Logger;
+import org.eclipse.ui.PlatformUI;
 
 public class EngineDescription {
 
@@ -26,15 +25,15 @@ public class EngineDescription {
 
 	private static final String PRIORITY = "priority";
 
-	private static final String SUPPORTED_SCRIPT_TYPE = "supportedScriptType";
+	private static final String BINDING = "binding";
 
-	private static final String TYPE = "type";
+	private static final String TYPE = "scriptType";
 
 	private static final String ID = "id";
 
 	private static final String NAME = "name";
 
-	private IConfigurationElement mConfigurationElement;
+	private final IConfigurationElement mConfigurationElement;
 
 	private List<ScriptType> types = null;
 
@@ -42,22 +41,24 @@ public class EngineDescription {
 		mConfigurationElement = configurationElement;
 	}
 
-	public Collection<String> getSupportedScriptTypesNames() {
-		return Collections2.transform(getSupportedScriptTypes(), new ScriptType.ToScriptType());
-	}
-
+	// public Collection<String> getSupportedScriptTypesNames() {
+	// return Collections2.transform(getSupportedScriptTypes(), new ScriptType.ToScriptType());
+	// }
+	//
 	public List<ScriptType> getSupportedScriptTypes() {
-		if(types == null) {
+		if (types == null) {
 			types = new ArrayList<ScriptType>();
-			for(final IConfigurationElement child : mConfigurationElement.getChildren(SUPPORTED_SCRIPT_TYPE)) {
+			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+
+			for (final IConfigurationElement child : mConfigurationElement.getChildren(BINDING)) {
 				String scriptTypeID = child.getAttribute(TYPE);
-				if(scriptTypeID != null) {
-					ScriptType scriptType = ScriptService.getInstance().getKownSwriptType().get(scriptTypeID);
-					if(scriptType == null) {
-						//TODO should log an error. Maybe need an activator
-						System.err.println("Unknow scriptType " + scriptTypeID);
-					}
-					types.add(scriptType);
+
+				if (scriptTypeID != null) {
+					ScriptType scriptType = scriptService.getAvailableScriptTypes().get(scriptTypeID);
+					if (scriptType == null)
+						Logger.logError("Unknow scriptType " + scriptTypeID);
+					else
+						types.add(scriptType);
 				}
 			}
 		}
@@ -75,17 +76,32 @@ public class EngineDescription {
 		return 0;
 	}
 
-	public Object createEngine() throws CoreException {
-		return mConfigurationElement.createExecutableExtension(CLASS);
+	public IScriptEngine createEngine() {
+		try {
+			Object object = mConfigurationElement.createExecutableExtension(CLASS);
+			if (object instanceof IScriptEngine)
+				return (IScriptEngine) object;
+		} catch (CoreException e) {
+			Logger.logError("Could not create script engine: " + getID(), e);
+		}
+
+		return null;
 	}
 
 	public String getID() {
 		return mConfigurationElement.getAttribute(ID);
 	}
 
-
 	public String getName() {
 		String name = mConfigurationElement.getAttribute(NAME);
 		return (name != null) ? name : getID();
+	}
+
+	public boolean supports(String scriptType) {
+		for (ScriptType type : getSupportedScriptTypes()) {
+			if (type.getName().equals(scriptType))
+				return true;
+		}
+		return false;
 	}
 }

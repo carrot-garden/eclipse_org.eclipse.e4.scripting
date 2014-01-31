@@ -25,7 +25,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.FileTrace.Trace;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
-import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ease.service.EngineDescription;
+import org.eclipse.ease.service.IScriptService;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.misc.UIStats;
@@ -385,7 +386,8 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 		mCodePieces.clear();
 
 		// re-enable launch extensions to register themselves
-		for (final IScriptEngineLaunchExtension extension : ScriptService.getLaunchExtensions(getID()))
+		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		for (final IScriptEngineLaunchExtension extension : scriptService.getLaunchExtensions(getID()))
 			extension.createEngine(this);
 	}
 

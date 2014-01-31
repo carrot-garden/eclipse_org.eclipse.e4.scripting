@@ -15,10 +15,11 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.ease.EngineDescription;
-import org.eclipse.ease.ScriptType;
-import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ease.service.EngineDescription;
+import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.storedscript.EASEProjectNature;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Helper to handle script resources
@@ -32,7 +33,7 @@ public class ScriptResourceUtils {
 	}
 
 	public static boolean isEclipseMonkeyProject(IProject project) {
-		if(project != null && project.isAccessible()) {
+		if ((project != null) && project.isAccessible()) {
 			try {
 				return project.hasNature(EASEProjectNature.ESCRIPT_MONKEY_NATURE);
 			} catch (CoreException e) {
@@ -43,12 +44,13 @@ public class ScriptResourceUtils {
 	}
 
 	public static boolean isEclipseMonkeyResource(IResource resource) {
-		if(resource != null) {
+		if (resource != null) {
 			IProject project = resource.getProject();
-			if(project.exists()) {
+			if (project.exists()) {
 				return isEclipseMonkeyProject(project) && isCorrectFileExtension(resource);
 			} else {
-				//Handle case when file is outside eclipse or the IProject has been deleted
+				// Handle case when file is outside eclipse or the IProject has
+				// been deleted
 				return isCorrectFileExtension(resource);
 			}
 		}
@@ -57,10 +59,11 @@ public class ScriptResourceUtils {
 
 	public static boolean isCorrectFileExtension(IResource resource) {
 		String fileExtension = resource.getFileExtension();
-		if(fileExtension != null) {
-			for(EngineDescription desc : ScriptService.getInstance().getEngines()) {
-				for(ScriptType type : desc.getSupportedScriptTypes()) {
-					if(fileExtension.equals(type.getExtension())) {
+		if (fileExtension != null) {
+			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+			for (EngineDescription desc : scriptService.getEngines()) {
+				for (ScriptType type : desc.getSupportedScriptTypes()) {
+					if (fileExtension.equals(type.getDefaultExtension())) {
 						return true;
 					}
 				}
@@ -70,8 +73,8 @@ public class ScriptResourceUtils {
 	}
 
 	public static void addEclipseMoneyNature(IProject project) throws CoreException {
-		if(project != null) {
-			if(!isEclipseMonkeyProject(project)) {
+		if (project != null) {
+			if (!isEclipseMonkeyProject(project)) {
 				addNature(project, EASEProjectNature.ESCRIPT_MONKEY_NATURE);
 			}
 		}
