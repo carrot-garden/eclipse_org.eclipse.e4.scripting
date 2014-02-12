@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.modules.IModuleWrapper;
@@ -96,4 +97,13 @@ public interface IScriptService {
 	 * @return launch extensions or empty collection
 	 */
 	Collection<IScriptEngineLaunchExtension> getLaunchExtensions(final String engineID);
+
+	/**
+	 * Get the script type for a given content type.
+	 * 
+	 * @param contentType
+	 *            content type to look for
+	 * @return script type associated with content type
+	 */
+	ScriptType getScriptType(IContentType contentType);
 }

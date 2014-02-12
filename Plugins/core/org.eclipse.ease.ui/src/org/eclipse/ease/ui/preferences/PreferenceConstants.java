@@ -15,15 +15,16 @@ package org.eclipse.ease.ui.preferences;
  */
 public interface PreferenceConstants {
 
-    String VALUE_OUTPUT_CONSOLE = "Console";
-    String VALUE_OUTPUT_SHELL = "Shell";
-    String VALUE_OUTPUT_NONE = "None";
+	String VALUE_OUTPUT_CONSOLE = "Console";
+	String VALUE_OUTPUT_SHELL = "Shell";
+	String VALUE_OUTPUT_NONE = "None";
 
-    String SHELL_BASE = "org.eclipse.ease.shell.prefs";
+	String SHELL_BASE = "org.eclipse.ease.shell.prefs";
 
-    String INIT_COMMANDS = "org.eclipse.ease.shell.prefs.initCommands";
+	String INIT_COMMANDS = "org.eclipse.ease.shell.prefs.initCommands";
 
-    String CONSOLE_BASE = "org.eclipse.ease.console.prefs";
-    String CONSOLE_OPEN_ON_OUT = "consoleOpenOnOut";
-    String CONSOLE_OPEN_ON_ERR = "consoleOpenOnErr";
+	String CONSOLE_BASE = "org.eclipse.ease.console.prefs";
+	String CONSOLE_OPEN_ON_OUT = "consoleOpenOnOut";
+	String CONSOLE_OPEN_ON_ERR = "consoleOpenOnErr";
+	String LOCATIONS = "constants";
 }

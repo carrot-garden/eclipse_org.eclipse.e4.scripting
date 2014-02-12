@@ -3,10 +3,4 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Modeling Examples
 Bundle-SymbolicName: org.eclipse.ease.integration.modeling.examples;singleton:=true
 Bundle-Version: 0.1.1.qualifier
-Bundle-Activator: org.eclipse.ease.integration.modeling.examples.Activator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.ease.ui,
- org.eclipse.ui.ide;bundle-version="3.9.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy

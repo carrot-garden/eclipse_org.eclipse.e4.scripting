@@ -18,10 +18,15 @@
       </category>
       <view
             category="org.eclipse.ease.ui.views.category.scripting"
-            class="org.eclipse.ease.ui.view.ScriptEplorerView"
+            class="org.eclipse.ease.ui.view.ScriptExplorerView"
             icon="icons/full/obj16/eclipse_monkey.png"
             id="org.eclipse.ease.ui.view.ScriptEplorerView"
             name="Script Explorer">
+      </view>
+      <view
+            class="org.eclipse.ease.ui.preferences.Test"
+            id="org.eclipse.ease.ui.preferences.Test"
+            name="New ViewPart">
       </view>
    </extension>
    <extension
@@ -75,6 +80,18 @@
                name="Module ID"
                optional="true">
          </commandParameter>
+      </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.RunScript"
+            id="org.eclipse.ease.commands.scriptShell.runScript"
+            name="Run Script">
+      </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.EditScript"
+            id="org.eclipse.ease.commands.scriptShell.editScript"
+            name="Edit Script">
       </command>
    </extension>
    <extension
@@ -220,14 +237,38 @@
                visible="false">
          </separator>
       </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ease.ui.view.ScriptEplorerView">
+         <command
+               commandId="org.eclipse.ease.commands.scriptShell.runScript"
+               icon="images/start_script.gif"
+               label="Run"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.ease.commands.scriptShell.editScript"
+               icon="images/start_record_macro.gif"
+               label="Edit"
+               style="push">
+         </command>
+         <separator
+               name="additions"
+               visible="false">
+         </separator>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.services">
       <serviceFactory
             factoryClass="org.eclipse.ease.ui.service.MacroServiceFactory">
-         <service></service>
          <service
                serviceClass="org.eclipse.ease.ui.IMacroService">
+         </service>
+      </serviceFactory>
+      <serviceFactory
+            factoryClass="org.eclipse.ease.ui.repository.RepositoryServiceFactory">
+         <service
+               serviceClass="org.eclipse.ease.ui.repository.IRepositoryService">
          </service>
       </serviceFactory>
    </extension>
@@ -236,6 +277,10 @@
       <urlStreamHandlerService
             protocol="macro"
             serviceClass="org.eclipse.ease.ui.macro.MacroURLStreamHandler">
+      </urlStreamHandlerService>
+      <urlStreamHandlerService
+            protocol="script"
+            serviceClass="org.eclipse.ease.ui.macro.ScriptURLStreamHandler">
       </urlStreamHandlerService>
    </extension>
    <extension
@@ -319,5 +364,45 @@
             id="org.eclipse.ease.ui.runSelectedScript"
             name="Run Selected Script">
       </command>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated ScriptRepository -->
+      <package
+            uri="repository"
+            class="org.eclipse.ease.ui.repository.IRepositoryPackage"
+            genModel="model/ScriptRepository.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated ScriptRepository -->
+      <parser
+            type="repository"
+            class="org.eclipse.ease.ui.repository.util.RepositoryResourceFactoryImpl"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.eclipse.ease.ui.repository.impl.Startup">
+      </startup>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.ease.preferences.root"
+            class="org.eclipse.ease.ui.preferences.ModulesPage"
+            id="org.eclipse.ease.preferences.modules"
+            name="Modules">
+      </page>
+      <page
+            class="org.eclipse.ease.ui.preferences.ScriptingPage"
+            id="org.eclipse.ease.preferences.root"
+            name="Scripting">
+      </page>
+      <page
+            category="org.eclipse.ease.preferences.root"
+            class="org.eclipse.ease.ui.preferences.LocationsPage"
+            id="org.eclipse.ease.preferences.scriptLocations"
+            name="Script Locations">
+      </page>
    </extension>
 </plugin>

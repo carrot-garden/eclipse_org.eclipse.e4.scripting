@@ -20,24 +20,21 @@ import org.osgi.service.url.AbstractURLStreamHandlerService;
 
 public class MacroURLStreamHandler extends AbstractURLStreamHandlerService {
 
-    public MacroURLStreamHandler() {
-    }
+	public MacroURLStreamHandler() {
+	}
 
-    @Override
-    public URLConnection openConnection(final URL u) throws IOException {
-        IMacroService macroService = (IMacroService) PlatformUI.getWorkbench().getService(IMacroService.class);
-        if (macroService != null) {
-            Macro macro = macroService.getMacro(u.getHost() + u.getFile());
+	@Override
+	public URLConnection openConnection(final URL u) throws IOException {
+		IMacroService macroService = (IMacroService) PlatformUI.getWorkbench().getService(IMacroService.class);
+		if (macroService != null) {
+			Macro macro = macroService.getMacro(u.getHost() + u.getFile());
 
-            if (macro != null)
-                return new MacroURLConnection(u, macro);
+			if (macro != null)
+				return new MacroURLConnection(u, macro);
 
-            throw new IOException("\"" + u.toString() + "\" not found");
-        }
+			throw new IOException("\"" + u.toString() + "\" not found");
+		}
 
-        u.getPath();
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+		return null;
+	}
 }
