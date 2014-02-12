@@ -15,18 +15,18 @@ import org.eclipse.ease.IScriptEngineProvider;
 
 public class ScriptEnginePropertyTester extends PropertyTester {
 
-    private static final String PROPERTY_ENGINE_ID = "engineID";
+	private static final String PROPERTY_ENGINE_ID = "engineID";
 
-    public ScriptEnginePropertyTester() {
-    }
+	public ScriptEnginePropertyTester() {
+	}
 
-    @Override
-    public boolean test(final Object receiver, final String property, final Object[] args, final Object expectedValue) {
-        if (receiver instanceof IScriptEngineProvider) {
-            if (PROPERTY_ENGINE_ID.equals(property))
-                return ((IScriptEngineProvider) receiver).getScriptEngine().getID().equals(expectedValue);
-        }
+	@Override
+	public boolean test(final Object receiver, final String property, final Object[] args, final Object expectedValue) {
+		if (receiver instanceof IScriptEngineProvider) {
+			if (PROPERTY_ENGINE_ID.equals(property))
+				return ((IScriptEngineProvider) receiver).getScriptEngine().getDescription().getID().equals(expectedValue);
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

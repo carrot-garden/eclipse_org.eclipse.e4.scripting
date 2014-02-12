@@ -39,24 +39,24 @@ import org.eclipse.ui.internal.progress.ProgressMessages;
 public abstract class AbstractScriptEngine extends Job implements IScriptEngine {
 
 	/** List of code junks to be executed. */
-	private final List<Script> mCodePieces = Collections.synchronizedList(new ArrayList<Script>());
+	private final List<Script> fCodePieces = Collections.synchronizedList(new ArrayList<Script>());
 
-	private final ListenerList mExecutionListeners = new ListenerList();
+	private final ListenerList fExecutionListeners = new ListenerList();
 
 	/** Indicator to terminate once this Job gets IDLE. */
-	private boolean mTerminateOnIdle = true;
+	private boolean fTerminateOnIdle = true;
 
-	private PrintStream mOutStream = null;
+	private PrintStream fOutputStream = null;
 
-	private PrintStream mErrorStream = null;
+	private PrintStream fErrorStream = null;
 
-	private InputStream mInStream = null;
+	private InputStream fInputStream = null;
 
-	private FileTrace mFileTrace = new FileTrace();
+	private FileTrace fFileTrace = new FileTrace();
 
-	private String mID;
+	private boolean fIsUI = false;
 
-	private boolean isUI = false;
+	private EngineDescription fDescription;
 
 	/**
 	 * Constructor. Contains a name for the underlying job and an indicator for the presence of online help.
@@ -74,6 +74,11 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	@Override
+	public EngineDescription getDescription() {
+		return fDescription;
+	}
+
+	@Override
 	public final ScriptResult executeAsync(final Object content) {
 		final Script piece;
 		if (content instanceof Script)
@@ -81,7 +86,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 		else
 			piece = new Script(content);
 
-		mCodePieces.add(piece);
+		fCodePieces.add(piece);
 		synchronized (this) {
 			notifyAll();
 		}
@@ -142,7 +147,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				if (ITracingConstant.MODULE_WRAPPER_TRACING)
 					Tracer.logInfo("Executing (" + script.getTitle() + "):\n" + script.getCode());
 
-				mFileTrace.push(script.getFile());
+				fFileTrace.push(script.getFile());
 
 				// execution
 				if (notifyListeners)
@@ -150,7 +155,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				else
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_INJECTION_START);
 
-				script.setResult(execute(script, script.getFile(), mFileTrace.peek().getFileName()));
+				script.setResult(execute(script, script.getFile(), fFileTrace.peek().getFileName()));
 
 			} catch (final ExitException e) {
 				script.setResult(e.getCondition());
@@ -176,7 +181,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				else
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_INJECTION_END);
 
-				mFileTrace.pop();
+				fFileTrace.pop();
 			}
 		}
 
@@ -239,7 +244,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	public final IStatus runCode(final IProgressMonitor monitor) {
 		if (setupEngine()) {
-			mFileTrace = new FileTrace();
+			fFileTrace = new FileTrace();
 
 			notifyExecutionListeners(null, IExecutionListener.ENGINE_START);
 
@@ -247,8 +252,8 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 			while ((!monitor.isCanceled()) && (!isTerminated())) {
 
 				// execute code
-				if (!mCodePieces.isEmpty()) {
-					final Script piece = mCodePieces.remove(0);
+				if (!fCodePieces.isEmpty()) {
+					final Script piece = fCodePieces.remove(0);
 					inject(piece, true);
 
 				} else {
@@ -265,12 +270,12 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 			}
 
 			// discard pending code pieces
-			synchronized (mCodePieces) {
-				for (final Script script : mCodePieces)
+			synchronized (fCodePieces) {
+				for (final Script script : fCodePieces)
 					script.setException(new ExitException());
 			}
 
-			mCodePieces.clear();
+			fCodePieces.clear();
 
 			notifyExecutionListeners(null, IExecutionListener.ENGINE_END);
 
@@ -285,50 +290,50 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	@Override
 	public PrintStream getOutputStream() {
-		return (mOutStream != null) ? mOutStream : System.out;
+		return (fOutputStream != null) ? fOutputStream : System.out;
 	}
 
 	@Override
 	public void setOutputStream(final OutputStream outputStream) {
 		if (outputStream instanceof PrintStream)
-			mOutStream = (PrintStream) outputStream;
+			fOutputStream = (PrintStream) outputStream;
 
 		else
-			mOutStream = new PrintStream(outputStream);
+			fOutputStream = new PrintStream(outputStream);
 	}
 
 	@Override
 	public InputStream getInputStream() {
-		return (mInStream != null) ? mInStream : System.in;
+		return (fInputStream != null) ? fInputStream : System.in;
 	}
 
 	@Override
 	public void setInputStream(final InputStream inputStream) {
-		mInStream = inputStream;
+		fInputStream = inputStream;
 	}
 
 	@Override
 	public PrintStream getErrorStream() {
-		return (mErrorStream != null) ? mErrorStream : System.err;
+		return (fErrorStream != null) ? fErrorStream : System.err;
 	}
 
 	@Override
 	public void setErrorStream(final OutputStream errorStream) {
 		if (errorStream instanceof PrintStream)
-			mErrorStream = (PrintStream) errorStream;
+			fErrorStream = (PrintStream) errorStream;
 
 		else
-			mErrorStream = new PrintStream(errorStream);
+			fErrorStream = new PrintStream(errorStream);
 	}
 
 	@Override
 	public final void setTerminateOnIdle(final boolean terminate) {
-		mTerminateOnIdle = terminate;
+		fTerminateOnIdle = terminate;
 	}
 
 	@Override
 	public boolean getTerminateOnIdle() {
-		return mTerminateOnIdle;
+		return fTerminateOnIdle;
 	}
 
 	/**
@@ -337,7 +342,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	 * @return true if interpreter is terminated.
 	 */
 	private boolean isTerminated() {
-		return mTerminateOnIdle && mCodePieces.isEmpty();
+		return fTerminateOnIdle && fCodePieces.isEmpty();
 	}
 
 	/**
@@ -347,28 +352,28 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	 */
 	@Override
 	public boolean isIdle() {
-		return mCodePieces.isEmpty();
+		return fCodePieces.isEmpty();
 	}
 
 	@Override
 	public void addExecutionListener(final IExecutionListener listener) {
-		mExecutionListeners.add(listener);
+		fExecutionListeners.add(listener);
 	}
 
 	@Override
 	public void removeExecutionListener(final IExecutionListener listener) {
-		mExecutionListeners.remove(listener);
+		fExecutionListeners.remove(listener);
 	}
 
 	protected void notifyExecutionListeners(final Script script, final int status) {
-		for (final Object listener : mExecutionListeners.getListeners())
+		for (final Object listener : fExecutionListeners.getListeners())
 			((IExecutionListener) listener).notify(this, script, status);
 	}
 
 	@Override
 	public void terminate() {
 		setTerminateOnIdle(true);
-		mCodePieces.clear();
+		fCodePieces.clear();
 		terminateCurrent();
 
 		// ask thread to terminate
@@ -380,20 +385,20 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	@Override
 	public void reset() {
 		// make sure that everybody gets notified that script engine got a reset
-		for (final Script script : mCodePieces)
+		for (final Script script : fCodePieces)
 			script.setException(new ExitException("Script engine got resetted."));
 
-		mCodePieces.clear();
+		fCodePieces.clear();
 
 		// re-enable launch extensions to register themselves
 		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-		for (final IScriptEngineLaunchExtension extension : scriptService.getLaunchExtensions(getID()))
+		for (final IScriptEngineLaunchExtension extension : scriptService.getLaunchExtensions(getDescription().getID()))
 			extension.createEngine(this);
 	}
 
 	@Override
 	public FileTrace getFileTrace() {
-		return mFileTrace;
+		return fFileTrace;
 	}
 
 	@Override
@@ -408,22 +413,17 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	public void setEngineDescription(final EngineDescription description) {
-		mID = description.getID();
-	}
-
-	@Override
-	public String getID() {
-		return mID;
+		fDescription = description;
 	}
 
 	@Override
 	public void setIsUI(final boolean isUI) {
-		this.isUI = isUI;
+		this.fIsUI = isUI;
 	}
 
 	@Override
 	public boolean isUI() {
-		return isUI;
+		return fIsUI;
 	}
 
 	/**

@@ -51,7 +51,7 @@ public class Activator extends EclipseUIPlugin {
 	 * Returns an image descriptor for the image file at the given plug-in relative path
 	 * 
 	 * @param path
-	 *        the path
+	 *            the path
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(final String path) {
@@ -65,14 +65,14 @@ public class Activator extends EclipseUIPlugin {
 		// if the bundle is not ready then there is no image
 		final Bundle bundle = Platform.getBundle(bundleID);
 		final int bundleState = bundle.getState();
-		if((bundleState != Bundle.ACTIVE) && (bundleState != Bundle.STARTING) && (bundleState != Bundle.RESOLVED))
+		if ((bundleState != Bundle.ACTIVE) && (bundleState != Bundle.STARTING) && (bundleState != Bundle.RESOLVED))
 			return null;
 
 		// look for the image (this will check both the plugin and fragment
 		// folders
 		final URL imagePath = FileLocator.find(bundle, new Path(path), null);
 
-		if(imagePath != null)
+		if (imagePath != null)
 			return ImageDescriptor.createFromURL(imagePath);
 
 		return null;
@@ -83,12 +83,12 @@ public class Activator extends EclipseUIPlugin {
 		assert (path != null) : "No path defined";
 
 		Image image = getDefault().getImageRegistry().get(bundleID + path);
-		if(image == null) {
+		if (image == null) {
 			ImageDescriptor descriptor = getImageDescriptor(bundleID, path);
-			if(descriptor != null) {
+			if (descriptor != null) {
 				image = descriptor.createImage();
 
-				if(storeToImageRegistry)
+				if (storeToImageRegistry)
 					getDefault().getImageRegistry().put(bundleID + path, image);
 			}
 		}
@@ -100,6 +100,7 @@ public class Activator extends EclipseUIPlugin {
 		return getStateLocation().append(name).toFile();
 	}
 
+	// FIXME seems to be obsolete
 	/**
 	 * 
 	 * This method returns an <code>org.eclipse.swt.graphics.Image</code> identified by its pluginId and iconPath.<BR>
@@ -108,7 +109,7 @@ public class Activator extends EclipseUIPlugin {
 		String key = pluginId + iconPath;
 		ImageRegistry registry = getDefault().getImageRegistry();
 		Image image = registry.get(key);
-		if(image == null) {
+		if (image == null) {
 			ImageDescriptor desc = getImageDescriptor(pluginId, iconPath);
 			registry.put(key, desc);
 			image = registry.get(key);
@@ -119,7 +120,6 @@ public class Activator extends EclipseUIPlugin {
 	public static Image getLocalPluginIconImage(String iconPath) {
 		return getPluginIconImage(PLUGIN_ID, iconPath);
 	}
-
 
 	public static ImageDescriptor getLocalImageDescriptor(String iconPath) {
 		return getImageDescriptor(PLUGIN_ID, iconPath);

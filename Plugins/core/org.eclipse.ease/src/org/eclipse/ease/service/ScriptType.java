@@ -1,6 +1,12 @@
 package org.eclipse.ease.service;
 
+import java.util.Collection;
+import java.util.HashSet;
+
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.ease.IHeaderParser;
+import org.eclipse.ease.Logger;
 
 import com.google.common.base.Function;
 
@@ -30,6 +36,9 @@ public class ScriptType {
 
 	private static final String NAME = "name";
 	private static final String DEFAULT_EXTENSION = "defaultExtension";
+	private static final String BINDING = "binding";
+	private static final String HEADER_PARSER = "headerParser";
+	private static final String CONTENT_TYPE = "contentType";
 
 	private final IConfigurationElement fConfigurationElement;
 
@@ -111,13 +120,6 @@ public class ScriptType {
 	// }
 	//
 	// /**
-	// * @return the extension
-	// */
-	// public String getExtension() {
-	// return extension;
-	// }
-	//
-	// /**
 	// * @param extension
 	// * the extension to set
 	// */
@@ -131,5 +133,28 @@ public class ScriptType {
 
 	public String getDefaultExtension() {
 		return fConfigurationElement.getAttribute(DEFAULT_EXTENSION);
+	}
+
+	public Collection<String> getContentTypes() {
+		Collection<String> result = new HashSet<String>();
+
+		for (IConfigurationElement binding : fConfigurationElement.getChildren(BINDING))
+			result.add(binding.getAttribute(CONTENT_TYPE));
+
+		return result;
+	}
+
+	public IHeaderParser getHeaderParser() {
+		try {
+			Object parser = fConfigurationElement.createExecutableExtension(HEADER_PARSER);
+			if (parser instanceof IHeaderParser)
+				return (IHeaderParser) parser;
+
+		} catch (CoreException e) {
+			// could not instantiate class
+			Logger.logError("Could not instantiate header parser", e);
+		}
+
+		return null;
 	}
 }

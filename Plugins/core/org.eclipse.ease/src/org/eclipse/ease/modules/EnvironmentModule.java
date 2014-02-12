@@ -223,37 +223,25 @@ public class EnvironmentModule extends AbstractEnvironment {
 	 */
 	@WrapToScript
 	public final Object include(final String filename) {
-		if (filename.contains("://")) {
-			// seems to be a URL
-
-			if (filename.startsWith(PROJECT)) {
-				// project relative link, we cannot resolve this via URL as we need a relative file in the project
-				Object currentFile = getScriptEngine().getExecutedFile();
-				if (currentFile instanceof IFile) {
-					IFile file = ((IFile) currentFile).getProject().getFile(new Path(filename.substring(PROJECT.length())));
-					if (file.exists())
-						return getScriptEngine().inject(file);
-				}
-
-			} else {
-				// generic URL
-				try {
-					URL url = new URL(filename);
-					return getScriptEngine().inject(url.openStream());
-
-				} catch (MalformedURLException e) {
-					// TODO handle this exception (but for now, at least know it
-					// happened)
-					throw new RuntimeException(e);
-				} catch (IOException e) {
-					// TODO handle this exception (but for now, at least know it
-					// happened)
-					throw new RuntimeException(e);
-				}
+		if (filename.startsWith(PROJECT + "://")) {
+			// project relative link, we cannot resolve this via URL as we need a relative file in the project
+			Object currentFile = getScriptEngine().getExecutedFile();
+			if (currentFile instanceof IFile) {
+				IFile file = ((IFile) currentFile).getProject().getFile(new Path(filename.substring(PROJECT.length())));
+				if (file.exists())
+					return getScriptEngine().inject(file);
 			}
 
 		} else {
-			// no URL, try to resolve
+
+			// maybe this is a URI
+			try {
+				URL url = new URL(filename);
+				return getScriptEngine().inject(url.openStream());
+
+			} catch (MalformedURLException e) {
+			} catch (IOException e) {
+			}
 
 			// maybe this is an absolute path within the file system
 			File systemFile = new File(filename);
@@ -285,7 +273,7 @@ public class EnvironmentModule extends AbstractEnvironment {
 		}
 
 		// giving up
-		throw new RuntimeException("cannot resolve \"" + filename + "\"");
+		throw new RuntimeException("Cannot locate '" + filename + "'");
 	}
 
 	/**

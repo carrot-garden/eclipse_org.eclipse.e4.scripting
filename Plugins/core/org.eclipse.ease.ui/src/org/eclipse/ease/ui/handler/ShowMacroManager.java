@@ -14,7 +14,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.ease.ui.macro.IMacroSupport;
+import org.eclipse.ease.ui.scripts.IScriptSupport;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -27,8 +27,8 @@ public class ShowMacroManager extends AbstractHandler implements IHandler {
     public final Object execute(final ExecutionEvent event) throws ExecutionException {
 
         final IWorkbenchPart part = HandlerUtil.getActivePart(event);
-        if (part instanceof IMacroSupport)
-            ((IMacroSupport) part).toggleMacroManager();
+        if (part instanceof IScriptSupport)
+            ((IScriptSupport) part).toggleMacroManager();
 
         return null;
     }

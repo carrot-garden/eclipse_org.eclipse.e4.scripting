@@ -33,25 +33,12 @@
    <extension point="org.eclipse.help.toc">
       <toc file="help/scripting_book.xml" primary="true">
       </toc>
+      <toc
+            file="help/modules_toc.xml"
+            primary="false">
+      </toc>
    </extension>
 
-<extension point="org.eclipse.help.toc">
-<toc file="help/modules_toc.xml" primary="false"/>
-</extension>
-<extension
-      point="org.eclipse.ui.preferencePages">
-   <page
-         category="org.eclipse.ease.preferences.root"
-         class="org.eclipse.ease.preferences.ModulesPage"
-         id="org.eclipse.ease.preferences.modules"
-         name="Modules">
-   </page>
-   <page
-         class="org.eclipse.ease.preferences.ScriptingPage"
-         id="org.eclipse.ease.preferences.root"
-         name="Scripting">
-   </page>
-</extension>
 <extension
       point="org.eclipse.ease.language">
    <engine

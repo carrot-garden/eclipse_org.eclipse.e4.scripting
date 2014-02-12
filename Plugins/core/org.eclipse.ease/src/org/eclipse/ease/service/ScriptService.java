@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.ease.AbstractScriptEngine;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
@@ -50,22 +51,22 @@ public class ScriptService implements IScriptService {
 
 	private static final String MODULE_WRAPPER = "moduleWrapper";
 
-	private static ScriptService mInstance = null;
+	private static ScriptService fInstance = null;
 
 	static ScriptService getInstance() {
-		if (mInstance == null)
-			mInstance = new ScriptService();
+		if (fInstance == null)
+			fInstance = new ScriptService();
 
-		return mInstance;
+		return fInstance;
 	}
 
-	private Map<String, ModuleDefinition> mAvailableModules = null;
+	private Map<String, ModuleDefinition> fAvailableModules = null;
 
-	private Map<String, EngineDescription> mEngineDescriptions = null;
+	private Map<String, EngineDescription> fEngineDescriptions = null;
 
-	private Map<String, IModuleWrapper> mModuleWrappers = null;
+	private Map<String, IModuleWrapper> fModuleWrappers = null;
 
-	private Map<String, ScriptType> mScriptTypes = null;
+	private Map<String, ScriptType> fScriptTypes = null;
 
 	private ScriptService() {
 	}
@@ -79,7 +80,7 @@ public class ScriptService implements IScriptService {
 				((AbstractScriptEngine) engine).setEngineDescription(description);
 
 			// engine loaded, now load launch extensions
-			for (final IScriptEngineLaunchExtension extension : getLaunchExtensions(engine.getID()))
+			for (final IScriptEngineLaunchExtension extension : getLaunchExtensions(description.getID()))
 				extension.createEngine(engine);
 
 			return engine;
@@ -110,18 +111,18 @@ public class ScriptService implements IScriptService {
 
 	@Override
 	public Map<String, ModuleDefinition> getAvailableModules() {
-		if (mAvailableModules == null) {
-			mAvailableModules = new HashMap<String, ModuleDefinition>();
+		if (fAvailableModules == null) {
+			fAvailableModules = new HashMap<String, ModuleDefinition>();
 			final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_MODULES_ID);
 			for (final IConfigurationElement e : config) {
 				if (e.getName().equals(EXTENSION_MODULE)) {
 					// module extension detected
 					ModuleDefinition definition = new ModuleDefinition(e);
-					mAvailableModules.put(definition.getName(), definition);
+					fAvailableModules.put(definition.getName(), definition);
 				}
 			}
 		}
-		return mAvailableModules;
+		return fAvailableModules;
 	}
 
 	@Override
@@ -151,18 +152,18 @@ public class ScriptService implements IScriptService {
 	}
 
 	private Map<String, EngineDescription> getEngineDescriptions() {
-		if (mEngineDescriptions == null) {
-			mEngineDescriptions = new HashMap<String, EngineDescription>();
+		if (fEngineDescriptions == null) {
+			fEngineDescriptions = new HashMap<String, EngineDescription>();
 			final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_LANGUAGE_ID);
 
 			for (final IConfigurationElement e : config) {
 				if (ENGINE.equals(e.getName())) {
 					EngineDescription engine = new EngineDescription(e);
-					mEngineDescriptions.put(engine.getID(), engine);
+					fEngineDescriptions.put(engine.getID(), engine);
 				}
 			}
 		}
-		return mEngineDescriptions;
+		return fEngineDescriptions;
 	}
 
 	// public Set<ScriptType> getHandleScriptType() {
@@ -182,8 +183,8 @@ public class ScriptService implements IScriptService {
 	}
 
 	private Map<String, IModuleWrapper> getModuleWrappers() {
-		if (mModuleWrappers == null) {
-			mModuleWrappers = new HashMap<String, IModuleWrapper>();
+		if (fModuleWrappers == null) {
+			fModuleWrappers = new HashMap<String, IModuleWrapper>();
 			final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_LANGUAGE_ID);
 
 			for (final IConfigurationElement e : config) {
@@ -192,10 +193,10 @@ public class ScriptService implements IScriptService {
 						final Object extension = e.createExecutableExtension("class");
 						String engineID = e.getAttribute(ENGINE_ID);
 						if ((extension instanceof IModuleWrapper) && (engineID != null)) {
-							if (mModuleWrappers.containsKey(engineID))
+							if (fModuleWrappers.containsKey(engineID))
 								Logger.logError("The engine id " + engineID + " is already used");
 							else
-								mModuleWrappers.put(engineID, (IModuleWrapper) extension);
+								fModuleWrappers.put(engineID, (IModuleWrapper) extension);
 						}
 					}
 				} catch (final InvalidRegistryObjectException e1) {
@@ -203,7 +204,7 @@ public class ScriptService implements IScriptService {
 				}
 			}
 		}
-		return mModuleWrappers;
+		return fModuleWrappers;
 	}
 
 	@Override
@@ -231,16 +232,26 @@ public class ScriptService implements IScriptService {
 
 	@Override
 	public Map<String, ScriptType> getAvailableScriptTypes() {
-		if (mScriptTypes == null) {
-			mScriptTypes = new HashMap<String, ScriptType>();
+		if (fScriptTypes == null) {
+			fScriptTypes = new HashMap<String, ScriptType>();
 			final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_SCRIPTTYPE_ID);
 
 			for (final IConfigurationElement e : config) {
 				if ("scriptType".equals(e.getName()))
-					mScriptTypes.put(e.getAttribute(SCRIPTTYPE_NAME), new ScriptType(e));
+					fScriptTypes.put(e.getAttribute(SCRIPTTYPE_NAME), new ScriptType(e));
 			}
 		}
 
-		return mScriptTypes;
+		return fScriptTypes;
+	}
+
+	@Override
+	public ScriptType getScriptType(IContentType contentType) {
+		for (ScriptType scriptType : getAvailableScriptTypes().values()) {
+			if (scriptType.getContentTypes().contains(contentType.getId()))
+				return scriptType;
+		}
+
+		return null;
 	}
 }
