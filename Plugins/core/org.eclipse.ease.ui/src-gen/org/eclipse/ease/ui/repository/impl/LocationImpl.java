@@ -3,10 +3,17 @@
 package org.eclipse.ease.ui.repository.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.ui.repository.ILocation;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
@@ -21,6 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.ease.ui.repository.impl.LocationImpl#getUri <em>Uri</em>}</li>
+ * <li>{@link org.eclipse.ease.ui.repository.impl.LocationImpl#isHidden <em>Hidden</em>}</li>
  * </ul>
  * </p>
  * 
@@ -44,6 +52,24 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @ordered
 	 */
 	protected String uri = URI_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isHidden() <em>Hidden</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @see #isHidden()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean HIDDEN_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isHidden() <em>Hidden</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @see #isHidden()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean hidden = HIDDEN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -93,10 +119,35 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void setHidden(boolean newHidden) {
+		boolean oldHidden = hidden;
+		hidden = newHidden;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.LOCATION__HIDDEN, oldHidden, hidden));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__URI:
 			return getUri();
+		case IRepositoryPackage.LOCATION__HIDDEN:
+			return isHidden();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,6 +162,9 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__URI:
 			setUri((String) newValue);
+			return;
+		case IRepositoryPackage.LOCATION__HIDDEN:
+			setHidden((Boolean) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,6 +181,9 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 		case IRepositoryPackage.LOCATION__URI:
 			setUri(URI_EDEFAULT);
 			return;
+		case IRepositoryPackage.LOCATION__HIDDEN:
+			setHidden(HIDDEN_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -141,6 +198,8 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__URI:
 			return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
+		case IRepositoryPackage.LOCATION__HIDDEN:
+			return hidden != HIDDEN_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -158,6 +217,8 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (uri: ");
 		result.append(uri);
+		result.append(", hidden: ");
+		result.append(hidden);
 		result.append(')');
 		return result.toString();
 	}
@@ -212,8 +273,33 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 */
 	@Override
 	public InputStream getInputStream() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		// try for workspace file
+		IResource resource = getIResource();
+		if ((resource instanceof IFile) && (resource.exists())) {
+			try {
+				return ((IFile) resource).getContents();
+			} catch (CoreException e) {
+				throw new RuntimeException("Could not read from workspace file " + resource);
+			}
+		}
 
+		// try for system file
+		File file = getFile();
+		if ((file != null) && (file.isFile()) && (file.exists())) {
+			try {
+				return new FileInputStream(file);
+			} catch (FileNotFoundException e) {
+				throw new RuntimeException("Could not read from file " + resource);
+			}
+		}
+
+		// try for generic URI
+		try {
+			return new URL(getUri()).openStream();
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("Invalid URI " + getUri());
+		} catch (IOException e) {
+			throw new RuntimeException("Could not read from URI " + getUri());
+		}
+	}
 } // LocationImpl

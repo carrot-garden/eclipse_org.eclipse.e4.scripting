@@ -113,7 +113,7 @@
       </command>
       <command
             categoryId="org.eclipse.ease.commands.category.macro"
-            defaultHandler="org.eclipse.ease.ui.handler.ToggleMacroRecording"
+            defaultHandler="org.eclipse.ease.ui.handler.ToggleScriptRecording"
             id="org.eclipse.ease.commands.macro.toggleMacroRecording"
             name="Toggle  Macro Recording">
          <state
@@ -266,21 +266,17 @@
          </service>
       </serviceFactory>
       <serviceFactory
-            factoryClass="org.eclipse.ease.ui.repository.RepositoryServiceFactory">
+            factoryClass="org.eclipse.ease.ui.scripts.repository.RepositoryServiceFactory">
          <service
-               serviceClass="org.eclipse.ease.ui.repository.IRepositoryService">
+               serviceClass="org.eclipse.ease.ui.scripts.repository.IRepositoryService">
          </service>
       </serviceFactory>
    </extension>
    <extension
          point="org.eclipse.ecf.filetransfer.urlStreamHandlerService">
       <urlStreamHandlerService
-            protocol="macro"
-            serviceClass="org.eclipse.ease.ui.macro.MacroURLStreamHandler">
-      </urlStreamHandlerService>
-      <urlStreamHandlerService
             protocol="script"
-            serviceClass="org.eclipse.ease.ui.macro.ScriptURLStreamHandler">
+            serviceClass="org.eclipse.ease.ui.scripts.ScriptURLStreamHandler">
       </urlStreamHandlerService>
    </extension>
    <extension
@@ -382,7 +378,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="org.eclipse.ease.ui.repository.impl.Startup">
+            class="org.eclipse.ease.ui.scripts.repository.impl.Startup">
       </startup>
    </extension>
    <extension

@@ -9,18 +9,20 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
-import org.eclipse.ease.ui.repository.IRepositoryService;
 import org.eclipse.ease.ui.repository.IScript;
+import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -45,6 +47,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 
 	private Text ftext;
 	private TableViewer tableViewer;
+	private Button btnUseCustomLocation;
 
 	public LocationsPage() {
 	}
@@ -66,27 +69,41 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 			grpScriptRecording.setLayout(gl_grpScriptRecording);
 			new Label(grpScriptRecording, SWT.NONE);
 			{
-				Button btnUseCustomLocation = new Button(grpScriptRecording, SWT.CHECK);
+				btnUseCustomLocation = new Button(grpScriptRecording, SWT.CHECK);
+				btnUseCustomLocation.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						// enable/disable components depending on checkbox
+						for (Control control : btnUseCustomLocation.getParent().getChildren()) {
+							if (!control.equals(btnUseCustomLocation))
+								control.setEnabled(btnUseCustomLocation.getSelection());
+						}
+					}
+				});
 				btnUseCustomLocation.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 				btnUseCustomLocation.setText("Use custom storage location");
 			}
 			new Label(grpScriptRecording, SWT.NONE);
 			{
 				Label lblLocationUri = new Label(grpScriptRecording, SWT.NONE);
+				lblLocationUri.setEnabled(false);
 				lblLocationUri.setText("Location URI:");
 			}
 			{
 				ftext = new Text(grpScriptRecording, SWT.BORDER);
+				ftext.setEnabled(false);
 				ftext.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 			}
 			new Label(grpScriptRecording, SWT.NONE);
 			new Label(grpScriptRecording, SWT.NONE);
 			{
 				Button btnWorkspace = new Button(grpScriptRecording, SWT.NONE);
+				btnWorkspace.setEnabled(false);
 				btnWorkspace.setText("Workspace...");
 			}
 			{
 				Button btnFileSystem = new Button(grpScriptRecording, SWT.NONE);
+				btnFileSystem.setEnabled(false);
 				btnFileSystem.setText("File System...");
 			}
 		}
@@ -151,6 +168,17 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 					}
 				});
 
+				tableViewer.setFilters(new ViewerFilter[] { new ViewerFilter() {
+
+					@Override
+					public boolean select(Viewer viewer, Object parentElement, Object element) {
+						if (element instanceof IEntry)
+							return !((IEntry) element).isHidden();
+
+						return true;
+					}
+				} });
+
 				final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);
 				tableViewer.setInput(new HashSet<IEntry>(repositoryService.getLocations()));
 			}
@@ -165,7 +193,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 					if (dialog.open() == Window.OK) {
 						Object[] result = dialog.getResult();
 						if ((result.length > 0) && (result[0] instanceof IPath))
-							addEntry("workspace:/" + result[0].toString());
+							addEntry("workspace:/" + result[0].toString(), false);
 					}
 				}
 			});
@@ -182,7 +210,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 					DirectoryDialog dialog = new DirectoryDialog(getShell());
 					String path = dialog.open();
 					if (path != null)
-						addEntry(new File(path).toURI().toString());
+						addEntry(new File(path).toURI().toString(), false);
 				}
 			});
 			btnAddFileSystem.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -197,7 +225,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 				public void widgetSelected(SelectionEvent e) {
 					InputDialog dialog = new InputDialog(getShell(), "Enter location URI", "Enter the URI of a location to add", "", new URIValidator());
 					if (dialog.open() == Window.OK)
-						addEntry(dialog.getValue());
+						addEntry(dialog.getValue(), false);
 				}
 			});
 			btnAddUri.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -207,6 +235,12 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 		new Label(container, SWT.NONE);
 		{
 			Button btnEdit = new Button(container, SWT.NONE);
+			btnEdit.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					// TODO implement edit functionality
+				}
+			});
 			btnEdit.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true, 1, 1));
 			btnEdit.setText("Edit");
 		}
@@ -214,6 +248,19 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 		new Label(container, SWT.NONE);
 		{
 			Button btnDelete = new Button(container, SWT.NONE);
+			btnDelete.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+					if (!selection.isEmpty()) {
+						Collection<IEntry> entries = (Collection<IEntry>) tableViewer.getInput();
+						for (Object location : selection.toList())
+							entries.remove(location);
+
+						tableViewer.refresh();
+					}
+				}
+			});
 			btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
 			btnDelete.setText("Delete");
 		}
@@ -223,10 +270,11 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 		return container;
 	}
 
-	protected void addEntry(String uri) {
+	private void addEntry(String uri, boolean hidden) {
 		IEntry entry = IRepositoryFactory.eINSTANCE.createEntry();
 		entry.setUri(uri);
 		entry.setRecursive(true);
+		entry.setHidden(hidden);
 
 		Collection<IEntry> entries = (Collection<IEntry>) tableViewer.getInput();
 		entries.add(entry);
@@ -242,10 +290,24 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 		for (IEntry entry : new HashSet<IEntry>(existing))
 			repositoryService.removeLocation(entry);
 
+		addEntry(getScriptStorageLocation(), true);
 		Collection<IEntry> entries = (Collection<IEntry>) tableViewer.getInput();
+
 		for (IEntry entry : entries)
 			repositoryService.addLocation(entry);
 
 		return super.performOk();
+	}
+
+	private String getScriptStorageLocation() {
+		if (btnUseCustomLocation.getSelection()) {
+			// custom location
+			return ftext.getText();
+
+		} else {
+			// default location
+			IPath path = Activator.getDefault().getStateLocation().append("recordedScripts");
+			return path.toFile().toURI().toString();
+		}
 	}
 }

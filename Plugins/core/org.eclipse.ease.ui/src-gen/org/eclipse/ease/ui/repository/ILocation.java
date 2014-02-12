@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.ease.ui.repository.ILocation#getUri <em>Uri</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.ILocation#isHidden <em>Hidden</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,6 +47,33 @@ public interface ILocation extends EObject {
 	 * @generated
 	 */
 	void setUri(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Hidden</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Hidden</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Hidden</em>' attribute.
+	 * @see #setHidden(boolean)
+	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getLocation_Hidden()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isHidden();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ease.ui.repository.ILocation#isHidden <em>Hidden</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Hidden</em>' attribute.
+	 * @see #isHidden()
+	 * @generated
+	 */
+	void setHidden(boolean value);
 
 	/**
 	 * @generated NOT

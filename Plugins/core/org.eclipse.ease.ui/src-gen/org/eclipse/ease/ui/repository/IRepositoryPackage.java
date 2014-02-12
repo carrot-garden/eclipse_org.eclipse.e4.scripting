@@ -76,13 +76,22 @@ public interface IRepositoryPackage extends EPackage {
 	int LOCATION__URI = 0;
 
 	/**
+	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCATION__HIDDEN = 1;
+
+	/**
 	 * The number of structural features of the '<em>Location</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION_FEATURE_COUNT = 1;
+	int LOCATION_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Location</em>' class.
@@ -111,6 +120,15 @@ public interface IRepositoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int SCRIPT__URI = LOCATION__URI;
+
+	/**
+	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT__HIDDEN = LOCATION__HIDDEN;
 
 	/**
 	 * The feature id for the '<em><b>Parameter</b></em>' containment reference list.
@@ -296,6 +314,15 @@ public interface IRepositoryPackage extends EPackage {
 	int ENTRY__URI = LOCATION__URI;
 
 	/**
+	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY__HIDDEN = LOCATION__HIDDEN;
+
+	/**
 	 * The feature id for the '<em><b>Timestamp</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -460,6 +487,17 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getLocation_Uri();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.ILocation#isHidden <em>Hidden</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Hidden</em>'.
+	 * @see org.eclipse.ease.ui.repository.ILocation#isHidden()
+	 * @see #getLocation()
+	 * @generated
+	 */
+	EAttribute getLocation_Hidden();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ease.ui.repository.IRepository <em>Repository</em>}'.
@@ -649,6 +687,14 @@ public interface IRepositoryPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute LOCATION__URI = eINSTANCE.getLocation_Uri();
+
+		/**
+		 * The meta object literal for the '<em><b>Hidden</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LOCATION__HIDDEN = eINSTANCE.getLocation_Hidden();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.RepositoryImpl <em>Repository</em>}' class.

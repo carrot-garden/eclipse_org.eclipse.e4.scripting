@@ -2,14 +2,17 @@
  */
 package org.eclipse.ease.ui.repository.impl;
 
-import org.eclipse.ease.ui.repository.*;
-
+import org.eclipse.ease.ui.repository.IEntry;
+import org.eclipse.ease.ui.repository.ILocation;
+import org.eclipse.ease.ui.repository.IParameter;
+import org.eclipse.ease.ui.repository.IRepository;
+import org.eclipse.ease.ui.repository.IRepositoryFactory;
+import org.eclipse.ease.ui.repository.IRepositoryPackage;
+import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**

@@ -231,6 +231,15 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getLocation_Hidden() {
+		return (EAttribute)locationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getRepository() {
 		return repositoryEClass;
 	}
@@ -322,6 +331,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		locationEClass = createEClass(LOCATION);
 		createEAttribute(locationEClass, LOCATION__URI);
+		createEAttribute(locationEClass, LOCATION__HIDDEN);
 
 		repositoryEClass = createEClass(REPOSITORY);
 		createEReference(repositoryEClass, REPOSITORY__ENTRIES);
@@ -378,6 +388,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		initEClass(locationEClass, ILocation.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLocation_Uri(), ecorePackage.getEString(), "uri", null, 1, 1, ILocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLocation_Hidden(), ecorePackage.getEBoolean(), "hidden", "false", 1, 1, ILocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(repositoryEClass, IRepository.class, "Repository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRepository_Entries(), this.getEntry(), null, "entries", null, 0, -1, IRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -21,10 +21,10 @@ import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.console.ScriptConsole;
 import org.eclipse.ease.ui.dnd.ShellDropTarget;
-import org.eclipse.ease.ui.macro.IMacroSupport;
-import org.eclipse.ease.ui.macro.MacroContributionFactory;
-import org.eclipse.ease.ui.macro.ui.MacroComposite;
 import org.eclipse.ease.ui.preferences.PreferenceConstants;
+import org.eclipse.ease.ui.scripts.IScriptSupport;
+import org.eclipse.ease.ui.scripts.ScriptContributionFactory;
+import org.eclipse.ease.ui.scripts.ui.ScriptComposite;
 import org.eclipse.jface.resource.ColorDescriptor;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -56,7 +56,7 @@ import org.eclipse.ui.part.ViewPart;
 /**
  * The JavaScript shell allows to interactively execute JavaScript code.
  */
-public class ScriptShell extends ViewPart implements IMacroSupport, IPropertyChangeListener, IScriptEngineProvider, IExecutionListener {
+public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyChangeListener, IScriptEngineProvider, IExecutionListener {
 
     public static final String VIEW_ID = "org.eclipse.ease.views.scriptShell";
 
@@ -92,7 +92,7 @@ public class ScriptShell extends ViewPart implements IMacroSupport, IPropertyCha
 
     private ScriptConsole mConsole = null;
 
-    private MacroComposite mMacroComposite;
+    private ScriptComposite mMacroComposite;
 
     static {
         // add dynamic context menu for engine switching
@@ -112,7 +112,7 @@ public class ScriptShell extends ViewPart implements IMacroSupport, IPropertyCha
         setEngine("org.eclipse.ease.javascript.rhino");
 
         // add dynamic context menu for macros
-        MacroContributionFactory.addContextMenu("org.eclipse.ease.commands.javascript.shell.showMacroManager.popup");
+        ScriptContributionFactory.addContextMenu("org.eclipse.ease.commands.javascript.shell.showMacroManager.popup");
 
         // FIXME add preferences lookup
         Activator.getDefault().getPreferenceStore().addPropertyChangeListener(this);
@@ -218,7 +218,7 @@ public class ScriptShell extends ViewPart implements IMacroSupport, IPropertyCha
 
         mOutputText.setEditable(false);
 
-        mMacroComposite = new MacroComposite(this, getSite(), sashForm, SWT.NONE);
+        mMacroComposite = new ScriptComposite(this, getSite(), sashForm, SWT.NONE);
         mMacroComposite.setEngine(mScriptEngine.getID());
 
         sashForm.setWeights(mSashWeights);

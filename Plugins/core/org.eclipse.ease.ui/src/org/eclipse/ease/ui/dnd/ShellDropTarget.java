@@ -13,7 +13,6 @@ package org.eclipse.ease.ui.dnd;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.IScriptEngineProvider;
-import org.eclipse.ease.ui.macro.Macro;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -110,7 +109,7 @@ public final class ShellDropTarget extends DropTargetAdapter {
 			mScriptEngineProvider.getScriptEngine().executeAsync("include('workspace:/" + ((IResource) element).getFullPath().toString() + "');");
 
 		else if (element instanceof IScript)
-			mScriptEngineProvider.getScriptEngine().executeAsync("include('script://" + ((Macro) element).getName() + "');");
+			mScriptEngineProvider.getScriptEngine().executeAsync("include('script://" + ((IScript) element).getFullName() + "');");
 
 		else
 			mScriptEngineProvider.getScriptEngine().executeAsync(element);
