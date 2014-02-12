@@ -6,6 +6,8 @@ import java.util.HashSet;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
@@ -267,6 +269,8 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 
+		performDefaults();
+
 		return container;
 	}
 
@@ -283,7 +287,29 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 	}
 
 	@Override
+	protected void performDefaults() {
+		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		String location = prefs.get(PreferenceConstants.SCRIPT_STORAGE_LOCATION, PreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION);
+		if (PreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION.equals(location)) {
+			btnUseCustomLocation.setSelection(false);
+
+		} else {
+			btnUseCustomLocation.setSelection(true);
+			ftext.setText(location);
+		}
+
+		for (Control control : btnUseCustomLocation.getParent().getChildren()) {
+			if (!control.equals(btnUseCustomLocation))
+				control.setEnabled(btnUseCustomLocation.getSelection());
+		}
+
+		super.performDefaults();
+	}
+
+	@Override
 	public boolean performOk() {
+
+		// store enties
 		final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);
 
 		Collection<IEntry> existing = repositoryService.getLocations();
@@ -296,18 +322,20 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 		for (IEntry entry : entries)
 			repositoryService.addLocation(entry);
 
+		// store script storage location
+		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		prefs.put(PreferenceConstants.SCRIPT_STORAGE_LOCATION, getScriptStorageLocation());
+
 		return super.performOk();
 	}
 
 	private String getScriptStorageLocation() {
-		if (btnUseCustomLocation.getSelection()) {
+		if (btnUseCustomLocation.getSelection())
 			// custom location
 			return ftext.getText();
 
-		} else {
+		else
 			// default location
-			IPath path = Activator.getDefault().getStateLocation().append("recordedScripts");
-			return path.toFile().toURI().toString();
-		}
+			return PreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION;
 	}
 }

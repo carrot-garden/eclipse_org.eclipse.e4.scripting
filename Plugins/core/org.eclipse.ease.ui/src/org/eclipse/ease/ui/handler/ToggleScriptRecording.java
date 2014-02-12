@@ -18,17 +18,22 @@ import java.util.Map;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.ease.IExecutionListener;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineProvider;
 import org.eclipse.ease.Script;
+import org.eclipse.ease.service.EngineDescription;
+import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.ui.Activator;
+import org.eclipse.ease.ui.scripts.ScriptStorage;
 import org.eclipse.ease.ui.tools.StringTools;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.menus.UIElement;
@@ -55,17 +60,16 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 
 				} else {
 					// stop recording
+					final ScriptStorage storage = ScriptStorage.createStorage();
 					final StringBuffer buffer = fRecordings.get(engine);
+
 					if (buffer.length() > 0) {
 						final InputDialog dialog = new InputDialog(HandlerUtil.getActiveShell(event), "Save Script",
 								"Enter a unique name for your script (use '/' as path delimiter)", "", new IInputValidator() {
 
 									@Override
 									public String isValid(final String name) {
-										IPath basePath = Activator.getDefault().getStateLocation();
-										IPath filePath = basePath.append(name);
-
-										if (filePath.toFile().exists())
+										if (storage.exists(name))
 											return "Script name <" + name + "> is already in use. Choose a different one.";
 
 										return null;
@@ -73,10 +77,17 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 								});
 
 						if (dialog.open() == Window.OK) {
-							// TODO get file extension from script type
+							final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+							EngineDescription description = engine.getDescription();
+							ScriptType scriptType = description.getSupportedScriptTypes().iterator().next();
+
+							String name = dialog.getValue() + "." + scriptType.getDefaultExtension();
+
 							// TODO write script header
-							// TODO store script
-							// TODO deal with workspace paths (refresh WS)
+
+							if (!storage.store(name, buffer.toString()))
+								// could not store script
+								MessageDialog.openError(HandlerUtil.getActiveShell(event), "Save error", "Could not store script data");
 						}
 					}
 				}

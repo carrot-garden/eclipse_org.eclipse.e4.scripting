@@ -12,6 +12,7 @@ import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.ScriptResult;
 import org.eclipse.ease.modules.IEnvironment;
 import org.eclipse.ease.modules.NativeEnvironment;
+import org.eclipse.ease.service.EngineDescription;
 
 public class JavaEngine implements IScriptEngine {
 
@@ -107,11 +108,6 @@ public class JavaEngine implements IScriptEngine {
 	}
 
 	@Override
-	public String getID() {
-		return null;
-	}
-
-	@Override
 	public String getName() {
 		return null;
 	}
@@ -176,5 +172,10 @@ public class JavaEngine implements IScriptEngine {
 
 	public IEnvironment getEnvironment() {
 		return mEnvironment;
+	}
+
+	@Override
+	public EngineDescription getDescription() {
+		throw new RuntimeException("not supported");
 	}
 }

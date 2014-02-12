@@ -16,6 +16,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 
+import org.eclipse.ease.service.EngineDescription;
+
 /**
  * Interface for a script engine. A script engine is capable of interpreting script code at runtime. Script engines shall be derived from {@link Thread} and
  * therefore run separately from other code. An engine shall be started by calling {@link #schedule()}.
@@ -166,13 +168,6 @@ public interface IScriptEngine {
 	FileTrace getFileTrace();
 
 	/**
-	 * Get the engine ID.
-	 * 
-	 * @return engine ID
-	 */
-	String getID();
-
-	/**
 	 * Get the engine name.
 	 * 
 	 * @return engine name
@@ -218,4 +213,11 @@ public interface IScriptEngine {
 	 * @return converted variable name
 	 */
 	String getSaveVariableName(String name);
+
+	/**
+	 * Get engine description for current engine.
+	 * 
+	 * @return engine description
+	 */
+	EngineDescription getDescription();
 }

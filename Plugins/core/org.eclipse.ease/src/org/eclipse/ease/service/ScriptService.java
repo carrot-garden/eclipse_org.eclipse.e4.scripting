@@ -80,7 +80,7 @@ public class ScriptService implements IScriptService {
 				((AbstractScriptEngine) engine).setEngineDescription(description);
 
 			// engine loaded, now load launch extensions
-			for (final IScriptEngineLaunchExtension extension : getLaunchExtensions(engine.getID()))
+			for (final IScriptEngineLaunchExtension extension : getLaunchExtensions(description.getID()))
 				extension.createEngine(engine);
 
 			return engine;

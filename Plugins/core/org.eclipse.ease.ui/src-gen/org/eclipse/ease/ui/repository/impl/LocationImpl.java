@@ -251,9 +251,12 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 			}
 
 			// try for a project
-			resource = ResourcesPlugin.getWorkspace().getRoot().getProject(path.toString());
-			if ((resource != null) && (resource.exists()))
-				return resource;
+			try {
+				resource = ResourcesPlugin.getWorkspace().getRoot().getProject(path.toString());
+				if ((resource != null) && (resource.exists()))
+					return resource;
+			} catch (IllegalArgumentException e) {
+			}
 		}
 
 		return null;

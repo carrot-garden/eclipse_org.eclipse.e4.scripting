@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ease.ui.preferences;
 
+import org.eclipse.ease.Activator;
+
 /**
  * Constant definitions for plug-in preferences.
  */
@@ -26,5 +28,8 @@ public interface PreferenceConstants {
 	String CONSOLE_BASE = "org.eclipse.ease.console.prefs";
 	String CONSOLE_OPEN_ON_OUT = "consoleOpenOnOut";
 	String CONSOLE_OPEN_ON_ERR = "consoleOpenOnErr";
+
 	String LOCATIONS = "constants";
+	String SCRIPT_STORAGE_LOCATION = "scriptStorageLocation";
+	String DEFAULT_SCRIPT_STORAGE_LOCATION = Activator.getDefault().getStateLocation().append("recordedScripts").toFile().toURI().toString();
 }
