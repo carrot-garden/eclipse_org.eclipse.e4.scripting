@@ -3,6 +3,7 @@ package org.eclipse.ease.ui.scripts;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -10,13 +11,13 @@ import org.eclipse.ease.Logger;
 
 public class FileScriptStorage extends ScriptStorage {
 
-	public FileScriptStorage(String location) {
+	public FileScriptStorage(final String location) {
 		super(location);
 	}
 
 	@Override
-	protected boolean createFile(Path path, String content) {
-		File file = new File(getLocation() + "/" + path);
+	protected boolean createFile(final Path path, final String content) {
+		File file = new File(URI.create(getLocation() + "/" + path));
 		if (!file.exists()) {
 			try {
 				if (file.createNewFile()) {
@@ -48,8 +49,9 @@ public class FileScriptStorage extends ScriptStorage {
 	}
 
 	@Override
-	protected boolean createPath(IPath path) {
-		File file = new File(getLocation() + "/" + path);
+	protected boolean createPath(final IPath path) {
+
+		File file = new File(URI.create(getLocation() + "/" + path));
 		if (!file.exists())
 			return file.mkdirs();
 

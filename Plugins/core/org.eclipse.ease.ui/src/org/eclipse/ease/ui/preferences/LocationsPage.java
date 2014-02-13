@@ -55,12 +55,12 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 	}
 
 	@Override
-	public void init(IWorkbench workbench) {
+	public void init(final IWorkbench workbench) {
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
 	}
 
 	@Override
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(new GridLayout(4, false));
 		{
@@ -74,7 +74,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 				btnUseCustomLocation = new Button(grpScriptRecording, SWT.CHECK);
 				btnUseCustomLocation.addSelectionListener(new SelectionAdapter() {
 					@Override
-					public void widgetSelected(SelectionEvent e) {
+					public void widgetSelected(final SelectionEvent e) {
 						// enable/disable components depending on checkbox
 						for (Control control : btnUseCustomLocation.getParent().getChildren()) {
 							if (!control.equals(btnUseCustomLocation))
@@ -100,11 +100,32 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 			new Label(grpScriptRecording, SWT.NONE);
 			{
 				Button btnWorkspace = new Button(grpScriptRecording, SWT.NONE);
+				btnWorkspace.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(final SelectionEvent e) {
+						ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), true,
+								"Select script storage folder");
+						if (dialog.open() == Window.OK) {
+							Object[] result = dialog.getResult();
+							if ((result.length > 0) && (result[0] instanceof IPath))
+								ftext.setText("workspace:/" + result[0].toString());
+						}
+					}
+				});
 				btnWorkspace.setEnabled(false);
 				btnWorkspace.setText("Workspace...");
 			}
 			{
 				Button btnFileSystem = new Button(grpScriptRecording, SWT.NONE);
+				btnFileSystem.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(final SelectionEvent e) {
+						DirectoryDialog dialog = new DirectoryDialog(getShell());
+						String path = dialog.open();
+						if (path != null)
+							ftext.setText(new File(path).toURI().toString());
+					}
+				});
 				btnFileSystem.setEnabled(false);
 				btnFileSystem.setText("File System...");
 			}
@@ -135,7 +156,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 					tblclmnLocation.setText("Location");
 					tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
 						@Override
-						public String getText(Object element) {
+						public String getText(final Object element) {
 							if (element instanceof IEntry)
 								return ((IEntry) element).getUri();
 
@@ -150,7 +171,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 					tblclmnRecursive.setText("Recursive");
 					tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
 						@Override
-						public String getText(Object element) {
+						public String getText(final Object element) {
 							if (element instanceof IEntry)
 								return ((IEntry) element).isRecursive() ? "true" : "false";
 
@@ -162,7 +183,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 				tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 				tableViewer.setComparator(new ViewerComparator() {
 					@Override
-					public int compare(Viewer viewer, Object e1, Object e2) {
+					public int compare(final Viewer viewer, final Object e1, final Object e2) {
 						if ((e1 instanceof IScript) && (e2 instanceof IScript))
 							return (((IScript) e1).getUri()).compareTo(((IScript) e2).getUri());
 
@@ -173,7 +194,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 				tableViewer.setFilters(new ViewerFilter[] { new ViewerFilter() {
 
 					@Override
-					public boolean select(Viewer viewer, Object parentElement, Object element) {
+					public boolean select(final Viewer viewer, final Object parentElement, final Object element) {
 						if (element instanceof IEntry)
 							return !((IEntry) element).isHidden();
 
@@ -189,7 +210,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 			Button btnAddWorkspace = new Button(container, SWT.NONE);
 			btnAddWorkspace.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void widgetSelected(SelectionEvent e) {
+				public void widgetSelected(final SelectionEvent e) {
 					ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), true,
 							"Select script folder");
 					if (dialog.open() == Window.OK) {
@@ -208,7 +229,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 			Button btnAddFileSystem = new Button(container, SWT.NONE);
 			btnAddFileSystem.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void widgetSelected(SelectionEvent e) {
+				public void widgetSelected(final SelectionEvent e) {
 					DirectoryDialog dialog = new DirectoryDialog(getShell());
 					String path = dialog.open();
 					if (path != null)
@@ -224,7 +245,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 			Button btnAddUri = new Button(container, SWT.NONE);
 			btnAddUri.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void widgetSelected(SelectionEvent e) {
+				public void widgetSelected(final SelectionEvent e) {
 					InputDialog dialog = new InputDialog(getShell(), "Enter location URI", "Enter the URI of a location to add", "", new URIValidator());
 					if (dialog.open() == Window.OK)
 						addEntry(dialog.getValue(), false);
@@ -239,7 +260,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 			Button btnEdit = new Button(container, SWT.NONE);
 			btnEdit.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void widgetSelected(SelectionEvent e) {
+				public void widgetSelected(final SelectionEvent e) {
 					// TODO implement edit functionality
 				}
 			});
@@ -252,7 +273,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 			Button btnDelete = new Button(container, SWT.NONE);
 			btnDelete.addSelectionListener(new SelectionAdapter() {
 				@Override
-				public void widgetSelected(SelectionEvent e) {
+				public void widgetSelected(final SelectionEvent e) {
 					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 					if (!selection.isEmpty()) {
 						Collection<IEntry> entries = (Collection<IEntry>) tableViewer.getInput();
@@ -274,7 +295,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 		return container;
 	}
 
-	private void addEntry(String uri, boolean hidden) {
+	private void addEntry(final String uri, final boolean hidden) {
 		IEntry entry = IRepositoryFactory.eINSTANCE.createEntry();
 		entry.setUri(uri);
 		entry.setRecursive(true);

@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
@@ -106,7 +107,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public void setUri(String newUri) {
+	public void setUri(final String newUri) {
 		String oldUri = uri;
 		uri = newUri;
 		if (eNotificationRequired())
@@ -129,7 +130,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public void setHidden(boolean newHidden) {
+	public void setHidden(final boolean newHidden) {
 		boolean oldHidden = hidden;
 		hidden = newHidden;
 		if (eNotificationRequired())
@@ -142,7 +143,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(final int featureID, final boolean resolve, final boolean coreType) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__URI:
 			return getUri();
@@ -158,7 +159,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(final int featureID, final Object newValue) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__URI:
 			setUri((String) newValue);
@@ -176,7 +177,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(final int featureID) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__URI:
 			setUri(URI_EDEFAULT);
@@ -194,7 +195,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(final int featureID) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__URI:
 			return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
@@ -267,7 +268,14 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 */
 	@Override
 	public File getFile() {
-		// TODO Auto-generated method stub
+		File file;
+		try {
+			file = new File(URI.create(getUri()));
+			return file.exists() ? file : null;
+		} catch (IllegalArgumentException e) {
+			// cannot resolve URI to a file
+		}
+
 		return null;
 	}
 

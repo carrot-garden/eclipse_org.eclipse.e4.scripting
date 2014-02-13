@@ -18,6 +18,7 @@ import org.eclipse.ease.ui.repository.IRepository;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.ease.ui.repository.impl.RepositoryFactoryImpl;
+import org.eclipse.ease.ui.scripts.ScriptStorage;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.ease.ui.scripts.repository.IScriptListener;
 import org.eclipse.emf.common.util.URI;
@@ -52,7 +53,7 @@ public class RepositoryService implements IRepositoryService {
 	private final Job fSaveJob = new Job("Save Script Repositories") {
 
 		@Override
-		protected IStatus run(IProgressMonitor monitor) {
+		protected IStatus run(final IProgressMonitor monitor) {
 			IPath path = Activator.getDefault().getStateLocation().append(CACHE_FILE_NAME);
 			File file = path.toFile();
 
@@ -96,10 +97,11 @@ public class RepositoryService implements IRepositoryService {
 			// create an empty repository to start with
 			fRepository = IRepositoryFactory.eINSTANCE.createRepository();
 
+			// add default location for stored scripts
 			IEntry entry = IRepositoryFactory.eINSTANCE.createEntry();
+			entry.setUri(ScriptStorage.createStorage().getLocation());
 			entry.setRecursive(true);
-			entry.setUri("workspace://JavaScript_Script_Examples/scripts");
-
+			entry.setHidden(true);
 			fRepository.getEntries().add(entry);
 
 			// update repository immediately
@@ -121,7 +123,7 @@ public class RepositoryService implements IRepositoryService {
 	}
 
 	@Override
-	public IScript getScript(String name) {
+	public IScript getScript(final String name) {
 		for (IScript script : getRepository().getScripts()) {
 			if (name.equals(script.getFullName()))
 				return script;
@@ -130,7 +132,7 @@ public class RepositoryService implements IRepositoryService {
 		return null;
 	}
 
-	public void addScript(IScript script) {
+	public void addScript(final IScript script) {
 		script.setUpdatePending(false);
 
 		if (!getRepository().getScripts().contains(script)) {
@@ -149,7 +151,7 @@ public class RepositoryService implements IRepositoryService {
 		fSaveJob.schedule(5000);
 	}
 
-	private void notifyListeners(IScript[] scripts) {
+	private void notifyListeners(final IScript[] scripts) {
 		for (Object listener : fListeners.getListeners())
 			((IScriptListener) listener).notify(scripts);
 	}
@@ -160,12 +162,12 @@ public class RepositoryService implements IRepositoryService {
 	}
 
 	@Override
-	public void addScriptListener(IScriptListener listener) {
+	public void addScriptListener(final IScriptListener listener) {
 		fListeners.add(listener);
 	}
 
 	@Override
-	public void removeScriptListener(IScriptListener listener) {
+	public void removeScriptListener(final IScriptListener listener) {
 		fListeners.remove(listener);
 	}
 
@@ -175,20 +177,20 @@ public class RepositoryService implements IRepositoryService {
 	}
 
 	@Override
-	public void removeLocation(IEntry entry) {
+	public void removeLocation(final IEntry entry) {
 		fRepository.getEntries().remove(entry);
 		fUpdateJob.scheduleUpdate(1000);
 		save();
 	}
 
 	@Override
-	public void addLocation(IEntry entry) {
+	public void addLocation(final IEntry entry) {
 		fRepository.getEntries().add(entry);
 		fUpdateJob.scheduleUpdate(1000);
 		save();
 	}
 
-	public void removeScript(IScript script) {
+	public void removeScript(final IScript script) {
 		fRepository.getScripts().remove(script);
 		notifyListeners(new IScript[] {});
 		save();

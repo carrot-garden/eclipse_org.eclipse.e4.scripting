@@ -42,7 +42,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class EnvironmentModule extends AbstractEnvironment {
 
-	private static final String PROJECT = "project://";
+	private static final String PROJECT_SCHEME = "project://";
 
 	public static final String MODULE_NAME = "Environment";
 
@@ -51,6 +51,7 @@ public class EnvironmentModule extends AbstractEnvironment {
 	public EnvironmentModule() {
 		// we need to force loading of the org.eclipse.ecf.filetransfer plugin to correctly register extended URL protocols.
 		// therefore load a class from that plugin
+		// TODO move this to the activator as UI components might need this before
 		Class<FileTransferInfo> foo = FileTransferInfo.class;
 	}
 
@@ -223,11 +224,11 @@ public class EnvironmentModule extends AbstractEnvironment {
 	 */
 	@WrapToScript
 	public final Object include(final String filename) {
-		if (filename.startsWith(PROJECT + "://")) {
+		if (filename.startsWith(PROJECT_SCHEME)) {
 			// project relative link, we cannot resolve this via URL as we need a relative file in the project
 			Object currentFile = getScriptEngine().getExecutedFile();
 			if (currentFile instanceof IFile) {
-				IFile file = ((IFile) currentFile).getProject().getFile(new Path(filename.substring(PROJECT.length())));
+				IFile file = ((IFile) currentFile).getProject().getFile(new Path(filename.substring(PROJECT_SCHEME.length())));
 				if (file.exists())
 					return getScriptEngine().inject(file);
 			}

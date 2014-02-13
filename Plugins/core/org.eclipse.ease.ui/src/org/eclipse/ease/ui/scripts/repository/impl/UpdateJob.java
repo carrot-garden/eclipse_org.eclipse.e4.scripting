@@ -1,5 +1,8 @@
 package org.eclipse.ease.ui.scripts.repository.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,6 +15,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentDescription;
 import org.eclipse.core.runtime.jobs.Job;
@@ -28,14 +32,14 @@ public class UpdateJob extends Job {
 
 	private final RepositoryService fRepositoryService;
 
-	public UpdateJob(RepositoryService repositoryService) {
+	public UpdateJob(final RepositoryService repositoryService) {
 		super("Updating script repository");
 
 		fRepositoryService = repositoryService;
 	}
 
 	@Override
-	protected IStatus run(IProgressMonitor monitor) {
+	protected IStatus run(final IProgressMonitor monitor) {
 
 		// mark script to be verified
 		for (IScript script : fRepositoryService.getScripts())
@@ -53,6 +57,14 @@ public class UpdateJob extends Job {
 					// this is a valid workspace resource
 					parse(resource, entry);
 					entry.setTimestamp(System.currentTimeMillis());
+				} else {
+					// check for file system resource
+					File file = entry.getFile();
+					if (file != null) {
+						// this is a valid file system resource
+						parse(file, entry);
+						entry.setTimestamp(System.currentTimeMillis());
+					}
 				}
 			}
 		}
@@ -71,14 +83,94 @@ public class UpdateJob extends Job {
 		return Status.OK_STATUS;
 	}
 
-	private void parse(IResource resource, final IEntry entry) {
+	private void parse(final File file, final IEntry entry) {
+		if (file.isDirectory()) {
+			// containment, parse children
+			for (File child : file.listFiles()) {
+				if ((child.isFile()) || (entry.isRecursive()))
+					parse(child, entry);
+			}
+
+		} else {
+			// try to locate registered script
+			String uri = file.toURI().toString();
+			IScript script = fRepositoryService.getScript(uri);
+
+			if (script == null) {
+				script = IRepositoryFactory.eINSTANCE.createScript();
+				script.setEntry(entry);
+				script.setUri(uri);
+			}
+
+			if (script.getTimestamp() != file.lastModified()) {
+				// file altered in file system
+
+				try {
+					// parse script headers
+					String name = file.getName();
+					if (name.contains(".")) {
+						String extension = name.substring(name.lastIndexOf('.') + 1);
+
+						// locate header parser
+						final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+						IHeaderParser parser = null;
+						for (ScriptType scriptType : scriptService.getAvailableScriptTypes().values()) {
+							if (extension.equalsIgnoreCase(scriptType.getDefaultExtension())) {
+								parser = scriptType.getHeaderParser();
+								break;
+							}
+						}
+
+						// parse header
+						if (parser != null) {
+							Map<String, String> parameters = parser.parser(new FileInputStream(file));
+							for (String key : parameters.keySet()) {
+								IParameter parameter = IRepositoryFactory.eINSTANCE.createParameter();
+								parameter.setKey(key);
+								parameter.setValue(parameters.get(key));
+								parameter.setScriptOrigin(true);
+
+								script.getParameter().add(parameter);
+							}
+						}
+
+						// set name
+						IParameter nameParameter = script.getParameter("Name");
+						if (nameParameter != null)
+							// name parameter contained in script
+							script.setFullName(nameParameter.getValue());
+
+						else {
+							// use path information relative to base folder for name
+							String filePath = file.getAbsolutePath();
+							String locationPath = entry.getFile().getAbsolutePath();
+							String relativePath = filePath.substring(locationPath.length());
+
+							IPath finalPath = new Path(relativePath).makeRelative();
+
+							script.setFullName(finalPath.removeFileExtension().toString());
+						}
+
+						// update timestamp
+						script.setTimestamp(file.lastModified());
+						fRepositoryService.addScript(script);
+					}
+				} catch (FileNotFoundException e) {
+					// TODO handle this exception (but for now, at least know it happened)
+					throw new RuntimeException(e);
+				}
+			}
+		}
+	}
+
+	private void parse(final IResource resource, final IEntry entry) {
 		if (resource instanceof IContainer) {
 			// containment, parse children
 			try {
 				resource.accept(new IResourceVisitor() {
 
 					@Override
-					public boolean visit(IResource resource) throws CoreException {
+					public boolean visit(final IResource resource) throws CoreException {
 
 						if (resource instanceof IFile)
 							parse(resource, entry);
@@ -153,13 +245,13 @@ public class UpdateJob extends Job {
 					}
 				} catch (CoreException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new RuntimeException(e);
 				}
 			}
 		}
 	}
 
-	public void scheduleUpdate(long delay) {
+	public void scheduleUpdate(final long delay) {
 		cancel();
 		schedule(delay);
 	}

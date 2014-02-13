@@ -88,6 +88,12 @@
             id="org.eclipse.ease.commands.scriptShell.editScript"
             name="Edit Script">
       </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.UpdateRepository"
+            id="org.eclipse.ease.commands.scriptShell.updateRepository"
+            name="Refresh Repository">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -244,6 +250,11 @@
                commandId="org.eclipse.ease.commands.scriptShell.editScript"
                icon="images/start_record_macro.gif"
                label="Edit"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.ease.commands.scriptShell.updateRepository"
+               label="Refresh"
                style="push">
          </command>
          <separator
