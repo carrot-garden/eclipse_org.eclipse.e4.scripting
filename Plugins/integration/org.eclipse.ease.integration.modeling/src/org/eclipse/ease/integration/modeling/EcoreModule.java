@@ -72,9 +72,9 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
 /**
- * This offer to user means to handle EMF models (Create EObject, Select element, Handle resources etc..).
- * This module need to be initialized with an nsURI referencing a metamodel usin {@link EcoreModule#initEPackage(String)}.Once this module has been
- * initialized all creation method of the factory is injected in the script.
+ * This offer to user means to handle EMF models (Create EObject, Select element, Handle resources etc..). This module need to be initialized with an nsURI
+ * referencing a metamodel usin {@link EcoreModule#initEPackage(String)}.Once this module has been initialized all creation method of the factory is injected in
+ * the script.
  * 
  * @author <a href="mailto:pierre-charles.david@obeo.fr">Pierre-Charles David</a>
  * @author <a href="mailto:laurent.redor@obeo.fr">Laurent Redor</a>
@@ -84,21 +84,19 @@ public class EcoreModule extends AbstractScriptModule {
 
 	protected SelectionModule selectionModule = new SelectionModule();
 
-
 	protected InputModule input = new InputModule();
 
 	private String uri;
 
 	/**
-	 * Returns the currently selected model element, either in the editor or the outline view. If several elements are
-	 * selected, only the first is returned.
+	 * Returns the currently selected model element, either in the editor or the outline view. If several elements are selected, only the first is returned.
 	 * 
 	 * @return the currently selected model element.
 	 */
 	public EObject getSelection() {
 		Object selection = selectionModule.getCustomSelectionFromSelector(GMFSemanticSeletor.SELECTOR_ID);
-		if(selection instanceof EObject) {
-			return (EObject)selection;
+		if (selection instanceof EObject) {
+			return (EObject) selection;
 		} else {
 			String message = "Unable to retreive a EObject from the selection";
 			DialogModule.error(message);
@@ -111,15 +109,15 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Return if the current instance is a instance of an EClass define by its name.
 	 * 
 	 * @param eObject
-	 *        The {@link EObject} you want to test.
+	 *            The {@link EObject} you want to test.
 	 * @param typeName
-	 *        The name of the EClass defined in the metamodel
+	 *            The name of the EClass defined in the metamodel
 	 * @return true if the {@link EObject} is instance of typeName
 	 */
 	@WrapToScript
 	public boolean eInstanceOf(@ScriptParameter(name = "eObject") EObject eObject, @ScriptParameter(name = "type") String type) {
 		EClassifier classifier = getEPackage().getEClassifier(type);
-		if(classifier == null) {
+		if (classifier == null) {
 			DialogModule.error("Unable to find EClass named :" + type);
 		}
 		return classifier.isInstance(eObject);
@@ -130,19 +128,17 @@ public class EcoreModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Returns the currently selected model element in the current editor if it is an instance of the named
-	 * meta-class (or a sub-class).
+	 * Returns the currently selected model element in the current editor if it is an instance of the named meta-class (or a sub-class).
 	 * 
 	 * @param type
-	 *        the name of a meta-class (e.g. "Property" or "Package")
-	 * @return the first element selected in the current editor if there is one and it is an instance of the named
-	 *         meta-class or a sub-class of it.
+	 *            the name of a meta-class (e.g. "Property" or "Package")
+	 * @return the first element selected in the current editor if there is one and it is an instance of the named meta-class or a sub-class of it.
 	 */
 	@WrapToScript
 	public EObject getSelection(@ScriptParameter(optional = true, name = "type") String type) {
 		EObject selection = getSelection();
-		if(type != null) {
-			if(eInstanceOf(selection, type)) {
+		if (type != null) {
+			if (eInstanceOf(selection, type)) {
 				return selection;
 			} else {
 				return null;
@@ -162,7 +158,7 @@ public class EcoreModule extends AbstractScriptModule {
 
 		@Override
 		public boolean apply(Method arg0) {
-			if(arg0 != null) {
+			if (arg0 != null) {
 				return arg0.getName().startsWith("create");
 			}
 			return false;
@@ -173,25 +169,26 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Initialized the module with the correct metamodèle. If this method is not called the module will at runtime ask with metamodel shall be used.
 	 * 
 	 * @param nsURI
-	 *        of the metamodel
+	 *            of the metamodel
 	 */
 	@WrapToScript
 	public void initEPackage(@ScriptParameter(name = "nsURI") String nsURI) {
-		if(nsURI == null) {
+		if (nsURI == null) {
 			initEPackageFromDialog();
 		} else {
 			this.uri = nsURI;
 		}
 		EPackage ePack = getEPackage();
-		if(ePack == null) {
+		if (ePack == null) {
 			DialogModule.error("Unable to find metamodel with URI : " + this.uri);
 			return;
 		}
 		EFactory factory = getFactory();
-		if(factory != null) {
+		if (factory != null) {
 			String factoryName = getFactoryVariableName();
 			CodeInjectorUtils.injectJavaVariable(factoryName, factory, getScriptEngine());
-			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName, getScriptEngine(), "[Ecore Module] Injecting class " + factory.getClass().getName());
+			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName,
+					getScriptEngine(), "[Ecore Module] Injecting class " + factory.getClass().getName());
 		} else {
 			DialogModule.error("Unable to find metamodel with URI : " + this.uri);
 		}
@@ -201,15 +198,15 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Create a new resource to hold model elements
 	 * 
 	 * @param name
-	 *        Name of the resource (Optional parameter ask dynamically to the user)
+	 *            Name of the resource (Optional parameter ask dynamically to the user)
 	 * @param uri
-	 *        URI locating the container of the resource (Optional parameter ask dynamically to the user)
+	 *            URI locating the container of the resource (Optional parameter ask dynamically to the user)
 	 * @return
 	 */
 	@WrapToScript
 	public Resource createResource(@ScriptParameter(name = "name", optional = true) String name, @ScriptParameter(name = "uri", optional = true) String uri) {
 		ResourceSet resourceSet = getResourceSet();
-		if(resourceSet == null) {
+		if (resourceSet == null) {
 			Logger.logWarning("Unable to get the current resourceSet. Creating a new one...");
 			resourceSet = new ResourceSetImpl();
 		}
@@ -227,32 +224,34 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Create a new URI. This URI is use to locate a resource.
 	 * 
 	 * @param containerURI
-	 *        path of the container of the new resource. (Optional Ask dynamically to the user)
+	 *            path of the container of the new resource. (Optional Ask dynamically to the user)
 	 * @param fileName
-	 *        name of the new resource. (Optional Ask dynamically to the user)
+	 *            name of the new resource. (Optional Ask dynamically to the user)
 	 * @return
 	 */
 	@WrapToScript
-	public URI createURI(@ScriptParameter(name = "containerURI", optional = true) String containerURI, @ScriptParameter(name = "fileName", optional = true) String fileName) {
+	public URI createURI(@ScriptParameter(name = "containerURI", optional = true) String containerURI,
+			@ScriptParameter(name = "fileName", optional = true) String fileName) {
 		URI container = null;
-		if(containerURI == null) {
-			//Launch dialog to get an URI
+		if (containerURI == null) {
+			// Launch dialog to get an URI
 			RunnableWithResult<IPath> getPathRunnable = new RunnableWithResult<IPath>() {
 
 				private IPath tt = null;
 
 				@Override
 				public void run() {
-					ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), false, "Select where you want to add your resource");
-					if(dialog.open() != Window.OK) {
+					ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), false,
+							"Select where you want to add your resource");
+					if (dialog.open() != Window.OK) {
 						return;
 					}
 					Object[] result = dialog.getResult();
-					if(result == null || result.length == 0) {
+					if ((result == null) || (result.length == 0)) {
 						DialogModule.error("Unable to retreive a container for the new resource from your selestion");
 						return;
 					}
-					tt = (IPath)result[0];
+					tt = (IPath) result[0];
 
 				}
 
@@ -268,8 +267,8 @@ public class EcoreModule extends AbstractScriptModule {
 		} else {
 			container = URI.createFileURI(containerURI);
 		}
-		if(fileName == null) {
-			//Launch input dialog
+		if (fileName == null) {
+			// Launch input dialog
 			fileName = input.ask("Give the resource name (With it's extension)");
 		}
 
@@ -284,11 +283,11 @@ public class EcoreModule extends AbstractScriptModule {
 	 */
 	@WrapToScript
 	public EFactory getFactory() {
-		if(this.uri == null) {
+		if (this.uri == null) {
 			initEPackageFromDialog();
 		}
 		EPackage ePackage = getEPackage();
-		if(ePackage == null) {
+		if (ePackage == null) {
 			throw new RuntimeException("Unable to retreive EPackage with URI " + this.uri);
 		}
 		return ePackage.getEFactoryInstance();
@@ -301,7 +300,7 @@ public class EcoreModule extends AbstractScriptModule {
 	 */
 	@WrapToScript
 	public EPackage getEPackage() {
-		if(this.uri == null) {
+		if (this.uri == null) {
 			initEPackageFromDialog();
 		}
 		EPackage ePack = EPackage.Registry.INSTANCE.getEPackage(uri);
@@ -311,10 +310,10 @@ public class EcoreModule extends AbstractScriptModule {
 	private void initEPackageFromDialog() {
 		UriSelectionDialog dialog = new UriSelectionDialog(getShell());
 		int returnCode = DialogModule.openDialog(dialog);
-		if(returnCode == Window.OK) {
+		if (returnCode == Window.OK) {
 			Object[] result = dialog.getResult();
-			if(result != null && result.length == 1) {
-				uri = (String)result[0];
+			if ((result != null) && (result.length == 1)) {
+				uri = (String) result[0];
 			}
 		}
 
@@ -324,9 +323,9 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Add an error marker on a EObject
 	 * 
 	 * @param eObject
-	 *        The Object you want to add a error marker
+	 *            The Object you want to add a error marker
 	 * @param message
-	 *        Message of the marker
+	 *            Message of the marker
 	 * @throws CoreException
 	 */
 	@WrapToScript
@@ -339,9 +338,9 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Add an Information marker on a EObject
 	 * 
 	 * @param eObject
-	 *        The Object you want to add a error marker
+	 *            The Object you want to add a error marker
 	 * @param message
-	 *        Message of the marker
+	 *            Message of the marker
 	 * @throws CoreException
 	 */
 	@WrapToScript
@@ -353,9 +352,9 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Add a Warning marker on a EObject
 	 * 
 	 * @param eObject
-	 *        The Object you want to add a error marker
+	 *            The Object you want to add a error marker
 	 * @param message
-	 *        Message of the marker
+	 *            Message of the marker
 	 * @throws CoreException
 	 */
 	@WrapToScript
@@ -364,8 +363,8 @@ public class EcoreModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * The current editor part is return or null if there is any active editor. In the case of there is any active
-	 * editor a message is display to inform the user.
+	 * The current editor part is return or null if there is any active editor. In the case of there is any active editor a message is display to inform the
+	 * user.
 	 * 
 	 * @return IEditorPart The current editor part or null
 	 */
@@ -389,11 +388,11 @@ public class EcoreModule extends AbstractScriptModule {
 				IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 
 				// this can be null if you close all perspectives
-				if(window != null && window.getActivePage() != null && window.getActivePage().getActiveEditor() != null) {
+				if ((window != null) && (window.getActivePage() != null) && (window.getActivePage().getActiveEditor() != null)) {
 					activeEditorRef.activeEditorPart = window.getActivePage().getActiveEditor();
 				} else {
 					Shell shell;
-					if(window != null && window.getShell() != null) {
+					if ((window != null) && (window.getShell() != null)) {
 						shell = window.getShell();
 					} else {
 						shell = new Shell();
@@ -405,23 +404,21 @@ public class EcoreModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Save:
-	 * The current editor if no eObject is passed in argument
-	 * The resource containing the eObject passed in argument
+	 * Save: The current editor if no eObject is passed in argument The resource containing the eObject passed in argument
 	 * 
 	 * @param eObject
-	 *        Help to locate the resource to save (Optional save the current editor)
+	 *            Help to locate the resource to save (Optional save the current editor)
 	 */
 	@WrapToScript
 	public void save(@ScriptParameter(optional = true, name = "target") Object target) {
 		Resource toSave = null;
-		if(target instanceof EObject) {
-			EObject eObject = (EObject)target;
+		if (target instanceof EObject) {
+			EObject eObject = (EObject) target;
 			toSave = eObject.eResource();
-		} else if(target instanceof Resource) {
-			toSave = (Resource)target;
+		} else if (target instanceof Resource) {
+			toSave = (Resource) target;
 		}
-		if(toSave != null) {
+		if (toSave != null) {
 			try {
 				toSave.save(null);
 			} catch (IOException e) {
@@ -464,16 +461,15 @@ public class EcoreModule extends AbstractScriptModule {
 
 	protected EditingDomain getEditingDomain() {
 		IEditorPart currentEditorPart = getCurrentEditorPart();
-		if(currentEditorPart != null) {
+		if (currentEditorPart != null) {
 			Object domain = currentEditorPart.getAdapter(EditingDomain.class);
-			if(domain instanceof EditingDomain) {
-				return (EditingDomain)domain;
+			if (domain instanceof EditingDomain) {
+				return (EditingDomain) domain;
 			}
 			domain = AdapterManager.getDefault().getAdapter(currentEditorPart, EditingDomain.class);
-			if(domain instanceof EditingDomain) {
-				return (EditingDomain)domain;
+			if (domain instanceof EditingDomain) {
+				return (EditingDomain) domain;
 			}
-
 
 		} else {
 			Logger.logWarning("Unable to retreive editing domain. There is not opened editor");
@@ -482,9 +478,7 @@ public class EcoreModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Return all object referencing this EObject.
-	 * The return value is a collection of Array of size 2.
-	 * Result[0] = EStructual feature linking the two object
+	 * Return all object referencing this EObject. The return value is a collection of Array of size 2. Result[0] = EStructual feature linking the two object
 	 * Result[1] = The referencing object
 	 * 
 	 * @param eObject
@@ -492,16 +486,16 @@ public class EcoreModule extends AbstractScriptModule {
 	 */
 	@WrapToScript
 	public static Collection<Object[]> getUsages(@ScriptParameter(name = "eObject") EObject eObject) {
-		if(eObject == null) {
+		if (eObject == null) {
 			return Collections.emptyList();
 		}
 
 		ECrossReferenceAdapter crossReferencer = ECrossReferenceAdapter.getCrossReferenceAdapter(eObject);
-		if(crossReferencer == null) {
+		if (crossReferencer == null) {
 			// try to register a cross referencer at the highest level
 			crossReferencer = new ECrossReferenceAdapter();
-			if(eObject.eResource() != null) {
-				if(eObject.eResource().getResourceSet() != null) {
+			if (eObject.eResource() != null) {
+				if (eObject.eResource().getResourceSet() != null) {
 					crossReferencer.setTarget(eObject.eResource().getResourceSet());
 				} else {
 					crossReferencer.setTarget(eObject.eResource());
@@ -527,7 +521,7 @@ public class EcoreModule extends AbstractScriptModule {
 
 	protected ResourceSet getResourceSet() {
 		EditingDomain editingDomain = getEditingDomain();
-		if(editingDomain != null) {
+		if (editingDomain != null) {
 			return editingDomain.getResourceSet();
 		}
 		return null;
@@ -538,22 +532,23 @@ public class EcoreModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Run an operation in the current editor's command stack
-	 * This is really help ful to manipulate a model using transaction
+	 * Run an operation in the current editor's command stack This is really help ful to manipulate a model using transaction
 	 * 
 	 * @param operation
-	 *        the operation to run
+	 *            the operation to run
 	 * @param operationName
-	 *        the name to give to the operation execution
+	 *            the name to give to the operation execution
 	 */
 	@WrapToScript
-	public void runOperation(@ScriptParameter(name = "operation") final Runnable operation, @ScriptParameter(name = "name", defaultValue = "Script Operation") String operationName) {
+	public void runOperation(@ScriptParameter(name = "operation") final Runnable operation,
+			@ScriptParameter(name = "name", defaultValue = "Script Operation") String operationName) {
 		EditingDomain domain = getEditingDomain();
 
-		if(domain instanceof TransactionalEditingDomain) {
-			((TransactionalEditingDomain)domain).getCommandStack().execute(new GMFtoEMFCommandWrapper(new RunnableTransactionalCommandWrapper((TransactionalEditingDomain)domain, operationName, null, operation)));
-			//			((EditingDomain)domain).getCommandStack().undo();
-		} else if(domain != null) {
+		if (domain instanceof TransactionalEditingDomain) {
+			((TransactionalEditingDomain) domain).getCommandStack().execute(
+					new GMFtoEMFCommandWrapper(new RunnableTransactionalCommandWrapper((TransactionalEditingDomain) domain, operationName, null, operation)));
+			// ((EditingDomain)domain).getCommandStack().undo();
+		} else if (domain != null) {
 			// execute the operation in a command
 			domain.getCommandStack().execute(new RunnableCommandWrapper(operation));
 		} else {
@@ -600,7 +595,7 @@ public class EcoreModule extends AbstractScriptModule {
 	 * Display a dialog which ask the user to select between a list of Object
 	 * 
 	 * @param inputs
-	 *        List of choice for the user
+	 *            List of choice for the user
 	 * @return The selected object
 	 */
 	@WrapToScript
@@ -609,8 +604,8 @@ public class EcoreModule extends AbstractScriptModule {
 
 			@Override
 			public String getText(Object element) {
-				if(element instanceof EObject) {
-					return getLabelProvider((EObject)element).getText(element);
+				if (element instanceof EObject) {
+					return getLabelProvider((EObject) element).getText(element);
 				}
 				return element.toString();
 			}
@@ -629,14 +624,14 @@ public class EcoreModule extends AbstractScriptModule {
 	@WrapToScript
 	public String ePrint(EObject target) {
 		IItemLabelProvider labelProvider = getLabelProvider(target);
-		if(labelProvider != null) {
+		if (labelProvider != null) {
 			return labelProvider.getText(target);
 		}
 		return "[ERRO] Unable to print this EObject";
 	}
 
 	private IItemLabelProvider getLabelProvider(EObject target) {
-		IItemLabelProvider labelProvider = (IItemLabelProvider)adapter.adapt(target, IItemLabelProvider.class);
+		IItemLabelProvider labelProvider = (IItemLabelProvider) adapter.adapt(target, IItemLabelProvider.class);
 		return labelProvider;
 	}
 
@@ -659,7 +654,7 @@ public class EcoreModule extends AbstractScriptModule {
 
 	@Override
 	public IModuleWrapper getWrapper() {
-		return BootStrapper.getWrapper(getScriptEngine().getID());
+		return BootStrapper.getWrapper(getScriptEngine().getDescription().getID());
 	}
 
 }

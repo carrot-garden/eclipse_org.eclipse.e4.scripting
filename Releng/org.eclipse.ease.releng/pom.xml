@@ -36,9 +36,6 @@
 		<module>
 			../../Plugins/core/org.eclipse.ease
 		</module>
-		<module>
-			../../developers/plugins/org.eclipse.ease.dev.debug
-		</module>
 		
 		<module>
 			../../Plugins/core/org.eclipse.ease.storedscript
@@ -171,6 +168,9 @@
 		</module>
 		<module>
 			../../developers/features/org.eclipse.ease.tools.feature
+		</module>
+		<module>
+			../../Plugins/engines/org.eclipse.ease.engine.javascript
 		</module>
 	</modules>
 	<build>
