@@ -23,11 +23,6 @@
             id="org.eclipse.ease.ui.view.ScriptEplorerView"
             name="Script Explorer">
       </view>
-      <view
-            class="org.eclipse.ease.ui.preferences.Test"
-            id="org.eclipse.ease.ui.preferences.Test"
-            name="New ViewPart">
-      </view>
    </extension>
    <extension
          point="org.eclipse.ui.commands">

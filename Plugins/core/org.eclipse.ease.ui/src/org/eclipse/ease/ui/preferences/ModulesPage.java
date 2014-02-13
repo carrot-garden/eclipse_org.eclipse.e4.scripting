@@ -2,9 +2,9 @@ package org.eclipse.ease.ui.preferences;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.ease.Activator;
 import org.eclipse.ease.modules.ModuleDefinition;
 import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ease.ui.Activator;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;

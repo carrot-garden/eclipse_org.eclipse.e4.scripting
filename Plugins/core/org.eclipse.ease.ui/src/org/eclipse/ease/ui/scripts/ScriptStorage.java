@@ -4,7 +4,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.ease.Activator;
+import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.preferences.PreferenceConstants;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.ui.PlatformUI;

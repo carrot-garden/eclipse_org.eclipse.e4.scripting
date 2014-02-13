@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ease.ui.preferences;
 
-import org.eclipse.ease.Activator;
+import org.eclipse.ease.ui.Activator;
 
 /**
  * Constant definitions for plug-in preferences.
