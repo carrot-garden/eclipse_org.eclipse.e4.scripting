@@ -17,9 +17,11 @@ public class FileScriptStorage extends ScriptStorage {
 
 	@Override
 	protected boolean createFile(final Path path, final String content) {
-		File file = new File(URI.create(getLocation() + "/" + path));
-		if (!file.exists()) {
-			try {
+		URI uri = URI.create(new Path(getLocation()).append(path).toString().replace(" ", "%20"));
+		File file = new File(uri);
+
+		try {
+			if (!file.exists()) {
 				if (file.createNewFile()) {
 
 					FileOutputStream outputStream = null;
@@ -40,9 +42,9 @@ public class FileScriptStorage extends ScriptStorage {
 						}
 					}
 				}
-			} catch (IOException e) {
-				Logger.logError("Could not create file", e);
 			}
+		} catch (IOException e) {
+			Logger.logError("Could not create file", e);
 		}
 
 		return false;
