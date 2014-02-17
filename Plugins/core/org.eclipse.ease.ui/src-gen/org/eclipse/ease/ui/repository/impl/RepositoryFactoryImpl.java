@@ -2,9 +2,9 @@
  */
 package org.eclipse.ease.ui.repository.impl;
 
+import java.util.Map;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.ILocation;
-import org.eclipse.ease.ui.repository.IParameter;
 import org.eclipse.ease.ui.repository.IRepository;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
@@ -60,10 +60,10 @@ public class RepositoryFactoryImpl extends EFactoryImpl implements IRepositoryFa
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case IRepositoryPackage.SCRIPT: return createScript();
-			case IRepositoryPackage.PARAMETER: return createParameter();
 			case IRepositoryPackage.LOCATION: return createLocation();
 			case IRepositoryPackage.REPOSITORY: return createRepository();
 			case IRepositoryPackage.ENTRY: return createEntry();
+			case IRepositoryPackage.PARAMETER_MAP: return (EObject)createParameterMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -77,16 +77,6 @@ public class RepositoryFactoryImpl extends EFactoryImpl implements IRepositoryFa
 	public IScript createScript() {
 		ScriptImpl script = new ScriptImpl();
 		return script;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public IParameter createParameter() {
-		ParameterImpl parameter = new ParameterImpl();
-		return parameter;
 	}
 
 	/**
@@ -117,6 +107,16 @@ public class RepositoryFactoryImpl extends EFactoryImpl implements IRepositoryFa
 	public IEntry createEntry() {
 		EntryImpl entry = new EntryImpl();
 		return entry;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, String> createParameterMap() {
+		ParameterMapImpl parameterMap = new ParameterMapImpl();
+		return parameterMap;
 	}
 
 	/**

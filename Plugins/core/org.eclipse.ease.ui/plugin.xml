@@ -78,12 +78,6 @@
       </command>
       <command
             categoryId="org.eclipse.ease.commands.category.scriptShell"
-            defaultHandler="org.eclipse.ease.ui.handler.RunScript"
-            id="org.eclipse.ease.commands.scriptShell.runScript"
-            name="Run Script">
-      </command>
-      <command
-            categoryId="org.eclipse.ease.commands.category.scriptShell"
             defaultHandler="org.eclipse.ease.ui.handler.EditScript"
             id="org.eclipse.ease.commands.scriptShell.editScript"
             name="Edit Script">
@@ -93,6 +87,17 @@
             defaultHandler="org.eclipse.ease.ui.handler.UpdateRepository"
             id="org.eclipse.ease.commands.scriptShell.updateRepository"
             name="Refresh Repository">
+      </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            defaultHandler="org.eclipse.ease.ui.handler.RunScript"
+            id="org.eclipse.ease.commands.scriptShell.runScript"
+            name="Run Script">
+         <commandParameter
+               id="org.eclipse.ease.commands.scriptShell.runScript.scriptName"
+               name="Script Name"
+               optional="true">
+         </commandParameter>
       </command>
    </extension>
    <extension
@@ -266,12 +271,6 @@
    <extension
          point="org.eclipse.ui.services">
       <serviceFactory
-            factoryClass="org.eclipse.ease.ui.service.MacroServiceFactory">
-         <service
-               serviceClass="org.eclipse.ease.ui.IMacroService">
-         </service>
-      </serviceFactory>
-      <serviceFactory
             factoryClass="org.eclipse.ease.ui.scripts.repository.RepositoryServiceFactory">
          <service
                serviceClass="org.eclipse.ease.ui.scripts.repository.IRepositoryService">
@@ -406,5 +405,9 @@
             id="org.eclipse.ease.preferences.scriptLocations"
             name="Script Locations">
       </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup></startup>
    </extension>
 </plugin>

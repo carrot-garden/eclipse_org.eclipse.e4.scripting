@@ -12,7 +12,7 @@ public class UpdateRepository extends AbstractHandler implements IHandler {
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);
-		repositoryService.update();
+		repositoryService.update(false);
 
 		return null;
 	}

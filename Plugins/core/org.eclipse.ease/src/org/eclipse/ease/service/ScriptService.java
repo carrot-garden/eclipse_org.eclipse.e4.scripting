@@ -254,4 +254,14 @@ public class ScriptService implements IScriptService {
 
 		return null;
 	}
+
+	@Override
+	public ScriptType getScriptType(String fileExtension) {
+		for (ScriptType scriptType : getAvailableScriptTypes().values()) {
+			if (scriptType.getDefaultExtension().equalsIgnoreCase(fileExtension))
+				return scriptType;
+		}
+
+		return null;
+	}
 }

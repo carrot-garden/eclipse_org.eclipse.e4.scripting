@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -28,53 +27,33 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.ease.ui.repository.impl.LocationImpl#getUri <em>Uri</em>}</li>
- * <li>{@link org.eclipse.ease.ui.repository.impl.LocationImpl#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.impl.LocationImpl#getLocation <em>Location</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class LocationImpl extends MinimalEObjectImpl.Container implements ILocation {
 	/**
-	 * The default value of the '{@link #getUri() <em>Uri</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getUri()
+	 * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #getLocation()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String URI_EDEFAULT = null;
+	protected static final String LOCATION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getUri() <em>Uri</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getUri()
+	 * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #getLocation()
 	 * @generated
 	 * @ordered
 	 */
-	protected String uri = URI_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isHidden() <em>Hidden</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #isHidden()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean HIDDEN_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isHidden() <em>Hidden</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #isHidden()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean hidden = HIDDEN_EDEFAULT;
+	protected String location = LOCATION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected LocationImpl() {
@@ -83,7 +62,6 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -93,133 +71,90 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public String getUri() {
-		return uri;
+	public String getLocation() {
+		return location;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void setUri(final String newUri) {
-		String oldUri = uri;
-		uri = newUri;
+	public void setLocation(String newLocation) {
+		String oldLocation = location;
+		location = newLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.LOCATION__URI, oldUri, uri));
+			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.LOCATION__LOCATION, oldLocation, location));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean isHidden() {
-		return hidden;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public void setHidden(final boolean newHidden) {
-		boolean oldHidden = hidden;
-		hidden = newHidden;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.LOCATION__HIDDEN, oldHidden, hidden));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Object eGet(final int featureID, final boolean resolve, final boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case IRepositoryPackage.LOCATION__URI:
-			return getUri();
-		case IRepositoryPackage.LOCATION__HIDDEN:
-			return isHidden();
+			case IRepositoryPackage.LOCATION__LOCATION:
+				return getLocation();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(final int featureID, final Object newValue) {
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case IRepositoryPackage.LOCATION__URI:
-			setUri((String) newValue);
-			return;
-		case IRepositoryPackage.LOCATION__HIDDEN:
-			setHidden((Boolean) newValue);
-			return;
+			case IRepositoryPackage.LOCATION__LOCATION:
+				setLocation((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(final int featureID) {
+	public void eUnset(int featureID) {
 		switch (featureID) {
-		case IRepositoryPackage.LOCATION__URI:
-			setUri(URI_EDEFAULT);
-			return;
-		case IRepositoryPackage.LOCATION__HIDDEN:
-			setHidden(HIDDEN_EDEFAULT);
-			return;
+			case IRepositoryPackage.LOCATION__LOCATION:
+				setLocation(LOCATION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(final int featureID) {
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case IRepositoryPackage.LOCATION__URI:
-			return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT.equals(uri);
-		case IRepositoryPackage.LOCATION__HIDDEN:
-			return hidden != HIDDEN_EDEFAULT;
+			case IRepositoryPackage.LOCATION__LOCATION:
+				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (uri: ");
-		result.append(uri);
-		result.append(", hidden: ");
-		result.append(hidden);
+		result.append(" (location: ");
+		result.append(location);
 		result.append(')');
 		return result.toString();
 	}
@@ -229,10 +164,10 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 */
 	@Override
 	public IResource getIResource() {
-		String uri = getUri();
+		String location = getLocation();
 		// FIXME use uri resolvers for that purpose
-		if (uri.startsWith("workspace://")) {
-			Path path = new Path(uri.substring(12));
+		if (location.startsWith("workspace://")) {
+			Path path = new Path(location.substring(12));
 
 			// try for a file
 			IResource resource;
@@ -270,7 +205,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	public File getFile() {
 		File file;
 		try {
-			file = new File(URI.create(getUri()));
+			file = new File(getURI());
 			return file.exists() ? file : null;
 		} catch (IllegalArgumentException e) {
 			// cannot resolve URI to a file
@@ -306,11 +241,17 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 
 		// try for generic URI
 		try {
-			return new URL(getUri()).openStream();
+
+			return getURI().toURL().openStream();
 		} catch (MalformedURLException e) {
-			throw new RuntimeException("Invalid URI " + getUri());
+			throw new RuntimeException("Invalid URI " + getURI());
 		} catch (IOException e) {
-			throw new RuntimeException("Could not read from URI " + getUri());
+			throw new RuntimeException("Could not read from URI " + getURI());
 		}
+	}
+
+	@Override
+	public URI getURI() {
+		return URI.create(getLocation());
 	}
 } // LocationImpl

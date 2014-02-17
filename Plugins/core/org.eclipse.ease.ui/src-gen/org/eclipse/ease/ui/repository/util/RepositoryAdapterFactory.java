@@ -2,9 +2,9 @@
  */
 package org.eclipse.ease.ui.repository.util;
 
+import java.util.Map;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.ILocation;
-import org.eclipse.ease.ui.repository.IParameter;
 import org.eclipse.ease.ui.repository.IRepository;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
 import org.eclipse.ease.ui.repository.IScript;
@@ -74,10 +74,6 @@ public class RepositoryAdapterFactory extends AdapterFactoryImpl {
 				return createScriptAdapter();
 			}
 			@Override
-			public Adapter caseParameter(IParameter object) {
-				return createParameterAdapter();
-			}
-			@Override
 			public Adapter caseLocation(ILocation object) {
 				return createLocationAdapter();
 			}
@@ -88,6 +84,10 @@ public class RepositoryAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseEntry(IEntry object) {
 				return createEntryAdapter();
+			}
+			@Override
+			public Adapter caseParameterMap(Map.Entry<String, String> object) {
+				return createParameterMapAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -120,20 +120,6 @@ public class RepositoryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createScriptAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ease.ui.repository.IParameter <em>Parameter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ease.ui.repository.IParameter
-	 * @generated
-	 */
-	public Adapter createParameterAdapter() {
 		return null;
 	}
 
@@ -176,6 +162,20 @@ public class RepositoryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createEntryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Parameter Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createParameterMapAdapter() {
 		return null;
 	}
 

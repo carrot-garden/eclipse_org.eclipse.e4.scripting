@@ -68,7 +68,7 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 	 * @param element
 	 *            element to be stored within path
 	 */
-	protected void registerElement(IPath path, Object element) {
+	public void registerElement(IPath path, Object element) {
 		registerPath(path);
 
 		fElements.get(path).add(element);

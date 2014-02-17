@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -39,6 +41,7 @@ public class RepositoryService implements IRepositoryService {
 
 	// TODO find a nice delay value here
 	private static final long DEFAULT_DELAY = 600; // 1 minute
+	public static final long UPDATE_STREAM_INTERVAL = 0;
 
 	public static RepositoryService getInstance() {
 		if (fInstance == null)
@@ -72,6 +75,7 @@ public class RepositoryService implements IRepositoryService {
 	};
 
 	private final ListenerList fListeners = new ListenerList();
+	private final UIIntegration fUiIntegration;
 
 	private RepositoryService() {
 		RepositoryFactoryImpl.init();
@@ -92,29 +96,41 @@ public class RepositoryService implements IRepositoryService {
 			}
 		}
 
-		fUpdateJob = new UpdateJob(this);
+		// create repository if empty
+		long updateDelay = 0;
 		if (fRepository == null) {
 			// create an empty repository to start with
 			fRepository = IRepositoryFactory.eINSTANCE.createRepository();
 
 			// add default location for stored scripts
 			IEntry entry = IRepositoryFactory.eINSTANCE.createEntry();
-			entry.setUri(ScriptStorage.createStorage().getLocation());
+			entry.setLocation(ScriptStorage.createStorage().getLocation());
 			entry.setRecursive(true);
 			entry.setHidden(true);
 			fRepository.getEntries().add(entry);
 
-			// update repository immediately
-			fUpdateJob.schedule();
-
 		} else {
 			// wait for the workspace to be loaded before updating, we have cached data anyway
-			fUpdateJob.schedule(DEFAULT_DELAY);
+			updateDelay = DEFAULT_DELAY;
 		}
+
+		// apply UI integrations
+		fUiIntegration = new UIIntegration(this);
+		System.out.println("RepositoryService() -> scheduling UI");
+		fUiIntegration.schedule();
+
+		// update repository
+		fUpdateJob = new UpdateJob(this);
+		fUpdateJob.schedule(updateDelay);
 	}
 
 	@Override
-	public void update() {
+	public void update(boolean force) {
+		if (force) {
+			for (IScript script : getScripts())
+				script.setTimestamp(0);
+		}
+
 		fUpdateJob.scheduleUpdate(0);
 	}
 
@@ -132,17 +148,6 @@ public class RepositoryService implements IRepositoryService {
 		return null;
 	}
 
-	public void addScript(final IScript script) {
-		script.setUpdatePending(false);
-
-		if (!getRepository().getScripts().contains(script)) {
-			getRepository().getScripts().add(script);
-			notifyListeners(new IScript[] { script });
-		}
-
-		save();
-	}
-
 	/**
 	 * Trigger delayed save action. Store the repository to disk after a given delay.
 	 */
@@ -151,9 +156,9 @@ public class RepositoryService implements IRepositoryService {
 		fSaveJob.schedule(5000);
 	}
 
-	private void notifyListeners(final IScript[] scripts) {
+	private void notifyListeners(final ScriptRepositoryEvent scriptRepositoryEvent) {
 		for (Object listener : fListeners.getListeners())
-			((IScriptListener) listener).notify(scripts);
+			((IScriptListener) listener).notify(scriptRepositoryEvent);
 	}
 
 	@Override
@@ -179,6 +184,7 @@ public class RepositoryService implements IRepositoryService {
 	@Override
 	public void removeLocation(final IEntry entry) {
 		fRepository.getEntries().remove(entry);
+		// TODO use better interval
 		fUpdateJob.scheduleUpdate(1000);
 		save();
 	}
@@ -186,13 +192,62 @@ public class RepositoryService implements IRepositoryService {
 	@Override
 	public void addLocation(final IEntry entry) {
 		fRepository.getEntries().add(entry);
+		// TODO use better interval
 		fUpdateJob.scheduleUpdate(1000);
 		save();
 	}
 
-	public void removeScript(final IScript script) {
+	void removeScript(final IScript script) {
 		fRepository.getScripts().remove(script);
-		notifyListeners(new IScript[] {});
-		save();
+		notifyListeners(new ScriptRepositoryEvent(script, ScriptRepositoryEvent.DELETE, null));
 	}
+
+	void updateScript(IScript script, Map<String, String> parameters) {
+		// TODO update listeners (only if parameters changed)
+
+		// store current parameters
+		Map<String, String> oldParameters = script.getParameters();
+
+		script.getScriptParameters().clear();
+		script.getScriptParameters().putAll(parameters);
+
+		// get new parameters
+		Map<String, String> newParameters = script.getParameters();
+
+		// now look for changes
+
+		// first find removed parameters
+		HashSet<String> deletedKeys = new HashSet<String>(oldParameters.keySet());
+		deletedKeys.removeAll(newParameters.keySet());
+
+		// now remove parameters that were not changed
+		for (String key : oldParameters.keySet()) {
+			if (oldParameters.get(key).equals(newParameters.get(key)))
+				newParameters.remove(key);
+		}
+
+		// re-add deleted keys with value set to null
+		for (String key : deletedKeys)
+			newParameters.put(key, null);
+
+		if (!newParameters.isEmpty()) {
+			// some parameters changed
+			notifyListeners(new ScriptRepositoryEvent(script, ScriptRepositoryEvent.PARAMETER_CHANGE, newParameters));
+		}
+
+		script.setUpdatePending(false);
+
+		System.out.println("RepositoryService.updateScript() -> scheduling UI");
+		fUiIntegration.schedule();
+	}
+
+	void addScript(final IScript script) {
+		script.setUpdatePending(false);
+
+		if (!getRepository().getScripts().contains(script)) {
+			getRepository().getScripts().add(script);
+			notifyListeners(new ScriptRepositoryEvent(script, ScriptRepositoryEvent.ADD, null));
+		}
+	}
+
 }

@@ -64,25 +64,16 @@ public interface IRepositoryPackage extends EPackage {
 	 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getLocation()
 	 * @generated
 	 */
-	int LOCATION = 2;
+	int LOCATION = 1;
 
 	/**
-	 * The feature id for the '<em><b>Uri</b></em>' attribute.
+	 * The feature id for the '<em><b>Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION__URI = 0;
-
-	/**
-	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOCATION__HIDDEN = 1;
+	int LOCATION__LOCATION = 0;
 
 	/**
 	 * The number of structural features of the '<em>Location</em>' class.
@@ -91,7 +82,7 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION_FEATURE_COUNT = 2;
+	int LOCATION_FEATURE_COUNT = 1;
 
 	/**
 	 * The number of operations of the '<em>Location</em>' class.
@@ -113,31 +104,13 @@ public interface IRepositoryPackage extends EPackage {
 	int SCRIPT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Uri</b></em>' attribute.
+	 * The feature id for the '<em><b>Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPT__URI = LOCATION__URI;
-
-	/**
-	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCRIPT__HIDDEN = LOCATION__HIDDEN;
-
-	/**
-	 * The feature id for the '<em><b>Parameter</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCRIPT__PARAMETER = LOCATION_FEATURE_COUNT + 0;
+	int SCRIPT__LOCATION = LOCATION__LOCATION;
 
 	/**
 	 * The feature id for the '<em><b>Timestamp</b></em>' attribute.
@@ -146,7 +119,7 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPT__TIMESTAMP = LOCATION_FEATURE_COUNT + 1;
+	int SCRIPT__TIMESTAMP = LOCATION_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Entry</b></em>' reference.
@@ -155,16 +128,7 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPT__ENTRY = LOCATION_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Full Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCRIPT__FULL_NAME = LOCATION_FEATURE_COUNT + 3;
+	int SCRIPT__ENTRY = LOCATION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Update Pending</b></em>' attribute.
@@ -173,7 +137,25 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPT__UPDATE_PENDING = LOCATION_FEATURE_COUNT + 4;
+	int SCRIPT__UPDATE_PENDING = LOCATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Script Parameters</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT__SCRIPT_PARAMETERS = LOCATION_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>User Parameters</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT__USER_PARAMETERS = LOCATION_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Script</em>' class.
@@ -194,61 +176,6 @@ public interface IRepositoryPackage extends EPackage {
 	int SCRIPT_OPERATION_COUNT = LOCATION_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ease.ui.repository.impl.ParameterImpl <em>Parameter</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ease.ui.repository.impl.ParameterImpl
-	 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getParameter()
-	 * @generated
-	 */
-	int PARAMETER = 1;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER__VALUE = 1;
-
-	/**
-	 * The feature id for the '<em><b>Script Origin</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER__SCRIPT_ORIGIN = 2;
-
-	/**
-	 * The number of structural features of the '<em>Parameter</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Parameter</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ease.ui.repository.impl.RepositoryImpl <em>Repository</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -256,7 +183,7 @@ public interface IRepositoryPackage extends EPackage {
 	 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getRepository()
 	 * @generated
 	 */
-	int REPOSITORY = 3;
+	int REPOSITORY = 2;
 
 	/**
 	 * The feature id for the '<em><b>Entries</b></em>' containment reference list.
@@ -302,34 +229,16 @@ public interface IRepositoryPackage extends EPackage {
 	 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getEntry()
 	 * @generated
 	 */
-	int ENTRY = 4;
+	int ENTRY = 3;
 
 	/**
-	 * The feature id for the '<em><b>Uri</b></em>' attribute.
+	 * The feature id for the '<em><b>Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENTRY__URI = LOCATION__URI;
-
-	/**
-	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENTRY__HIDDEN = LOCATION__HIDDEN;
-
-	/**
-	 * The feature id for the '<em><b>Timestamp</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENTRY__TIMESTAMP = LOCATION_FEATURE_COUNT + 0;
+	int ENTRY__LOCATION = LOCATION__LOCATION;
 
 	/**
 	 * The feature id for the '<em><b>Recursive</b></em>' attribute.
@@ -338,7 +247,16 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ENTRY__RECURSIVE = LOCATION_FEATURE_COUNT + 1;
+	int ENTRY__RECURSIVE = LOCATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY__HIDDEN = LOCATION_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Entry</em>' class.
@@ -360,6 +278,53 @@ public interface IRepositoryPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ease.ui.repository.impl.ParameterMapImpl <em>Parameter Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ease.ui.repository.impl.ParameterMapImpl
+	 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getParameterMap()
+	 * @generated
+	 */
+	int PARAMETER_MAP = 4;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Parameter Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Parameter Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_MAP_OPERATION_COUNT = 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ease.ui.repository.IScript <em>Script</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -368,17 +333,6 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getScript();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ease.ui.repository.IScript#getParameter <em>Parameter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Parameter</em>'.
-	 * @see org.eclipse.ease.ui.repository.IScript#getParameter()
-	 * @see #getScript()
-	 * @generated
-	 */
-	EReference getScript_Parameter();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IScript#getTimestamp <em>Timestamp</em>}'.
@@ -403,17 +357,6 @@ public interface IRepositoryPackage extends EPackage {
 	EReference getScript_Entry();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IScript#getFullName <em>Full Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Full Name</em>'.
-	 * @see org.eclipse.ease.ui.repository.IScript#getFullName()
-	 * @see #getScript()
-	 * @generated
-	 */
-	EAttribute getScript_FullName();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IScript#isUpdatePending <em>Update Pending</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -425,47 +368,26 @@ public interface IRepositoryPackage extends EPackage {
 	EAttribute getScript_UpdatePending();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ease.ui.repository.IParameter <em>Parameter</em>}'.
+	 * Returns the meta object for the map '{@link org.eclipse.ease.ui.repository.IScript#getScriptParameters <em>Script Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Parameter</em>'.
-	 * @see org.eclipse.ease.ui.repository.IParameter
+	 * @return the meta object for the map '<em>Script Parameters</em>'.
+	 * @see org.eclipse.ease.ui.repository.IScript#getScriptParameters()
+	 * @see #getScript()
 	 * @generated
 	 */
-	EClass getParameter();
+	EReference getScript_ScriptParameters();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IParameter#getKey <em>Key</em>}'.
+	 * Returns the meta object for the map '{@link org.eclipse.ease.ui.repository.IScript#getUserParameters <em>User Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Key</em>'.
-	 * @see org.eclipse.ease.ui.repository.IParameter#getKey()
-	 * @see #getParameter()
+	 * @return the meta object for the map '<em>User Parameters</em>'.
+	 * @see org.eclipse.ease.ui.repository.IScript#getUserParameters()
+	 * @see #getScript()
 	 * @generated
 	 */
-	EAttribute getParameter_Key();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IParameter#getValue <em>Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see org.eclipse.ease.ui.repository.IParameter#getValue()
-	 * @see #getParameter()
-	 * @generated
-	 */
-	EAttribute getParameter_Value();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IParameter#isScriptOrigin <em>Script Origin</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Script Origin</em>'.
-	 * @see org.eclipse.ease.ui.repository.IParameter#isScriptOrigin()
-	 * @see #getParameter()
-	 * @generated
-	 */
-	EAttribute getParameter_ScriptOrigin();
+	EReference getScript_UserParameters();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ease.ui.repository.ILocation <em>Location</em>}'.
@@ -478,26 +400,15 @@ public interface IRepositoryPackage extends EPackage {
 	EClass getLocation();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.ILocation#getUri <em>Uri</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.ILocation#getLocation <em>Location</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Uri</em>'.
-	 * @see org.eclipse.ease.ui.repository.ILocation#getUri()
+	 * @return the meta object for the attribute '<em>Location</em>'.
+	 * @see org.eclipse.ease.ui.repository.ILocation#getLocation()
 	 * @see #getLocation()
 	 * @generated
 	 */
-	EAttribute getLocation_Uri();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.ILocation#isHidden <em>Hidden</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Hidden</em>'.
-	 * @see org.eclipse.ease.ui.repository.ILocation#isHidden()
-	 * @see #getLocation()
-	 * @generated
-	 */
-	EAttribute getLocation_Hidden();
+	EAttribute getLocation_Location();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ease.ui.repository.IRepository <em>Repository</em>}'.
@@ -542,17 +453,6 @@ public interface IRepositoryPackage extends EPackage {
 	EClass getEntry();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IEntry#getTimestamp <em>Timestamp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Timestamp</em>'.
-	 * @see org.eclipse.ease.ui.repository.IEntry#getTimestamp()
-	 * @see #getEntry()
-	 * @generated
-	 */
-	EAttribute getEntry_Timestamp();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IEntry#isRecursive <em>Recursive</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -562,6 +462,51 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEntry_Recursive();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IEntry#isHidden <em>Hidden</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Hidden</em>'.
+	 * @see org.eclipse.ease.ui.repository.IEntry#isHidden()
+	 * @see #getEntry()
+	 * @generated
+	 */
+	EAttribute getEntry_Hidden();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Parameter Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Parameter Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString" keyRequired="true"
+	 *        valueDataType="org.eclipse.emf.ecore.EString" valueRequired="true"
+	 * @generated
+	 */
+	EClass getParameterMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getParameterMap()
+	 * @generated
+	 */
+	EAttribute getParameterMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getParameterMap()
+	 * @generated
+	 */
+	EAttribute getParameterMap_Value();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -597,14 +542,6 @@ public interface IRepositoryPackage extends EPackage {
 		EClass SCRIPT = eINSTANCE.getScript();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameter</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SCRIPT__PARAMETER = eINSTANCE.getScript_Parameter();
-
-		/**
 		 * The meta object literal for the '<em><b>Timestamp</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -621,14 +558,6 @@ public interface IRepositoryPackage extends EPackage {
 		EReference SCRIPT__ENTRY = eINSTANCE.getScript_Entry();
 
 		/**
-		 * The meta object literal for the '<em><b>Full Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SCRIPT__FULL_NAME = eINSTANCE.getScript_FullName();
-
-		/**
 		 * The meta object literal for the '<em><b>Update Pending</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -637,38 +566,20 @@ public interface IRepositoryPackage extends EPackage {
 		EAttribute SCRIPT__UPDATE_PENDING = eINSTANCE.getScript_UpdatePending();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.ParameterImpl <em>Parameter</em>}' class.
+		 * The meta object literal for the '<em><b>Script Parameters</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ease.ui.repository.impl.ParameterImpl
-		 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getParameter()
 		 * @generated
 		 */
-		EClass PARAMETER = eINSTANCE.getParameter();
+		EReference SCRIPT__SCRIPT_PARAMETERS = eINSTANCE.getScript_ScriptParameters();
 
 		/**
-		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>User Parameters</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PARAMETER__KEY = eINSTANCE.getParameter_Key();
-
-		/**
-		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PARAMETER__VALUE = eINSTANCE.getParameter_Value();
-
-		/**
-		 * The meta object literal for the '<em><b>Script Origin</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PARAMETER__SCRIPT_ORIGIN = eINSTANCE.getParameter_ScriptOrigin();
+		EReference SCRIPT__USER_PARAMETERS = eINSTANCE.getScript_UserParameters();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.LocationImpl <em>Location</em>}' class.
@@ -681,20 +592,12 @@ public interface IRepositoryPackage extends EPackage {
 		EClass LOCATION = eINSTANCE.getLocation();
 
 		/**
-		 * The meta object literal for the '<em><b>Uri</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute LOCATION__URI = eINSTANCE.getLocation_Uri();
-
-		/**
-		 * The meta object literal for the '<em><b>Hidden</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LOCATION__HIDDEN = eINSTANCE.getLocation_Hidden();
+		EAttribute LOCATION__LOCATION = eINSTANCE.getLocation_Location();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.RepositoryImpl <em>Repository</em>}' class.
@@ -733,20 +636,46 @@ public interface IRepositoryPackage extends EPackage {
 		EClass ENTRY = eINSTANCE.getEntry();
 
 		/**
-		 * The meta object literal for the '<em><b>Timestamp</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ENTRY__TIMESTAMP = eINSTANCE.getEntry_Timestamp();
-
-		/**
 		 * The meta object literal for the '<em><b>Recursive</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute ENTRY__RECURSIVE = eINSTANCE.getEntry_Recursive();
+
+		/**
+		 * The meta object literal for the '<em><b>Hidden</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENTRY__HIDDEN = eINSTANCE.getEntry_Hidden();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.ParameterMapImpl <em>Parameter Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ease.ui.repository.impl.ParameterMapImpl
+		 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getParameterMap()
+		 * @generated
+		 */
+		EClass PARAMETER_MAP = eINSTANCE.getParameterMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER_MAP__KEY = eINSTANCE.getParameterMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER_MAP__VALUE = eINSTANCE.getParameterMap_Value();
 
 	}
 

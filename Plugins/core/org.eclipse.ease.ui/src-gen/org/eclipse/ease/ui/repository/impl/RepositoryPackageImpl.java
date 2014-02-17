@@ -2,9 +2,9 @@
  */
 package org.eclipse.ease.ui.repository.impl;
 
+import java.util.Map;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.ILocation;
-import org.eclipse.ease.ui.repository.IParameter;
 import org.eclipse.ease.ui.repository.IRepository;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
@@ -34,13 +34,6 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass parameterEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass locationEClass = null;
 
 	/**
@@ -56,6 +49,13 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * @generated
 	 */
 	private EClass entryEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass parameterMapEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -132,17 +132,8 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getScript_Parameter() {
-		return (EReference)scriptEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getScript_Timestamp() {
-		return (EAttribute)scriptEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)scriptEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -151,16 +142,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * @generated
 	 */
 	public EReference getScript_Entry() {
-		return (EReference)scriptEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getScript_FullName() {
-		return (EAttribute)scriptEClass.getEStructuralFeatures().get(3);
+		return (EReference)scriptEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -169,7 +151,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * @generated
 	 */
 	public EAttribute getScript_UpdatePending() {
-		return (EAttribute)scriptEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)scriptEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -177,8 +159,8 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getParameter() {
-		return parameterEClass;
+	public EReference getScript_ScriptParameters() {
+		return (EReference)scriptEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -186,26 +168,8 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameter_Key() {
-		return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getParameter_Value() {
-		return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getParameter_ScriptOrigin() {
-		return (EAttribute)parameterEClass.getEStructuralFeatures().get(2);
+	public EReference getScript_UserParameters() {
+		return (EReference)scriptEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -222,17 +186,8 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getLocation_Uri() {
+	public EAttribute getLocation_Location() {
 		return (EAttribute)locationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getLocation_Hidden() {
-		return (EAttribute)locationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -276,7 +231,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getEntry_Timestamp() {
+	public EAttribute getEntry_Recursive() {
 		return (EAttribute)entryEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -285,8 +240,35 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getEntry_Recursive() {
+	public EAttribute getEntry_Hidden() {
 		return (EAttribute)entryEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getParameterMap() {
+		return parameterMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterMap_Key() {
+		return (EAttribute)parameterMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterMap_Value() {
+		return (EAttribute)parameterMapEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -318,28 +300,26 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		// Create classes and their features
 		scriptEClass = createEClass(SCRIPT);
-		createEReference(scriptEClass, SCRIPT__PARAMETER);
 		createEAttribute(scriptEClass, SCRIPT__TIMESTAMP);
 		createEReference(scriptEClass, SCRIPT__ENTRY);
-		createEAttribute(scriptEClass, SCRIPT__FULL_NAME);
 		createEAttribute(scriptEClass, SCRIPT__UPDATE_PENDING);
-
-		parameterEClass = createEClass(PARAMETER);
-		createEAttribute(parameterEClass, PARAMETER__KEY);
-		createEAttribute(parameterEClass, PARAMETER__VALUE);
-		createEAttribute(parameterEClass, PARAMETER__SCRIPT_ORIGIN);
+		createEReference(scriptEClass, SCRIPT__SCRIPT_PARAMETERS);
+		createEReference(scriptEClass, SCRIPT__USER_PARAMETERS);
 
 		locationEClass = createEClass(LOCATION);
-		createEAttribute(locationEClass, LOCATION__URI);
-		createEAttribute(locationEClass, LOCATION__HIDDEN);
+		createEAttribute(locationEClass, LOCATION__LOCATION);
 
 		repositoryEClass = createEClass(REPOSITORY);
 		createEReference(repositoryEClass, REPOSITORY__ENTRIES);
 		createEReference(repositoryEClass, REPOSITORY__SCRIPTS);
 
 		entryEClass = createEClass(ENTRY);
-		createEAttribute(entryEClass, ENTRY__TIMESTAMP);
 		createEAttribute(entryEClass, ENTRY__RECURSIVE);
+		createEAttribute(entryEClass, ENTRY__HIDDEN);
+
+		parameterMapEClass = createEClass(PARAMETER_MAP);
+		createEAttribute(parameterMapEClass, PARAMETER_MAP__KEY);
+		createEAttribute(parameterMapEClass, PARAMETER_MAP__VALUE);
 	}
 
 	/**
@@ -375,28 +355,26 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(scriptEClass, IScript.class, "Script", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getScript_Parameter(), this.getParameter(), null, "parameter", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScript_Timestamp(), ecorePackage.getELong(), "timestamp", "-1", 1, 1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScript_Entry(), this.getEntry(), null, "entry", null, 1, 1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getScript_FullName(), ecorePackage.getEString(), "fullName", null, 1, 1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScript_UpdatePending(), ecorePackage.getEBoolean(), "updatePending", "false", 1, 1, IScript.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(parameterEClass, IParameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getParameter_Key(), ecorePackage.getEString(), "key", null, 1, 1, IParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_Value(), ecorePackage.getEString(), "value", null, 1, 1, IParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_ScriptOrigin(), ecorePackage.getEBoolean(), "scriptOrigin", "true", 1, 1, IParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getScript_ScriptParameters(), this.getParameterMap(), null, "scriptParameters", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getScript_UserParameters(), this.getParameterMap(), null, "userParameters", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(locationEClass, ILocation.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLocation_Uri(), ecorePackage.getEString(), "uri", null, 1, 1, ILocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLocation_Hidden(), ecorePackage.getEBoolean(), "hidden", "false", 1, 1, ILocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLocation_Location(), ecorePackage.getEString(), "location", null, 1, 1, ILocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(repositoryEClass, IRepository.class, "Repository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRepository_Entries(), this.getEntry(), null, "entries", null, 0, -1, IRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRepository_Scripts(), this.getScript(), null, "scripts", null, 0, -1, IRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(entryEClass, IEntry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEntry_Timestamp(), ecorePackage.getELong(), "timestamp", "-1", 1, 1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEntry_Recursive(), ecorePackage.getEBoolean(), "recursive", "false", 1, 1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEntry_Hidden(), ecorePackage.getEBoolean(), "hidden", "false", 1, 1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(parameterMapEClass, Map.Entry.class, "ParameterMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getParameterMap_Key(), ecorePackage.getEString(), "key", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterMap_Value(), ecorePackage.getEString(), "value", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

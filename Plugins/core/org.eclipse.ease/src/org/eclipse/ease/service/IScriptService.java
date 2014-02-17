@@ -106,4 +106,13 @@ public interface IScriptService {
 	 * @return script type associated with content type
 	 */
 	ScriptType getScriptType(IContentType contentType);
+
+	/**
+	 * Get the script type for a given file extension.
+	 * 
+	 * @param fileExtension
+	 *            file extension to look for
+	 * @return script type associated with file extension
+	 */
+	ScriptType getScriptType(String fileExtension);
 }

@@ -2,7 +2,8 @@
  */
 package org.eclipse.ease.ui.repository.impl;
 
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -14,16 +15,16 @@ import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.ui.repository.IEntry;
-import org.eclipse.ease.ui.repository.IParameter;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ui.PlatformUI;
 
@@ -32,26 +33,17 @@ import org.eclipse.ui.PlatformUI;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getTimestamp <em>Timestamp</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getEntry <em>Entry</em>}</li>
- *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getFullName <em>Full Name</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#isUpdatePending <em>Update Pending</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getScriptParameters <em>Script Parameters</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getUserParameters <em>User Parameters</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class ScriptImpl extends LocationImpl implements IScript {
-	/**
-	 * The cached value of the '{@link #getParameter() <em>Parameter</em>}' containment reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getParameter()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IParameter> parameter;
-
 	/**
 	 * The default value of the '{@link #getTimestamp() <em>Timestamp</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -80,27 +72,8 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	protected IEntry entry;
 
 	/**
-	 * The default value of the '{@link #getFullName() <em>Full Name</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getFullName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String FULL_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getFullName() <em>Full Name</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getFullName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String fullName = FULL_NAME_EDEFAULT;
-
-	/**
 	 * The default value of the '{@link #isUpdatePending() <em>Update Pending</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isUpdatePending()
 	 * @generated
 	 * @ordered
@@ -109,13 +82,30 @@ public class ScriptImpl extends LocationImpl implements IScript {
 
 	/**
 	 * The cached value of the '{@link #isUpdatePending() <em>Update Pending</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isUpdatePending()
 	 * @generated
 	 * @ordered
 	 */
 	protected boolean updatePending = UPDATE_PENDING_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getScriptParameters() <em>Script Parameters</em>}' map.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #getScriptParameters()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> scriptParameters;
+
+	/**
+	 * The cached value of the '{@link #getUserParameters() <em>User Parameters</em>}' map.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #getUserParameters()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> userParameters;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -132,18 +122,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	@Override
 	protected EClass eStaticClass() {
 		return IRepositoryPackage.Literals.SCRIPT;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<IParameter> getParameter() {
-		if (parameter == null) {
-			parameter = new EObjectContainmentEList<IParameter>(IParameter.class, this, IRepositoryPackage.SCRIPT__PARAMETER);
-		}
-		return parameter;
 	}
 
 	/**
@@ -209,8 +187,8 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	 * @generated
 	 */
 	@Override
-	public String getFullName() {
-		return fullName;
+	public boolean isUpdatePending() {
+		return updatePending;
 	}
 
 	/**
@@ -218,27 +196,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	 * @generated
 	 */
 	@Override
-	public void setFullName(String newFullName) {
-		String oldFullName = fullName;
-		fullName = newFullName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.SCRIPT__FULL_NAME, oldFullName, fullName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isUpdatePending() {
-		return updatePending;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public void setUpdatePending(boolean newUpdatePending) {
 		boolean oldUpdatePending = updatePending;
 		updatePending = newUpdatePending;
@@ -251,10 +208,36 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	 * @generated
 	 */
 	@Override
+	public EMap<String, String> getScriptParameters() {
+		if (scriptParameters == null) {
+			scriptParameters = new EcoreEMap<String,String>(IRepositoryPackage.Literals.PARAMETER_MAP, ParameterMapImpl.class, this, IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS);
+		}
+		return scriptParameters;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EMap<String, String> getUserParameters() {
+		if (userParameters == null) {
+			userParameters = new EcoreEMap<String,String>(IRepositoryPackage.Literals.PARAMETER_MAP, ParameterMapImpl.class, this, IRepositoryPackage.SCRIPT__USER_PARAMETERS);
+		}
+		return userParameters;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case IRepositoryPackage.SCRIPT__PARAMETER:
-				return ((InternalEList<?>)getParameter()).basicRemove(otherEnd, msgs);
+			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
+				return ((InternalEList<?>)getScriptParameters()).basicRemove(otherEnd, msgs);
+			case IRepositoryPackage.SCRIPT__USER_PARAMETERS:
+				return ((InternalEList<?>)getUserParameters()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -266,17 +249,19 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case IRepositoryPackage.SCRIPT__PARAMETER:
-				return getParameter();
 			case IRepositoryPackage.SCRIPT__TIMESTAMP:
 				return getTimestamp();
 			case IRepositoryPackage.SCRIPT__ENTRY:
 				if (resolve) return getEntry();
 				return basicGetEntry();
-			case IRepositoryPackage.SCRIPT__FULL_NAME:
-				return getFullName();
 			case IRepositoryPackage.SCRIPT__UPDATE_PENDING:
 				return isUpdatePending();
+			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
+				if (coreType) return getScriptParameters();
+				else return getScriptParameters().map();
+			case IRepositoryPackage.SCRIPT__USER_PARAMETERS:
+				if (coreType) return getUserParameters();
+				else return getUserParameters().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -289,21 +274,20 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case IRepositoryPackage.SCRIPT__PARAMETER:
-				getParameter().clear();
-				getParameter().addAll((Collection<? extends IParameter>)newValue);
-				return;
 			case IRepositoryPackage.SCRIPT__TIMESTAMP:
 				setTimestamp((Long)newValue);
 				return;
 			case IRepositoryPackage.SCRIPT__ENTRY:
 				setEntry((IEntry)newValue);
 				return;
-			case IRepositoryPackage.SCRIPT__FULL_NAME:
-				setFullName((String)newValue);
-				return;
 			case IRepositoryPackage.SCRIPT__UPDATE_PENDING:
 				setUpdatePending((Boolean)newValue);
+				return;
+			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
+				((EStructuralFeature.Setting)getScriptParameters()).set(newValue);
+				return;
+			case IRepositoryPackage.SCRIPT__USER_PARAMETERS:
+				((EStructuralFeature.Setting)getUserParameters()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -316,20 +300,20 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case IRepositoryPackage.SCRIPT__PARAMETER:
-				getParameter().clear();
-				return;
 			case IRepositoryPackage.SCRIPT__TIMESTAMP:
 				setTimestamp(TIMESTAMP_EDEFAULT);
 				return;
 			case IRepositoryPackage.SCRIPT__ENTRY:
 				setEntry((IEntry)null);
 				return;
-			case IRepositoryPackage.SCRIPT__FULL_NAME:
-				setFullName(FULL_NAME_EDEFAULT);
-				return;
 			case IRepositoryPackage.SCRIPT__UPDATE_PENDING:
 				setUpdatePending(UPDATE_PENDING_EDEFAULT);
+				return;
+			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
+				getScriptParameters().clear();
+				return;
+			case IRepositoryPackage.SCRIPT__USER_PARAMETERS:
+				getUserParameters().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -342,16 +326,16 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case IRepositoryPackage.SCRIPT__PARAMETER:
-				return parameter != null && !parameter.isEmpty();
 			case IRepositoryPackage.SCRIPT__TIMESTAMP:
 				return timestamp != TIMESTAMP_EDEFAULT;
 			case IRepositoryPackage.SCRIPT__ENTRY:
 				return entry != null;
-			case IRepositoryPackage.SCRIPT__FULL_NAME:
-				return FULL_NAME_EDEFAULT == null ? fullName != null : !FULL_NAME_EDEFAULT.equals(fullName);
 			case IRepositoryPackage.SCRIPT__UPDATE_PENDING:
 				return updatePending != UPDATE_PENDING_EDEFAULT;
+			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
+				return scriptParameters != null && !scriptParameters.isEmpty();
+			case IRepositoryPackage.SCRIPT__USER_PARAMETERS:
+				return userParameters != null && !userParameters.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -367,8 +351,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (timestamp: ");
 		result.append(timestamp);
-		result.append(", fullName: ");
-		result.append(fullName);
 		result.append(", updatePending: ");
 		result.append(updatePending);
 		result.append(')');
@@ -379,13 +361,12 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	 * @generated NOT
 	 */
 	@Override
-	public IParameter getParameter(String name) {
-		for (IParameter parameter : getParameter()) {
-			if (parameter.getKey().equals(name))
-				return parameter;
-		}
+	public String getFullName() {
+		String name = getParameters().get("name");
+		if (name != null)
+			return name;
 
-		return null;
+		return new Path(getLocation().substring(getEntry().getLocation().length())).makeRelative().toString();
 	}
 
 	/**
@@ -404,6 +385,9 @@ public class ScriptImpl extends LocationImpl implements IScript {
 		return new Path(getFullName()).removeLastSegments(1);
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	@Override
 	public void run() {
 		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
@@ -411,9 +395,9 @@ public class ScriptImpl extends LocationImpl implements IScript {
 		IScriptEngine engine = null;
 
 		// content type as provided in metadata
-		IParameter parameter = getParameter("Content-type");
-		if (parameter != null)
-			engine = scriptService.createEngine(parameter.getValue());
+		String scriptType = getParameters().get("script-type");
+		if (scriptType != null)
+			engine = scriptService.createEngine(scriptType);
 
 		// content type from file
 		if (engine == null) {
@@ -426,6 +410,9 @@ public class ScriptImpl extends LocationImpl implements IScript {
 					// could not read content description
 				}
 			}
+
+			// TODO get content type from extension
+			// TODO get content type from raw file data
 		}
 
 		// try to execute
@@ -442,4 +429,17 @@ public class ScriptImpl extends LocationImpl implements IScript {
 			Logger.logError("Could not detect script engine for " + this);
 	}
 
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	public Map<String, String> getParameters() {
+		// first merge script parameters
+		Map<String, String> parameters = new HashMap<String, String>(getScriptParameters().map());
+
+		// now apply user parameters, as they have higher priority
+		parameters.putAll(getUserParameters().map());
+
+		return parameters;
+	}
 } // ScriptImpl

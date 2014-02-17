@@ -39,7 +39,7 @@ public abstract class ScriptStorage {
 				// trigger repository update
 				// TODO trigger update on changed location only
 				final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);
-				repositoryService.update();
+				repositoryService.update(false);
 
 				return true;
 			}

@@ -17,7 +17,7 @@ public interface IRepositoryService {
 	/**
 	 * Trigger an immediate refresh of all script sources and contained scripts.
 	 */
-	void update();
+	void update(boolean force);
 
 	Collection<IScript> getScripts();
 
@@ -34,9 +34,9 @@ public interface IRepositoryService {
 	 */
 	IScript getScript(String name);
 
-	Collection<IEntry> getLocations();
+	void addLocation(IEntry entry);
 
 	void removeLocation(IEntry entry);
 
-	void addLocation(IEntry entry);
+	Collection<IEntry> getLocations();
 }

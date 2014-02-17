@@ -10,8 +10,8 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.repository.IEntry;
+import org.eclipse.ease.ui.repository.ILocation;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
-import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -158,7 +158,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 						@Override
 						public String getText(final Object element) {
 							if (element instanceof IEntry)
-								return ((IEntry) element).getUri();
+								return ((IEntry) element).getLocation();
 
 							return super.getText(element);
 						}
@@ -184,8 +184,8 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 				tableViewer.setComparator(new ViewerComparator() {
 					@Override
 					public int compare(final Viewer viewer, final Object e1, final Object e2) {
-						if ((e1 instanceof IScript) && (e2 instanceof IScript))
-							return (((IScript) e1).getUri()).compareTo(((IScript) e2).getUri());
+						if ((e1 instanceof ILocation) && (e2 instanceof ILocation))
+							return (((ILocation) e1).getLocation()).compareTo(((ILocation) e2).getLocation());
 
 						return super.compare(viewer, e1, e2);
 					}
@@ -295,9 +295,9 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 		return container;
 	}
 
-	private void addEntry(final String uri, final boolean hidden) {
+	private void addEntry(final String location, final boolean hidden) {
 		IEntry entry = IRepositoryFactory.eINSTANCE.createEntry();
-		entry.setUri(uri);
+		entry.setLocation(location);
 		entry.setRecursive(true);
 		entry.setHidden(hidden);
 

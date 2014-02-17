@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ease.ui.scripts.ui;
 
+import java.util.Map;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineProvider;
@@ -17,10 +19,10 @@ import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.ease.ui.scripts.repository.IScriptListener;
+import org.eclipse.ease.ui.scripts.repository.impl.ScriptRepositoryEvent;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.IElementComparer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -149,18 +151,6 @@ public class ScriptComposite extends Composite implements IScriptListener {
 	}
 
 	@Override
-	public void notify(IScript[] scripts) {
-		// FIXME needs some performance improvements on multiple script updates
-		Display.getDefault().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				treeViewer.refresh();
-			}
-		});
-	}
-
-	@Override
 	public void dispose() {
 		final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);
 		repositoryService.removeScriptListener(this);
@@ -176,5 +166,30 @@ public class ScriptComposite extends Composite implements IScriptListener {
 
 		if ((fDoubleClickListener != null) && (treeViewer != null))
 			treeViewer.addDoubleClickListener(fDoubleClickListener);
+	}
+
+	@Override
+	public void notify(ScriptRepositoryEvent event) {
+		switch (event.getType()) {
+		case ScriptRepositoryEvent.PARAMETER_CHANGE:
+			Map<String, String> eventData = (Map<String, String>) event.getEventData();
+			if (!eventData.containsKey("name"))
+				return;
+
+			// name changed, fall through
+
+		case ScriptRepositoryEvent.DELETE:
+			// fall through
+
+		case ScriptRepositoryEvent.ADD:
+			// FIXME needs some performance improvements on multiple script updates
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					treeViewer.refresh();
+				}
+			});
+		}
 	}
 }

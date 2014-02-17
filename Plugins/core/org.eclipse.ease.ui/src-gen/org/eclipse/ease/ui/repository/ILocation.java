@@ -4,6 +4,7 @@ package org.eclipse.ease.ui.repository;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.URI;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EObject;
@@ -14,8 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.ease.ui.repository.ILocation#getUri <em>Uri</em>}</li>
- *   <li>{@link org.eclipse.ease.ui.repository.ILocation#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.ILocation#getLocation <em>Location</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,55 +25,29 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ILocation extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Uri</b></em>' attribute.
+	 * Returns the value of the '<em><b>Location</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Uri</em>' attribute isn't clear, there really should be more of a description here...
+	 * If the meaning of the '<em>Location</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Uri</em>' attribute.
-	 * @see #setUri(String)
-	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getLocation_Uri()
+	 * @return the value of the '<em>Location</em>' attribute.
+	 * @see #setLocation(String)
+	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getLocation_Location()
 	 * @model required="true"
 	 * @generated
 	 */
-	String getUri();
+	String getLocation();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ease.ui.repository.ILocation#getUri <em>Uri</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Uri</em>' attribute.
-	 * @see #getUri()
+	 * Sets the value of the '{@link org.eclipse.ease.ui.repository.ILocation#getLocation <em>Location</em>}' attribute.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @param value the new value of the '<em>Location</em>' attribute.
+	 * @see #getLocation()
 	 * @generated
 	 */
-	void setUri(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Hidden</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Hidden</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Hidden</em>' attribute.
-	 * @see #setHidden(boolean)
-	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getLocation_Hidden()
-	 * @model default="false" required="true"
-	 * @generated
-	 */
-	boolean isHidden();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ease.ui.repository.ILocation#isHidden <em>Hidden</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Hidden</em>' attribute.
-	 * @see #isHidden()
-	 * @generated
-	 */
-	void setHidden(boolean value);
+	void setLocation(String value);
 
 	/**
 	 * @generated NOT
@@ -89,4 +63,9 @@ public interface ILocation extends EObject {
 	 * @generated NOT
 	 */
 	InputStream getInputStream();
+
+	/**
+	 * @generated NOT
+	 */
+	URI getURI();
 } // ILocation

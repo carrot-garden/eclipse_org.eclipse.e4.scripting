@@ -2,9 +2,9 @@
  */
 package org.eclipse.ease.ui.repository.util;
 
+import java.util.Map;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.ILocation;
-import org.eclipse.ease.ui.repository.IParameter;
 import org.eclipse.ease.ui.repository.IRepository;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
 import org.eclipse.ease.ui.repository.IScript;
@@ -76,12 +76,6 @@ public class RepositorySwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IRepositoryPackage.PARAMETER: {
-				IParameter parameter = (IParameter)theEObject;
-				T result = caseParameter(parameter);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case IRepositoryPackage.LOCATION: {
 				ILocation location = (ILocation)theEObject;
 				T result = caseLocation(location);
@@ -101,6 +95,12 @@ public class RepositorySwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case IRepositoryPackage.PARAMETER_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, String> parameterMap = (Map.Entry<String, String>)theEObject;
+				T result = caseParameterMap(parameterMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -117,21 +117,6 @@ public class RepositorySwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseScript(IScript object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Parameter</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Parameter</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseParameter(IParameter object) {
 		return null;
 	}
 
@@ -177,6 +162,21 @@ public class RepositorySwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseEntry(IEntry object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Parameter Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Parameter Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseParameterMap(Map.Entry<String, String> object) {
 		return null;
 	}
 

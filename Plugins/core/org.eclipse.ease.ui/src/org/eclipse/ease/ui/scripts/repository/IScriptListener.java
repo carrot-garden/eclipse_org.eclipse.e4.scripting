@@ -1,7 +1,7 @@
 package org.eclipse.ease.ui.scripts.repository;
 
-import org.eclipse.ease.ui.repository.IScript;
+import org.eclipse.ease.ui.scripts.repository.impl.ScriptRepositoryEvent;
 
 public interface IScriptListener {
-	void notify(IScript[] scripts);
+	void notify(ScriptRepositoryEvent event);
 }
