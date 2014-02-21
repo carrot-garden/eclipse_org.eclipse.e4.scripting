@@ -209,7 +209,7 @@
          </command>
          <command
                commandId="org.eclipse.ease.commands.scriptShell.reset"
-               icon="platform:/plugin/org.eclipse.equinox.p2.ui/icons/obj/iu_update_obj.gif"
+               icon="images/reset.gif"
                label="Reset"
                style="push"
                tooltip="Reset Script Engine">
