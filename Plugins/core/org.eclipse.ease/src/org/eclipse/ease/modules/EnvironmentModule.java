@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ExitException;
 import org.eclipse.ease.IScriptEngine;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
@@ -149,9 +150,17 @@ public class EnvironmentModule extends AbstractEnvironment {
 		if (!reload) {
 			Field[] declaredFields = instance.getClass().getDeclaredFields();
 			for (Field field : declaredFields) {
-				if (Modifier.isStatic(field.getModifiers())) {
-					if (field.getAnnotation(WrapToScript.class) != null)
-						scriptCode.append(getWrapper().getConstantDefinition(field.getName().toUpperCase(), field));
+				try {
+					if ((Modifier.isStatic(field.getModifiers())) && (Modifier.isPublic(field.getModifiers()))) {
+						if (field.getAnnotation(WrapToScript.class) != null)
+							// do not generate code here as this would require the module to be exported in manifest.mf
+							getScriptEngine().setVariable(getWrapper().getSaveVariableName(field.getName()), field.get(instance));
+					}
+				} catch (IllegalArgumentException e) {
+					Logger.logError("Could not wrap field \"" + field.getName() + " \" of module \"" + instance.getClass() + "\"");
+				} catch (IllegalAccessException e) {
+					// should not happen as field is public. But in case just ignore this field and continue with the next one
+					Logger.logError("Could not wrap field \"" + field.getName() + " \" of module \"" + instance.getClass() + "\"");
 				}
 			}
 		}
