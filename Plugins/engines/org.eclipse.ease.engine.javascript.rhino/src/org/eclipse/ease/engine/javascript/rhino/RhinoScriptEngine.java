@@ -119,6 +119,8 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 		for (final String name : mBufferedVariables.keySet())
 			setVariable(name, mBufferedVariables.get(name));
 
+		mBufferedVariables.clear();
+
 		// enable script termination support
 		mContext.setGenerateObserverCount(true);
 		mContext.setInstructionObserverThreshold(10);

@@ -435,7 +435,7 @@
                <with
                      variable="selection">
                   <test
-                        property="org.eclipse.ease.hasEngine">
+                        property="org.eclipse.ease.ui.hasEngine">
                   </test>
                </with>
             </enablement>
@@ -456,7 +456,7 @@
                <with
                      variable="selection">
                   <test
-                        property="org.eclipse.ease.hasDebugEngine">
+                        property="org.eclipse.ease.ui.hasDebugEngine">
                   </test>
                </with>
             </enablement>
@@ -487,5 +487,15 @@
                mode="run">
          </launchMode>
       </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.ease.ui.propertytester.EngineTester"
+            id="org.eclipse.ease.scripting"
+            namespace="org.eclipse.ease.ui"
+            properties="hasEngine,hasDebugEngine"
+            type="java.lang.Object">
+      </propertyTester>
    </extension>
 </plugin>

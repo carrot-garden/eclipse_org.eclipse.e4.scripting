@@ -1,4 +1,4 @@
-package org.eclipse.ease.propertytesters;
+package org.eclipse.ease.ui.propertytester;
 
 import java.util.Collection;
 
@@ -7,6 +7,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.ease.ResourceTools;
 import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.ScriptType;
+import org.eclipse.ui.part.FileEditorInput;
 
 public class EngineTester extends PropertyTester {
 
@@ -21,6 +22,9 @@ public class EngineTester extends PropertyTester {
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		if (receiver instanceof Collection)
 			receiver = ((Collection) receiver).iterator().next();
+
+		if (receiver instanceof FileEditorInput)
+			receiver = ((FileEditorInput) receiver).getFile();
 
 		if (receiver instanceof IFile) {
 			ScriptType scriptType = ResourceTools.getScriptType((IFile) receiver);
