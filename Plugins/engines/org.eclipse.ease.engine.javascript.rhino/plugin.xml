@@ -21,16 +21,6 @@
             engineID="org.eclipse.ease.javascript.rhino">
       </launchExtension>
    </extension>
-   <extension
-         point="org.eclipse.ease.storedscript.metadata">
-      <parser
-            id="JavaScriptMetadaHeaderParser"
-            parser_class="org.eclipse.ease.engine.javascript.rhino.JavascriptHeaderParser">
-         <script_type
-               type="JavaScript">
-         </script_type>
-      </parser>
-   </extension>
 
 </plugin>
 

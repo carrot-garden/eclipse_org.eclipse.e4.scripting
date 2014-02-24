@@ -1,60 +1,50 @@
-/*******************************************************************************
- * Copyright (c) 2013 Atos
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Arthur Daussy - initial implementation
- *******************************************************************************/
 package org.eclipse.ease.lang.python;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import org.eclipse.core.runtime.CoreException;
+import org.eclipse.ease.AbstractHeaderParser;
 import org.eclipse.ease.Logger;
-import org.eclipse.ease.storedscript.metada.AbstractFileHeaderParser;
-import org.eclipse.ease.storedscript.storedscript.IStoredScript;
 
+public class PythonHeaderParser extends AbstractHeaderParser {
 
-/**
- * Header parser for python language
- * 
- * @author adaussy
- * 
- */
-public class PythonHeaderParser extends AbstractFileHeaderParser {
-
-	private Pattern commentPattern = Pattern.compile("^\\s*#(.*)", Pattern.MULTILINE);
-
-	protected Pattern getPattern() {
-		return commentPattern;
-	}
+	private static final String LINE_COMMENT = "#";
 
 	@Override
-	public String getHeader(IStoredScript storeScript) throws CoreException {
-		String content;
+	protected String getComment(InputStream stream) {
+		StringBuilder comment = new StringBuilder();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+
+		boolean isComment = true;
 		try {
-			content = storeScript.getContent();
-			if(content != null) {
-				StringBuilder headerBuilder = new StringBuilder();
-				Matcher matcher = getPattern().matcher(content);
-				while(matcher.find()) {
-					headerBuilder.append(matcher.group(1)).append("\n");
+			do {
+				String line = reader.readLine();
+				if (line == null)
+					break;
+
+				line = line.trim();
+
+				if (line.isEmpty())
+					continue;
+
+				if (line.startsWith(LINE_COMMENT)) {
+					comment.append(line.substring(LINE_COMMENT.length()).trim());
+					comment.append("\n");
+					continue;
 				}
-				return headerBuilder.toString();
-			}
+
+				// not a comment line, not empty
+				isComment = false;
+
+			} while (isComment);
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new CoreException(Logger.createErrorStatus(e.getMessage(), "org.eclipse.ease.lang.python"));
+			Logger.logError("Could not parse input stream header", e);
+			return "";
 		}
-		return null;
+
+		return comment.toString();
 	}
-
-
-
-
 }
