@@ -83,9 +83,6 @@
 			../../Plugins/engines/org.eclipse.ease.engine.javascript.rhino
 		</module>
 		<module>
-			../../Plugins/engines/org.eclipse.ease.engine.javascript.rhino.ui
-		</module>
-		<module>
 			../../Plugins/engines/org.eclipse.ease.lang.javascript.examples
 		</module>
 		<module>
