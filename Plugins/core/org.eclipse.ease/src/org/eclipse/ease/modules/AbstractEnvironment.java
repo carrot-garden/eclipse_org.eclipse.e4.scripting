@@ -89,10 +89,11 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 	 *            module class to look resolve
 	 * @return resolved module instance or <code>null</code>
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public final <T extends Object, U extends Class<T>> T getModule(final U clazz) {
+	public <T extends Object, U extends Class<T>> T getModule(final U clazz) {
 		for (final Object module : getModules()) {
-			if (module.getClass().equals(clazz))
+			if (clazz.isAssignableFrom(module.getClass()))
 				return (T) module;
 		}
 
