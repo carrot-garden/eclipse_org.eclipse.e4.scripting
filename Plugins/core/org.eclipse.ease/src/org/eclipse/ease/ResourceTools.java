@@ -12,6 +12,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.content.IContentDescription;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.urlhandler.WorkspaceURLConnection;
@@ -56,6 +57,22 @@ public final class ResourceTools {
 		return null;
 	}
 
+	public static Object getContent(String uri) {
+		IResource resource = getResource(uri);
+		if (resource != null)
+			return resource;
+
+		File file = getFile(uri);
+		if (file != null)
+			return file;
+
+		InputStream inputStream = getInputStream(uri);
+		if (inputStream != null)
+			return inputStream;
+
+		return null;
+	}
+
 	public static boolean exists(String uri) {
 		IResource resource = getResource(uri);
 		if (resource != null)
@@ -85,7 +102,10 @@ public final class ResourceTools {
 		// resolve by content type
 		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
 		try {
-			return scriptService.getScriptType(file.getContentDescription().getContentType());
+			IContentDescription contentDescription = file.getContentDescription();
+			if (contentDescription != null)
+				return scriptService.getScriptType(contentDescription.getContentType());
+
 		} catch (CoreException e) {
 		}
 

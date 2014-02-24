@@ -7,14 +7,12 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.content.IContentDescription;
 import org.eclipse.ease.Logger;
-import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ease.ResourceTools;
 import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
 import org.eclipse.ease.ui.repository.IScript;
-import org.eclipse.ui.PlatformUI;
 
 public class WorkspaceParser extends InputStreamParser {
 
@@ -50,23 +48,26 @@ public class WorkspaceParser extends InputStreamParser {
 
 			try {
 				if (script == null) {
-					// new script detected
-					script = IRepositoryFactory.eINSTANCE.createScript();
-					script.setEntry(entry);
-					script.setLocation(location);
 
-					ScriptType scriptType = getScriptType((IFile) resource);
-					Map<String, String> parameters = extractParameters(scriptType, ((IFile) resource).getContents());
-					script.getScriptParameters().clear();
-					script.getScriptParameters().putAll(parameters);
+					ScriptType scriptType = ResourceTools.getScriptType((IFile) resource);
+					if (scriptType != null) {
+						// new script detected
+						script = IRepositoryFactory.eINSTANCE.createScript();
+						script.setEntry(entry);
+						script.setLocation(location);
 
-					script.setTimestamp(resource.getModificationStamp());
+						Map<String, String> parameters = extractParameters(scriptType, ((IFile) resource).getContents());
+						script.getScriptParameters().clear();
+						script.getScriptParameters().putAll(parameters);
 
-					getRepositoryService().addScript(script);
+						script.setTimestamp(resource.getModificationStamp());
+
+						getRepositoryService().addScript(script);
+					}
 
 				} else if (script.getTimestamp() != resource.getModificationStamp()) {
 					// script needs updating
-					ScriptType scriptType = getScriptType((IFile) resource);
+					ScriptType scriptType = ResourceTools.getScriptType((IFile) resource);
 					Map<String, String> parameters = extractParameters(scriptType, ((IFile) resource).getContents());
 
 					script.setTimestamp(resource.getModificationStamp());
@@ -82,22 +83,5 @@ public class WorkspaceParser extends InputStreamParser {
 				Logger.logError("Cannot read script: " + resource, e);
 			}
 		}
-	}
-
-	private ScriptType getScriptType(IFile file) throws CoreException {
-		try {
-			IContentDescription contentDescription = file.getContentDescription();
-			if (contentDescription != null) {
-				final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-				ScriptType scriptType = scriptService.getScriptType(contentDescription.getContentType());
-				if (scriptType != null)
-					return scriptType;
-			}
-		} catch (CoreException e) {
-			// cannot retrieve content description
-		}
-
-		// we could not get the script type from the content type, try parsing the file itself
-		return getScriptType(file.getContents());
 	}
 }

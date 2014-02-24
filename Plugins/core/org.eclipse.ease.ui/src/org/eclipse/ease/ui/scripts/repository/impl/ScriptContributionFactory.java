@@ -44,7 +44,7 @@ public class ScriptContributionFactory extends AbstractContributionFactory {
 			contributionParameter.label = script.getName();
 			contributionParameter.visibleEnabled = true;
 			contributionParameter.parameters = new HashMap<String, String>();
-			contributionParameter.parameters.put(RunScript.PARAMETER_NAME, script.getFullName());
+			contributionParameter.parameters.put(RunScript.PARAMETER_NAME, script.getPath().toString());
 
 			items.add(new CommandContributionItem(contributionParameter) {
 				@Override

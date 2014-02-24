@@ -71,4 +71,9 @@ public class JavaScriptHeaderParser extends AbstractHeaderParser {
 
 		return comment.toString();
 	}
+
+	@Override
+	protected String getLineCommentToken() {
+		return LINE_COMMENT;
+	}
 }

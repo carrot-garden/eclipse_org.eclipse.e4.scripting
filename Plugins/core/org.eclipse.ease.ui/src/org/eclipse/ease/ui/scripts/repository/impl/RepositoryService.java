@@ -40,7 +40,7 @@ public class RepositoryService implements IRepositoryService {
 	private static final String CACHE_FILE_NAME = "script.repository";
 
 	// TODO find a nice delay value here
-	private static final long DEFAULT_DELAY = 600; // 1 minute
+	private static final long DEFAULT_DELAY = 0; // 1 minute
 	public static final long UPDATE_STREAM_INTERVAL = 0;
 
 	public static RepositoryService getInstance() {
@@ -140,7 +140,7 @@ public class RepositoryService implements IRepositoryService {
 	@Override
 	public IScript getScript(final String name) {
 		for (IScript script : getRepository().getScripts()) {
-			if (name.equals(script.getFullName()))
+			if (name.equals(script.getPath().toString()))
 				return script;
 		}
 

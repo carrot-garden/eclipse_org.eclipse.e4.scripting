@@ -14,7 +14,7 @@ public class ScriptContentProvider extends AbstractVirtualTreeProvider {
 			Collection<IScript> scripts = new HashSet<IScript>(((IRepositoryService) inputElement).getScripts());
 
 			for (IScript script : scripts)
-				registerElement(script.getPath(), script);
+				registerElement(script.getPath().removeLastSegments(1), script);
 		}
 	}
 }

@@ -69,6 +69,7 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 	 *            element to be stored within path
 	 */
 	public void registerElement(IPath path, Object element) {
+		path = path.makeRelative();
 		registerPath(path);
 
 		fElements.get(path).add(element);
@@ -80,7 +81,8 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 	 * @param path
 	 *            path to be visible
 	 */
-	protected void registerPath(IPath path) {
+	public void registerPath(IPath path) {
+		path = path.makeRelative();
 		if (!fElements.containsKey(path)) {
 			fElements.put(path, new HashSet<Object>());
 

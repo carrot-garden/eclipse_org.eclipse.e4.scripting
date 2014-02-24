@@ -38,5 +38,33 @@ public abstract class AbstractHeaderParser implements IHeaderParser {
 		return parameters;
 	}
 
+	@Override
+	public String createHeader(Map<String, String> headerContent) {
+		StringBuilder builder = new StringBuilder();
+
+		builder.append(getLineCommentToken());
+		builder.append(' ');
+		builder.append("********************************************************************************\n");
+
+		for (String key : headerContent.keySet()) {
+			StringBuilder lineBuilder = new StringBuilder();
+
+			lineBuilder.append(getLineCommentToken()).append(" ").append(key);
+			while (lineBuilder.length() < 25)
+				lineBuilder.append(' ');
+
+			lineBuilder.append(": ").append(headerContent.get(key)).append("\n");
+			builder.append(lineBuilder);
+		}
+
+		builder.append(getLineCommentToken());
+		builder.append(' ');
+		builder.append("********************************************************************************\n");
+
+		return builder.toString();
+	}
+
+	protected abstract String getLineCommentToken();
+
 	protected abstract String getComment(InputStream stream);
 }

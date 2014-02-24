@@ -26,7 +26,6 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
@@ -55,7 +54,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 			if ((element instanceof IScript) && (fEngineProvider != null)) {
 				final IScriptEngine scriptEngine = fEngineProvider.getScriptEngine();
 				if (scriptEngine != null)
-					scriptEngine.executeAsync("include('script://" + ((IScript) element).getFullName() + "');");
+					scriptEngine.executeAsync("include('script:/" + ((IScript) element).getPath() + "');");
 			}
 		}
 	};
@@ -113,10 +112,11 @@ public class ScriptComposite extends Composite implements IScriptListener {
 				return (element instanceof IPath) ? 0 : 1;
 			}
 
-			@Override
-			public int compare(Viewer viewer, Object e1, Object e2) {
-				return e1.toString().compareTo(e2.toString());
-			}
+			// @Override
+			// public int compare(Viewer viewer, Object e1, Object e2) {
+			// super.compare(viewer, e1, e2)
+			// return e1.toString().compareTo(e2.toString());
+			// }
 		});
 
 		final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);

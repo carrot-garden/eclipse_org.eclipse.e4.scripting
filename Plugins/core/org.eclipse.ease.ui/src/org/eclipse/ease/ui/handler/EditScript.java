@@ -1,11 +1,12 @@
 package org.eclipse.ease.ui.handler;
 
+import java.io.File;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.jface.viewers.ISelection;
@@ -24,15 +25,17 @@ public class EditScript extends AbstractHandler implements IHandler {
 		if (selection instanceof IStructuredSelection) {
 			for (Object element : ((IStructuredSelection) selection).toList()) {
 				if (element instanceof IScript) {
-					IResource file = ((IScript) element).getIResource();
-					if ((file instanceof IFile) && (file.exists())) {
+					Object content = ((IScript) element).getContent();
+					if ((content instanceof IFile) && (((IFile) content).exists())) {
 						// open editor
 						IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 						try {
-							IDE.openEditor(page, (IFile) file);
+							IDE.openEditor(page, (IFile) content);
 						} catch (PartInitException e) {
-							Logger.logError("Could not open editor for file " + file);
+							Logger.logError("Could not open editor for file " + content);
 						}
+					} else if ((content instanceof File) && (((File) content).exists())) {
+						// TODO open editor for external file
 					}
 				}
 			}

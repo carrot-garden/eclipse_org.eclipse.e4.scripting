@@ -109,7 +109,7 @@ public final class ShellDropTarget extends DropTargetAdapter {
 			mScriptEngineProvider.getScriptEngine().executeAsync("include('workspace:/" + ((IResource) element).getFullPath().toString() + "');");
 
 		else if (element instanceof IScript)
-			mScriptEngineProvider.getScriptEngine().executeAsync("include('script://" + ((IScript) element).getFullName() + "');");
+			mScriptEngineProvider.getScriptEngine().executeAsync("include('script:/" + ((IScript) element).getPath() + "');");
 
 		else
 			mScriptEngineProvider.getScriptEngine().executeAsync(element);

@@ -14,9 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.ease.ui.scripts.ui.AbstractVirtualTreeProvider;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.swt.graphics.Image;
 
+/**
+ * @deprecated use {@link AbstractVirtualTreeProvider}
+ */
+@Deprecated
 public class AdvancedTreeNode<T> implements Comparable<Object> {
 
 	private final String mName;

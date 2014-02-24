@@ -1,6 +1,7 @@
 package org.eclipse.ease.ui.scripts.repository.impl;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,28 +59,19 @@ public class UpdateJob extends Job implements IResourceChangeListener
 		// update locations
 		for (IEntry entry : entries) {
 
-			// check for workspace resources
-			IResource resource = entry.getIResource();
-			if (resource != null) {
+			Object content = entry.getContent();
+			if ((content instanceof IResource) && (((IResource) content).exists())) {
 				// this is a valid workspace resource
-				new WorkspaceParser(fRepositoryService).parse(resource, entry);
+				new WorkspaceParser(fRepositoryService).parse((IResource) content, entry);
 				ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_CHANGE);
 
-			} else {
-				// check for file system resource
-				File file = entry.getFile();
-				if (file != null) {
-					// this is a valid file system resource
-					new FilesystemParser(fRepositoryService).parse(file, entry);
+			} else if ((content instanceof File) && (((File) content).exists())) {
+				// this is a valid file system resource
+				new FilesystemParser(fRepositoryService).parse((File) content, entry);
 
-				} else {
-					// // check for stream
-					// InputStream stream = entry.getInputStream();
-					// if (stream != null) {
-					// new InputStreamParser(fRepositoryService).parse(stream, entry);
-					// entry.setTimestamp(System.currentTimeMillis());
-					// }
-				}
+			} else if (content instanceof InputStream) {
+				// new InputStreamParser(fRepositoryService).parse(stream, entry);
+				// entry.setTimestamp(System.currentTimeMillis());
 			}
 		}
 

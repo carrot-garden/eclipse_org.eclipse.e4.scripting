@@ -12,12 +12,15 @@ package org.eclipse.ease.ui.handler;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.IExecutionListener;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineProvider;
@@ -83,8 +86,18 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 
 							String name = dialog.getValue() + "." + scriptType.getDefaultExtension();
 
-							// TODO write script header
+							// write script header
+							Map<String, String> header = new HashMap<String, String>();
+							header.put("name", new Path(dialog.getValue()).makeRelative().toString());
+							header.put("description", "Script recorded by user.");
+							header.put("script-type", scriptType.getName());
+							header.put("author", System.getProperty("user.name"));
+							header.put("date-recorded", new SimpleDateFormat("yyyy-MM-dd, HH:mm").format(new Date()));
 
+							buffer.insert(0, "\n");
+							buffer.insert(0, scriptType.getHeaderParser().createHeader(header));
+
+							// store script
 							if (!storage.store(name, buffer.toString()))
 								// could not store script
 								MessageDialog.openError(HandlerUtil.getActiveShell(event), "Save error", "Could not store script data");

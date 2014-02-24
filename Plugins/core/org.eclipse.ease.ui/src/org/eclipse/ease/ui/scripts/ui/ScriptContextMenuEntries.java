@@ -49,7 +49,7 @@ public class ScriptContextMenuEntries extends AbstractContributionFactory {
 				final StringBuffer names = new StringBuffer();
 				for (final Object object : ((IStructuredSelection) selection).toArray()) {
 					if (object instanceof IScript)
-						names.append(((IScript) object).getFullName()).append(';');
+						names.append(((IScript) object).getPath()).append(';');
 				}
 
 				if (names.length() > 0) {
