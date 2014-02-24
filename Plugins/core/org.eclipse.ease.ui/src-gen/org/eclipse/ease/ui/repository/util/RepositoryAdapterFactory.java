@@ -3,14 +3,14 @@
 package org.eclipse.ease.ui.repository.util;
 
 import java.util.Map;
-import org.eclipse.ease.ui.repository.IEntry;
-import org.eclipse.ease.ui.repository.ILocation;
-import org.eclipse.ease.ui.repository.IRepository;
-import org.eclipse.ease.ui.repository.IRepositoryPackage;
-import org.eclipse.ease.ui.repository.IScript;
+
+import org.eclipse.ease.ui.repository.*;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**

@@ -8,10 +8,6 @@ package org.eclipse.ease.ui.repository;
  * A representation of the model object '<em><b>Entry</b></em>'.
  * <!-- end-user-doc -->
  *
- * <!-- begin-model-doc -->
- * Entry pointing to a script location.
- * <!-- end-model-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
@@ -29,10 +25,11 @@ public interface IEntry extends ILocation {
 	 * Returns the value of the '<em><b>Recursive</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Recursive</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Flag indicating to parse this entry recursively.
-	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Recursive</em>' attribute.
 	 * @see #setRecursive(boolean)
 	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getEntry_Recursive()

@@ -3,7 +3,6 @@
 package org.eclipse.ease.ui.repository;
 
 import java.util.Map;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.EMap;
 
@@ -135,27 +134,29 @@ public interface IScript extends ILocation {
 	EMap<String, String> getUserParameters();
 
 	/**
-	 * @generated NOT
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @model
+	 * @generated
 	 */
-	Map<String, String> getParameters();
+	void run();
 
 	/**
-	 * @generated NOT
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * @generated NOT
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @model kind="operation" dataType="org.eclipse.ease.ui.repository.Path"
+	 * @generated
 	 */
 	IPath getPath();
 
 	/**
 	 * @generated NOT
 	 */
-	void run();
+	Map<String, String> getParameters();
 
-	/**
-	 * @generated NOT
-	 */
-	String getFullName();
 } // IScript

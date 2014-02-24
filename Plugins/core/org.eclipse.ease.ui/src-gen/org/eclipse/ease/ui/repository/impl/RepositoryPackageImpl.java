@@ -2,17 +2,24 @@
  */
 package org.eclipse.ease.ui.repository.impl;
 
+import java.io.InputStream;
 import java.util.Map;
+
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.ILocation;
 import org.eclipse.ease.ui.repository.IRepository;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
 import org.eclipse.ease.ui.repository.IScript;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -56,6 +63,20 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * @generated
 	 */
 	private EClass parameterMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType pathEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType inputStreamEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -177,6 +198,33 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getScript__Run() {
+		return scriptEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getScript__GetName() {
+		return scriptEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getScript__GetPath() {
+		return scriptEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getLocation() {
 		return locationEClass;
 	}
@@ -188,6 +236,24 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 */
 	public EAttribute getLocation_Location() {
 		return (EAttribute)locationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLocation__GetContent() {
+		return locationEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLocation__GetInputStream() {
+		return locationEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -276,6 +342,24 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getPath() {
+		return pathEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getInputStream() {
+		return inputStreamEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public IRepositoryFactory getRepositoryFactory() {
 		return (IRepositoryFactory)getEFactoryInstance();
 	}
@@ -305,9 +389,14 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 		createEAttribute(scriptEClass, SCRIPT__UPDATE_PENDING);
 		createEReference(scriptEClass, SCRIPT__SCRIPT_PARAMETERS);
 		createEReference(scriptEClass, SCRIPT__USER_PARAMETERS);
+		createEOperation(scriptEClass, SCRIPT___RUN);
+		createEOperation(scriptEClass, SCRIPT___GET_NAME);
+		createEOperation(scriptEClass, SCRIPT___GET_PATH);
 
 		locationEClass = createEClass(LOCATION);
 		createEAttribute(locationEClass, LOCATION__LOCATION);
+		createEOperation(locationEClass, LOCATION___GET_CONTENT);
+		createEOperation(locationEClass, LOCATION___GET_INPUT_STREAM);
 
 		repositoryEClass = createEClass(REPOSITORY);
 		createEReference(repositoryEClass, REPOSITORY__ENTRIES);
@@ -320,6 +409,10 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 		parameterMapEClass = createEClass(PARAMETER_MAP);
 		createEAttribute(parameterMapEClass, PARAMETER_MAP__KEY);
 		createEAttribute(parameterMapEClass, PARAMETER_MAP__VALUE);
+
+		// Create data types
+		pathEDataType = createEDataType(PATH);
+		inputStreamEDataType = createEDataType(INPUT_STREAM);
 	}
 
 	/**
@@ -361,8 +454,18 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 		initEReference(getScript_ScriptParameters(), this.getParameterMap(), null, "scriptParameters", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScript_UserParameters(), this.getParameterMap(), null, "userParameters", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEOperation(getScript__Run(), null, "run", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getScript__GetName(), ecorePackage.getEString(), "getName", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getScript__GetPath(), this.getPath(), "getPath", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(locationEClass, ILocation.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLocation_Location(), ecorePackage.getEString(), "location", null, 1, 1, ILocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLocation_Location(), ecorePackage.getEString(), "location", null, 1, 1, ILocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getLocation__GetContent(), ecorePackage.getEJavaObject(), "getContent", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getLocation__GetInputStream(), this.getInputStream(), "getInputStream", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(repositoryEClass, IRepository.class, "Repository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRepository_Entries(), this.getEntry(), null, "entries", null, 0, -1, IRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -375,6 +478,10 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 		initEClass(parameterMapEClass, Map.Entry.class, "ParameterMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterMap_Key(), ecorePackage.getEString(), "key", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterMap_Value(), ecorePackage.getEString(), "value", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize data types
+		initEDataType(pathEDataType, IPath.class, "Path", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(inputStreamEDataType, InputStream.class, "InputStream", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -3,9 +3,13 @@
 package org.eclipse.ease.ui.repository.util;
 
 import java.util.Map;
+
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
+
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.resource.Resource;
+
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 
 /**

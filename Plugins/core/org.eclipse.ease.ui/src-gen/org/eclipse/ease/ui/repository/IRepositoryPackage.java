@@ -4,6 +4,8 @@ package org.eclipse.ease.ui.repository;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -85,13 +87,31 @@ public interface IRepositoryPackage extends EPackage {
 	int LOCATION_FEATURE_COUNT = 1;
 
 	/**
+	 * The operation id for the '<em>Get Content</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCATION___GET_CONTENT = 0;
+
+	/**
+	 * The operation id for the '<em>Get Input Stream</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCATION___GET_INPUT_STREAM = 1;
+
+	/**
 	 * The number of operations of the '<em>Location</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION_OPERATION_COUNT = 0;
+	int LOCATION_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ease.ui.repository.impl.ScriptImpl <em>Script</em>}' class.
@@ -167,13 +187,58 @@ public interface IRepositoryPackage extends EPackage {
 	int SCRIPT_FEATURE_COUNT = LOCATION_FEATURE_COUNT + 5;
 
 	/**
+	 * The operation id for the '<em>Get Content</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT___GET_CONTENT = LOCATION___GET_CONTENT;
+
+	/**
+	 * The operation id for the '<em>Get Input Stream</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT___GET_INPUT_STREAM = LOCATION___GET_INPUT_STREAM;
+
+	/**
+	 * The operation id for the '<em>Run</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT___RUN = LOCATION_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT___GET_NAME = LOCATION_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Path</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT___GET_PATH = LOCATION_OPERATION_COUNT + 2;
+
+	/**
 	 * The number of operations of the '<em>Script</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPT_OPERATION_COUNT = LOCATION_OPERATION_COUNT + 0;
+	int SCRIPT_OPERATION_COUNT = LOCATION_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ease.ui.repository.impl.RepositoryImpl <em>Repository</em>}' class.
@@ -268,6 +333,24 @@ public interface IRepositoryPackage extends EPackage {
 	int ENTRY_FEATURE_COUNT = LOCATION_FEATURE_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Get Content</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY___GET_CONTENT = LOCATION___GET_CONTENT;
+
+	/**
+	 * The operation id for the '<em>Get Input Stream</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY___GET_INPUT_STREAM = LOCATION___GET_INPUT_STREAM;
+
+	/**
 	 * The number of operations of the '<em>Entry</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -275,7 +358,6 @@ public interface IRepositoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int ENTRY_OPERATION_COUNT = LOCATION_OPERATION_COUNT + 0;
-
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ease.ui.repository.impl.ParameterMapImpl <em>Parameter Map</em>}' class.
@@ -322,6 +404,28 @@ public interface IRepositoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETER_MAP_OPERATION_COUNT = 0;
+
+
+	/**
+	 * The meta object id for the '<em>Path</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.core.runtime.IPath
+	 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getPath()
+	 * @generated
+	 */
+	int PATH = 5;
+
+
+	/**
+	 * The meta object id for the '<em>Input Stream</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.io.InputStream
+	 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getInputStream()
+	 * @generated
+	 */
+	int INPUT_STREAM = 6;
 
 
 	/**
@@ -390,6 +494,36 @@ public interface IRepositoryPackage extends EPackage {
 	EReference getScript_UserParameters();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ease.ui.repository.IScript#run() <em>Run</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Run</em>' operation.
+	 * @see org.eclipse.ease.ui.repository.IScript#run()
+	 * @generated
+	 */
+	EOperation getScript__Run();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ease.ui.repository.IScript#getName() <em>Get Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Name</em>' operation.
+	 * @see org.eclipse.ease.ui.repository.IScript#getName()
+	 * @generated
+	 */
+	EOperation getScript__GetName();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ease.ui.repository.IScript#getPath() <em>Get Path</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Path</em>' operation.
+	 * @see org.eclipse.ease.ui.repository.IScript#getPath()
+	 * @generated
+	 */
+	EOperation getScript__GetPath();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ease.ui.repository.ILocation <em>Location</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -409,6 +543,26 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getLocation_Location();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ease.ui.repository.ILocation#getContent() <em>Get Content</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Content</em>' operation.
+	 * @see org.eclipse.ease.ui.repository.ILocation#getContent()
+	 * @generated
+	 */
+	EOperation getLocation__GetContent();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ease.ui.repository.ILocation#getInputStream() <em>Get Input Stream</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Input Stream</em>' operation.
+	 * @see org.eclipse.ease.ui.repository.ILocation#getInputStream()
+	 * @generated
+	 */
+	EOperation getLocation__GetInputStream();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ease.ui.repository.IRepository <em>Repository</em>}'.
@@ -509,6 +663,28 @@ public interface IRepositoryPackage extends EPackage {
 	EAttribute getParameterMap_Value();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.core.runtime.IPath <em>Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Path</em>'.
+	 * @see org.eclipse.core.runtime.IPath
+	 * @model instanceClass="org.eclipse.core.runtime.IPath"
+	 * @generated
+	 */
+	EDataType getPath();
+
+	/**
+	 * Returns the meta object for data type '{@link java.io.InputStream <em>Input Stream</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Input Stream</em>'.
+	 * @see java.io.InputStream
+	 * @model instanceClass="java.io.InputStream"
+	 * @generated
+	 */
+	EDataType getInputStream();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -582,6 +758,30 @@ public interface IRepositoryPackage extends EPackage {
 		EReference SCRIPT__USER_PARAMETERS = eINSTANCE.getScript_UserParameters();
 
 		/**
+		 * The meta object literal for the '<em><b>Run</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SCRIPT___RUN = eINSTANCE.getScript__Run();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SCRIPT___GET_NAME = eINSTANCE.getScript__GetName();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Path</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SCRIPT___GET_PATH = eINSTANCE.getScript__GetPath();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.LocationImpl <em>Location</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -598,6 +798,22 @@ public interface IRepositoryPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute LOCATION__LOCATION = eINSTANCE.getLocation_Location();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Content</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOCATION___GET_CONTENT = eINSTANCE.getLocation__GetContent();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Input Stream</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOCATION___GET_INPUT_STREAM = eINSTANCE.getLocation__GetInputStream();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.RepositoryImpl <em>Repository</em>}' class.
@@ -676,6 +892,26 @@ public interface IRepositoryPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETER_MAP__VALUE = eINSTANCE.getParameterMap_Value();
+
+		/**
+		 * The meta object literal for the '<em>Path</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.core.runtime.IPath
+		 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getPath()
+		 * @generated
+		 */
+		EDataType PATH = eINSTANCE.getPath();
+
+		/**
+		 * The meta object literal for the '<em>Input Stream</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.io.InputStream
+		 * @see org.eclipse.ease.ui.repository.impl.RepositoryPackageImpl#getInputStream()
+		 * @generated
+		 */
+		EDataType INPUT_STREAM = eINSTANCE.getInputStream();
 
 	}
 
