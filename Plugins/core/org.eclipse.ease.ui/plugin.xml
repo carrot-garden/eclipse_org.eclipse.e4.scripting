@@ -410,4 +410,69 @@
          point="org.eclipse.ui.startup">
       <startup></startup>
    </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="org.eclipse.ease.launchConfigurationType"
+            icon="images/script.gif"
+            id="org.eclipse.ease.launchConfigurationTypeImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="org.eclipse.ease.ui.launching.EaseLaunchDelegate"
+            description="Run a script file"
+            icon="images/script.gif"
+            id="org.eclipse.ease.launchShortcut"
+            label="EASE Script"
+            modes="run">
+         <contextualLaunch>
+            <enablement>
+               <count
+                     value="1">
+               </count>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <or>
+                     <test
+                           property="org.eclipse.debug.ui.matchesPattern"
+                           value="js">
+                     </test>
+                     <test
+                           property="org.eclipse.debug.ui.matchesPattern"
+                           value="javascript">
+                     </test>
+                  </or>
+               </iterate>
+            </enablement>
+         </contextualLaunch>
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="org.eclipse.ease.ui.launching.EaseLaunchDelegate"
+            id="org.eclipse.ease.launchConfigurationType"
+            modes="run,debug"
+            name="EASE Script"
+            sourceLocatorId="org.eclipse.ease.sourceLocator.generic">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="org.eclipse.ease.ui.launching.LaunchConfigurationTabGroup"
+            id="org.eclipse.ease.launchConfigurationTabGroup"
+            type="org.eclipse.ease.launchConfigurationType">
+         <launchMode
+               mode="debug"
+               perspective="org.eclipse.debug.ui.DebugPerspective">
+         </launchMode>
+         <launchMode
+               mode="run">
+         </launchMode>
+      </launchConfigurationTabGroup>
+   </extension>
 </plugin>

@@ -22,23 +22,25 @@ import org.eclipse.core.runtime.Path;
 
 public class WorkspaceURLConnection extends URLConnection {
 
-    protected WorkspaceURLConnection(final URL url) {
-        super(url);
-    }
+	public static final String SCHEME = "workspace";
 
-    @Override
-    public void connect() throws IOException {
-    }
+	protected WorkspaceURLConnection(final URL url) {
+		super(url);
+	}
 
-    @Override
-    public InputStream getInputStream() throws IOException {
+	@Override
+	public void connect() throws IOException {
+	}
 
-        IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(getURL().getHost() + getURL().getFile()));
-        try {
-            return file.getContents();
-        } catch (CoreException e) {
-            throw new IOException(e);
-        }
-    }
+	@Override
+	public InputStream getInputStream() throws IOException {
+
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(getURL().getHost() + getURL().getFile()));
+		try {
+			return file.getContents();
+		} catch (CoreException e) {
+			throw new IOException(e);
+		}
+	}
 
 }

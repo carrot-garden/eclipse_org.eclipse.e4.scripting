@@ -12,8 +12,6 @@ package org.eclipse.ease.ui.launching;
 
 public interface LaunchConstants {
 
-	public String PROJECT = "Project name";
-
 	public String FILE_LOCATION = "File location";
 
 	public String SUSPEND_ON_STARTUP = "Suspend on startup";
@@ -21,4 +19,8 @@ public interface LaunchConstants {
 	public String DISPLAY_DYNAMIC_CODE = "Display dynamic code";
 
 	public String LIBRARIES = "Libraries";
+
+	public String SCRIPT_ENGINE = "Script engine";
+
+	public String STARTUP_PARAMETERS = "Startup parameters";
 }

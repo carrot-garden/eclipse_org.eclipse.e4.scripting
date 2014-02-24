@@ -104,4 +104,9 @@ public class EngineDescription {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
 }
