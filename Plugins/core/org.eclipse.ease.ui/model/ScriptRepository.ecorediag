@@ -20,41 +20,9 @@
     <element xmi:type="ecore:EClass" href="ScriptRepository.ecore#//Script"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_us5lopAyEeOmU8KEFBYynA" x="160" y="305"/>
   </children>
-  <children xmi:type="notation:Node" xmi:id="_utYGwJAyEeOmU8KEFBYynA" type="1001">
-    <children xmi:type="notation:Node" xmi:id="_utYGw5AyEeOmU8KEFBYynA" type="4001"/>
-    <children xmi:type="notation:Node" xmi:id="_utYGxJAyEeOmU8KEFBYynA" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_utYt1JAyEeOmU8KEFBYynA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="ScriptRepository.ecore#//Parameter/key"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_utYt1ZAyEeOmU8KEFBYynA"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_utYt1pAyEeOmU8KEFBYynA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="ScriptRepository.ecore#//Parameter/value"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_utYt15AyEeOmU8KEFBYynA"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_utYt2JAyEeOmU8KEFBYynA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="ScriptRepository.ecore#//Parameter/scriptOrigin"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_utYt2ZAyEeOmU8KEFBYynA"/>
-      </children>
-      <styles xmi:type="notation:DrawerStyle" xmi:id="_utYGxZAyEeOmU8KEFBYynA"/>
-      <styles xmi:type="notation:SortingStyle" xmi:id="_utYGxpAyEeOmU8KEFBYynA"/>
-      <styles xmi:type="notation:FilteringStyle" xmi:id="_utYGx5AyEeOmU8KEFBYynA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_utYt0JAyEeOmU8KEFBYynA" type="5002">
-      <styles xmi:type="notation:DrawerStyle" xmi:id="_utYt0ZAyEeOmU8KEFBYynA"/>
-      <styles xmi:type="notation:SortingStyle" xmi:id="_utYt0pAyEeOmU8KEFBYynA"/>
-      <styles xmi:type="notation:FilteringStyle" xmi:id="_utYt05AyEeOmU8KEFBYynA"/>
-    </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_utYGwZAyEeOmU8KEFBYynA" fontColor="4210752" fontName="Sans" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EClass" href="ScriptRepository.ecore#//Parameter"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_utYGwpAyEeOmU8KEFBYynA" y="109"/>
-  </children>
   <children xmi:type="notation:Node" xmi:id="_utZU4JAyEeOmU8KEFBYynA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_utZU45AyEeOmU8KEFBYynA" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_utZU5JAyEeOmU8KEFBYynA" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_utZ79JAyEeOmU8KEFBYynA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="ScriptRepository.ecore#//Location/uri"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_utZ79ZAyEeOmU8KEFBYynA"/>
-      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_utZU5ZAyEeOmU8KEFBYynA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_utZU5pAyEeOmU8KEFBYynA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_utZU55AyEeOmU8KEFBYynA"/>
@@ -87,10 +55,6 @@
   <children xmi:type="notation:Node" xmi:id="_utajCZAyEeOmU8KEFBYynA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_utbKEJAyEeOmU8KEFBYynA" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_utbKEZAyEeOmU8KEFBYynA" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_utbKGZAyEeOmU8KEFBYynA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="ScriptRepository.ecore#//Entry/timestamp"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_utbKGpAyEeOmU8KEFBYynA"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_utbxIJAyEeOmU8KEFBYynA" type="2001">
         <element xmi:type="ecore:EAttribute" href="ScriptRepository.ecore#//Entry/recursive"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_utbxIZAyEeOmU8KEFBYynA"/>
@@ -110,20 +74,6 @@
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_useu4ZAyEeOmU8KEFBYynA"/>
   <element xmi:type="ecore:EPackage" href="ScriptRepository.ecore#/"/>
-  <edges xmi:type="notation:Edge" xmi:id="_ute0cJAyEeOmU8KEFBYynA" type="3002" source="_us5loJAyEeOmU8KEFBYynA" target="_utYGwJAyEeOmU8KEFBYynA">
-    <children xmi:type="notation:Node" xmi:id="_utfbgJAyEeOmU8KEFBYynA" type="4011">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_utfbgZAyEeOmU8KEFBYynA" x="-10" y="-10"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_utgCkJAyEeOmU8KEFBYynA" type="4012">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_utgCkZAyEeOmU8KEFBYynA" x="10" y="10"/>
-    </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_ute0cZAyEeOmU8KEFBYynA" lineColor="4210752"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_ute0cpAyEeOmU8KEFBYynA" fontColor="4210752" fontName="Sans" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="ScriptRepository.ecore#//Script/parameter"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ute0c5AyEeOmU8KEFBYynA" points="[0, 0, 86, 60]$[-86, -60, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_uwo2IJAyEeOmU8KEFBYynA" id="(0.3026315789473684,0.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_uwo2IZAyEeOmU8KEFBYynA" id="(0.49714285714285716,1.0)"/>
-  </edges>
   <edges xmi:type="notation:Edge" xmi:id="_utgpoJAyEeOmU8KEFBYynA" type="3002" source="_us5loJAyEeOmU8KEFBYynA" target="_utajCZAyEeOmU8KEFBYynA">
     <children xmi:type="notation:Node" xmi:id="_utgppJAyEeOmU8KEFBYynA" type="4011">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_utgppZAyEeOmU8KEFBYynA" x="-10" y="-10"/>

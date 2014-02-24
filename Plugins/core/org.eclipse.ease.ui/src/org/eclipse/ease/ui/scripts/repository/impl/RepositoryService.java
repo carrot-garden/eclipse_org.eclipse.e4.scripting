@@ -116,8 +116,7 @@ public class RepositoryService implements IRepositoryService {
 
 		// apply UI integrations
 		fUiIntegration = new UIIntegration(this);
-		System.out.println("RepositoryService() -> scheduling UI");
-		fUiIntegration.schedule();
+		fUiIntegration.addScripts(getScripts());
 
 		// update repository
 		fUpdateJob = new UpdateJob(this);

@@ -48,4 +48,14 @@
          priority="0">
    </engine>
 </extension>
+<extension
+      point="org.eclipse.core.expressions.propertyTesters">
+   <propertyTester
+         class="org.eclipse.ease.propertytesters.EngineTester"
+         id="org.eclipse.ease.scripting"
+         namespace="org.eclipse.ease"
+         properties="hasEngine,hasDebugEngine"
+         type="java.lang.Object">
+   </propertyTester>
+</extension>
 </plugin>

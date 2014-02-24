@@ -23,4 +23,6 @@ public interface LaunchConstants {
 	public String SCRIPT_ENGINE = "Script engine";
 
 	public String STARTUP_PARAMETERS = "Startup parameters";
+
+	public String SUSPEND_ON_SCRIPT_LOAD = "Suspend on script load";
 }

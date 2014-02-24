@@ -12,9 +12,11 @@ package org.eclipse.ease.ui.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.Logger;
+import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.storedscript.storedscript.IStoredScript;
 import org.eclipse.ease.storedscript.storedscript.ScriptType;
@@ -33,14 +35,15 @@ public class ScriptLauncherUtils {
 		IScriptEngine engine = null;
 		IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
 		if (scriptService != null) {
-			engine = scriptService.createEngine(scriptType.getType());
-
-			if (engine == null) {
+			List<EngineDescription> engines = scriptService.getEngines(scriptType.getType());
+			if (engines.isEmpty()) {
 				String message = "Unable to find a script engine for script " + script.getUri();
 				ErrorDialog
 						.openError(Display.getDefault().getActiveShell(), "No engine found", message, Logger.createErrorStatus(message, Activator.PLUGIN_ID));
 				return;
 			}
+
+			engine = engines.get(0).createEngine();
 		}
 
 		if (UIMetadataUtils.hasToBeLaunchInUI(script)) {

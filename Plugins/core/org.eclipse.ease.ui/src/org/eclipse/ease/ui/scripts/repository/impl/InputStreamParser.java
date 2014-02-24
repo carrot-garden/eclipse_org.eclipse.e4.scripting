@@ -1,50 +1,33 @@
 package org.eclipse.ease.ui.scripts.repository.impl;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.ease.IHeaderParser;
+import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.ui.repository.IScript;
+import org.eclipse.ui.PlatformUI;
 
 public class InputStreamParser {
+
+	/** Maximum amount of lines to scan for content type. */
+	private static final int MAX_LINES = 50;
+
+	/** Regex pattern to detect content-type keywords. */
+	private static final Pattern CONTENT_TYPE_PATTERN = Pattern.compile(".*script-type:\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
 	private final RepositoryService fRepositoryService;
 
 	public InputStreamParser(RepositoryService repositoryService) {
 		fRepositoryService = repositoryService;
 	}
-
-	// public void parse(InputStream stream, IEntry entry) {
-	// // check if entry directly links to a script
-	// String fileExtension = new Path(entry.getUri()).getFileExtension();
-	// if (fileExtension != null) {
-	// final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-	// ScriptType type = scriptService.getScriptType(fileExtension);
-	// if (type != null) {
-	// // this is very likely a script file
-	//
-	// // create uri
-	// String uri = entry.getUri();
-	// IScript script = fRepositoryService.getScript(URI.createURI(uri));
-	//
-	// if (script == null) {
-	// script = IRepositoryFactory.eINSTANCE.createScript();
-	// script.setEntry(entry);
-	// script.setUri(uri);
-	// }
-	//
-	// if ((script.getTimestamp() + RepositoryService.UPDATE_STREAM_INTERVAL) < System.currentTimeMillis()) {
-	// // we need to update this location
-	// }
-	//
-	// // parse entry
-	// // TODO continue here
-	//
-	// }
-	// }
-	// }
 
 	protected RepositoryService getRepositoryService() {
 		return fRepositoryService;
@@ -68,7 +51,28 @@ public class InputStreamParser {
 	}
 
 	protected ScriptType getScriptType(InputStream contents) {
-		// TODO Auto-generated method stub
+		BufferedReader reader = new BufferedReader(new InputStreamReader(contents));
+
+		// read MAX_LINES looking for a pattern content-type: <some content>
+		try {
+			String line = reader.readLine();
+			int lineCount = MAX_LINES;
+			while ((line != null) && (lineCount-- > 0)) {
+				final Matcher matcher = CONTENT_TYPE_PATTERN.matcher(line);
+				if (matcher.matches()) {
+					// we found a content type
+					final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+					ScriptType scriptType = scriptService.getAvailableScriptTypes().get(matcher.group(1));
+
+					if (scriptType != null)
+						return scriptType;
+				}
+
+			}
+		} catch (IOException e) {
+			// cannot read data, giving up
+		}
+
 		return null;
 	}
 }

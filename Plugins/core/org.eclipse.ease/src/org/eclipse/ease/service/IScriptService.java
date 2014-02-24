@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.content.IContentType;
-import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.modules.IModuleWrapper;
 import org.eclipse.ease.modules.ModuleDefinition;
@@ -30,24 +29,13 @@ import org.eclipse.ease.modules.ModuleDefinition;
 public interface IScriptService {
 
 	/**
-	 * Create a script engine for a certain kind of scripts.
-	 * 
-	 * @param scriptType
-	 *            type of script
-	 * @return script engine or <code>null</code>
-	 */
-	IScriptEngine createEngine(String scriptType);
-
-	/**
-	 * * @return script engine or <code>null</code>
-	 * 
-	 * Create a dedicated script engine. Allows to create an engine for a dedicated engine identifier.
+	 * Get a dedicated engine description. Allows to get an engine description for a dedicated engine identifier.
 	 * 
 	 * @param engineID
 	 *            engine identifier
-	 * @return script engine or <code>null</code>
+	 * @return script engine description or <code>null</code>
 	 */
-	IScriptEngine createEngineByID(String engineID);
+	EngineDescription getEngineByID(String engineID);
 
 	/**
 	 * Get available engine descriptions.
@@ -57,7 +45,7 @@ public interface IScriptService {
 	Collection<EngineDescription> getEngines();
 
 	/**
-	 * Get available engine descriptions for a certain script type. The resulting list is sorted by priority. Index 0 contains the engine with the highest
+	 * Get available engine descriptions for a given script type. The resulting list is sorted by priority. Index 0 contains the engine with the highest
 	 * priority.
 	 * 
 	 * @param scriptType
@@ -65,6 +53,15 @@ public interface IScriptService {
 	 * @return available descriptions or empty collection
 	 */
 	List<EngineDescription> getEngines(String scriptType);
+
+	/**
+	 * Get default engine for a given script type. While there might exist multiple engines, the returned one has the highest priority.
+	 * 
+	 * @param scriptType
+	 *            type of script
+	 * @return engine description or <code>null</code>
+	 */
+	EngineDescription getEngine(String scriptType);
 
 	/**
 	 * Get the unique module wrapper for a dedicated script engine.

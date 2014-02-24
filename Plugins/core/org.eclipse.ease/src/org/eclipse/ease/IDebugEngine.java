@@ -12,6 +12,8 @@ package org.eclipse.ease;
 
 import java.util.Map;
 
+import org.eclipse.debug.core.ILaunch;
+
 /**
  * Interface to be implemented by a script debug engine
  */
@@ -20,4 +22,6 @@ public interface IDebugEngine extends IScriptEngine {
 	Object removeVariable(final String name);
 
 	Map<String, Object> getVariables();
+
+	void setupDebugger(ILaunch launch, boolean suspendOnStartup, boolean suspendOnScriptLoad, boolean showDynamicCode);
 }

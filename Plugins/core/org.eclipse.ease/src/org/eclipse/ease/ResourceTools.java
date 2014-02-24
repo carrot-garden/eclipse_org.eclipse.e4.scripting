@@ -6,11 +6,16 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.urlhandler.WorkspaceURLConnection;
+import org.eclipse.ui.PlatformUI;
 
 public final class ResourceTools {
 
@@ -74,5 +79,30 @@ public final class ResourceTools {
 
 	public static String toLocation(IResource resource) {
 		return WorkspaceURLConnection.SCHEME + ":/" + resource.getFullPath().toPortableString();
+	}
+
+	public static ScriptType getScriptType(IFile file) {
+		// resolve by content type
+		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		try {
+			return scriptService.getScriptType(file.getContentDescription().getContentType());
+		} catch (CoreException e) {
+		}
+
+		// did not work, resolve by extension
+		return scriptService.getScriptType(file.getFileExtension());
+	}
+
+	public static ScriptType getScriptType(File file) {
+		// resolve by extension
+		String name = file.getName();
+		if (name.contains(".")) {
+			String extension = name.substring(name.lastIndexOf('.') + 1);
+
+			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+			return scriptService.getScriptType(extension);
+		}
+
+		return null;
 	}
 }

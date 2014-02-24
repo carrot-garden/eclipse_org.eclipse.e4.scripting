@@ -46,7 +46,13 @@ public class ScriptContributionFactory extends AbstractContributionFactory {
 			contributionParameter.parameters = new HashMap<String, String>();
 			contributionParameter.parameters.put(RunScript.PARAMETER_NAME, script.getFullName());
 
-			items.add(new CommandContributionItem(contributionParameter));
+			items.add(new CommandContributionItem(contributionParameter) {
+				@Override
+				public boolean isDynamic() {
+					return true;
+				}
+
+			});
 		}
 
 		return items;

@@ -15,7 +15,9 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.ease.AbstractScriptEngine;
 import org.eclipse.ease.IScriptEngine;
+import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.Logger;
 import org.eclipse.ui.PlatformUI;
 
@@ -32,6 +34,8 @@ public class EngineDescription {
 	private static final String ID = "id";
 
 	private static final String NAME = "name";
+
+	private static final String DEBUGGING = "debugger";
 
 	private final IConfigurationElement mConfigurationElement;
 
@@ -76,11 +80,27 @@ public class EngineDescription {
 		return 0;
 	}
 
+	/**
+	 * Create a dedicated script engine.
+	 * 
+	 * @return script engine or <code>null</code>
+	 */
 	public IScriptEngine createEngine() {
 		try {
 			Object object = mConfigurationElement.createExecutableExtension(CLASS);
-			if (object instanceof IScriptEngine)
+			if (object instanceof IScriptEngine) {
+				// configure engine
+				if (object instanceof AbstractScriptEngine)
+					((AbstractScriptEngine) object).setEngineDescription(this);
+
+				// engine loaded, now load launch extensions
+				final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+				for (final IScriptEngineLaunchExtension extension : scriptService.getLaunchExtensions(getID()))
+					extension.createEngine((IScriptEngine) object);
+
 				return (IScriptEngine) object;
+			}
+
 		} catch (CoreException e) {
 			Logger.logError("Could not create script engine: " + getID(), e);
 		}
@@ -108,5 +128,9 @@ public class EngineDescription {
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	public boolean supportsDebugging() {
+		return Boolean.parseBoolean(mConfigurationElement.getAttribute(DEBUGGING));
 	}
 }

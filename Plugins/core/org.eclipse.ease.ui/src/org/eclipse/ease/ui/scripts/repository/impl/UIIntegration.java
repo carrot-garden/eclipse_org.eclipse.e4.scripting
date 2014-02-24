@@ -1,5 +1,6 @@
 package org.eclipse.ease.ui.scripts.repository.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,27 +9,28 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ease.ui.repository.IScript;
-import org.eclipse.jface.action.IContributionItem;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.ui.IPartListener;
+import org.eclipse.ease.ui.scripts.repository.IScriptListener;
+import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWindowListener;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.progress.UIJob;
 
-public class UIIntegration extends UIJob {
+public class UIIntegration extends UIJob implements IScriptListener {
 	private final Map<String, ScriptContributionFactory> fContributionFactories = new HashMap<String, ScriptContributionFactory>();
 
 	private final RepositoryService fRepositoryService;
+
+	private final Collection<IScript> fAddedScripts = new HashSet<IScript>();
 
 	public UIIntegration(RepositoryService repositoryService) {
 		super("Update script UI components");
 
 		fRepositoryService = repositoryService;
+		fRepositoryService.addScriptListener(this);
 	}
 
 	@Override
@@ -58,95 +60,79 @@ public class UIIntegration extends UIJob {
 			});
 
 		} else {
-			for (IScript script : new HashSet<IScript>(fRepositoryService.getScripts())) {
-				String toolbarLocation = script.getParameters().get("toolbar");
-				if (toolbarLocation != null) {
-					// map to a real location
-					toolbarLocation = LocationHelper.toLocation(toolbarLocation);
-					if (toolbarLocation != null) {
+			Collection<IScript> scriptsToAdd;
+			synchronized (this) {
+				scriptsToAdd = new HashSet<IScript>(fAddedScripts);
+				fAddedScripts.clear();
+			}
 
-						// get contribution factory for toolbar
-						ScriptContributionFactory contributionFactory = fContributionFactories.get("toolbar:" + toolbarLocation);
-						if (contributionFactory == null) {
-							// create a contribution factory
-							contributionFactory = new ScriptContributionFactory("toolbar:" + toolbarLocation, null);
-							fContributionFactories.put("toolbar:" + toolbarLocation, contributionFactory);
-
-							final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
-							menuService.addContributionFactory(contributionFactory);
-						}
-						// add script
-						contributionFactory.addScript(script);
-
-						// views already visible (not in the background of some part stack) will not use the contribution factory
-						IViewPart view = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(toolbarLocation);
-						if (view instanceof ViewPart) {
-							for (IContributionItem item : contributionFactory.createContributions(ScriptContributionFactory.STATIC_ID, PlatformUI
-									.getWorkbench().getActiveWorkbenchWindow())) {
-								view.getViewSite().getActionBars().getToolBarManager().add(item);
-								System.out.println("added static toolbar entry");
-							}
-
-							// refresh view
-
-							view.getSite().getPage().addPartListener(new IPartListener() {
-
-								@Override
-								public void partActivated(IWorkbenchPart part) {
-									if (part instanceof ViewPart) {
-										IToolBarManager toolBarManager = ((ViewPart) part).getViewSite().getActionBars().getToolBarManager();
-										if (toolBarManager.find(ScriptContributionFactory.DYNAMIC_ID) != null) {
-											// this toolbar contains script elements from the registered contribution factory
-
-											// remove static contributions
-											IContributionItem item = toolBarManager.find(ScriptContributionFactory.STATIC_ID);
-											while (item != null) {
-												toolBarManager.remove(item);
-												System.out.println("removed static toolbar entry");
-												item = toolBarManager.find(ScriptContributionFactory.STATIC_ID);
-											}
-
-											((ViewPart) part).getViewSite().getActionBars().updateActionBars();
-										}
-									}
-								}
-
-								@Override
-								public void partBroughtToTop(IWorkbenchPart part) {
-									// TODO Auto-generated method stub
-
-								}
-
-								@Override
-								public void partClosed(IWorkbenchPart part) {
-									// TODO Auto-generated method stub
-
-								}
-
-								@Override
-								public void partDeactivated(IWorkbenchPart part) {
-									// TODO Auto-generated method stub
-
-								}
-
-								@Override
-								public void partOpened(IWorkbenchPart part) {
-									// TODO Auto-generated method stub
-
-								}
-
-							});
-
-							view.getViewSite().getActionBars().updateActionBars();
-						}
-					}
-
-				}
-
-				// String menuLocation = script.getParameter("menu");
+			// update added scripts
+			for (IScript script : scriptsToAdd) {
+				updateContributionFactory(script, "toolbar");
+				updateContributionFactory(script, "menu");
 			}
 		}
 
+		if (!fAddedScripts.isEmpty())
+			// TODO change fixed delay
+			schedule(300);
+
 		return Status.OK_STATUS;
+	}
+
+	private void updateContributionFactory(IScript script, String type) {
+		String location = script.getParameters().get(type);
+		if (location != null) {
+			// map to a real location
+			location = LocationHelper.toLocation(location);
+			if (location != null) {
+				location = type + ":" + location;
+
+				// get contribution factory for toolbar
+				ScriptContributionFactory contributionFactory = fContributionFactories.get(location);
+				if (contributionFactory == null) {
+					// create a contribution factory
+					contributionFactory = new ScriptContributionFactory(location, null);
+					fContributionFactories.put(location, contributionFactory);
+
+					final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
+					menuService.addContributionFactory(contributionFactory);
+				}
+
+				// add script
+				contributionFactory.addScript(script);
+
+				IViewPart view = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(location.substring(location.indexOf(":") + 1));
+				if (view instanceof ViewPart) {
+					final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
+					if (view.getViewSite().getActionBars().getToolBarManager() instanceof ContributionManager) {
+						view.getViewSite().getActionBars().getToolBarManager().removeAll();
+						menuService.populateContributionManager((ContributionManager) view.getViewSite().getActionBars().getToolBarManager(), location);
+						view.getViewSite().getActionBars().updateActionBars();
+					}
+				}
+
+			}
+		}
+	}
+
+	@Override
+	public void notify(ScriptRepositoryEvent event) {
+		switch (event.getType()) {
+		case ScriptRepositoryEvent.ADD:
+			addScript(event.getScript());
+			break;
+		}
+
+	}
+
+	public synchronized void addScripts(Collection<IScript> scripts) {
+		fAddedScripts.addAll(scripts);
+		schedule();
+	}
+
+	private synchronized void addScript(IScript script) {
+		fAddedScripts.add(script);
+		schedule();
 	}
 }

@@ -24,8 +24,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
-import org.eclipse.ease.AbstractScriptEngine;
-import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.modules.IModuleWrapper;
@@ -71,42 +69,9 @@ public class ScriptService implements IScriptService {
 	private ScriptService() {
 	}
 
-	private IScriptEngine createEngine(final EngineDescription description) {
-		IScriptEngine engine = description.createEngine();
-
-		if (engine != null) {
-			// configure engine
-			if (engine instanceof AbstractScriptEngine)
-				((AbstractScriptEngine) engine).setEngineDescription(description);
-
-			// engine loaded, now load launch extensions
-			for (final IScriptEngineLaunchExtension extension : getLaunchExtensions(description.getID()))
-				extension.createEngine(engine);
-
-			return engine;
-		}
-
-		return null;
-	}
-
 	@Override
-	public IScriptEngine createEngine(final String scriptType) {
-
-		List<EngineDescription> engines = getEngines(scriptType);
-
-		if (!engines.isEmpty())
-			return createEngine(engines.get(0));
-
-		return null;
-	}
-
-	@Override
-	public IScriptEngine createEngineByID(final String engineID) {
-		EngineDescription description = getEngineDescriptions().get(engineID);
-		if (description != null)
-			return createEngine(description);
-
-		return null;
+	public EngineDescription getEngineByID(final String engineID) {
+		return getEngineDescriptions().get(engineID);
 	}
 
 	@Override
@@ -261,6 +226,15 @@ public class ScriptService implements IScriptService {
 			if (scriptType.getDefaultExtension().equalsIgnoreCase(fileExtension))
 				return scriptType;
 		}
+
+		return null;
+	}
+
+	@Override
+	public EngineDescription getEngine(String scriptType) {
+		List<EngineDescription> engines = getEngines(scriptType);
+		if (!engines.isEmpty())
+			return engines.get(0);
 
 		return null;
 	}

@@ -432,20 +432,33 @@
                <count
                      value="1">
                </count>
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <or>
-                     <test
-                           property="org.eclipse.debug.ui.matchesPattern"
-                           value="js">
-                     </test>
-                     <test
-                           property="org.eclipse.debug.ui.matchesPattern"
-                           value="javascript">
-                     </test>
-                  </or>
-               </iterate>
+               <with
+                     variable="selection">
+                  <test
+                        property="org.eclipse.ease.hasEngine">
+                  </test>
+               </with>
+            </enablement>
+         </contextualLaunch>
+      </shortcut>
+      <shortcut
+            class="org.eclipse.ease.ui.launching.EaseLaunchDelegate"
+            description="Run a script file"
+            icon="images/script.gif"
+            id="org.eclipse.ease.launchShortcut"
+            label="EASE Script"
+            modes="debug">
+         <contextualLaunch>
+            <enablement>
+               <count
+                     value="1">
+               </count>
+               <with
+                     variable="selection">
+                  <test
+                        property="org.eclipse.ease.hasDebugEngine">
+                  </test>
+               </with>
             </enablement>
          </contextualLaunch>
       </shortcut>

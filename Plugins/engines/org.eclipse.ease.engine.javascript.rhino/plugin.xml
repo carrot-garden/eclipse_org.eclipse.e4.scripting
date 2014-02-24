@@ -5,6 +5,7 @@
          point="org.eclipse.ease.language">
       <engine
             class="org.eclipse.ease.engine.javascript.rhino.RhinoScriptEngine"
+            debugger="false"
             id="org.eclipse.ease.javascript.rhino"
             name="JavaScript (Rhino)"
             priority="10">

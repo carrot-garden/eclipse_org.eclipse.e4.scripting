@@ -28,8 +28,10 @@ import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.debug.ui.ILaunchShortcut;
 import org.eclipse.debug.ui.ILaunchShortcut2;
+import org.eclipse.ease.IDebugEngine;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.ResourceTools;
+import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.ui.console.ScriptConsole;
 import org.eclipse.jface.viewers.ISelection;
@@ -108,12 +110,12 @@ public class EaseLaunchDelegate implements ILaunchShortcut, ILaunchShortcut2, IL
 
 	@Override
 	public final ILaunchConfiguration[] getLaunchConfigurations(final IEditorPart editorpart) {
-		return getLaunchConfgurations(getLaunchableResource(editorpart));
+		return getLaunchConfgurations(getLaunchableResource(editorpart), ILaunchManager.RUN_MODE);
 	}
 
 	@Override
 	public final ILaunchConfiguration[] getLaunchConfigurations(final ISelection selection) {
-		return getLaunchConfgurations(getLaunchableResource(selection));
+		return getLaunchConfgurations(getLaunchableResource(selection), ILaunchManager.RUN_MODE);
 	}
 
 	// **********************************************************************
@@ -138,9 +140,10 @@ public class EaseLaunchDelegate implements ILaunchShortcut, ILaunchShortcut2, IL
 	 * 
 	 * @param resource
 	 *            root file to execute
+	 * @param mode
 	 * @return {@link ILaunchConfiguration}s using resource
 	 */
-	private ILaunchConfiguration[] getLaunchConfgurations(final IResource resource) {
+	private ILaunchConfiguration[] getLaunchConfgurations(final IResource resource, String mode) {
 		final List<ILaunchConfiguration> configurations = new ArrayList<ILaunchConfiguration>();
 
 		final ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
@@ -152,8 +155,18 @@ public class EaseLaunchDelegate implements ILaunchShortcut, ILaunchShortcut2, IL
 			for (final ILaunchConfiguration configuration : manager.getLaunchConfigurations(type)) {
 				try {
 					String configurationUri = configuration.getAttribute(LaunchConstants.FILE_LOCATION, "");
-					if (resourceLocation.equals(configurationUri))
-						configurations.add(configuration);
+					if (resourceLocation.equals(configurationUri)) {
+						// we have a candidate
+						if (ILaunchManager.DEBUG_MODE.equals(mode)) {
+							String engineID = configuration.getAttribute(LaunchConstants.SCRIPT_ENGINE, "");
+							final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+							EngineDescription engineDescription = scriptService.getEngineByID(engineID);
+							if (engineDescription.supportsDebugging())
+								configurations.add(configuration);
+
+						} else
+							configurations.add(configuration);
+					}
 
 				} catch (final CoreException e) {
 					// could not read configuration, ignore
@@ -181,7 +194,8 @@ public class EaseLaunchDelegate implements ILaunchShortcut, ILaunchShortcut2, IL
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().saveAllEditors(true);
 
 			try {
-				ILaunchConfiguration[] configurations = getLaunchConfgurations(file);
+				ILaunchConfiguration[] configurations = getLaunchConfgurations(file, mode);
+
 				if (configurations.length == 0) {
 					// no configuration found, create new one
 					final ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
@@ -223,7 +237,7 @@ public class EaseLaunchDelegate implements ILaunchShortcut, ILaunchShortcut2, IL
 		try {
 			String engineID = configuration.getAttribute(LaunchConstants.SCRIPT_ENGINE, "");
 			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-			final IScriptEngine engine = scriptService.createEngineByID(engineID);
+			final IScriptEngine engine = scriptService.getEngineByID(engineID).createEngine();
 
 			final ScriptConsole console = ScriptConsole.create(engine.getName() + ": " + resource, engine);
 			engine.setOutputStream(console.getOutputStream());
@@ -255,31 +269,27 @@ public class EaseLaunchDelegate implements ILaunchShortcut, ILaunchShortcut2, IL
 		}
 	}
 
-	protected void setupDebugger(final IScriptEngine engine, final ILaunchConfiguration configuration, final ILaunch launch) {
-		// if (engine instanceof RhinoScriptEngine) {
-		//
-		// boolean suspendOnStartup = false;
-		// try {
-		// suspendOnStartup = configuration.getAttribute(LaunchConstants.SUSPEND_ON_STARTUP, false);
-		// } catch (CoreException e) {
-		// }
-		//
-		// final RhinoDebugTarget debugTarget = new RhinoDebugTarget(launch, suspendOnStartup);
-		// launch.addDebugTarget(debugTarget);
-		//
-		// boolean showDynamicCode = false;
-		// try {
-		// showDynamicCode = configuration.getAttribute(LaunchConstants.DISPLAY_DYNAMIC_CODE, false);
-		// } catch (CoreException e) {
-		// }
-		//
-		// final RhinoDebugger debugger = new RhinoDebugger((RhinoScriptEngine) engine, showDynamicCode);
-		// ((RhinoScriptEngine) engine).setDebugger(debugger);
-		//
-		// final EventDispatchJob dispatcher = new EventDispatchJob(debugTarget, debugger);
-		// debugTarget.setDispatcher(dispatcher);
-		// debugger.setDispatcher(dispatcher);
-		// dispatcher.schedule();
-		// }
+	private void setupDebugger(final IScriptEngine engine, final ILaunchConfiguration configuration, final ILaunch launch) {
+		if (engine instanceof IDebugEngine) {
+			boolean suspendOnStartup = false;
+			try {
+				suspendOnStartup = configuration.getAttribute(LaunchConstants.SUSPEND_ON_STARTUP, false);
+			} catch (CoreException e) {
+			}
+
+			boolean suspendOnScriptLoad = false;
+			try {
+				suspendOnScriptLoad = configuration.getAttribute(LaunchConstants.SUSPEND_ON_SCRIPT_LOAD, false);
+			} catch (CoreException e) {
+			}
+
+			boolean showDynamicCode = false;
+			try {
+				showDynamicCode = configuration.getAttribute(LaunchConstants.DISPLAY_DYNAMIC_CODE, false);
+			} catch (CoreException e) {
+			}
+
+			((IDebugEngine) engine).setupDebugger(launch, suspendOnStartup, suspendOnScriptLoad, showDynamicCode);
+		}
 	}
 }

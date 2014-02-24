@@ -478,7 +478,7 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		}
 
 		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-		fScriptEngine = scriptService.createEngineByID(id);
+		fScriptEngine = scriptService.getEngineByID(id).createEngine();
 
 		if (fScriptEngine != null) {
 			fScriptEngine.setTerminateOnIdle(false);

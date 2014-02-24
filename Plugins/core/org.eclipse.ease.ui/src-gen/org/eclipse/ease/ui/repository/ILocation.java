@@ -34,7 +34,7 @@ public interface ILocation extends EObject {
 	 * @return the value of the '<em>Location</em>' attribute.
 	 * @see #setLocation(String)
 	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getLocation_Location()
-	 * @model required="true"
+	 * @model id="true" required="true"
 	 * @generated
 	 */
 	String getLocation();
