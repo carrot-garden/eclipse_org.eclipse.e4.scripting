@@ -146,6 +146,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 		repositoryService.addScriptListener(this);
 	}
 
+	// TODO change this filter to scripttype
 	public void setEngine(final String engineID) {
 		treeViewer.setFilters(new ViewerFilter[] { new ScriptEngineFilter(engineID) });
 	}

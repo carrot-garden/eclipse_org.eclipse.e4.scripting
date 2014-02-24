@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.ease.IHeaderParser;
 import org.eclipse.ease.Logger;
+import org.eclipse.ui.PlatformUI;
 
 import com.google.common.base.Function;
 
@@ -156,5 +157,17 @@ public class ScriptType {
 		}
 
 		return null;
+	}
+
+	public Collection<EngineDescription> getEngines() {
+		HashSet<EngineDescription> engines = new HashSet<EngineDescription>();
+
+		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		for (EngineDescription description : scriptService.getEngines()) {
+			if (description.getSupportedScriptTypes().contains(this))
+				engines.add(description);
+		}
+
+		return engines;
 	}
 }

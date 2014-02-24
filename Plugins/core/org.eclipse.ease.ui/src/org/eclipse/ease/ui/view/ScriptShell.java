@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ease.ui.view;
 
+import java.util.Collection;
+
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -17,7 +19,9 @@ import org.eclipse.ease.IExecutionListener;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineProvider;
 import org.eclipse.ease.Script;
+import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.console.ScriptConsole;
 import org.eclipse.ease.ui.dnd.ShellDropTarget;
@@ -86,13 +90,11 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 
 	private int[] mSashWeights = new int[] { 70, 30 };
 
-	private IScriptEngine mScriptEngine;
+	private IScriptEngine fScriptEngine;
 
 	private IMemento mInitMemento;
 
-	private ScriptConsole mConsole = null;
-
-	private ScriptComposite mMacroComposite;
+	private ScriptComposite fScriptComposite;
 
 	static {
 		// add dynamic context menu for engine switching
@@ -109,46 +111,17 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		super();
 
 		// setup Script engine
-		setEngine("org.eclipse.ease.javascript.rhino");
+		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		ScriptType scriptType = scriptService.getAvailableScriptTypes().get("JavaScript");
+		Collection<EngineDescription> engines = scriptType.getEngines();
+		if (!engines.isEmpty())
+			setEngine(engines.iterator().next().getID());
 
 		// add dynamic context menu for macros
 		ScriptContributionFactory.addContextMenu("org.eclipse.ease.commands.javascript.shell.showMacroManager.popup");
 
 		// FIXME add preferences lookup
 		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(this);
-	}
-
-	/**
-	 * Configure output streams for RhinoRunner.
-	 */
-	private void configureOutputStreams() {
-		// set stdout/stderr stream
-		mScriptEngine.setOutputStream(getConsole().getOutputStream());
-		mScriptEngine.setErrorStream(getConsole().getOutputStream());
-	}
-
-	/**
-	 * Get the JavaScript console for this shell.
-	 * 
-	 * @return instance of JavaScript console
-	 */
-	private ScriptConsole getConsole() {
-		if (mConsole == null) {
-			// create console
-
-			mConsole = ScriptConsole.create(mScriptEngine.getName() + " Script Shell", mScriptEngine);
-			mConsole.addPropertyChangeListener(new IPropertyChangeListener() {
-
-				@Override
-				public void propertyChange(final PropertyChangeEvent event) {
-					if (ScriptConsole.CONSOLE_ACTIVE.equals(event.getProperty())) {
-						mConsole = null;
-						configureOutputStreams();
-					}
-				}
-			});
-		}
-		return mConsole;
 	}
 
 	@Override
@@ -218,8 +191,8 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 
 		mOutputText.setEditable(false);
 
-		mMacroComposite = new ScriptComposite(this, getSite(), sashForm, SWT.NONE);
-		mMacroComposite.setEngine(mScriptEngine.getDescription().getID());
+		fScriptComposite = new ScriptComposite(this, getSite(), sashForm, SWT.NONE);
+		fScriptComposite.setEngine(fScriptEngine.getDescription().getID());
 
 		sashForm.setWeights(mSashWeights);
 		mInputCombo = new Combo(parent, SWT.NONE);
@@ -231,7 +204,7 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 				mInputCombo.setText("");
 
 				addToHistory(input);
-				mScriptEngine.executeAsync(input);
+				fScriptEngine.executeAsync(input);
 			}
 		});
 
@@ -254,10 +227,10 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		final IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(PreferenceConstants.SHELL_BASE);
 		final String initCommands = prefs.get(PreferenceConstants.INIT_COMMANDS, "");
 		if ((initCommands != null) && (!initCommands.isEmpty()))
-			mScriptEngine.executeAsync(initCommands);
+			fScriptEngine.executeAsync(initCommands);
 
 		// set view title
-		setPartName(mScriptEngine.getName() + " " + super.getTitle());
+		setPartName(fScriptEngine.getName() + " " + super.getTitle());
 	}
 
 	/**
@@ -291,12 +264,10 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 
 	@Override
 	public final void dispose() {
-		if (mScriptEngine != null) {
-			mScriptEngine.removeExecutionListener(this);
-			mScriptEngine.terminate();
+		if (fScriptEngine != null) {
+			fScriptEngine.removeExecutionListener(this);
+			fScriptEngine.terminate();
 		}
-
-		mConsole = null;
 
 		mResourceManager.dispose();
 
@@ -461,12 +432,12 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 	}
 
 	public void stopScriptEngine() {
-		mScriptEngine.terminateCurrent();
+		fScriptEngine.terminateCurrent();
 	}
 
 	@Override
 	public IScriptEngine getScriptEngine() {
-		return mScriptEngine;
+		return fScriptEngine;
 	}
 
 	@Override
@@ -501,27 +472,48 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 	}
 
 	public void setEngine(final String id) {
-		if (mScriptEngine != null) {
-			mScriptEngine.removeExecutionListener(this);
-			mScriptEngine.terminate();
+		if (fScriptEngine != null) {
+			fScriptEngine.removeExecutionListener(this);
+			fScriptEngine.terminate();
 		}
 
 		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-		mScriptEngine = scriptService.createEngineByID(id);
-		mScriptEngine.setTerminateOnIdle(false);
+		fScriptEngine = scriptService.createEngineByID(id);
 
-		configureOutputStreams();
-		getConsole().setScriptEngine(mScriptEngine);
+		if (fScriptEngine != null) {
+			fScriptEngine.setTerminateOnIdle(false);
 
-		mScriptEngine.schedule();
+			// set view title
+			setPartName(fScriptEngine.getName() + " Script Shell");
 
-		// set view title
-		setPartName(mScriptEngine.getName() + " Script Shell");
+			// prepare console
+			ScriptConsole console = ScriptConsole.create(fScriptEngine.getName() + "Script Shell", fScriptEngine);
+			fScriptEngine.setOutputStream(console.getOutputStream());
+			fScriptEngine.setErrorStream(console.getErrorStream());
 
-		// register at script engine
-		mScriptEngine.addExecutionListener(this);
+			// register at script engine
+			fScriptEngine.addExecutionListener(this);
 
-		if (mMacroComposite != null)
-			mMacroComposite.setEngine(mScriptEngine.getDescription().getID());
+			// set script type filter
+			if (fScriptComposite != null)
+				fScriptComposite.setEngine(fScriptEngine.getDescription().getID());
+
+			// start script engine
+			fScriptEngine.schedule();
+		}
 	}
+
+	/**
+	 * Get the JavaScript console for this shell.
+	 * 
+	 * @return instance of JavaScript console
+	 */
+	// private ScriptConsole getConsole() {
+	// if (mConsole == null)
+	// // create console
+	// mConsole = ScriptConsole.create(mScriptEngine.getName() + "Script Shell", mScriptEngine);
+	//
+	// return mConsole;
+	// }
+
 }
