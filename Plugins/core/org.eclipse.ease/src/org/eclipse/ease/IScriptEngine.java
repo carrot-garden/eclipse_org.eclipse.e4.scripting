@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.util.Map;
 
 import org.eclipse.ease.service.EngineDescription;
 
@@ -220,4 +221,21 @@ public interface IScriptEngine {
 	 * @return engine description
 	 */
 	EngineDescription getDescription();
+
+	/**
+	 * Remove a variable from the scope.
+	 * 
+	 * @param name
+	 *            variable to be removed.
+	 * @return
+	 */
+	Object removeVariable(final String name);
+
+	/**
+	 * Get all variables from the scope.
+	 * 
+	 * @return map of variables
+	 */
+	Map<String, Object> getVariables();
+
 }

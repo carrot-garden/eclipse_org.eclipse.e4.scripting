@@ -16,15 +16,15 @@ import org.eclipse.ease.service.EngineDescription;
 
 public class JavaEngine implements IScriptEngine {
 
-	private PrintStream mOutStream;
-	private PrintStream mErrorStream;
-	private InputStream mInStream;
+	private PrintStream fOutStream;
+	private PrintStream fErrorStream;
+	private InputStream fInStream;
 
-	private final Map<String, Object> mVariables = new HashMap<String, Object>();
-	private final IEnvironment mEnvironment;
+	private final Map<String, Object> fVariables = new HashMap<String, Object>();
+	private final IEnvironment fEnvironment;
 
 	public JavaEngine() {
-		mEnvironment = new NativeEnvironment();
+		fEnvironment = new NativeEnvironment();
 	}
 
 	@Override
@@ -114,17 +114,17 @@ public class JavaEngine implements IScriptEngine {
 
 	@Override
 	public void setVariable(final String name, final Object content) {
-		mVariables.put(name, content);
+		fVariables.put(name, content);
 	}
 
 	@Override
 	public Object getVariable(final String name) {
-		return mVariables.get(name);
+		return fVariables.get(name);
 	}
 
 	@Override
 	public boolean hasVariable(final String name) {
-		return mVariables.containsKey(name);
+		return fVariables.containsKey(name);
 	}
 
 	@Override
@@ -134,48 +134,58 @@ public class JavaEngine implements IScriptEngine {
 
 	@Override
 	public PrintStream getOutputStream() {
-		return (mOutStream != null) ? mOutStream : System.out;
+		return (fOutStream != null) ? fOutStream : System.out;
 	}
 
 	@Override
 	public void setOutputStream(final OutputStream outputStream) {
 		if (outputStream instanceof PrintStream)
-			mOutStream = (PrintStream) outputStream;
+			fOutStream = (PrintStream) outputStream;
 
 		else
-			mOutStream = new PrintStream(outputStream);
+			fOutStream = new PrintStream(outputStream);
 	}
 
 	@Override
 	public InputStream getInputStream() {
-		return (mInStream != null) ? mInStream : System.in;
+		return (fInStream != null) ? fInStream : System.in;
 	}
 
 	@Override
 	public void setInputStream(final InputStream inputStream) {
-		mInStream = inputStream;
+		fInStream = inputStream;
 	}
 
 	@Override
 	public PrintStream getErrorStream() {
-		return (mErrorStream != null) ? mErrorStream : System.err;
+		return (fErrorStream != null) ? fErrorStream : System.err;
 	}
 
 	@Override
 	public void setErrorStream(final OutputStream errorStream) {
 		if (errorStream instanceof PrintStream)
-			mErrorStream = (PrintStream) errorStream;
+			fErrorStream = (PrintStream) errorStream;
 
 		else
-			mErrorStream = new PrintStream(errorStream);
+			fErrorStream = new PrintStream(errorStream);
 	}
 
 	public IEnvironment getEnvironment() {
-		return mEnvironment;
+		return fEnvironment;
 	}
 
 	@Override
 	public EngineDescription getDescription() {
 		throw new RuntimeException("not supported");
+	}
+
+	@Override
+	public Object removeVariable(final String name) {
+		return getVariables().remove(name);
+	}
+
+	@Override
+	public Map<String, Object> getVariables() {
+		return fVariables;
 	}
 }
