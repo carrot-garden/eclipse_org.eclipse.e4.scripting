@@ -12,7 +12,7 @@
 package org.eclipse.ease.ui.console.actions;
 
 import org.eclipse.ease.ui.Activator;
-import org.eclipse.ease.ui.preferences.PreferenceConstants;
+import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -56,7 +56,7 @@ public abstract class ShowWhenContentChangesAction extends Action implements IPr
     }
 
     private String getPreferenceKey() {
-        return PreferenceConstants.CONSOLE_BASE + "." + mConsoleName + "." + getKey();
+        return IPreferenceConstants.CONSOLE_BASE + "." + mConsoleName + "." + getKey();
     }
 
     protected abstract String getKey();

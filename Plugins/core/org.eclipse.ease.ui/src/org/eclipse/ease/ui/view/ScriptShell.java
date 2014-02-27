@@ -25,7 +25,7 @@ import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.console.ScriptConsole;
 import org.eclipse.ease.ui.dnd.ShellDropTarget;
-import org.eclipse.ease.ui.preferences.PreferenceConstants;
+import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.ease.ui.scripts.IScriptSupport;
 import org.eclipse.ease.ui.scripts.ScriptContributionFactory;
 import org.eclipse.ease.ui.scripts.ui.ScriptComposite;
@@ -224,8 +224,8 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		ShellDropTarget.addDropSupport(mOutputText, this);
 
 		// run startup commands
-		final IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(PreferenceConstants.SHELL_BASE);
-		final String initCommands = prefs.get(PreferenceConstants.INIT_COMMANDS, "");
+		final IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(IPreferenceConstants.SHELL_BASE);
+		final String initCommands = prefs.get(IPreferenceConstants.INIT_COMMANDS, "");
 		if ((initCommands != null) && (!initCommands.isEmpty()))
 			fScriptEngine.executeAsync(initCommands);
 

@@ -11,6 +11,8 @@
 package org.eclipse.ease.ui.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
+import org.eclipse.ease.ui.Activator;
+import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
  * Class used to initialize default preference values.
@@ -19,19 +21,15 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
 	/**
 	 * 
-	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#
-	 *      initializeDefaultPreferences()
+	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer# initializeDefaultPreferences()
 	 */
 	@Override
 	public final void initializeDefaultPreferences() {
-		// final IPreferenceStore store =
-		// Activator.getDefault().getPreferenceStore();
-		// store.setDefault(PreferenceConstants.INIT_COMMANDS, "");
-		// store.setDefault(PreferenceConstants.TARGET_STDOUT,
-		// PreferenceConstants.VALUE_OUTPUT_CONSOLE);
-		// store.setDefault(PreferenceConstants.TARGET_RESULT,
-		// PreferenceConstants.VALUE_OUTPUT_SHELL);
-		// store.setDefault(PreferenceConstants.TARGET_ERRORS,
-		// PreferenceConstants.VALUE_OUTPUT_CONSOLE);
+		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+
+		// shell default settings
+		store.setDefault(IPreferenceConstants.SHELL_HISTORY_LENGTH, 20);
+		store.setDefault(IPreferenceConstants.SHELL_AUTOFOCUS, true);
+		store.setDefault(IPreferenceConstants.SHELL_KEEP_COMMAND, false);
 	}
 }

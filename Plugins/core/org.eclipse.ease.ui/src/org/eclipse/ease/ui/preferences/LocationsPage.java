@@ -310,8 +310,8 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 	@Override
 	protected void performDefaults() {
 		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-		String location = prefs.get(PreferenceConstants.SCRIPT_STORAGE_LOCATION, PreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION);
-		if (PreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION.equals(location)) {
+		String location = prefs.get(IPreferenceConstants.SCRIPT_STORAGE_LOCATION, IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION);
+		if (IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION.equals(location)) {
 			btnUseCustomLocation.setSelection(false);
 
 		} else {
@@ -345,7 +345,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 
 		// store script storage location
 		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-		prefs.put(PreferenceConstants.SCRIPT_STORAGE_LOCATION, getScriptStorageLocation());
+		prefs.put(IPreferenceConstants.SCRIPT_STORAGE_LOCATION, getScriptStorageLocation());
 
 		return super.performOk();
 	}
@@ -357,6 +357,6 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 
 		else
 			// default location
-			return PreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION;
+			return IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION;
 	}
 }

@@ -405,6 +405,12 @@
             id="org.eclipse.ease.preferences.scriptLocations"
             name="Script Locations">
       </page>
+      <page
+            category="org.eclipse.ease.preferences.root"
+            class="org.eclipse.ease.ui.preferences.ShellPreferencePage"
+            id="org.eclipse.ease.preferences.scriptShell"
+            name="Shell">
+      </page>
    </extension>
    <extension
          point="org.eclipse.ui.startup">
@@ -497,5 +503,11 @@
             properties="hasEngine,hasDebugEngine"
             type="java.lang.Object">
       </propertyTester>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.ease.ui.preferences.PreferenceInitializer">
+      </initializer>
    </extension>
 </plugin>

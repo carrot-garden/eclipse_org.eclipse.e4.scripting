@@ -5,7 +5,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.ui.Activator;
-import org.eclipse.ease.ui.preferences.PreferenceConstants;
+import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.ui.PlatformUI;
 
@@ -13,7 +13,7 @@ public abstract class ScriptStorage {
 
 	public static ScriptStorage createStorage() {
 		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-		String location = prefs.get(PreferenceConstants.SCRIPT_STORAGE_LOCATION, PreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION);
+		String location = prefs.get(IPreferenceConstants.SCRIPT_STORAGE_LOCATION, IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION);
 
 		if (location.startsWith("workspace://"))
 			return new WorkspaceScriptStorage(location);

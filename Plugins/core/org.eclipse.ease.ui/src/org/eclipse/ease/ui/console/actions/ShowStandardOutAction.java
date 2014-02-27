@@ -15,7 +15,7 @@ import org.eclipse.debug.internal.ui.IDebugHelpContextIds;
 import org.eclipse.debug.internal.ui.IInternalDebugUIConstants;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.ease.ui.Activator;
-import org.eclipse.ease.ui.preferences.PreferenceConstants;
+import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsole;
 
@@ -40,6 +40,6 @@ public class ShowStandardOutAction extends ShowWhenContentChangesAction {
 
     @Override
     protected String getKey() {
-        return PreferenceConstants.CONSOLE_OPEN_ON_OUT;
+        return IPreferenceConstants.CONSOLE_OPEN_ON_OUT;
     }
 }

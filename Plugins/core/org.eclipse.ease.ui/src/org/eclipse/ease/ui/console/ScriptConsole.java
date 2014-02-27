@@ -18,7 +18,7 @@ import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineProvider;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.ui.Activator;
-import org.eclipse.ease.ui.preferences.PreferenceConstants;
+import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -71,10 +71,10 @@ public class ScriptConsole extends IOConsole implements IExecutionListener, IScr
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 
 		IOConsoleOutputStream outputStream = getOutputStream();
-		outputStream.setActivateOnWrite(store.getBoolean(PreferenceConstants.CONSOLE_BASE + "." + getName() + "." + PreferenceConstants.CONSOLE_OPEN_ON_OUT));
+		outputStream.setActivateOnWrite(store.getBoolean(IPreferenceConstants.CONSOLE_BASE + "." + getName() + "." + IPreferenceConstants.CONSOLE_OPEN_ON_OUT));
 
 		IOConsoleOutputStream errorStream = getErrorStream();
-		errorStream.setActivateOnWrite(store.getBoolean(PreferenceConstants.CONSOLE_BASE + "." + getName() + "." + PreferenceConstants.CONSOLE_OPEN_ON_ERR));
+		errorStream.setActivateOnWrite(store.getBoolean(IPreferenceConstants.CONSOLE_BASE + "." + getName() + "." + IPreferenceConstants.CONSOLE_OPEN_ON_ERR));
 	}
 
 	public static String getConsoleType() {
@@ -166,10 +166,10 @@ public class ScriptConsole extends IOConsole implements IExecutionListener, IScr
 	public void propertyChange(final PropertyChangeEvent event) {
 		String property = event.getProperty();
 
-		if (property.equals(PreferenceConstants.CONSOLE_BASE + "." + getName() + "." + PreferenceConstants.CONSOLE_OPEN_ON_OUT))
+		if (property.equals(IPreferenceConstants.CONSOLE_BASE + "." + getName() + "." + IPreferenceConstants.CONSOLE_OPEN_ON_OUT))
 			getOutputStream().setActivateOnWrite((Boolean) event.getNewValue());
 
-		else if (property.equals(PreferenceConstants.CONSOLE_BASE + "." + getName() + "." + PreferenceConstants.CONSOLE_OPEN_ON_ERR))
+		else if (property.equals(IPreferenceConstants.CONSOLE_BASE + "." + getName() + "." + IPreferenceConstants.CONSOLE_OPEN_ON_ERR))
 			getErrorStream().setActivateOnWrite((Boolean) event.getNewValue());
 	}
 

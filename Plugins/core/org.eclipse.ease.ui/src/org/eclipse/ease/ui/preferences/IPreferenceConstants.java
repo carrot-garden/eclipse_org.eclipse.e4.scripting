@@ -15,7 +15,7 @@ import org.eclipse.ease.ui.Activator;
 /**
  * Constant definitions for plug-in preferences.
  */
-public interface PreferenceConstants {
+public interface IPreferenceConstants {
 
 	String VALUE_OUTPUT_CONSOLE = "Console";
 	String VALUE_OUTPUT_SHELL = "Shell";
@@ -32,4 +32,12 @@ public interface PreferenceConstants {
 	String LOCATIONS = "constants";
 	String SCRIPT_STORAGE_LOCATION = "scriptStorageLocation";
 	String DEFAULT_SCRIPT_STORAGE_LOCATION = Activator.getDefault().getStateLocation().append("recordedScripts").toFile().toURI().toString();
+
+	String SHELL_HISTORY_LENGTH = "shellHistoryLength";
+	int DEFAULT_SHELL_HISTORY_LENGTH = 20;
+	String SHELL_AUTOFOCUS = "shellAutoFocus";
+	boolean DEFAULT_SHELL_AUTOFOCUS = true;
+	String SHELL_KEEP_COMMAND = "shellKeepCommand";
+	boolean DEFAULT_SHELL_KEEP_COMMAND = false;
+	String SHELL_STARTUP = "shellStartup";
 }
