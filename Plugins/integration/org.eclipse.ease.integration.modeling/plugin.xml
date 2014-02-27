@@ -13,7 +13,4 @@
       </module>
    </extension>
 
-<extension point="org.eclipse.help.toc">
-<toc file="help/modules_toc.xml" primary="false"/>
-</extension>
 </plugin>

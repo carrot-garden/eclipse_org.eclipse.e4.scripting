@@ -33,10 +33,6 @@
    <extension point="org.eclipse.help.toc">
       <toc file="help/scripting_book.xml" primary="true">
       </toc>
-      <toc
-            file="help/modules_toc.xml"
-            primary="false">
-      </toc>
    </extension>
 
 <extension

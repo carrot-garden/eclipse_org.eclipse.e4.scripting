@@ -30,6 +30,7 @@ public class ModuleDoclet extends Doclet {
 	private static final String LINE_DELIMITER = "\n";
 
 	private static final String OPTION_PROJECT_ROOT = "-root";
+	private static final String OPTION_DOCLETPATH = "-docletpath";
 
 	public static boolean start(final RootDoc root) {
 		final ModuleDoclet doclet = new ModuleDoclet();
@@ -44,21 +45,6 @@ public class ModuleDoclet extends Doclet {
 	}
 
 	public static boolean validOptions(final String options[][], final DocErrorReporter reporter) {
-		boolean foundDestinationOption = false;
-		for (int i = 0; i < options.length; i++) {
-			final String[] opt = options[i];
-			if (opt[0].equals("-d")) {
-				if (foundDestinationOption) {
-					reporter.printError("Only one -d option allowed.");
-					return false;
-				} else
-					foundDestinationOption = true;
-			}
-		}
-		// if (!foundDestinationOption)
-		// reporter.printError("Usage: javadoc -d destinationfolder ...");
-
-		// return foundDestinationOption;
 		return true;
 	}
 
@@ -70,19 +56,10 @@ public class ModuleDoclet extends Doclet {
 	private File fDocletPath;
 
 	private boolean process(final RootDoc root) {
-		System.out.println("----------------------------------------");
-		System.out.println("-- running doclet");
-		System.out.println("----------------------------------------");
 
 		String[][] options = root.options();
 		for (String[] option : options) {
-			System.out.print("\tO: ");
-			for (String o : option)
-				System.out.print(o + ", ");
-
-			System.out.println("");
-
-			if ("-docletpath".equals(option[0]))
+			if (OPTION_DOCLETPATH.equals(option[0]))
 				fDocletPath = new File(option[1]);
 		}
 
@@ -98,33 +75,20 @@ public class ModuleDoclet extends Doclet {
 					// create lookup table with module data
 					createModuleLookupTable(rootFolder);
 
-					for (String key : mLookupTable.keySet())
-						System.out.println("Module: " + key + " - " + mLookupTable.get(key));
-
 					// create HTML help files
-					System.out.println("----------------------------------------");
-					System.out.println("-- building HTML files");
 					if (createHTMLFiles(rootFolder, classes)) {
 						// some files were created, update tocs, ...
 
 						// create TOC file
-						System.out.println("----------------------------------------");
-						System.out.println("-- building TOC");
 						createTOCFile(rootFolder);
 
 						// update plugin.xml
-						System.out.println("----------------------------------------");
-						System.out.println("-- update plugin.xml");
 						updatePluginXML(rootFolder);
 
 						// update MANIFEST.MF
-						System.out.println("----------------------------------------");
-						System.out.println("-- update MANIFEST.MF");
 						updateManifest(rootFolder);
 
 						// update build.properties
-						System.out.println("----------------------------------------");
-						System.out.println("-- update build.properties");
 						updateBuildProperties(rootFolder);
 					}
 				} catch (Exception e) {
