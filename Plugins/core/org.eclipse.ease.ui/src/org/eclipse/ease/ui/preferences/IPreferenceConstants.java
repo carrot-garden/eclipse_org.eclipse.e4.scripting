@@ -33,6 +33,8 @@ public interface IPreferenceConstants {
 	String SCRIPT_STORAGE_LOCATION = "scriptStorageLocation";
 	String DEFAULT_SCRIPT_STORAGE_LOCATION = Activator.getDefault().getStateLocation().append("recordedScripts").toFile().toURI().toString();
 
+	String NODE_SHELL = "shell";
+
 	String SHELL_HISTORY_LENGTH = "shellHistoryLength";
 	int DEFAULT_SHELL_HISTORY_LENGTH = 20;
 	String SHELL_AUTOFOCUS = "shellAutoFocus";

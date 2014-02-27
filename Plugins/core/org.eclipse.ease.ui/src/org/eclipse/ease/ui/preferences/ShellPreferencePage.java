@@ -12,7 +12,6 @@ package org.eclipse.ease.ui.preferences;
 
 import java.util.Map;
 
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptType;
@@ -33,6 +32,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.service.prefs.Preferences;
 
 public class ShellPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 	private Text fTxtHistoryLength;
@@ -114,7 +114,8 @@ public class ShellPreferencePage extends PreferencePage implements IWorkbenchPre
 
 	@Override
 	protected void performDefaults() {
-		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).node(IPreferenceConstants.NODE_SHELL);
+
 		int defaultLength = prefs.getInt(IPreferenceConstants.SHELL_HISTORY_LENGTH, IPreferenceConstants.DEFAULT_SHELL_HISTORY_LENGTH);
 		fTxtHistoryLength.setText(Integer.toString(defaultLength));
 
@@ -137,7 +138,7 @@ public class ShellPreferencePage extends PreferencePage implements IWorkbenchPre
 	@Override
 	public boolean performOk() {
 
-		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).node(IPreferenceConstants.NODE_SHELL);
 
 		// FIXME add checks to have valid integers in the input box
 		prefs.putInt(IPreferenceConstants.SHELL_HISTORY_LENGTH, Integer.parseInt(fTxtHistoryLength.getText()));

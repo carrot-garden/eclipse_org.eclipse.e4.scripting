@@ -13,7 +13,6 @@ package org.eclipse.ease.ui.view;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.IExecutionListener;
 import org.eclipse.ease.IScriptEngine;
@@ -56,6 +55,7 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.osgi.service.prefs.Preferences;
 
 /**
  * The JavaScript shell allows to interactively execute JavaScript code.
@@ -65,8 +65,6 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 	public static final String VIEW_ID = "org.eclipse.ease.views.scriptShell";
 
 	private SashForm sashForm;
-
-	private static final int HISTORY_LENGTH = 30;
 
 	private static final String XML_HISTORY_NODE = "history";
 
@@ -96,6 +94,12 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 
 	private ScriptComposite fScriptComposite;
 
+	private int fHistoryLength;
+
+	private boolean fAutoFocus;
+
+	private boolean fKeepCommand;
+
 	static {
 		// add dynamic context menu for engine switching
 		EngineContributionFactory.addContextMenu();
@@ -103,6 +107,34 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		// add dynamic context menu for module loading
 		ModuleContributionFactory.addContextMenu();
 	}
+
+	private class AutoFocus implements KeyListener {
+
+		@Override
+		public void keyReleased(final KeyEvent e) {
+			if ((e.keyCode == 'v') && ((e.stateMask & SWT.CONTROL) != 0)) {
+				// CTRL-v pressed
+				final Clipboard clipboard = new Clipboard(Display.getDefault());
+				final Object content = clipboard.getContents(TextTransfer.getInstance());
+				if (content != null)
+					mInputCombo.setText(mInputCombo.getText() + content.toString());
+
+				mInputCombo.setFocus();
+				mInputCombo.setSelection(new Point(mInputCombo.getText().length(), mInputCombo.getText().length()));
+			}
+		}
+
+		@Override
+		public void keyPressed(final KeyEvent e) {
+			if (!((e.keyCode == 'c') && ((e.stateMask & SWT.CONTROL) != 0)) && (e.keyCode != SWT.CONTROL)) {
+				mInputCombo.setText(mInputCombo.getText() + e.character);
+				mInputCombo.setFocus();
+				mInputCombo.setSelection(new Point(mInputCombo.getText().length(), mInputCombo.getText().length()));
+			}
+		}
+	}
+
+	private AutoFocus fAutoFocusListener = null;
 
 	/**
 	 * Default constructor.
@@ -155,31 +187,6 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		mOutputText = new StyledText(sashForm, SWT.V_SCROLL | SWT.READ_ONLY | SWT.BORDER);
-		mOutputText.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyReleased(final KeyEvent e) {
-				if ((e.keyCode == 'v') && ((e.stateMask & SWT.CONTROL) != 0)) {
-					// CTRL-v pressed
-					final Clipboard clipboard = new Clipboard(Display.getDefault());
-					final Object content = clipboard.getContents(TextTransfer.getInstance());
-					if (content != null)
-						mInputCombo.setText(mInputCombo.getText() + content.toString());
-
-					mInputCombo.setFocus();
-					mInputCombo.setSelection(new Point(mInputCombo.getText().length(), mInputCombo.getText().length()));
-				}
-			}
-
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				if (!((e.keyCode == 'c') && ((e.stateMask & SWT.CONTROL) != 0)) && (e.keyCode != SWT.CONTROL)) {
-					mInputCombo.setText(mInputCombo.getText() + e.character);
-					mInputCombo.setFocus();
-					mInputCombo.setSelection(new Point(mInputCombo.getText().length(), mInputCombo.getText().length()));
-				}
-			}
-		});
 
 		// set monospaced font
 		final Object os = Platform.getOS();
@@ -223,14 +230,35 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		// add DND support
 		ShellDropTarget.addDropSupport(mOutputText, this);
 
-		// run startup commands
-		final IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(IPreferenceConstants.SHELL_BASE);
-		final String initCommands = prefs.get(IPreferenceConstants.INIT_COMMANDS, "");
-		if ((initCommands != null) && (!initCommands.isEmpty()))
-			fScriptEngine.executeAsync(initCommands);
-
 		// set view title
 		setPartName(fScriptEngine.getName() + " " + super.getTitle());
+
+		// read default preferences
+		Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).node(IPreferenceConstants.NODE_SHELL);
+
+		fHistoryLength = prefs.getInt(IPreferenceConstants.SHELL_HISTORY_LENGTH, IPreferenceConstants.DEFAULT_SHELL_HISTORY_LENGTH);
+		fAutoFocus = prefs.getBoolean(IPreferenceConstants.SHELL_AUTOFOCUS, IPreferenceConstants.DEFAULT_SHELL_AUTOFOCUS);
+		fKeepCommand = prefs.getBoolean(IPreferenceConstants.SHELL_KEEP_COMMAND, IPreferenceConstants.DEFAULT_SHELL_KEEP_COMMAND);
+
+		if (fAutoFocus) {
+			if (fAutoFocusListener == null)
+				fAutoFocusListener = new AutoFocus();
+
+			mOutputText.addKeyListener(fAutoFocusListener);
+		}
+
+		// run startup commands, do this for all supported script types
+		runStartupCommands();
+	}
+
+	public void runStartupCommands() {
+		Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).node(IPreferenceConstants.NODE_SHELL);
+
+		for (ScriptType scriptType : fScriptEngine.getDescription().getSupportedScriptTypes()) {
+			final String initCommands = prefs.get(IPreferenceConstants.SHELL_STARTUP + scriptType.getName(), "").trim();
+			if (!initCommands.isEmpty())
+				fScriptEngine.executeAsync(initCommands);
+		}
 	}
 
 	/**
@@ -256,7 +284,7 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		}
 
 		// avoid history overflows
-		if (mInputCombo.getItemCount() >= HISTORY_LENGTH)
+		while (mInputCombo.getItemCount() >= fHistoryLength)
 			mInputCombo.remove(mInputCombo.getItemCount() - 1);
 
 		mInputCombo.add(input, 0);
@@ -421,10 +449,24 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 
 	@Override
 	public final void propertyChange(final PropertyChangeEvent event) {
-		// a preference property changed, do we need to adjust output paths?
+		// a preference property changed
 
-		// FIXME does not work as it is accessed by an external thread
-		// configureOutputStreams();
+		if (IPreferenceConstants.SHELL_AUTOFOCUS.equals(event.getProperty())) {
+			if (Boolean.parseBoolean(event.getNewValue().toString())) {
+				if (fAutoFocusListener == null)
+					fAutoFocusListener = new AutoFocus();
+
+				mOutputText.addKeyListener(fAutoFocusListener);
+
+			} else
+				mOutputText.removeKeyListener(fAutoFocusListener);
+
+		} else if (IPreferenceConstants.SHELL_KEEP_COMMAND.equals(event.getProperty())) {
+			fKeepCommand = Boolean.parseBoolean(event.getNewValue().toString());
+
+		} else if (IPreferenceConstants.SHELL_HISTORY_LENGTH.equals(event.getProperty())) {
+			fHistoryLength = Integer.parseInt(event.getNewValue().toString());
+		}
 	}
 
 	public StyledText getOutput() {
@@ -460,6 +502,19 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 					else
 						localPrint("[null]", TYPE_RESULT);
 				}
+
+				if (fKeepCommand) {
+					final String code = script.getCode();
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							mInputCombo.setText(code);
+							mInputCombo.setSelection(new Point(0, code.length()));
+						}
+					});
+				}
+
 				break;
 
 			default:
@@ -500,6 +555,11 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 
 			// start script engine
 			fScriptEngine.schedule();
+
+			// execute startup scripts
+			// TODO currently we cannot run this on the first launch as the UI is not ready yet
+			if (mInputCombo != null)
+				runStartupCommands();
 		}
 	}
 
