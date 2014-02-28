@@ -25,6 +25,7 @@ public class JavaEngine implements IScriptEngine {
 
 	public JavaEngine() {
 		fEnvironment = new NativeEnvironment();
+		((NativeEnvironment) fEnvironment).initialize(this, fEnvironment);
 	}
 
 	@Override
