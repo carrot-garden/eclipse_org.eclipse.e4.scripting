@@ -27,8 +27,17 @@
       </sourceLocator>
    </extension>
    <extension point="org.eclipse.ease.modules">
-      <module class="org.eclipse.ease.modules.EnvironmentModule" name="Environment" visible="false">
+      <module
+            category="org.eclipse.ease.category.system"
+            class="org.eclipse.ease.modules.EnvironmentModule"
+            id="org.eclipse.ease.module.environment"
+            name="Environment"
+            visible="false">
       </module>
+      <category
+            id="org.eclipse.ease.category.system"
+            name="System">
+      </category>
    </extension>
    <extension point="org.eclipse.help.toc">
       <toc file="help/scripting_book.xml" primary="true">

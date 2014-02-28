@@ -1,9 +1,5 @@
 package org.eclipse.ease.ui.preferences;
 
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.ease.modules.ModuleDefinition;
-import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -22,8 +18,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.PlatformUI;
-import org.osgi.service.prefs.Preferences;
 
 public class ModulesPage extends PreferencePage implements IWorkbenchPreferencePage {
 	private IWorkbench mWorkbench;
@@ -107,38 +101,41 @@ public class ModulesPage extends PreferencePage implements IWorkbenchPreferenceP
 	}
 
 	protected void hideModule(String name) {
-		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-		for (ModuleDefinition definition : scriptService.getAvailableModules().values()) {
-			if (definition.getAbsoluteName().startsWith(name)) {
-				IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-				Preferences node = prefs.node("modules");
-				node.putBoolean(definition.getAbsoluteName(), false);
-			}
-		}
+		// FIXME temporary disabled
+		// final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		// for (ModuleDefinition definition : scriptService.getAvailableModules().values()) {
+		// if (definition.getPath().toString().startsWith(name)) {
+		// IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		// Preferences node = prefs.node("modules");
+		// node.putBoolean(definition.getAbsoluteName(), false);
+		// }
+		// }
 	}
 
 	protected void unhideModule(String name) {
-		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-		for (ModuleDefinition definition : scriptService.getAvailableModules().values()) {
-			if (definition.getAbsoluteName().startsWith(name)) {
-				IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-				Preferences node = prefs.node("modules");
-				node.remove(definition.getAbsoluteName());
-			}
-		}
+		// FIXME temporary disabled
+		// final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		// for (ModuleDefinition definition : scriptService.getAvailableModules().values()) {
+		// if (definition.getAbsoluteName().startsWith(name)) {
+		// IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		// Preferences node = prefs.node("modules");
+		// node.remove(definition.getAbsoluteName());
+		// }
+		// }
 	}
 
 	private void populateTrees() {
 		visibleTreeViewer.setInput("foo"); // enable tree, we fill the content provider afterwards
 		invisibleTreeViewer.setInput("foo"); // enable tree, we fill the content provider afterwards
 
-		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-		for (ModuleDefinition definition : scriptService.getAvailableModules().values()) {
-			if (definition.isVisible())
-				((StringTreeContentProvider) (visibleTreeViewer.getContentProvider())).addElement(definition.getAbsoluteName(), null);
-			else
-				((StringTreeContentProvider) (invisibleTreeViewer.getContentProvider())).addElement(definition.getAbsoluteName(), null);
-		}
+		// FIXME temporary disabled
+		// final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		// for (ModuleDefinition definition : scriptService.getAvailableModules().values()) {
+		// if (definition.isVisible())
+		// ((StringTreeContentProvider) (visibleTreeViewer.getContentProvider())).addElement(definition.getAbsoluteName(), null);
+		// else
+		// ((StringTreeContentProvider) (invisibleTreeViewer.getContentProvider())).addElement(definition.getAbsoluteName(), null);
+		// }
 
 		visibleTreeViewer.refresh();
 		invisibleTreeViewer.refresh();

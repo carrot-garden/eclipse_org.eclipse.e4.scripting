@@ -1,24 +1,28 @@
 package org.eclipse.ease.modules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ui.PlatformUI;
 
 public abstract class AbstractEnvironment extends AbstractScriptModule implements IEnvironment {
 
 	/** Stores ordering of wrapped elements. */
-	private final List<Object> mModules = new ArrayList<Object>();
+	private final List<Object> fModules = new ArrayList<Object>();
 
 	/** Stores beautified names of loaded modules. */
-	private final Map<String, Object> mModuleNames = new HashMap<String, Object>();
+	private final Map<String, Object> fModuleNames = new HashMap<String, Object>();
 
-	private final ListenerList mModuleListeners = new ListenerList();
+	private final ListenerList fModuleListeners = new ListenerList();
 
 	/**
 	 * Load a module. Loading a module generally enhances the script environment with new functions and variables. If a module was already loaded before, it
@@ -32,41 +36,108 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 	@Override
 	@WrapToScript
 	public final Object loadModule(final String identifier) {
-		Object module = getModule(identifier);
+		// resolve identifier
+		String moduleName = resolveModuleName(identifier);
+
+		Object module = getModule(moduleName);
 		if (module == null) {
 			// not loaded yet
 			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
 			Map<String, ModuleDefinition> availableModules = scriptService.getAvailableModules();
 
-			ModuleDefinition definition = availableModules.get(identifier);
+			ModuleDefinition definition = availableModules.get(moduleName);
 			if (definition != null) {
 				// module exists
 
 				// load dependencies; always load to bring dependencies on top of modules stack
-				for (String dependencyName : definition.getDependencies()) {
-					if (loadModule(dependencyName) == null)
+				for (String dependencyId : definition.getDependencies()) {
+					ModuleDefinition requiredModule = scriptService.getModuleDefinition(dependencyId);
+					if ((requiredModule == null) || (loadModule(requiredModule.getPath().toString()) == null)) {
+						Logger.logError("Dependency \"" + dependencyId + "\" could not be resolved.");
 						// could not load dependency, bail out
 						return null;
+					}
 				}
 
-				module = definition.getModuleInstance();
+				module = definition.createModuleInstance();
 				if (module instanceof IScriptModule)
 					((IScriptModule) module).initialize(getScriptEngine(), this);
 
-				mModuleNames.put(identifier, module);
+				fModuleNames.put(moduleName, module);
 			}
 		}
-		if (module == null) {
-			getScriptEngine().getErrorStream().append("Unable to find module with id " + identifier);
-		}
-		// create function wrappers
-		wrap(module);
 
-		// move module up to first position
-		mModules.remove(module);
-		mModules.add(0, module);
+		if (module == null)
+			getScriptEngine().getErrorStream().append("Unable to find module \"" + moduleName + "\"");
+
+		else {
+			// create function wrappers
+			wrap(module);
+
+			// move module up to first position
+			fModules.remove(module);
+			fModules.add(0, module);
+		}
 
 		return module;
+	}
+
+	private String resolveModuleName(String identifier) {
+		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		Map<String, ModuleDefinition> availableModules = scriptService.getAvailableModules();
+
+		IPath searchPath = new Path(identifier);
+		if ((searchPath.segmentCount() == 1) && (!searchPath.isAbsolute())) {
+			// only module name given
+			for (String pathName : availableModules.keySet()) {
+				if (new Path(pathName).lastSegment().equals(identifier)) {
+					// candidate detected
+					if (searchPath.isAbsolute())
+						// we already had one candidate, name is ambiguous
+						throw new RuntimeException("Module identifier \"" + identifier + "\" is ambiguous. Use full path name to load.");
+
+					searchPath = availableModules.get(pathName).getPath();
+				}
+			}
+		}
+
+		return searchPath.toString();
+	}
+
+	/**
+	 * List all available (visible) modules. Returns a list of visible modules. Loaded modules are indicated.
+	 * 
+	 * @return string containing module information
+	 */
+	@WrapToScript
+	public final String listModules() {
+
+		IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		Collection<ModuleDefinition> modules = scriptService.getAvailableModules().values();
+
+		final StringBuilder output = new StringBuilder();
+
+		// add header
+		output.append("available modules\n=================\n\n");
+
+		// add modules
+		for (final ModuleDefinition module : modules) {
+
+			if (module.isVisible()) {
+				output.append('\t');
+
+				output.append(module.getPath().toString());
+				if (getModule(module.getPath().toString()) != null)
+					output.append(" [LOADED]");
+
+				output.append('\n');
+			}
+		}
+
+		// write to default output
+		print(output);
+
+		return output.toString();
 	}
 
 	/**
@@ -79,7 +150,7 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 	@Override
 	@WrapToScript
 	public final Object getModule(final String name) {
-		return mModuleNames.get(name);
+		return fModuleNames.get(name);
 	}
 
 	/**
@@ -102,7 +173,7 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 
 	@Override
 	public List<Object> getModules() {
-		return Collections.unmodifiableList(mModules);
+		return Collections.unmodifiableList(fModules);
 	}
 
 	@Override
@@ -113,16 +184,16 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 
 	@Override
 	public void addModuleListener(final IModuleListener listener) {
-		mModuleListeners.add(listener);
+		fModuleListeners.add(listener);
 	}
 
 	@Override
 	public void removeModuleListener(final IModuleListener listener) {
-		mModuleListeners.remove(listener);
+		fModuleListeners.remove(listener);
 	}
 
 	protected void fireModuleEvent(final Object module, final int type) {
-		for (Object listener : mModuleListeners.getListeners())
+		for (Object listener : fModuleListeners.getListeners())
 			((IModuleListener) listener).notifyModule(module, type);
 	}
 

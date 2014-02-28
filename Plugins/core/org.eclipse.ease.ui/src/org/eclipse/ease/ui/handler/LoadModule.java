@@ -23,25 +23,25 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class LoadModule extends AbstractHandler implements IHandler {
 
-    public static final String COMMAND_ID = "org.eclipse.ease.commands.scriptShell.loadModule";
-    public static final String PARAMETER_NAME = COMMAND_ID + ".moduleID";
+	public static final String COMMAND_ID = "org.eclipse.ease.commands.scriptShell.loadModule";
+	public static final String PARAMETER_NAME = COMMAND_ID + ".moduleID";
 
-    @Override
-    public final Object execute(final ExecutionEvent event) throws ExecutionException {
+	@Override
+	public final Object execute(final ExecutionEvent event) throws ExecutionException {
 
-        final IWorkbenchPart part = HandlerUtil.getActivePart(event);
-        if (part instanceof IScriptEngineProvider) {
-            final String moduleID = event.getParameter(PARAMETER_NAME);
+		final IWorkbenchPart part = HandlerUtil.getActivePart(event);
+		if (part instanceof IScriptEngineProvider) {
+			final String moduleID = event.getParameter(PARAMETER_NAME);
 
-            if (moduleID != null)
-                // specific module selected
-                ((IScriptEngineProvider) part).getScriptEngine().executeAsync("loadModule(\"" + moduleID + "\");");
+			if (moduleID != null)
+				// specific module selected
+				((IScriptEngineProvider) part).getScriptEngine().executeAsync("loadModule('" + moduleID + "');");
 
-            else
-                // button was clicked, no module selected
-                ((IScriptEngineProvider) part).getScriptEngine().executeAsync("listModules();");
-        }
+			else
+				// button was clicked, no module selected
+				((IScriptEngineProvider) part).getScriptEngine().executeAsync("listModules();");
+		}
 
-        return null;
-    }
+		return null;
+	}
 }

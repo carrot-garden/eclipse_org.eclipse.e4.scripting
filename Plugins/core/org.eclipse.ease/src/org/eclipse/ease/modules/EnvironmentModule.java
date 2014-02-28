@@ -19,7 +19,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,9 +33,6 @@ import org.eclipse.ease.Logger;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
-import org.eclipse.ease.service.IScriptService;
-import org.eclipse.ecf.filetransfer.FileTransferInfo;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * The Environment provides base functions for all script interpreters. It is automatically loaded by any interpreter upon startup.
@@ -45,15 +41,11 @@ public class EnvironmentModule extends AbstractEnvironment {
 
 	private static final String PROJECT_SCHEME = "project://";
 
-	public static final String MODULE_NAME = "Environment";
+	public static final String MODULE_NAME = "/System/Environment";
 
 	public static final String MODULE_PREFIX = "__MOD_";
 
 	public EnvironmentModule() {
-		// we need to force loading of the org.eclipse.ecf.filetransfer plugin to correctly register extended URL protocols.
-		// therefore load a class from that plugin
-		// TODO move this to the activator as UI components might need this before
-		Class<FileTransferInfo> foo = FileTransferInfo.class;
 	}
 
 	/**
@@ -284,42 +276,6 @@ public class EnvironmentModule extends AbstractEnvironment {
 
 		// giving up
 		throw new RuntimeException("Cannot locate '" + filename + "'");
-	}
-
-	/**
-	 * List all available (visible) modules. Returns a list of visible modules. Loaded modules are indicated.
-	 * 
-	 * @return string containing module information
-	 */
-	@WrapToScript
-	public final String listModules() {
-
-		IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-		Collection<ModuleDefinition> modules = scriptService.getAvailableModules().values();
-
-		final StringBuilder output = new StringBuilder();
-
-		// add header
-		output.append("available modules\n=================\n\n");
-
-		// add modules
-		for (final ModuleDefinition module : modules) {
-
-			if (module.isVisible()) {
-				output.append('\t');
-
-				output.append(module.getName());
-				if (getModule(module.getName()) != null)
-					output.append(" [LOADED]");
-
-				output.append('\n');
-			}
-		}
-
-		// write to default output
-		print(output);
-
-		return output.toString();
 	}
 
 	private String getPreExecutionCode(final Object instance, final Method method) {

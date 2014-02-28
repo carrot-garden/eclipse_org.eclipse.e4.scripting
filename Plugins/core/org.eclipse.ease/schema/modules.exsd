@@ -56,7 +56,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.modules/module/@name"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.modules/module/@id"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -68,6 +68,13 @@
          <choice minOccurs="0" maxOccurs="unbounded">
             <element ref="dependency" minOccurs="0" maxOccurs="unbounded"/>
          </choice>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Unique id of this module.As a recommendation use the pluginID followed by a unique module name.
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
@@ -98,7 +105,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.modules/category/@name"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.modules/category/@id"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -107,6 +114,13 @@
 
    <element name="category">
       <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Unique id of this module.As a recommendation use the pluginID followed by a unique category name.
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
@@ -120,7 +134,7 @@
                   Refer to a parent category to nest categories. Empty for a root category.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="identifier" basedOn="org.eclipse.scripting.modules/category/@name"/>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.ease.modules/category/@id"/>
                </appinfo>
             </annotation>
          </attribute>

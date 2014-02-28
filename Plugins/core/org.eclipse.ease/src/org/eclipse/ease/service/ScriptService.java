@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.modules.IModuleWrapper;
+import org.eclipse.ease.modules.ModuleCategoryDefinition;
 import org.eclipse.ease.modules.ModuleDefinition;
 
 public class ScriptService implements IScriptService {
@@ -36,6 +37,8 @@ public class ScriptService implements IScriptService {
 	private static final String ENGINE_ID = "engineID";
 
 	private static final Object EXTENSION_MODULE = "module";
+
+	private static final Object EXTENSION_CATEGORY = "category";
 
 	private static final String EXTENSION_LANGUAGE_ID = "org.eclipse.ease.language";
 
@@ -66,6 +69,8 @@ public class ScriptService implements IScriptService {
 
 	private Map<String, ScriptType> fScriptTypes = null;
 
+	private Map<String, ModuleCategoryDefinition> fAvailableModuleCategories = null;
+
 	private ScriptService() {
 	}
 
@@ -83,7 +88,7 @@ public class ScriptService implements IScriptService {
 				if (e.getName().equals(EXTENSION_MODULE)) {
 					// module extension detected
 					ModuleDefinition definition = new ModuleDefinition(e);
-					fAvailableModules.put(definition.getName(), definition);
+					fAvailableModules.put(definition.getPath().toString(), definition);
 				}
 			}
 		}
@@ -235,6 +240,32 @@ public class ScriptService implements IScriptService {
 		List<EngineDescription> engines = getEngines(scriptType);
 		if (!engines.isEmpty())
 			return engines.get(0);
+
+		return null;
+	}
+
+	@Override
+	public Map<String, ModuleCategoryDefinition> getAvailableModuleCategories() {
+		if (fAvailableModuleCategories == null) {
+			fAvailableModuleCategories = new HashMap<String, ModuleCategoryDefinition>();
+			final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_MODULES_ID);
+			for (final IConfigurationElement e : config) {
+				if (e.getName().equals(EXTENSION_CATEGORY)) {
+					// module category detected
+					ModuleCategoryDefinition definition = new ModuleCategoryDefinition(e);
+					fAvailableModuleCategories.put(definition.getId(), definition);
+				}
+			}
+		}
+		return fAvailableModuleCategories;
+	}
+
+	@Override
+	public ModuleDefinition getModuleDefinition(String moduleId) {
+		for (ModuleDefinition definition : getAvailableModules().values()) {
+			if (definition.getId().equals(moduleId))
+				return definition;
+		}
 
 		return null;
 	}

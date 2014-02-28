@@ -10,32 +10,35 @@
  *******************************************************************************/
 package org.eclipse.ease;
 
+import org.eclipse.ecf.filetransfer.FileTransferInfo;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-
 
 public class Activator extends AbstractUIPlugin {
 
 	public static final String PLUGIN_ID = "org.eclipse.ease";
 
-	private static Activator mInstance;
+	private static Activator fInstance;
 
 	public static Activator getDefault() {
-		return mInstance;
+		return fInstance;
 	}
 
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
 
-		mInstance = this;
+		// we need to force loading of the org.eclipse.ecf.filetransfer plugin to correctly register extended URL protocols.
+		// therefore load a class from that plugin
+		Class<FileTransferInfo> foo = FileTransferInfo.class;
+
+		fInstance = this;
 	}
 
 	@Override
 	public void stop(final BundleContext context) throws Exception {
-		mInstance = null;
+		fInstance = null;
 
 		super.stop(context);
 	}
-
 }

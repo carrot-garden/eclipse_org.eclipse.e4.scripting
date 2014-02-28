@@ -17,6 +17,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.modules.IModuleWrapper;
+import org.eclipse.ease.modules.ModuleCategoryDefinition;
 import org.eclipse.ease.modules.ModuleDefinition;
 
 /**
@@ -73,11 +74,18 @@ public interface IScriptService {
 	IModuleWrapper getModuleWrapper(String engineID);
 
 	/**
-	 * Get a map of available modules. Keys contain the short module name, values contain its descriptor.
+	 * Get a map of available modules. Keys contain the full module name, values contain its descriptor.
 	 * 
 	 * @return available modules or empty map
 	 */
 	Map<String, ModuleDefinition> getAvailableModules();
+
+	/**
+	 * Get a map of available module categories. Keys contain the category id, values contain its descriptor.
+	 * 
+	 * @return available modules or empty map
+	 */
+	Map<String, ModuleCategoryDefinition> getAvailableModuleCategories();
 
 	/**
 	 * Get a map of available script tpye. Keys contain the type name, values contain its descriptor.
@@ -112,4 +120,13 @@ public interface IScriptService {
 	 * @return script type associated with file extension
 	 */
 	ScriptType getScriptType(String fileExtension);
+
+	/**
+	 * Get the definition of the module with given ID.
+	 * 
+	 * @param moduleId
+	 *            id to look for
+	 * @return module definition
+	 */
+	ModuleDefinition getModuleDefinition(String moduleId);
 }

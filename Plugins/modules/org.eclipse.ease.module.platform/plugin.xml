@@ -2,13 +2,29 @@
 <plugin>
    <extension-point id="Selector" name="Selector" schema="schema/Selector.exsd"/>
    <extension point="org.eclipse.ease.modules">
-      <module class="org.eclipse.ease.module.platform.modules.DialogModule" name="DialogModule" visible="true">
+      <module
+            class="org.eclipse.ease.module.platform.modules.DialogModule"
+            id="org.eclipse.ease.module.platform.dialog"
+            name="DialogModule"
+            visible="true">
       </module>
-      <module class="org.eclipse.ease.module.platform.modules.WorkbenchModule" name="WorkbenchModule" visible="true">
+      <module
+            class="org.eclipse.ease.module.platform.modules.WorkbenchModule"
+            id="org.eclipse.ease.module.platform.workbench"
+            name="WorkbenchModule"
+            visible="true">
       </module>
-      <module class="org.eclipse.ease.module.platform.modules.TextEditorModule" name="TextEditorModule" visible="true">
+      <module
+            class="org.eclipse.ease.module.platform.modules.TextEditorModule"
+            id="org.eclipse.ease.module.platform.texteditor"
+            name="TextEditorModule"
+            visible="true">
       </module>
-      <module class="org.eclipse.ease.module.platform.modules.SelectionModule" name="SelectionModule" visible="true">
+      <module
+            class="org.eclipse.ease.module.platform.modules.SelectionModule"
+            id="org.eclipse.ease.module.platform.selection"
+            name="SelectionModule"
+            visible="true">
       </module>
    </extension>
 
