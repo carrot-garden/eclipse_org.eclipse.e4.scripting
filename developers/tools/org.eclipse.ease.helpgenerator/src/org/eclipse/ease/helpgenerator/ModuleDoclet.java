@@ -102,8 +102,10 @@ public class ModuleDoclet extends Doclet {
 		return true;
 	}
 
-	private File getChild(File folder, String name) {
-		if (folder.isDirectory())
+	private File getChild(final File folder, final String name) {
+		// if the folder exists, it needs to be a directory
+		// if it does not exist, it will be created by the writeFile() method
+		if ((folder.isDirectory()) || (!folder.exists()))
 			return new File(folder.getPath() + File.separator + name);
 
 		return null;
@@ -396,7 +398,7 @@ public class ModuleDoclet extends Doclet {
 		return false;
 	}
 
-	private static boolean isWrapToScriptAnnotation(AnnotationDesc annotation) {
+	private static boolean isWrapToScriptAnnotation(final AnnotationDesc annotation) {
 		return (QUALIFIED_WRAP_TO_SCRIPT.equals(annotation.annotationType().qualifiedName()))
 				|| (WRAP_TO_SCRIPT.equals(annotation.annotationType().qualifiedName()));
 	}
