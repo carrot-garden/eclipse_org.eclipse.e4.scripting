@@ -10,29 +10,28 @@
  *******************************************************************************/
 package org.eclipse.ease.ui.view;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.modules.ModuleDefinition;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.handler.LoadModule;
+import org.eclipse.ease.ui.preferences.IPreferenceConstants;
+import org.eclipse.ease.ui.scripts.ui.AbstractPopupItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.AbstractContributionFactory;
-import org.eclipse.ui.menus.CommandContributionItem;
-import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.menus.IContributionRoot;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.services.IServiceLocator;
+import org.osgi.service.prefs.Preferences;
 
-// TODO ev. replace this by a dynamic menu in plugin.xml
 public class ModuleContributionFactory extends AbstractContributionFactory {
 
-	private static ModuleContributionFactory mInstance = null;
+	private static ModuleContributionFactory fInstance = null;
 
 	/**
 	 * Add context menu for these contribution items.
@@ -48,10 +47,10 @@ public class ModuleContributionFactory extends AbstractContributionFactory {
 	 * @return factory instance
 	 */
 	private static ModuleContributionFactory getInstance() {
-		if (mInstance == null)
-			mInstance = new ModuleContributionFactory();
+		if (fInstance == null)
+			fInstance = new ModuleContributionFactory();
 
-		return mInstance;
+		return fInstance;
 	}
 
 	/**
@@ -67,35 +66,46 @@ public class ModuleContributionFactory extends AbstractContributionFactory {
 		IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
 		Map<String, ModuleDefinition> modules = scriptService.getAvailableModules();
 
-		final List<CommandContributionItemParameter> items = new ArrayList<CommandContributionItemParameter>();
+		// read preferences for tree/list layout
+		Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).node(IPreferenceConstants.NODE_SHELL);
+		boolean flatMode = prefs.getBoolean(IPreferenceConstants.SHELL_MODULES_AS_LIST, IPreferenceConstants.DEFAULT_SHELL_MODULES_AS_LIST);
+
+		// create root menu (only used as a container while populating)
+		HashMap<IPath, ModulePopupMenu> moduleTree = new HashMap<IPath, ModulePopupMenu>();
+		ModulePopupMenu menu = new ModulePopupMenu("");
+		moduleTree.put(new Path("/"), menu);
+
 		for (final ModuleDefinition definition : modules.values()) {
 			if (definition.isVisible()) {
+				if (!flatMode) {
+					// find correct menu for tree layout
+					IPath path = definition.getPath();
+					if (!moduleTree.containsKey(path.removeLastSegments(1)))
+						createPath(moduleTree, path.removeLastSegments(1));
 
-				// set parameter for command
-				final HashMap<String, String> parameters = new HashMap<String, String>();
-				parameters.put(LoadModule.PARAMETER_NAME, definition.getPath().toString());
+					menu = moduleTree.get(path.removeLastSegments(1));
+				}
 
-				final CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(serviceLocator, null,
-						LoadModule.COMMAND_ID, CommandContributionItem.STYLE_PUSH);
-				contributionParameter.parameters = parameters;
-				contributionParameter.label = definition.getName();
-				contributionParameter.visibleEnabled = true;
-				contributionParameter.icon = Activator.getImageDescriptor("/images/library.png");
-
-				items.add(contributionParameter);
+				menu.addEntry(new ModulePopupItem(definition));
 			}
 		}
 
-		// sort contributions
-		Collections.sort(items, new Comparator<CommandContributionItemParameter>() {
+		// populate root contributions
+		ModulePopupMenu root = moduleTree.get(new Path("/"));
+		for (AbstractPopupItem item : root.getEntries())
+			additions.addContributionItem(item.getContribution(serviceLocator), null);
+	}
 
-			@Override
-			public int compare(final CommandContributionItemParameter o1, final CommandContributionItemParameter o2) {
-				return o1.label.compareTo(o2.label);
-			}
-		});
+	private static ModulePopupMenu createPath(HashMap<IPath, ModulePopupMenu> moduleTree, IPath path) {
+		if (!moduleTree.containsKey(path)) {
+			ModulePopupMenu parentMenu = createPath(moduleTree, path.removeLastSegments(1));
+			ModulePopupMenu menu = new ModulePopupMenu(path.lastSegment());
 
-		for (final CommandContributionItemParameter item : items)
-			additions.addContributionItem(new CommandContributionItem(item), null);
+			parentMenu.addEntry(menu);
+			moduleTree.put(path, menu);
+			return menu;
+		}
+
+		return moduleTree.get(path);
 	}
 }

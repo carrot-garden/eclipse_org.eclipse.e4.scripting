@@ -39,6 +39,7 @@ public class ShellPreferencePage extends PreferencePage implements IWorkbenchPre
 	private Button fChkAutoFocusText;
 	private Button fChkKeepLastCommand;
 	private TabFolder fTabFolder;
+	private Button fChkModulesAsFlatList;
 
 	public ShellPreferencePage() {
 	}
@@ -76,10 +77,12 @@ public class ShellPreferencePage extends PreferencePage implements IWorkbenchPre
 		Label lblEntries = new Label(grpAppearance, SWT.NONE);
 		lblEntries.setText("entries");
 
+		fChkModulesAsFlatList = new Button(grpAppearance, SWT.CHECK);
+		fChkModulesAsFlatList.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		fChkModulesAsFlatList.setText("Show modules as flat list");
+
 		fChkAutoFocusText = new Button(grpAppearance, SWT.CHECK);
-		GridData gd_ChkAutoFocusText = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
-		gd_ChkAutoFocusText.verticalIndent = 10;
-		fChkAutoFocusText.setLayoutData(gd_ChkAutoFocusText);
+		fChkAutoFocusText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		fChkAutoFocusText.setText("Auto focus text input field");
 
 		fChkKeepLastCommand = new Button(grpAppearance, SWT.CHECK);
@@ -119,6 +122,9 @@ public class ShellPreferencePage extends PreferencePage implements IWorkbenchPre
 		int defaultLength = prefs.getInt(IPreferenceConstants.SHELL_HISTORY_LENGTH, IPreferenceConstants.DEFAULT_SHELL_HISTORY_LENGTH);
 		fTxtHistoryLength.setText(Integer.toString(defaultLength));
 
+		boolean flatList = prefs.getBoolean(IPreferenceConstants.SHELL_MODULES_AS_LIST, IPreferenceConstants.DEFAULT_SHELL_MODULES_AS_LIST);
+		fChkAutoFocusText.setSelection(flatList);
+
 		boolean autofocus = prefs.getBoolean(IPreferenceConstants.SHELL_AUTOFOCUS, IPreferenceConstants.DEFAULT_SHELL_AUTOFOCUS);
 		fChkAutoFocusText.setSelection(autofocus);
 
@@ -143,6 +149,7 @@ public class ShellPreferencePage extends PreferencePage implements IWorkbenchPre
 		// FIXME add checks to have valid integers in the input box
 		prefs.putInt(IPreferenceConstants.SHELL_HISTORY_LENGTH, Integer.parseInt(fTxtHistoryLength.getText()));
 
+		prefs.putBoolean(IPreferenceConstants.SHELL_MODULES_AS_LIST, fChkModulesAsFlatList.getSelection());
 		prefs.putBoolean(IPreferenceConstants.SHELL_AUTOFOCUS, fChkAutoFocusText.getSelection());
 		prefs.putBoolean(IPreferenceConstants.SHELL_KEEP_COMMAND, fChkKeepLastCommand.getSelection());
 

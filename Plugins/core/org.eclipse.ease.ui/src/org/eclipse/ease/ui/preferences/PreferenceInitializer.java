@@ -29,6 +29,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
 		// shell default settings
 		store.setDefault(IPreferenceConstants.SHELL_HISTORY_LENGTH, 20);
+		store.setDefault(IPreferenceConstants.SHELL_MODULES_AS_LIST, false);
 		store.setDefault(IPreferenceConstants.SHELL_AUTOFOCUS, true);
 		store.setDefault(IPreferenceConstants.SHELL_KEEP_COMMAND, false);
 	}

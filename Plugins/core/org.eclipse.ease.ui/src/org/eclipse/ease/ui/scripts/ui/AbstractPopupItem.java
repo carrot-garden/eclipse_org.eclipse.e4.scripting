@@ -11,6 +11,7 @@
 package org.eclipse.ease.ui.scripts.ui;
 
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
@@ -22,6 +23,7 @@ public abstract class AbstractPopupItem {
 		contributionParameter.serviceLocator = serviceLocator;
 		contributionParameter.label = getDisplayName();
 		contributionParameter.visibleEnabled = true;
+		contributionParameter.icon = getImageDescriptor();
 
 		return new CommandContributionItem(contributionParameter);
 	}
@@ -30,7 +32,9 @@ public abstract class AbstractPopupItem {
 		return true;
 	}
 
-	public abstract CommandContributionItemParameter getContributionParameter();
+	protected abstract CommandContributionItemParameter getContributionParameter();
 
 	public abstract String getDisplayName();
+
+	protected abstract ImageDescriptor getImageDescriptor();
 }

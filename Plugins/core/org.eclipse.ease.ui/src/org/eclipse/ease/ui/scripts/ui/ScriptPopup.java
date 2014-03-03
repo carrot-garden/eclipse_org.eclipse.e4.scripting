@@ -15,6 +15,7 @@ import java.util.HashMap;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.handler.Run;
 import org.eclipse.ease.ui.repository.IScript;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 
@@ -44,5 +45,11 @@ public class ScriptPopup extends AbstractPopupItem {
 	@Override
 	public String getDisplayName() {
 		return fScript.getName();
+	}
+
+	@Override
+	protected ImageDescriptor getImageDescriptor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

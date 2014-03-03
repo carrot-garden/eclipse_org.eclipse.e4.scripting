@@ -16,6 +16,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.internal.WorkbenchImages;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
 
@@ -73,8 +75,10 @@ public abstract class AbstractPopupMenu extends AbstractPopupItem implements IMe
 		return fMenuManager.getMenuText();
 	}
 
+	@Override
 	protected ImageDescriptor getImageDescriptor() {
-		return null;
+		// TODO provide own image
+		return WorkbenchImages.getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER);
 	}
 
 	protected abstract void populate();

@@ -42,4 +42,6 @@ public interface IPreferenceConstants {
 	String SHELL_KEEP_COMMAND = "shellKeepCommand";
 	boolean DEFAULT_SHELL_KEEP_COMMAND = false;
 	String SHELL_STARTUP = "shellStartup";
+	String SHELL_MODULES_AS_LIST = "shellModulesAsList";
+	boolean DEFAULT_SHELL_MODULES_AS_LIST = false;
 }
