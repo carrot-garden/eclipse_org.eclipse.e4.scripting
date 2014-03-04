@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.Activator;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.service.prefs.Preferences;
@@ -112,6 +113,10 @@ public class ModuleDefinition {
 				if (definition != null) {
 					fPath = new Path(definition.getName()).append(fPath);
 					categoryID = definition.getParentId();
+				} else {
+					// invalid category detected
+					Logger.logError("Invalid category \"" + categoryID + "\" detected for module \"" + getName() + "\"");
+					categoryID = null;
 				}
 			}
 
