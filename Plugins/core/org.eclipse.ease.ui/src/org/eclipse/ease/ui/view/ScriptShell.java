@@ -42,6 +42,8 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -197,6 +199,27 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 			mOutputText.setFont(mResourceManager.createFont(FontDescriptor.createFrom("Monospace", 10, SWT.NONE)));
 
 		mOutputText.setEditable(false);
+		mOutputText.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(final MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(final MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDoubleClick(final MouseEvent e) {
+				// copy line under cursor in input box
+				String selected = mOutputText.getLine(mOutputText.getLineIndex(e.y));
+				if (!selected.isEmpty()) {
+					mInputCombo.setText(selected);
+					mInputCombo.setFocus();
+					mInputCombo.setSelection(new Point(0, selected.length()));
+				}
+			}
+		});
 
 		fScriptComposite = new ScriptComposite(this, getSite(), sashForm, SWT.NONE);
 		fScriptComposite.setEngine(fScriptEngine.getDescription().getID());
