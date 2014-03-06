@@ -25,8 +25,6 @@ import org.eclipse.ease.service.EngineDescription;
  */
 public interface IScriptEngine {
 
-	String UNDEFINED = "_-_-_undefined_-_-_";
-
 	/**
 	 * Execute script code asynchronously. The code provided will be scheduled and executed as soon as all previously scheduled code is executed. If
 	 * <i>content</i> is a {@link Reader} object, or a {@link File} special treatment is done, otherwise the toString() method is used to extract script code.

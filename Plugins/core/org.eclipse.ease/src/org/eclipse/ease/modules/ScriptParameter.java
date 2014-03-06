@@ -7,16 +7,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
-import org.eclipse.ease.IScriptEngine;
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.PARAMETER })
 @Documented
 public @interface ScriptParameter {
 
-	String name();
+	public static final String NULL = "[null]";
 
-	String defaultValue() default IScriptEngine.UNDEFINED;
+	public static final String UNDEFINED = "_-_-_undefined_-_-_";
+
+	String name() default "";
+
+	String defaultValue() default UNDEFINED;
 
 	boolean optional() default false;
 
@@ -42,7 +44,7 @@ public @interface ScriptParameter {
 
 		public static Object getDefaultValue(ScriptParameter in, Class<?> type) {
 			String defaultValue = getDefaultValue(in);
-			if (defaultValue == null || IScriptEngine.UNDEFINED.equals(defaultValue)) {
+			if ((defaultValue == null) || UNDEFINED.equals(defaultValue)) {
 				return null;
 			}
 			if (Integer.class.isAssignableFrom(type)) {

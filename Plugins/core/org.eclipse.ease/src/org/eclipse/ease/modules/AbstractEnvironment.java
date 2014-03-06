@@ -178,7 +178,7 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 
 	@Override
 	@WrapToScript
-	public final void print(final Object text) {
+	public final void print(final @ScriptParameter(optional = true, defaultValue = "") Object text) {
 		getScriptEngine().getOutputStream().println(text);
 	}
 

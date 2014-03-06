@@ -196,7 +196,7 @@ public class EnvironmentModule extends AbstractEnvironment {
 	 *            return code
 	 */
 	@WrapToScript
-	public final void exit(final Object value) {
+	public final void exit(final @ScriptParameter(optional = true, defaultValue = ScriptParameter.NULL) Object value) {
 		throw new ExitException(value);
 	}
 
@@ -299,27 +299,6 @@ public class EnvironmentModule extends AbstractEnvironment {
 
 		return code.toString();
 	}
-
-	// @SuppressWarnings("unchecked")
-	// public static final Class<IScriptModule> getModuleClass(final String
-	// moduleIdentifier) {
-	// final IConfigurationElement[] config =
-	// Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_MODULE_ID);
-	//
-	// try {
-	// for (final IConfigurationElement e : config) {
-	// if (moduleIdentifier.equals(e.getAttribute("name"))) {
-	// final Object o = e.createExecutableExtension("class");
-	// if (o instanceof IScriptModule) {
-	// return ((Class<IScriptModule>) o.getClass());
-	// }
-	// }
-	// }
-	// } catch (final Exception e) {
-	// }
-	//
-	// return null;
-	// }
 
 	// // FIXME move to rhino bundle
 	// /**

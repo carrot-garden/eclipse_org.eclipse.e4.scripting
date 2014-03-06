@@ -25,246 +25,278 @@ import org.eclipse.ease.modules.ScriptParameter;
 
 public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
-    private static final String UNDIFINED_KEYWORD = "undifined";
+	private class Parameter {
 
-    @Override
-    public String getSaveVariableName(final String variableName) {
-        return RhinoScriptEngine.getSaveName(variableName);
-    }
+		private Class<?> fClazz;
+		private String fName = "";
+		private boolean fOptional = true;
+		private String fDefaultValue = ScriptParameter.UNDEFINED;
 
-    @Override
-    public String createFunctionWrapper(final String moduleVariable, final Method method, final Set<String> functionNames, final String resultName,
-            final String preExecutionCode, final String postExecutionCode) {
+		public void setClass(Class<?> clazz) {
+			fClazz = clazz;
+		}
 
-        StringBuilder javaScriptCode = new StringBuilder();
+		public void setName(String name) {
+			fName = name;
+		}
 
-        // create body
-        StringBuffer body = new StringBuffer();
+		public void setOptional(boolean optional) {
+			fOptional = optional;
+		}
 
-        // insert hooked pre execution code
-        if (preExecutionCode != null) {
-            body.append(preExecutionCode);
-        }
+		public void setDefault(String defaultValue) {
+			fDefaultValue = defaultValue;
+		}
 
-        // parse parameters for undefined values
-        for (int i = 0; i < method.getParameterTypes().length; i++) {
-            body.append("\tif (typeof a" + i + " === \"undefined\")\n");
-            body.append("\t\ta" + i + " = Packages.org.eclipse.ease.modules.IScriptModule.UNDEFINED;\n");
-        }
+		public String getName() {
+			return fName;
+		}
 
-        // create parameter string
-        final StringBuilder parameters = new StringBuilder();
-        for (int i = 0; i < method.getParameterTypes().length; i++) {
-            parameters.append(", ");
-            parameters.append((char) ('a' + i));
-        }
-        if (parameters.length() > 0)
-            parameters.replace(0, 2, "");
+		public Class<?> getClazz() {
+			return fClazz;
+		}
 
-        // insert method call
-        CharSequence generateParameterCall = generateParameterCall(method);
-        body.append(generateOptionalParamterBodyPart(method));
-        body.append(generateCallMethodOnDefinedVariableInfo(moduleVariable, method.getName(), resultName, generateParameterCall));
+		public String getDefaultValue() {
+			return fDefaultValue;
+		}
 
-        // insert hooked post execution code
-        if (postExecutionCode != null) {
-            body.append(postExecutionCode);
-        }
+		public boolean isOptional() {
+			return fOptional;
+		}
+	}
 
-        // insert return statement
-        body.append(generateReturnStatement(resultName));
+	private static final String UNDIFINED_KEYWORD = "undifined";
 
-        for (String name : functionNames) {
-            if (!isCorrectMethodName(name)) {
-                Logger.logError("The method name " + name + " from the module " + moduleVariable + " can not be used because it's name is not correct",
-                        Activator.PLUGIN_ID);
-                return "";
-            }
-            if (!name.isEmpty()) {
-                javaScriptCode.append(generateMethodDefinition(body, generateParameterCall, name));
-            }
-        }
+	@Override
+	public String getSaveVariableName(final String variableName) {
+		return RhinoScriptEngine.getSaveName(variableName);
+	}
 
-        return javaScriptCode.toString();
-    }
+	@Override
+	public String createFunctionWrapper(final String moduleVariable, final Method method, final Set<String> functionNames, final String resultName,
+			final String preExecutionCode, final String postExecutionCode) {
 
-    /**
-     * Generate a part of a the body which handle optional argument. It will generate for example function name(a,b,c){ a = a || null; b = b ||
-     * "defaultStringValue"; c = c || 16 ... body ... }
-     * 
-     * @param method
-     * @return
-     */
-    protected CharSequence generateOptionalParamterBodyPart(final Method method) {
-        StringBuilder defaultValueParameters = new StringBuilder();
-        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-        Class<?>[] parametersTypes = method.getParameterTypes();
-        for (int parameterIndex = 0; parameterIndex < parametersTypes.length; parameterIndex++) {
-            Annotation[] annots = parameterAnnotations[parameterIndex];
-            String parameterName = getParameterName(annots);
-            if (parameterName == null) {
-                parameterName = "a" + parameterIndex;
-            }
-            Class<?> type = parametersTypes[parameterIndex];
-            if (annots.length > 0) {
-                for (Annotation a : annots) {
-                    if (a instanceof ScriptParameter) {
-                        defaultValueParameters.append("\tvar ");
-                        defaultValueParameters.append(parameterName);
-                        defaultValueParameters.append(" = ");
-                        defaultValueParameters.append(parameterName);
-                        defaultValueParameters.append(" || ");
-                        CharSequence setOptionalParameterValue = setOptionalParameterValue(type, (ScriptParameter) a);
-                        if (setOptionalParameterValue != null) {
-                            defaultValueParameters.append(setOptionalParameterValue);
-                        } else {
-                            defaultValueParameters.append("null");
-                        }
-                        defaultValueParameters.append(";\n");
-                    }
-                }
-            }
-        }
-        return defaultValueParameters;
-    }
+		StringBuilder javaScriptCode = new StringBuilder();
 
-    /**
-     * Generate code for optional parameter (and handle default value)
-     * 
-     * @param type
-     * @param a
-     * @return
-     */
-    protected CharSequence setOptionalParameterValue(final Class<?> type, final ScriptParameter a) {
-        Object defaultValue = ScriptParameter.OptionalParameterHelper.getDefaultValue(a, type);
-        StringBuilder parametersSignature = new StringBuilder();
-        parametersSignature.append("=");
-        if (defaultValue != null) {
-            if (defaultValue instanceof String) {
-                parametersSignature.append("\"" + defaultValue + "\"");
-            } else {
-                parametersSignature.append(defaultValue.toString());
-            }
-        }
-        return null;
-    }
+		// parse parameters
+		ArrayList<Parameter> parameters = new ArrayList<Parameter>();
+		for (int index = 0; index < method.getParameterTypes().length; index++) {
+			Parameter parameter = new Parameter();
+			parameter.setClass(method.getParameterTypes()[index]);
 
-    protected String getNullVariableName() {
-        return UNDIFINED_KEYWORD;
-    }
+			ScriptParameter annotation = getParameterAnnotation(method.getParameterAnnotations()[index]);
+			if (annotation != null) {
+				parameter.setName(annotation.name());
+				parameter.setOptional(annotation.optional());
+				parameter.setDefault(annotation.defaultValue());
+			}
+			parameters.add(parameter);
+		}
 
-    public static List<String> RESERVED_KEYWORDS = new ArrayList<String>();
+		// post process parameters: find unique names for unnamed parameters
+		StringBuilder parameterList = new StringBuilder();
+		for (Parameter parameter : parameters) {
+			if (parameter.getName().isEmpty())
+				parameter.setName(findName(parameters));
 
-    public boolean isCorrectMethodName(final String methodName) {
-        return RhinoScriptEngine.isSaveName(methodName) && !RESERVED_KEYWORDS.contains(methodName);
-    }
+			parameterList.append(", ").append(parameter.getName());
+		}
+		if (parameterList.length() > 2)
+			parameterList.delete(0, 2);
 
-    static {
-        RESERVED_KEYWORDS.add("for");
-        RESERVED_KEYWORDS.add("while");
-        RESERVED_KEYWORDS.add("delete");
-        // TODO Complete this list
-    }
+		StringBuilder body = new StringBuilder();
+		// insert parameter checks
+		body.append(verifyParameters(parameters));
 
-    /**
-     * Generate method definition. function name (parametersSignature){ ... body ... }
-     * 
-     * @param body
-     *            the body
-     * @param parametersSignature
-     *            the parameters signature
-     * @param name
-     *            the name
-     * @return the char sequence
-     */
-    protected CharSequence generateMethodDefinition(final CharSequence body, final CharSequence parametersSignature, final String name) {
-        StringBuilder methodDef = new StringBuilder();
-        methodDef.append("function ");
-        methodDef.append(name);
-        methodDef.append("(");
-        methodDef.append(parametersSignature);
-        methodDef.append(") {\n");
-        methodDef.append(body);
-        methodDef.append("}\n");
-        return methodDef.toString();
-    }
+		// insert hooked pre execution code
+		if (preExecutionCode != null)
+			body.append(preExecutionCode);
 
-    /**
-     * @param method
-     * @return
-     */
-    protected CharSequence generateParameterCall(final Method method) {
-        StringBuilder parameters = new StringBuilder();
-        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-        Class<?>[] parametersTypes = method.getParameterTypes();
-        for (int parameterIndex = 0; parameterIndex < parametersTypes.length; parameterIndex++) {
-            Annotation[] annots = parameterAnnotations[parameterIndex];
-            String parameterName = getParameterName(annots);
-            if (parameterName == null) {
-                parameterName = "a" + parameterIndex;
-            }
-            parameters.append(parameterName);
-            if (parameterIndex != (parametersTypes.length - 1)) {
-                parameters.append(", ");
-            }
-        }
-        return parameters;
-    }
+		// insert method call
+		body.append("\tvar ").append(resultName).append(" = ").append(moduleVariable).append('.').append(method.getName()).append('(');
+		body.append(parameterList);
+		body.append(");\n");
 
-    @Override
-    public String getConstantDefinition(final String name, final Field field) {
-        return "const " + RhinoScriptEngine.getSaveName(name) + " = Packages." + field.getDeclaringClass().getName() + "." + field.getName() + ";\n";
-    }
+		// insert hooked post execution code
+		if (postExecutionCode != null)
+			body.append(postExecutionCode);
 
-    @Override
-    public String getVariableDefinition(final String name, final String content) {
-        return "var " + RhinoScriptEngine.getSaveName(name) + " = " + content + ";";
-    }
+		// insert return statement
+		body.append("\treturn ").append(resultName).append(";\n");
 
-    @Override
-    public String classInstantiation(final Class<?> clazz, final String[] parameters) {
-        StringBuilder code = new StringBuilder();
-        code.append("new Packages.");
-        code.append(clazz.getName());
-        code.append("(");
+		// build function declarations
+		for (String name : functionNames) {
+			if (!isCorrectMethodName(name)) {
+				Logger.logError("The method name \"" + name + "\" from the module \"" + moduleVariable + "\" can not be wrapped because it's name is reserved",
+						Activator.PLUGIN_ID);
 
-        if (parameters != null) {
-            for (String parameter : parameters) {
-                code.append('"');
-                code.append(parameter);
-                code.append('"');
-                code.append(", ");
-            }
-            if (parameters.length > 0)
-                code.replace(code.length() - 2, code.length(), "");
-        }
+			} else if (!name.isEmpty()) {
+				javaScriptCode.append("function ").append(name).append("(").append(parameterList).append(") {\n");
+				javaScriptCode.append(body);
+				javaScriptCode.append("}\n");
+			}
+		}
 
-        code.append(")");
+		return javaScriptCode.toString();
+	}
 
-        return code.toString();
-    }
+	private StringBuilder verifyParameters(List<Parameter> parameters) {
+		StringBuilder data = new StringBuilder();
 
-    protected String generateReturnStatement(final String resultName) {
-        StringBuilder returnStatment = new StringBuilder();
-        returnStatment.append("\treturn ");
-        returnStatment.append(resultName);
-        returnStatment.append(";\n");
-        return returnStatment.toString();
-    }
+		if (!parameters.isEmpty()) {
+			Parameter parameter = parameters.get(parameters.size() - 1);
+			if (parameter.isOptional()) {
+				data.append("\tif (typeof " + parameter.getName() + " === \"undefined\") {\n");
+				data.append("\t\t" + parameter.getName() + " = " + getDefaultValue(parameter) + "\n");
 
-    protected CharSequence generateCallMethodOnDefinedVariableInfo(final String moduleVariable, final String methodName, final String resultName,
-            final CharSequence parameters) {
-        StringBuilder body = new StringBuilder();
-        body.append("\tvar ");
-        body.append(resultName);
-        body.append(" = ");
-        body.append(moduleVariable);
-        body.append(".");
-        body.append(methodName);
-        body.append("(");
-        body.append(parameters);
-        body.append(");\n");
-        return body;
-    }
+				data.append(verifyParameters(parameters.subList(0, parameters.size() - 1)));
 
+				data.append("\t}\n");
+			}
+		}
+
+		return data;
+	}
+
+	private String getDefaultValue(Parameter parameter) {
+		String defaultStringValue = parameter.getDefaultValue().replaceAll("\\r", "\\\\r").replaceAll("\\n", "\\\\n");
+		Class<?> clazz = parameter.getClazz();
+
+		if (ScriptParameter.NULL.equals(defaultStringValue))
+			return "null";
+
+		if (ScriptParameter.UNDEFINED.equals(defaultStringValue)) {
+			// look for empty constructor
+			try {
+				clazz.getConstructor();
+				// empty constructor found, return class
+				return classInstantiation(clazz, null);
+			} catch (SecurityException e) {
+			} catch (NoSuchMethodException e) {
+			}
+		}
+
+		// look for string constructor
+		try {
+			clazz.getConstructor(String.class);
+			// string constructor found, return class
+			return classInstantiation(clazz, new String[] { defaultStringValue });
+		} catch (SecurityException e) {
+		} catch (NoSuchMethodException e) {
+		}
+
+		// special handling for string defaults passed to an Object.class
+		if (clazz.isAssignableFrom(String.class))
+			return classInstantiation(String.class, new String[] { defaultStringValue });
+
+		return "null";
+	}
+
+	/**
+	 * Find a unique name that is not used yet.
+	 * 
+	 * @param parameters
+	 *            list of available parameters
+	 * @return unique unused parameter name
+	 */
+	private String findName(ArrayList<Parameter> parameters) {
+		String name;
+		int index = 1;
+		boolean found;
+		do {
+			found = true;
+			name = "param" + index;
+
+			for (Parameter parameter : parameters) {
+				if (name.equals(parameter.getName())) {
+					index++;
+					found = false;
+					break;
+				}
+			}
+
+		} while (!found);
+
+		return name;
+	}
+
+	private ScriptParameter getParameterAnnotation(Annotation[] annotations) {
+		for (Annotation annotation : annotations) {
+			if (annotation instanceof ScriptParameter)
+				return (ScriptParameter) annotation;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Generate code for optional parameter (and handle default value)
+	 * 
+	 * @param type
+	 * @param a
+	 * @return
+	 */
+	protected CharSequence setOptionalParameterValue(final Class<?> type, final ScriptParameter a) {
+		Object defaultValue = ScriptParameter.OptionalParameterHelper.getDefaultValue(a, type);
+		StringBuilder parametersSignature = new StringBuilder();
+		parametersSignature.append("=");
+		if (defaultValue != null) {
+			if (defaultValue instanceof String) {
+				parametersSignature.append("\"" + defaultValue + "\"");
+			} else {
+				parametersSignature.append(defaultValue.toString());
+			}
+		}
+		return null;
+	}
+
+	protected String getNullVariableName() {
+		return UNDIFINED_KEYWORD;
+	}
+
+	public static List<String> RESERVED_KEYWORDS = new ArrayList<String>();
+
+	public boolean isCorrectMethodName(final String methodName) {
+		return RhinoScriptEngine.isSaveName(methodName) && !RESERVED_KEYWORDS.contains(methodName);
+	}
+
+	static {
+		RESERVED_KEYWORDS.add("for");
+		RESERVED_KEYWORDS.add("while");
+		RESERVED_KEYWORDS.add("delete");
+		// TODO Complete this list
+	}
+
+	@Override
+	public String getConstantDefinition(final String name, final Field field) {
+		return "const " + RhinoScriptEngine.getSaveName(name) + " = Packages." + field.getDeclaringClass().getName() + "." + field.getName() + ";\n";
+	}
+
+	@Override
+	public String getVariableDefinition(final String name, final String content) {
+		return "var " + RhinoScriptEngine.getSaveName(name) + " = " + content + ";";
+	}
+
+	@Override
+	public String classInstantiation(final Class<?> clazz, final String[] parameters) {
+		StringBuilder code = new StringBuilder();
+		code.append("new Packages.");
+		code.append(clazz.getName());
+		code.append("(");
+
+		if (parameters != null) {
+			for (String parameter : parameters) {
+				code.append('"');
+				code.append(parameter);
+				code.append('"');
+				code.append(", ");
+			}
+			if (parameters.length > 0)
+				code.replace(code.length() - 2, code.length(), "");
+		}
+
+		code.append(")");
+
+		return code.toString();
+	}
 }
