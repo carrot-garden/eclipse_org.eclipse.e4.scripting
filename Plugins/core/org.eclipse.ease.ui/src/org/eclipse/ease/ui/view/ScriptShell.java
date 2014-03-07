@@ -381,18 +381,20 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 							// indent message
 							out = "\t" + message.replaceAll("\\r?\\n", "\n\t");
 
-						mOutputText.append("\n");
+						if (!mOutputText.isDisposed()) {
+							mOutputText.append("\n");
 
-						// create new style range
-						final StyleRange styleRange = getStyle(style, mOutputText.getText().length(), out.length());
+							// create new style range
+							final StyleRange styleRange = getStyle(style, mOutputText.getText().length(), out.length());
 
-						mOutputText.append(out);
-						mOutputText.setStyleRange(styleRange);
+							mOutputText.append(out);
+							mOutputText.setStyleRange(styleRange);
 
-						// scroll to end of window
-						if (!mScrollLock) {
-							mOutputText.setHorizontalPixel(0);
-							mOutputText.setTopPixel(mOutputText.getLineHeight() * mOutputText.getLineCount());
+							// scroll to end of window
+							if (!mScrollLock) {
+								mOutputText.setHorizontalPixel(0);
+								mOutputText.setTopPixel(mOutputText.getLineHeight() * mOutputText.getLineCount());
+							}
 						}
 					}
 				});
@@ -532,8 +534,10 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 
 						@Override
 						public void run() {
-							mInputCombo.setText(code);
-							mInputCombo.setSelection(new Point(0, code.length()));
+							if (!mInputCombo.isDisposed()) {
+								mInputCombo.setText(code);
+								mInputCombo.setSelection(new Point(0, code.length()));
+							}
 						}
 					});
 				}
