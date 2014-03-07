@@ -15,16 +15,14 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IAdapterManager;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.ease.Logger;
+import org.eclipse.ease.module.platform.UIModule;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.services.IEvaluationService;
 
 import com.google.common.collect.Lists;
-
 
 /**
  * Module to interact with selection
@@ -39,48 +37,33 @@ public class SelectionModule extends AbstractScriptModule {
 	}
 
 	/**
-	 * Return the current selection {@link ISelection}
-	 * 
-	 * @return
-	 */
-	@WrapToScript
-	public ISelection getSelection() {
-		GetSelectionRunnable runnable = new GetSelectionRunnable();
-		Display.getDefault().syncExec(runnable);
-		ISelection selection = runnable.getSelection();
-		return selection;
-	}
-
-	/**
-	 * Return the current selection using the selection service.
-	 * The selection service return transformed selection using some rules define in the platform. This method use the selector with the
-	 * Highest priority
+	 * Return the current selection using the selection service. The selection service return transformed selection using some rules define in the platform.
+	 * This method use the selector with the Highest priority
 	 * 
 	 * @return
 	 */
 	@WrapToScript
 	public Object getCustomSelection() {
-		ISelection selection = getSelection();
-		IEvaluationService esrvc = (IEvaluationService)PlatformUI.getWorkbench().getService(IEvaluationService.class);
+		ISelection selection = getEnvironment().getModule(UIModule.class).getSelection(null);
+		IEvaluationService esrvc = (IEvaluationService) PlatformUI.getWorkbench().getService(IEvaluationService.class);
 
 		Object customSelection = SelectorService.getInstance().getSelectionFromContext(selection, esrvc.getCurrentState());
-		if(customSelection != null) {
+		if (customSelection != null) {
 			return customSelection;
 		}
 		return selection;
 	}
 
 	/**
-	 * Return the current selection using the selection service.
-	 * The selection service return transformed selection using some rules define in the platform.
+	 * Return the current selection using the selection service. The selection service return transformed selection using some rules define in the platform.
 	 * 
 	 * @param selectorID
-	 *        The if of the selector to use
+	 *            The if of the selector to use
 	 * @return
 	 */
 	@WrapToScript
-	public Object getCustomSelectionFromSelector(String selectorID) {
-		ISelection selection = getSelection();
+	public Object getCustomSelectionFromSelector(final String selectorID) {
+		ISelection selection = getEnvironment().getModule(UIModule.class).getSelection(null);
 		return SelectorService.getInstance().getSelectionFromSelector(selection, selectorID);
 	}
 
@@ -91,25 +74,26 @@ public class SelectionModule extends AbstractScriptModule {
 	 */
 	@WrapToScript
 	public Iterable<Object> getIterableSelection() {
-		ISelection selection = getSelection();
+		ISelection selection = getEnvironment().getModule(UIModule.class).getSelection(null);
 		IIterable result = getAdapter(IIterable.class, selection);
-		if(result != null) {
+		if (result != null) {
 			return Lists.newArrayList(result.iterator());
 		}
-		DialogModule.error("The current selection is not an iterable");
+		getEnvironment().getModule(UIModule.class);
+		UIModule.showErrorDialog("Error", "The current selection is not an iterable");
 		return null;
 	}
 
-	protected <T extends Object> T getAdapter(Class<T> cla, Object o) {
-		if(o != null && cla != null) {
-			if(cla.isInstance(o)) {
-				return (T)o;
-			} else if(o instanceof IAdaptable) {
-				return (T)((IAdaptable)o).getAdapter(cla);
+	protected <T extends Object> T getAdapter(final Class<T> cla, final Object o) {
+		if ((o != null) && (cla != null)) {
+			if (cla.isInstance(o)) {
+				return (T) o;
+			} else if (o instanceof IAdaptable) {
+				return (T) ((IAdaptable) o).getAdapter(cla);
 			} else {
 				IAdapterManager manager = Platform.getAdapterManager();
-				if(manager != null) {
-					return (T)manager.getAdapter(o, cla);
+				if (manager != null) {
+					return (T) manager.getAdapter(o, cla);
 				} else {
 					Logger.logError("Unable to get thr AdapterManger");
 					return null;
@@ -118,34 +102,4 @@ public class SelectionModule extends AbstractScriptModule {
 		}
 		return null;
 	}
-
-	private static class GetSelectionRunnable implements Runnable {
-
-		private ISelection selection;
-
-		@Override
-		public void run() {
-			ISelectionService selectionService = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService();
-			if(selectionService != null) {
-				this.selection = selectionService.getSelection();
-				if(selection == null) {
-					Logger.logError("Unable to find a selection from the workbench");
-				}
-			}
-		}
-
-
-		/**
-		 * @return the selection
-		 */
-		public ISelection getSelection() {
-			return selection;
-		}
-
-
-
-	}
-
-
-
 }

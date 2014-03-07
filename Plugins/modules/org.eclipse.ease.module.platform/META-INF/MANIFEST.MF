@@ -11,7 +11,9 @@ Require-Bundle: org.eclipse.ui,
  org.mozilla.javascript,
  org.eclipse.jface.text;bundle-version="3.8.100",
  org.eclipse.core.expressions,
- com.google.guava;bundle-version="11.0.2"
+ com.google.guava;bundle-version="11.0.2",
+ org.eclipse.ui.workbench,
+ org.eclipse.ui.ide;bundle-version="3.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Version: 0.1.1.qualifier
 Bundle-Name: Platform
