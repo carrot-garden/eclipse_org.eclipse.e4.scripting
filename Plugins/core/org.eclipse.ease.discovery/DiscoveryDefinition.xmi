@@ -28,6 +28,7 @@
         incubation="true">
       <sitesURLS>http://download.eclipse.org/releases/kepler</sitesURLS>
       <sitesURLS>http://download.eclipse.org/e4/updates/ease/eclipse-e4-ease-nightly/</sitesURLS>
+      <sitesURLS>https://codeandme.googlecode.com/svn/ease_extensions/trunk/org.eclipse.ease.jython.releng.p2/p2/</sitesURLS>
       <sitesURLS>http://topcased-mm.gforge.enseeiht.fr/ease_jython/updates/ease_jython_nightly/</sitesURLS>
       <id>org.eclipse.ease.python.feature</id>
       <id>org.eclipse.ease.python.jython.feature</id>
