@@ -79,8 +79,7 @@ public class SelectionModule extends AbstractScriptModule {
 		if (result != null) {
 			return Lists.newArrayList(result.iterator());
 		}
-		getEnvironment().getModule(UIModule.class);
-		UIModule.showErrorDialog("Error", "The current selection is not an iterable");
+		getEnvironment().getModule(UIModule.class).showErrorDialog("Error", "The current selection is not an iterable");
 		return null;
 	}
 

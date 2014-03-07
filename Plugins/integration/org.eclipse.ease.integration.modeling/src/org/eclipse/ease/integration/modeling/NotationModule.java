@@ -12,15 +12,13 @@ package org.eclipse.ease.integration.modeling;
 
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.integration.modeling.selector.GMFNotationSelector;
-import org.eclipse.ease.module.platform.modules.DialogModule;
+import org.eclipse.ease.module.platform.UIModule;
 import org.eclipse.ease.modules.IEnvironment;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
-
 /**
- * This module help to handle Notation models
- * This extends {@link EcoreModule}
+ * This module help to handle Notation models This extends {@link EcoreModule}
  * 
  * @author adaussy
  * 
@@ -32,22 +30,21 @@ public class NotationModule extends EcoreModule {
 
 	}
 
-    @Override
-    public void initialize(final IScriptEngine engine, final IEnvironment environment) {
-        super.initialize(engine, environment);
-        initEPackage(NotationPackage.eNS_URI);
-    }
+	@Override
+	public void initialize(final IScriptEngine engine, final IEnvironment environment) {
+		super.initialize(engine, environment);
+		initEPackage(NotationPackage.eNS_URI);
+	}
 
 	@Override
 	public EObject getSelection() {
 		Object selection = selectionModule.getCustomSelectionFromSelector(GMFNotationSelector.SELECTOR_ID);
-		if(selection instanceof EObject) {
-			return (EObject)selection;
+		if (selection instanceof EObject) {
+			return (EObject) selection;
 		} else {
 			String message = "Unable to retreive a EObject from the selection";
-			DialogModule.error(message);
+			getEnvironment().getModule(UIModule.class).showErrorDialog("Error", message);
 			return null;
 		}
 	}
-
 }

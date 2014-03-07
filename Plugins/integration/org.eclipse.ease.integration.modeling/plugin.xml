@@ -12,12 +12,18 @@
             id="org.eclipse.ease.integration.modeling.ecore"
             name="EcoreModule"
             visible="true">
+         <dependency
+               module="org.eclipse.ease.module.platform.ui">
+         </dependency>
       </module>
       <module
             class="org.eclipse.ease.integration.modeling.NotationModule"
             id="org.eclipse.ease.integration.modeling.notation"
             name="NotationModule"
             visible="true">
+         <dependency
+               module="org.eclipse.ease.module.platform.ui">
+         </dependency>
       </module>
    </extension>
 
