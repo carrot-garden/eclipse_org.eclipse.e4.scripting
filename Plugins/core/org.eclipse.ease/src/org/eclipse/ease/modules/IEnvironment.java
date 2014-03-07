@@ -42,4 +42,5 @@ public interface IEnvironment {
 	 */
 	Object loadModule(final String moduleIdentifier);
 
+	Object resolveFile(final String filename);
 }

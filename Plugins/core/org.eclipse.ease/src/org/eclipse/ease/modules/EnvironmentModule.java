@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ease.modules;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -23,9 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ExitException;
 import org.eclipse.ease.IScriptEngine;
@@ -38,8 +34,6 @@ import org.eclipse.ease.debug.Tracer;
  * The Environment provides base functions for all script interpreters. It is automatically loaded by any interpreter upon startup.
  */
 public class EnvironmentModule extends AbstractEnvironment {
-
-	private static final String PROJECT_SCHEME = "project://";
 
 	public static final String MODULE_NAME = "/System/Environment";
 
@@ -200,18 +194,6 @@ public class EnvironmentModule extends AbstractEnvironment {
 		throw new ExitException(value);
 	}
 
-	// /**
-	// * Terminates execution of the current piece of code. Eg forces an include
-	// command to return.
-	// *
-	// * @param value
-	// * return value
-	// */
-	// @WrapToScript
-	// public final void stepUp(final Object value) {
-	// throw new BreakException(value);
-	// }
-	//
 	/**
 	 * Include and execute a script file. Quite similar to eval(Object) a source file is opened and its content is executed. Multiple sources are available:
 	 * "workspace://" opens a file relative to the workspace root, "project://" opens a file relative to the current project, "file://" opens a file from the
@@ -225,16 +207,11 @@ public class EnvironmentModule extends AbstractEnvironment {
 	 */
 	@WrapToScript
 	public final Object include(final String filename) {
-		if (filename.startsWith(PROJECT_SCHEME)) {
-			// project relative link, we cannot resolve this via URL as we need a relative file in the project
-			Object currentFile = getScriptEngine().getExecutedFile();
-			if (currentFile instanceof IFile) {
-				IFile file = ((IFile) currentFile).getProject().getFile(new Path(filename.substring(PROJECT_SCHEME.length())));
-				if (file.exists())
-					return getScriptEngine().inject(file);
-			}
+		Object file = resolveFile(filename);
+		if (file != null)
+			return getScriptEngine().inject(file);
 
-		} else {
+		else {
 
 			// maybe this is a URI
 			try {
@@ -243,34 +220,6 @@ public class EnvironmentModule extends AbstractEnvironment {
 
 			} catch (MalformedURLException e) {
 			} catch (IOException e) {
-			}
-
-			// maybe this is an absolute path within the file system
-			File systemFile = new File(filename);
-			if (systemFile.exists())
-				return getScriptEngine().inject(systemFile);
-
-			// maybe this is an absolute path within the workspace
-			IFile workspaceFile;
-			try {
-				workspaceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(filename));
-				if (workspaceFile.exists())
-					return getScriptEngine().inject(workspaceFile);
-			} catch (IllegalArgumentException e) {
-				// invalid path detected
-			}
-
-			// maybe a relative filename
-			Object currentFile = getScriptEngine().getExecutedFile();
-			if (currentFile instanceof IFile) {
-				workspaceFile = ((IFile) currentFile).getParent().getFile(new Path(filename));
-				if (workspaceFile.exists())
-					return getScriptEngine().inject(workspaceFile);
-
-			} else if (currentFile instanceof File) {
-				systemFile = new File(((File) currentFile).getParentFile().getAbsolutePath() + File.pathSeparator + filename);
-				if (systemFile.exists())
-					return getScriptEngine().inject(systemFile);
 			}
 		}
 
