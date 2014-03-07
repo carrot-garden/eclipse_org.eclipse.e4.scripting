@@ -201,8 +201,8 @@ public class UIModule {
 	 * @throws PartInitException
 	 *             when view cannot be created
 	 */
-	@WrapToScript(alias = "showView")
-	public IViewPart openView(final String name) throws PartInitException {
+	@WrapToScript(alias = "openView")
+	public IViewPart showView(final String name) throws PartInitException {
 		// find view ID
 		final String viewID = getIDForName(name);
 
@@ -246,8 +246,8 @@ public class UIModule {
 	 * @throws PartInitException
 	 *             when editor cannot be created
 	 */
-	@WrapToScript
-	public IEditorPart openEditor(final IFile file) throws PartInitException {
+	@WrapToScript(alias = "openEditor")
+	public IEditorPart showEditor(final IFile file) throws PartInitException {
 		final IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
 
 		try {
