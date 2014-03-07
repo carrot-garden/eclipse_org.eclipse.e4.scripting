@@ -6,6 +6,9 @@
             id="org.eclipse.ease.integration.modeling.uml.umlmodule"
             name="UMLModule"
             visible="true">
+         <dependency
+               module="org.eclipse.ease.module.platform.ui">
+         </dependency>
       </module>
    </extension>
 

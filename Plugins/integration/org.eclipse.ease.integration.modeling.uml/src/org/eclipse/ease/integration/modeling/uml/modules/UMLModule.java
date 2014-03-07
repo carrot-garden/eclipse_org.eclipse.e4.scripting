@@ -2,7 +2,7 @@ package org.eclipse.ease.integration.modeling.uml.modules;
 
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.integration.modeling.EcoreModule;
-import org.eclipse.ease.module.platform.modules.DialogModule;
+import org.eclipse.ease.module.platform.UIModule;
 import org.eclipse.ease.modules.IEnvironment;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.emf.common.util.EList;
@@ -14,7 +14,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.UMLPackage;
 
-
 /**
  * This module help to handle UML models
  * 
@@ -23,11 +22,11 @@ import org.eclipse.uml2.uml.UMLPackage;
  */
 public class UMLModule extends EcoreModule {
 
-    @Override
-    public void initialize(final IScriptEngine engine, final IEnvironment environment) {
-        super.initialize(engine, environment);
-        initEPackage(UMLPackage.eNS_URI);
-    }
+	@Override
+	public void initialize(final IScriptEngine engine, final IEnvironment environment) {
+		super.initialize(engine, environment);
+		initEPackage(UMLPackage.eNS_URI);
+	}
 
 	/**
 	 * Get the UML model from the current active editor
@@ -37,31 +36,31 @@ public class UMLModule extends EcoreModule {
 	@WrapToScript
 	public Model getModel() {
 		EditingDomain editingDomain = getEditingDomain();
-		if(editingDomain == null) {
-			DialogModule.error("Unable to retreive editing domain");
+		if (editingDomain == null) {
+			getEnvironment().getModule(UIModule.class).showErrorDialog("Error", "Unable to retreive editing domain");
 		}
 		ResourceSet resourceSet = editingDomain.getResourceSet();
-		if(resourceSet == null) {
-			DialogModule.error("Unable to retreive the resource set");
+		if (resourceSet == null) {
+			getEnvironment().getModule(UIModule.class).showErrorDialog("Error", "Unable to retreive the resource set");
 		}
-		for(Resource r : resourceSet.getResources()) {
+		for (Resource r : resourceSet.getResources()) {
 			Model result = lookForModel(r);
-			if(result != null) {
+			if (result != null) {
 				return result;
 			}
 		}
 		return null;
 	}
 
-	private Model lookForModel(Resource r) {
+	private Model lookForModel(final Resource r) {
 		URI resourceURI = r.getURI();
-		if(resourceURI != null) {
-			if(UMLPackage.eNS_PREFIX.equals(resourceURI.fileExtension())) {
+		if (resourceURI != null) {
+			if (UMLPackage.eNS_PREFIX.equals(resourceURI.fileExtension())) {
 				EList<EObject> content = r.getContents();
-				if(!content.isEmpty()) {
+				if (!content.isEmpty()) {
 					EObject root = content.get(0);
-					if(root instanceof Model) {
-						return (Model)root;
+					if (root instanceof Model) {
+						return (Model) root;
 					}
 				}
 			}

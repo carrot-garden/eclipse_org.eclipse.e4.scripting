@@ -43,21 +43,22 @@ public class InputModule {
 	 * Opens a simple dialog box to ask the user a simple string.
 	 * 
 	 * @param title
-	 *        the title of the dialog box
+	 *            the title of the dialog box
 	 * @param message
-	 *        the message for the dialog box
+	 *            the message for the dialog box
 	 * @param defaultValue
-	 *        the default value, used as an initial value
+	 *            the default value, used as an initial value
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
 	@WrapToScript
-	public String askSimpleString(String message, @ScriptParameter(optional = true, name = "title") String title, @ScriptParameter(optional = true, name = "defaultValue") String defaultValue) {
-		if(title == null) {
+	public String askSimpleString(final String message, @ScriptParameter(optional = true, name = "title") String title,
+			@ScriptParameter(optional = true, name = "defaultValue") final String defaultValue) {
+		if (title == null) {
 			title = "";
 		}
 		InputDialog dlg = new InputDialog(getShell(), title, message, defaultValue, null);
 		int result = DialogModule.openDialog(dlg);
-		if(result == Window.OK) {
+		if (result == Window.OK) {
 			return dlg.getValue();
 		} else {
 			return null;
@@ -68,12 +69,12 @@ public class InputModule {
 	 * Opens a simple dialog box to ask the user a simple string with an empty default value.
 	 * 
 	 * @param title
-	 *        the title of the dialog box
+	 *            the title of the dialog box
 	 * @param message
-	 *        the message for the dialog box
+	 *            the message for the dialog box
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
-	public String askSimpleString(String title, String message) {
+	public String askSimpleString(final String title, final String message) {
 		return askSimpleString(title, message, "");
 	}
 
@@ -81,10 +82,10 @@ public class InputModule {
 	 * Opens a simple dialog box to ask the user a simple string with an empty default value and default dialog title.
 	 * 
 	 * @param message
-	 *        the message for the dialog box
+	 *            the message for the dialog box
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
-	public String askSimpleString(String message) {
+	public String askSimpleString(final String message) {
 		return askSimpleString("Script input", message, "");
 	}
 
@@ -92,57 +93,29 @@ public class InputModule {
 	 * Opens a simple dialog box to ask the user a simple string with an empty default value and default dialog title.
 	 * 
 	 * @param message
-	 *        the message for the dialog box
+	 *            the message for the dialog box
 	 * @return the text entered by the user, or <code>null</code> if the dialog box was canceled
 	 */
 	@WrapToScript
-	public String ask(String message) {
+	public String ask(final String message) {
 		return askSimpleString(message);
 	}
 
 	/**
-	 * Opens a dialog box to ask a confirmation to the user (e.g. before a destructive or expensive operation).
+	 * /** Opens a dialog box which allows the user to select a container (project or folder) in the workspace.
 	 * 
 	 * @param title
-	 *        the title of the dialog box
-	 * @param question
-	 *        the question to ask confirmation for
-	 * @return <code>true</code> if the user confirmed the question (agreed), <code>false</code> otherwise.
-	 */
-	@WrapToScript
-	public boolean askConfirmation(String title, String question) {
-		return DialogModule.confirm(title, question);
-	}
-
-	/**
-	 * Opens a dialog box to ask a simple Yes/No question to the user.
-	 * 
-	 * @param title
-	 *        the title of the dialog box.
-	 * @param question
-	 *        the question to ask.
-	 * @return <code>true</code> if the user answers "Yes", <code>false</code> otherwise.
-	 */
-	@WrapToScript
-	public boolean askQuestion(String title, String question) {
-		return DialogModule.question(title, question);
-	}
-
-	/**
-	 * Opens a dialog box which allows the user to select a container (project or folder) in the workspace.
-	 * 
-	 * @param title
-	 *        the title to use for the dialog box
+	 *            the title to use for the dialog box
 	 * @param message
-	 *        a message to show in the dialog box
+	 *            a message to show in the dialog box
 	 * @return
 	 */
 	@WrapToScript
-	public Object selectContainer(String title, String message) {
+	public Object selectContainer(final String title, final String message) {
 		ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), null, true, title);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
-		if(DialogModule.openDialog(dialog) == Window.OK) {
+		if (DialogModule.openDialog(dialog) == Window.OK) {
 			Object[] result = dialog.getResult();
 			return result;
 		}
@@ -153,24 +126,23 @@ public class InputModule {
 	 * Opens a dialog but which allows the user to select a resource from the workspace.
 	 * 
 	 * @param title
-	 *        the title of the dialog box
+	 *            the title of the dialog box
 	 * @param message
-	 *        a message to show in the dialog box
+	 *            a message to show in the dialog box
 	 * @return
 	 */
 	@WrapToScript
-	public Object selectResource(String title, String message) {
+	public Object selectResource(final String title, final String message) {
 		ResourceSelectionDialog dialog = new ResourceSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), message);
 		dialog.setTitle(title);
-		if(DialogModule.openDialog(dialog) == Window.OK) {
+		if (DialogModule.openDialog(dialog) == Window.OK) {
 			return dialog.getResult();
 		}
 		return null;
 	}
 
 	/**
-	 * Opens a dialog but which allows the user to select a resource from the workspace with a default title and
-	 * message.
+	 * Opens a dialog but which allows the user to select a resource from the workspace with a default title and message.
 	 * 
 	 * @return
 	 */
@@ -183,24 +155,23 @@ public class InputModule {
 	 * Reads the contents of a text file from the workspace into a string.
 	 * 
 	 * @param loc
-	 *        the location of the text file to read, which must be in the workspace. It can be a string (workspace
-	 *        relative path), an Eclipse IFile object (obtained from an Eclipse API), or an array containing one of
-	 *        those (as returned by {@link #selectResource()} for example).
+	 *            the location of the text file to read, which must be in the workspace. It can be a string (workspace relative path), an Eclipse IFile object
+	 *            (obtained from an Eclipse API), or an array containing one of those (as returned by {@link #selectResource()} for example).
 	 * 
 	 * @return the contents of the text file, or <code>null</code> if it could not be read.
 	 */
 	@WrapToScript
-	public String readFile(Object loc) {
-		if(loc instanceof Object[]) {
-			if(((Object[])loc).length == 1) {
-				return readFile(((Object[])loc)[0]);
+	public String readFile(final Object loc) {
+		if (loc instanceof Object[]) {
+			if (((Object[]) loc).length == 1) {
+				return readFile(((Object[]) loc)[0]);
 			} else {
 				return null;
 			}
-		} else if(loc instanceof IFile) {
-			return readFile((IFile)loc);
-		} else if(loc instanceof String) {
-			return readFile((String)loc);
+		} else if (loc instanceof IFile) {
+			return readFile((IFile) loc);
+		} else if (loc instanceof String) {
+			return readFile((String) loc);
 		} else {
 			return null;
 		}
@@ -210,11 +181,11 @@ public class InputModule {
 	 * Reads the contents of a text file into a string.
 	 * 
 	 * @param workspacePath
-	 *        the workspace-relative path to the file to read (e.g. <code>"/MyProject/myfile.txt"</code>).
+	 *            the workspace-relative path to the file to read (e.g. <code>"/MyProject/myfile.txt"</code>).
 	 * @return the contents of the specified text file, or <code>null</code> if it could not be read.
 	 */
 	@WrapToScript
-	public String readFile(String workspacePath) {
+	public String readFile(final String workspacePath) {
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(workspacePath));
 		return readFile(file);
 	}
@@ -223,11 +194,11 @@ public class InputModule {
 	 * Reads the contents of a text file into a string.
 	 * 
 	 * @param file
-	 *        the file to read.
+	 *            the file to read.
 	 * @return the contents of the specified text file, or <code>null</code> if it could not be read.
 	 */
 	@WrapToScript
-	public String readFile(IFile file) {
+	public String readFile(final IFile file) {
 		InputStream input = null;
 		try {
 			input = file.getContents();
@@ -242,7 +213,7 @@ public class InputModule {
 		} catch (IOException e) {
 			return null;
 		} finally {
-			if(input != null) {
+			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
@@ -255,9 +226,9 @@ public class InputModule {
 
 	private Shell getShell() {
 		IWorkbench workbench = PlatformUI.getWorkbench();
-		if(workbench != null) {
+		if (workbench != null) {
 			IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
-			if(activeWorkbenchWindow != null) {
+			if (activeWorkbenchWindow != null) {
 				return activeWorkbenchWindow.getShell();
 			}
 		}

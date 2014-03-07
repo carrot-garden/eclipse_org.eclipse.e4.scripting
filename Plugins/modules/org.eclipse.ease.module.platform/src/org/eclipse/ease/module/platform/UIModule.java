@@ -117,7 +117,7 @@ public class UIModule {
 	 * @return <code>true</code> when accepted
 	 */
 	@WrapToScript
-	public static boolean showConfirmDialog(final String title, final String message) {
+	public boolean showConfirmDialog(final String title, final String message) {
 		RunnableWithResult<Boolean> runnable = new RunnableWithResult<Boolean>() {
 
 			private boolean fResult;
@@ -146,7 +146,7 @@ public class UIModule {
 	 *            dialog message
 	 */
 	@WrapToScript
-	public static void showWarningDialog(final String title, final String message) {
+	public void showWarningDialog(final String title, final String message) {
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
@@ -165,7 +165,7 @@ public class UIModule {
 	 *            dialog message
 	 */
 	@WrapToScript
-	public static void showErrorDialog(final String title, final String message) {
+	public void showErrorDialog(final String title, final String message) {
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
