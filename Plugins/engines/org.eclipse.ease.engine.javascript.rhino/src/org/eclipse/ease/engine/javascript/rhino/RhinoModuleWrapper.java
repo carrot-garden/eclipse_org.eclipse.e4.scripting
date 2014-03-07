@@ -32,19 +32,19 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		private boolean fOptional = true;
 		private String fDefaultValue = ScriptParameter.UNDEFINED;
 
-		public void setClass(Class<?> clazz) {
+		public void setClass(final Class<?> clazz) {
 			fClazz = clazz;
 		}
 
-		public void setName(String name) {
+		public void setName(final String name) {
 			fName = name;
 		}
 
-		public void setOptional(boolean optional) {
+		public void setOptional(final boolean optional) {
 			fOptional = optional;
 		}
 
-		public void setDefault(String defaultValue) {
+		public void setDefault(final String defaultValue) {
 			fDefaultValue = defaultValue;
 		}
 
@@ -140,14 +140,14 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		return javaScriptCode.toString();
 	}
 
-	private StringBuilder verifyParameters(List<Parameter> parameters) {
+	private StringBuilder verifyParameters(final List<Parameter> parameters) {
 		StringBuilder data = new StringBuilder();
 
 		if (!parameters.isEmpty()) {
 			Parameter parameter = parameters.get(parameters.size() - 1);
 			if (parameter.isOptional()) {
 				data.append("\tif (typeof " + parameter.getName() + " === \"undefined\") {\n");
-				data.append("\t\t" + parameter.getName() + " = " + getDefaultValue(parameter) + "\n");
+				data.append("\t\t" + parameter.getName() + " = " + getDefaultValue(parameter) + ";\n");
 
 				data.append(verifyParameters(parameters.subList(0, parameters.size() - 1)));
 
@@ -158,13 +158,44 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		return data;
 	}
 
-	private String getDefaultValue(Parameter parameter) {
+	private String getDefaultValue(final Parameter parameter) {
 		String defaultStringValue = parameter.getDefaultValue().replaceAll("\\r", "\\\\r").replaceAll("\\n", "\\\\n");
 		Class<?> clazz = parameter.getClazz();
 
+		// null as default value
 		if (ScriptParameter.NULL.equals(defaultStringValue))
 			return "null";
 
+		// base datatypes
+		if ((Integer.class.equals(clazz)) || (int.class.equals(clazz))) {
+			try {
+				return Integer.toString(Integer.parseInt(defaultStringValue));
+			} catch (NumberFormatException e1) {
+			}
+		}
+		if ((Long.class.equals(clazz)) || (long.class.equals(clazz))) {
+			try {
+				return Long.toString(Long.parseLong(defaultStringValue));
+			} catch (NumberFormatException e1) {
+			}
+		}
+		if ((Float.class.equals(clazz)) || (float.class.equals(clazz))) {
+			try {
+				return Float.toString(Float.parseFloat(defaultStringValue));
+			} catch (NumberFormatException e1) {
+			}
+		}
+		if ((Double.class.equals(clazz)) || (double.class.equals(clazz))) {
+			try {
+				return Double.toString(Double.parseDouble(defaultStringValue));
+			} catch (NumberFormatException e1) {
+			}
+		}
+		if ((Boolean.class.equals(clazz)) || (boolean.class.equals(clazz))) {
+			return Boolean.toString(Boolean.parseBoolean(defaultStringValue));
+		}
+
+		// undefined resolves to empty constructor
 		if (ScriptParameter.UNDEFINED.equals(defaultStringValue)) {
 			// look for empty constructor
 			try {
@@ -199,7 +230,7 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 	 *            list of available parameters
 	 * @return unique unused parameter name
 	 */
-	private String findName(ArrayList<Parameter> parameters) {
+	private String findName(final ArrayList<Parameter> parameters) {
 		String name;
 		int index = 1;
 		boolean found;
@@ -220,7 +251,7 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		return name;
 	}
 
-	private ScriptParameter getParameterAnnotation(Annotation[] annotations) {
+	private ScriptParameter getParameterAnnotation(final Annotation[] annotations) {
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof ScriptParameter)
 				return (ScriptParameter) annotation;
