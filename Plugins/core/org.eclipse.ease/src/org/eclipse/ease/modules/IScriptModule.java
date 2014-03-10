@@ -17,8 +17,6 @@ import org.eclipse.ease.IScriptEngine;
  * Implementing this interface is optional for a module.
  */
 public interface IScriptModule {
-	Object UNDEFINED = new Object();
-
 	/**
 	 * Provides script engine and environment instances.
 	 * 
