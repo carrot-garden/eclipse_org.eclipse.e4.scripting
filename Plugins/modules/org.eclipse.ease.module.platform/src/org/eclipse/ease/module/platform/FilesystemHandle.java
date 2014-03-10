@@ -80,12 +80,15 @@ public class FilesystemHandle implements IFileHandle {
 	}
 
 	@Override
-	public boolean write(final String data, final int offset) {
+	public boolean write(final String data, int offset) {
 		try {
 			if (fMode == RANDOM_ACCESS) {
 				// random write access to file
 				BufferedReader reader = createReader();
 				StringBuilder buffer = read(reader);
+
+				if (offset == OFFSET_ENF_OF_FILE)
+					offset = buffer.length();
 
 				buffer.insert(Math.min(buffer.length(), offset), data);
 
@@ -157,6 +160,13 @@ public class FilesystemHandle implements IFileHandle {
 
 	@Override
 	protected void finalize() throws Throwable {
+		close();
+
+		super.finalize();
+	}
+
+	@Override
+	public void close() {
 		try {
 			if (fReader != null)
 				fReader.close();
@@ -168,7 +178,5 @@ public class FilesystemHandle implements IFileHandle {
 				fWriter.close();
 		} catch (Exception e) {
 		}
-
-		super.finalize();
 	}
 }

@@ -215,4 +215,9 @@ public class ResourcesModule extends AbstractScriptModule {
 	public boolean createFile(final IFileHandle handle, @ScriptParameter(optional = true, defaultValue = "true") final Object createHierarchy) throws Exception {
 		return handle.createFile(Boolean.parseBoolean(createHierarchy.toString()));
 	}
+
+	@WrapToScript
+	public void closeFile(final IFileHandle handle) {
+		handle.close();
+	}
 }

@@ -3,6 +3,8 @@ package org.eclipse.ease.module.platform;
 import java.io.IOException;
 
 public interface IFileHandle {
+	int OFFSET_ENF_OF_FILE = -1;
+
 	int READ = 1;
 	int WRITE = 2;
 	int APPEND = 4;
@@ -17,4 +19,6 @@ public interface IFileHandle {
 	boolean exists();
 
 	boolean createFile(boolean createHierarchy) throws Exception;
+
+	void close();
 }

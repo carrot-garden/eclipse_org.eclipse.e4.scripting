@@ -26,12 +26,15 @@ public class ResourceHandle extends FilesystemHandle {
 	}
 
 	@Override
-	public boolean write(final String data, final int offset) {
+	public boolean write(final String data, int offset) {
 		try {
 			if (getMode() == RANDOM_ACCESS) {
 				// random write access to file
 				BufferedReader reader = createReader();
 				StringBuilder buffer = read(reader);
+
+				if (offset == OFFSET_ENF_OF_FILE)
+					offset = buffer.length();
 
 				buffer.insert(Math.min(buffer.length(), offset), data);
 
