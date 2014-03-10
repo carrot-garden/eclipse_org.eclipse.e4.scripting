@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.service.IScriptService;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ease.service.ScriptService;
 import org.osgi.service.prefs.Preferences;
 
 public class ModuleDefinition {
@@ -103,7 +103,7 @@ public class ModuleDefinition {
 	 */
 	public IPath getPath() {
 		if (fPath == null) {
-			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+			final IScriptService scriptService = ScriptService.getService();
 
 			fPath = new Path(getName());
 

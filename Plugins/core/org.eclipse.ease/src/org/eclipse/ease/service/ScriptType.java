@@ -7,7 +7,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.ease.IHeaderParser;
 import org.eclipse.ease.Logger;
-import org.eclipse.ui.PlatformUI;
 
 import com.google.common.base.Function;
 
@@ -16,7 +15,7 @@ public class ScriptType {
 	public static class ToScriptType implements Function<ScriptType, String> {
 
 		@Override
-		public String apply(ScriptType arg0) {
+		public String apply(final ScriptType arg0) {
 			return arg0.getName();
 		}
 
@@ -25,7 +24,7 @@ public class ScriptType {
 	public static class ToExtensionFile implements Function<ScriptType, String> {
 
 		@Override
-		public String apply(ScriptType arg0) {
+		public String apply(final ScriptType arg0) {
 			return arg0.getDefaultExtension();
 		}
 
@@ -43,7 +42,7 @@ public class ScriptType {
 
 	private final IConfigurationElement fConfigurationElement;
 
-	public ScriptType(IConfigurationElement configurationElement) {
+	public ScriptType(final IConfigurationElement configurationElement) {
 		fConfigurationElement = configurationElement;
 	}
 
@@ -162,7 +161,7 @@ public class ScriptType {
 	public Collection<EngineDescription> getEngines() {
 		HashSet<EngineDescription> engines = new HashSet<EngineDescription>();
 
-		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		final IScriptService scriptService = ScriptService.getService();
 		for (EngineDescription description : scriptService.getEngines()) {
 			if (description.getSupportedScriptTypes().contains(this))
 				engines.add(description);

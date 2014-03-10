@@ -29,6 +29,7 @@ import org.eclipse.ease.Logger;
 import org.eclipse.ease.modules.IModuleWrapper;
 import org.eclipse.ease.modules.ModuleCategoryDefinition;
 import org.eclipse.ease.modules.ModuleDefinition;
+import org.eclipse.ui.PlatformUI;
 
 public class ScriptService implements IScriptService {
 
@@ -54,7 +55,16 @@ public class ScriptService implements IScriptService {
 
 	private static ScriptService fInstance = null;
 
-	static ScriptService getInstance() {
+	public static IScriptService getService() {
+		try {
+			return (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		} catch (IllegalStateException e) {
+			// workbench has not been created yet, might be running in headless mode
+			return ScriptService.getInstance();
+		}
+	}
+
+	public static ScriptService getInstance() {
 		if (fInstance == null)
 			fInstance = new ScriptService();
 
@@ -101,7 +111,7 @@ public class ScriptService implements IScriptService {
 	}
 
 	@Override
-	public List<EngineDescription> getEngines(String scriptType) {
+	public List<EngineDescription> getEngines(final String scriptType) {
 		List<EngineDescription> result = new ArrayList<EngineDescription>();
 
 		for (EngineDescription description : getEngines()) {
@@ -113,7 +123,7 @@ public class ScriptService implements IScriptService {
 		Collections.sort(result, new Comparator<EngineDescription>() {
 
 			@Override
-			public int compare(EngineDescription o1, EngineDescription o2) {
+			public int compare(final EngineDescription o1, final EngineDescription o2) {
 				return o2.getPriority() - o1.getPriority();
 			}
 		});
@@ -216,7 +226,7 @@ public class ScriptService implements IScriptService {
 	}
 
 	@Override
-	public ScriptType getScriptType(IContentType contentType) {
+	public ScriptType getScriptType(final IContentType contentType) {
 		for (ScriptType scriptType : getAvailableScriptTypes().values()) {
 			if (scriptType.getContentTypes().contains(contentType.getId()))
 				return scriptType;
@@ -226,7 +236,7 @@ public class ScriptService implements IScriptService {
 	}
 
 	@Override
-	public ScriptType getScriptType(String fileExtension) {
+	public ScriptType getScriptType(final String fileExtension) {
 		for (ScriptType scriptType : getAvailableScriptTypes().values()) {
 			if (scriptType.getDefaultExtension().equalsIgnoreCase(fileExtension))
 				return scriptType;
@@ -236,7 +246,7 @@ public class ScriptService implements IScriptService {
 	}
 
 	@Override
-	public EngineDescription getEngine(String scriptType) {
+	public EngineDescription getEngine(final String scriptType) {
 		List<EngineDescription> engines = getEngines(scriptType);
 		if (!engines.isEmpty())
 			return engines.get(0);
@@ -261,7 +271,7 @@ public class ScriptService implements IScriptService {
 	}
 
 	@Override
-	public ModuleDefinition getModuleDefinition(String moduleId) {
+	public ModuleDefinition getModuleDefinition(final String moduleId) {
 		for (ModuleDefinition definition : getAvailableModules().values()) {
 			if (definition.getId().equals(moduleId))
 				return definition;

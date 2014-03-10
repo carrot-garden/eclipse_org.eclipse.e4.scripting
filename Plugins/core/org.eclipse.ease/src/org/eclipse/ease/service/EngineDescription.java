@@ -19,7 +19,6 @@ import org.eclipse.ease.AbstractScriptEngine;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineLaunchExtension;
 import org.eclipse.ease.Logger;
-import org.eclipse.ui.PlatformUI;
 
 public class EngineDescription {
 
@@ -41,7 +40,7 @@ public class EngineDescription {
 
 	private List<ScriptType> types = null;
 
-	public EngineDescription(IConfigurationElement configurationElement) {
+	public EngineDescription(final IConfigurationElement configurationElement) {
 		mConfigurationElement = configurationElement;
 	}
 
@@ -52,7 +51,7 @@ public class EngineDescription {
 	public List<ScriptType> getSupportedScriptTypes() {
 		if (types == null) {
 			types = new ArrayList<ScriptType>();
-			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+			IScriptService scriptService = ScriptService.getService();
 
 			for (final IConfigurationElement child : mConfigurationElement.getChildren(BINDING)) {
 				String scriptTypeID = child.getAttribute(TYPE);
@@ -94,7 +93,7 @@ public class EngineDescription {
 					((AbstractScriptEngine) object).setEngineDescription(this);
 
 				// engine loaded, now load launch extensions
-				final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+				final IScriptService scriptService = ScriptService.getService();
 				for (final IScriptEngineLaunchExtension extension : scriptService.getLaunchExtensions(getID()))
 					extension.createEngine((IScriptEngine) object);
 
@@ -117,7 +116,7 @@ public class EngineDescription {
 		return (name != null) ? name : getID();
 	}
 
-	public boolean supports(String scriptType) {
+	public boolean supports(final String scriptType) {
 		for (ScriptType type : getSupportedScriptTypes()) {
 			if (type.getName().equals(scriptType))
 				return true;

@@ -53,4 +53,30 @@
          priority="0">
    </engine>
 </extension>
+<extension
+      id="runScript"
+      name="runScript"
+      point="org.eclipse.core.runtime.applications">
+   <application
+         cardinality="singleton-global"
+         thread="main"
+         visible="true">
+      <run
+            class="org.eclipse.ease.applications.RunHeadlessScript">
+      </run>
+   </application>
+</extension>
+<extension
+      id="listEngines"
+      name="listEngines"
+      point="org.eclipse.core.runtime.applications">
+   <application
+         cardinality="singleton-global"
+         thread="main"
+         visible="true">
+      <run
+            class="org.eclipse.ease.applications.ListEngines">
+      </run>
+   </application>
+</extension>
 </plugin>

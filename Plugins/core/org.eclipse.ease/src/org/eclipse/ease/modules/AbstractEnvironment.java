@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ease.service.ScriptService;
 import org.eclipse.ui.PlatformUI;
 
 public abstract class AbstractEnvironment extends AbstractScriptModule implements IEnvironment {
@@ -52,7 +53,7 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 		Object module = getModule(moduleName);
 		if (module == null) {
 			// not loaded yet
-			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+			final IScriptService scriptService = ScriptService.getService();
 			Map<String, ModuleDefinition> availableModules = scriptService.getAvailableModules();
 
 			ModuleDefinition definition = availableModules.get(moduleName);
@@ -93,7 +94,7 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 	}
 
 	private String resolveModuleName(final String identifier) {
-		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+		final IScriptService scriptService = ScriptService.getService();
 		Map<String, ModuleDefinition> availableModules = scriptService.getAvailableModules();
 
 		IPath searchPath = new Path(identifier);
