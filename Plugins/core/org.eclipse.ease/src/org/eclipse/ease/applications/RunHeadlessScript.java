@@ -169,12 +169,13 @@ public class RunHeadlessScript implements IApplication {
 	}
 
 	private static void printUsage() {
-		System.out.println("SYNTAX: [-workspace <workspace location>] [-engine <engineID>]-script <script name>");
+		System.out.println("SYNTAX: [-workspace <workspace location>] [-engine <engineID>]-script <script name> <script parameters>");
 		System.out.println("");
 		System.out.println("\t\t<script name> is a path like 'file://C/myfolder/myscript.js'");
 		System.out.println("\t\t<engineID> provides a dedicated script engine ID. Use org.eclipse.ease.listEngines application.");
 		System.out.println("\t\t<workspace location> is a file system path like 'C:\\somefolder\\myworkspace'");
 		System.out.println("\t\t\tif you provide a workspace you can use workspace:// identifiers in your scripts");
+		System.out.println("\t\t<script parameters> will be passed to the script as String[] in the variable 'argv'");
 	}
 
 	@Override
