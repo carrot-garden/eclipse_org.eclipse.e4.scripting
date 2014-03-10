@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ease.ui.view;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,13 +92,23 @@ public class ModuleContributionFactory extends AbstractContributionFactory {
 			}
 		}
 
-		// populate root contributions
 		ModulePopupMenu root = moduleTree.get(new Path("/"));
+
+		// sort alphabetically
+		Collections.sort(root.getEntries(), new Comparator<AbstractPopupItem>() {
+
+			@Override
+			public int compare(final AbstractPopupItem o1, final AbstractPopupItem o2) {
+				return o1.getDisplayName().compareToIgnoreCase(o2.getDisplayName());
+			}
+		});
+
+		// populate root contributions
 		for (AbstractPopupItem item : root.getEntries())
 			additions.addContributionItem(item.getContribution(serviceLocator), null);
 	}
 
-	private static ModulePopupMenu createPath(HashMap<IPath, ModulePopupMenu> moduleTree, IPath path) {
+	private static ModulePopupMenu createPath(final HashMap<IPath, ModulePopupMenu> moduleTree, final IPath path) {
 		if (!moduleTree.containsKey(path)) {
 			ModulePopupMenu parentMenu = createPath(moduleTree, path.removeLastSegments(1));
 			ModulePopupMenu menu = new ModulePopupMenu(path.lastSegment());
