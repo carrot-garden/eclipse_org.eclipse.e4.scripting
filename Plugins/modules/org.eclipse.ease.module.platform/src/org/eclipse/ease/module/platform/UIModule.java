@@ -11,6 +11,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISelectionService;
@@ -55,16 +56,9 @@ public class UIModule {
 
 		final RunnableWithResult<Boolean> runnable = new RunnableWithResult<Boolean>() {
 
-			private boolean fResult;
-
 			@Override
 			public void run() {
-				fResult = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), title, message);
-			}
-
-			@Override
-			public Boolean getResult() {
-				return fResult;
+				setResult(MessageDialog.openQuestion(Display.getDefault().getActiveShell(), title, message));
 			}
 		};
 
@@ -87,18 +81,11 @@ public class UIModule {
 
 		final RunnableWithResult<String> runnable = new RunnableWithResult<String>() {
 
-			private String fResult = null;
-
 			@Override
 			public void run() {
 				InputDialog dialog = new InputDialog(Display.getDefault().getActiveShell(), title, message, initialValue, null);
 				if (dialog.open() == Window.OK)
-					fResult = dialog.getValue();
-			}
-
-			@Override
-			public String getResult() {
-				return fResult;
+					setResult(dialog.getValue());
 			}
 		};
 
@@ -120,16 +107,9 @@ public class UIModule {
 	public boolean showConfirmDialog(final String title, final String message) {
 		RunnableWithResult<Boolean> runnable = new RunnableWithResult<Boolean>() {
 
-			private boolean fResult;
-
 			@Override
 			public void run() {
-				fResult = MessageDialog.openConfirm(Display.getDefault().getActiveShell(), title, message);
-			}
-
-			@Override
-			public Boolean getResult() {
-				return fResult;
+				setResult(MessageDialog.openConfirm(Display.getDefault().getActiveShell(), title, message));
 			}
 		};
 		Display.getDefault().syncExec(runnable);
@@ -209,24 +189,17 @@ public class UIModule {
 		if (viewID != null) {
 			RunnableWithResult<IViewPart> runnable = new RunnableWithResult<IViewPart>() {
 
-				private IViewPart fResult = null;
-
 				@Override
 				public void run() {
 					try {
 						try {
-							fResult = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(viewID);
+							setResult(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(viewID));
 						} catch (final NullPointerException e) {
 							if (PlatformUI.getWorkbench().getWorkbenchWindowCount() > 0)
-								fResult = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getActivePage().showView(viewID);
+								setResult(PlatformUI.getWorkbench().getWorkbenchWindows()[0].getActivePage().showView(viewID));
 						}
 					} catch (PartInitException e) {
 					}
-				}
-
-				@Override
-				public IViewPart getResult() {
-					return fResult;
 				}
 			};
 
@@ -323,5 +296,41 @@ public class UIModule {
 		}
 
 		return id;
+	}
+
+	/**
+	 * Show a generic dialog.
+	 * 
+	 * @param dialog
+	 *            dialog to display
+	 * @return result of dialog.open() method
+	 */
+	@WrapToScript
+	public int openDialog(final Window dialog) {
+		RunnableWithResult<Integer> run = new RunnableWithResult<Integer>() {
+
+			@Override
+			public void run() {
+				setResult(dialog.open());
+			}
+		};
+		Display.getDefault().syncExec(run);
+
+		return run.getResult();
+	}
+
+	@WrapToScript
+	public Shell getShell() {
+		RunnableWithResult<Shell> runnable = new RunnableWithResult<Shell>() {
+			@Override
+			public void run() {
+				setResult(Display.getCurrent().getActiveShell());
+
+			}
+		};
+
+		Display.getDefault().syncExec(runnable);
+
+		return runnable.getResult();
 	}
 }

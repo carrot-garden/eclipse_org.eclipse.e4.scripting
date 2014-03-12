@@ -10,8 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ease.common;
 
+public abstract class RunnableWithResult<T extends Object> implements Runnable {
 
-public interface RunnableWithResult<T extends Object> extends Runnable {
+	private T fResult = null;
 
-	public T getResult();
+	protected void setResult(final T result) {
+		fResult = result;
+	}
+
+	public T getResult() {
+		return fResult;
+	}
 }

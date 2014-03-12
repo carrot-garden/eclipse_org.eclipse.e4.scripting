@@ -2,6 +2,7 @@
 <plugin>
    <extension point="org.eclipse.ease.modules">
       <module
+            category="org.eclipse.ease.modules.category.modeling"
             class="org.eclipse.ease.integration.modeling.papyrus.PapyrusModule"
             id="org.eclipse.ease.integration.modeling.papyrus.module"
             name="PapyrusModule"

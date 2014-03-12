@@ -8,6 +8,7 @@
    </extension>
    <extension point="org.eclipse.ease.modules">
       <module
+            category="org.eclipse.ease.modules.category.modeling"
             class="org.eclipse.ease.integration.modeling.EcoreModule"
             id="org.eclipse.ease.integration.modeling.ecore"
             name="EcoreModule"
@@ -17,6 +18,7 @@
          </dependency>
       </module>
       <module
+            category="org.eclipse.ease.modules.category.modeling"
             class="org.eclipse.ease.integration.modeling.NotationModule"
             id="org.eclipse.ease.integration.modeling.notation"
             name="NotationModule"
@@ -25,6 +27,10 @@
                module="org.eclipse.ease.module.platform.ui">
          </dependency>
       </module>
+      <category
+            id="org.eclipse.ease.modules.category.modeling"
+            name="Modeling">
+      </category>
    </extension>
 
 </plugin>

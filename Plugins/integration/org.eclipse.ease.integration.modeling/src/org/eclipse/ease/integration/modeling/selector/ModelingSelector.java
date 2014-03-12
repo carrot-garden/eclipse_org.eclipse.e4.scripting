@@ -19,7 +19,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IAdapterManager;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ease.module.platform.modules.ISelector;
+import org.eclipse.ease.modules.incubation.ISelector;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.PlatformUI;

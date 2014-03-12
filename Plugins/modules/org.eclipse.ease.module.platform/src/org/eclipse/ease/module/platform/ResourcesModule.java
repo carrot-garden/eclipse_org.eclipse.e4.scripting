@@ -2,12 +2,20 @@ package org.eclipse.ease.module.platform;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.common.RunnableWithResult;
 import org.eclipse.ease.modules.AbstractScriptModule;
@@ -15,12 +23,19 @@ import org.eclipse.ease.modules.ScriptParameter;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.SaveAsDialog;
+import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.eclipse.ui.part.FileEditorInput;
 
 public class ResourcesModule extends AbstractScriptModule {
 
@@ -93,19 +108,11 @@ public class ResourcesModule extends AbstractScriptModule {
 
 			RunnableWithResult<String> runnable = new RunnableWithResult<String>() {
 
-				private String fResult;
-
 				@Override
 				public void run() {
 					FileDialog dialog = new FileDialog(Display.getDefault().getActiveShell(), mode);
 					dialog.setFilterPath(dialogRoot.getAbsolutePath());
-					fResult = dialog.open();
-
-				}
-
-				@Override
-				public String getResult() {
-					return fResult;
+					setResult(dialog.open());
 				}
 			};
 
@@ -118,8 +125,6 @@ public class ResourcesModule extends AbstractScriptModule {
 
 			RunnableWithResult<String> runnable = new RunnableWithResult<String>() {
 
-				private String fResult = null;
-
 				@Override
 				public void run() {
 					if ((type == WRITE) || (type == APPEND)) {
@@ -130,7 +135,7 @@ public class ResourcesModule extends AbstractScriptModule {
 							dialog.setOriginalFile(dialogRoot.getFile(new Path("newFile")));
 
 						if (dialog.open() == Window.OK)
-							fResult = "workspace:/" + dialog.getResult().toString();
+							setResult("workspace:/" + dialog.getResult().toString());
 
 					} else {
 						// open a select file dialog
@@ -142,13 +147,66 @@ public class ResourcesModule extends AbstractScriptModule {
 						dialog.setInput(dialogRoot);
 
 						if (dialog.open() == Window.OK)
-							fResult = "workspace:/" + ((IFile) dialog.getFirstResult()).getFullPath().toPortableString();
+							setResult("workspace:/" + ((IFile) dialog.getFirstResult()).getFullPath().toPortableString());
 					}
 				}
+			};
+
+			Display.getDefault().syncExec(runnable);
+			return runnable.getResult();
+		}
+
+		return null;
+	}
+
+	/**
+	 * /** Opens a dialog box which allows the user to select a container (project or folder) in the workspace.
+	 * 
+	 * @param title
+	 *            the title to use for the dialog box
+	 * @param message
+	 *            a message to show in the dialog box
+	 * @return array of selected objects
+	 */
+	@WrapToScript
+	public String showFolderSelectionDialog(@ScriptParameter(optional = true, defaultValue = ScriptParameter.NULL) final Object rootFolder) {
+
+		// FIXME currently we cannot resolve folders within the workspace
+		// therefore this call fails when a subfolder is requested by the user
+
+		Object root = (rootFolder instanceof String) ? getFile((String) rootFolder) : rootFolder;
+		if (rootFolder == null)
+			root = getWorkspace();
+
+		if (root instanceof File) {
+
+			final File dialogRoot = (File) root;
+
+			RunnableWithResult<String> runnable = new RunnableWithResult<String>() {
 
 				@Override
-				public String getResult() {
-					return fResult;
+				public void run() {
+					DirectoryDialog dialog = new DirectoryDialog(Display.getDefault().getActiveShell());
+					dialog.setFilterPath(dialogRoot.getAbsolutePath());
+					setResult(dialog.open());
+				}
+			};
+
+			Display.getDefault().syncExec(runnable);
+			return runnable.getResult();
+
+		} else if (root instanceof IContainer) {
+			// workspace
+			final IContainer dialogRoot = (IContainer) root;
+
+			RunnableWithResult<String> runnable = new RunnableWithResult<String>() {
+
+				@Override
+				public void run() {
+					ContainerSelectionDialog dialog = new ContainerSelectionDialog(Display.getDefault().getActiveShell(), null, true, null);
+					dialog.setInitialSelections(new Object[] { dialogRoot });
+					if (dialog.open() == Window.OK)
+						setResult("workspace:/" + ((IContainer) dialog.getResult()[0]).getFullPath().toPortableString());
 				}
 			};
 
@@ -216,8 +274,109 @@ public class ResourcesModule extends AbstractScriptModule {
 		return handle.createFile(Boolean.parseBoolean(createHierarchy.toString()));
 	}
 
+	/**
+	 * Create a folder into the workbench
+	 * 
+	 * @param path
+	 *            Path of the new folder
+	 * @return The {@link IFolder}
+	 */
+	@WrapToScript
+	public IFolder createFolder(final String path) {
+		// FIXME we need a method to resolve workspace paths and system paths to allow to create system folders too
+		IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(path));
+		try {
+			if (!folder.exists())
+				folder.create(false, true, null);
+
+			return folder;
+
+		} catch (CoreException e) {
+		}
+
+		return null;
+	}
+
 	@WrapToScript
 	public void closeFile(final IFileHandle handle) {
 		handle.close();
+	}
+
+	/**
+	 * Open a file using the default editor
+	 * 
+	 * @param location
+	 *            location of the file
+	 */
+	@WrapToScript
+	public void openFile(Object location) {
+		if (location instanceof String)
+			location = getFile((String) location);
+
+		if (location instanceof IFile) {
+			final IFile file = (IFile) location;
+
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						IEditorDescriptor editor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
+						if (editor == null)
+							editor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(EditorsUI.DEFAULT_TEXT_EDITOR_ID);
+
+						if (editor != null)
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), editor.getId());
+
+					} catch (PartInitException e) {
+					}
+				}
+			});
+		}
+	}
+
+	/**
+	 * Return all the file of a workspace matching a pattern
+	 * 
+	 * @param patternString
+	 *            A pattern as define in {@link Pattern}
+	 * @return An array of all the file into the workspace matching this pattern
+	 */
+	@WrapToScript
+	public IFile[] findFiles(final String pattern, @ScriptParameter(optional = true, defaultValue = ScriptParameter.NULL) final Object rootFolder,
+			@ScriptParameter(optional = true, defaultValue = "true") final boolean recursive) {
+		Pattern regExp = Pattern.compile(pattern);
+
+		List<File> result = new ArrayList<File>();
+		Collection<IContainer> toVisit = new HashSet<IContainer>();
+
+		// locate root folder to start with
+		if (rootFolder == null)
+			toVisit.add(ResourcesPlugin.getWorkspace().getRoot());
+
+		// FIXME locate workspace folder, best create an exported method for it
+		// else
+		// toVisit.add(getFolder(rootFolder));
+
+		do {
+			IContainer container = toVisit.iterator().next();
+			toVisit.remove(container);
+
+			try {
+				for (IResource child : container.members()) {
+					if (child instanceof IFile) {
+						if (regExp.matcher(child.getName()).matches())
+							result.add((File) child);
+
+					} else if ((recursive) && (child instanceof IContainer))
+						toVisit.add((IContainer) child);
+				}
+			} catch (CoreException e) {
+				// cannot parse container, skip and continue with next one
+			}
+
+		} while (!toVisit.isEmpty());
+
+		return result.toArray(new IFile[result.size()]);
 	}
 }

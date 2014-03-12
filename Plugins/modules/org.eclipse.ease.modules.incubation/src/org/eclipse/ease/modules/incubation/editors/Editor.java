@@ -41,9 +41,6 @@ public class Editor {
 	 * Properties
 	 */
 
-	/**
-	 * @see org.mozilla.javascript.ScriptableObject#getClassName()
-	 */
 	public String getClassName() {
 		return "Editor";
 	}

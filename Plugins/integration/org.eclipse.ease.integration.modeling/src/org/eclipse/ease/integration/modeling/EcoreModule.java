@@ -32,15 +32,14 @@ import org.eclipse.ease.common.RunnableWithResult;
 import org.eclipse.ease.injection.CodeInjectorUtils;
 import org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor;
 import org.eclipse.ease.integration.modeling.ui.UriSelectionDialog;
-import org.eclipse.ease.module.interaction.InputModule;
 import org.eclipse.ease.module.platform.UIModule;
-import org.eclipse.ease.module.platform.modules.DialogModule;
-import org.eclipse.ease.module.platform.modules.SelectionModule;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.BootStrapper;
 import org.eclipse.ease.modules.IModuleWrapper;
 import org.eclipse.ease.modules.ScriptParameter;
 import org.eclipse.ease.modules.WrapToScript;
+import org.eclipse.ease.modules.incubation.DialogModule;
+import org.eclipse.ease.modules.incubation.SelectionModule;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
@@ -61,7 +60,6 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -84,8 +82,6 @@ import com.google.common.collect.Collections2;
 public class EcoreModule extends AbstractScriptModule {
 
 	protected SelectionModule selectionModule = new SelectionModule();
-
-	protected InputModule input = new InputModule();
 
 	private String uri;
 
@@ -238,12 +234,10 @@ public class EcoreModule extends AbstractScriptModule {
 			// Launch dialog to get an URI
 			RunnableWithResult<IPath> getPathRunnable = new RunnableWithResult<IPath>() {
 
-				private IPath tt = null;
-
 				@Override
 				public void run() {
-					ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), false,
-							"Select where you want to add your resource");
+					ContainerSelectionDialog dialog = new ContainerSelectionDialog(Display.getDefault().getActiveShell(), ResourcesPlugin.getWorkspace()
+							.getRoot(), false, "Select where you want to add your resource");
 					if (dialog.open() != Window.OK) {
 						return;
 					}
@@ -253,15 +247,8 @@ public class EcoreModule extends AbstractScriptModule {
 								"Unable to retreive a container for the new resource from your selestion");
 						return;
 					}
-					tt = (IPath) result[0];
-
+					setResult((IPath) result[0]);
 				}
-
-				@Override
-				public IPath getResult() {
-					return tt;
-				}
-
 			};
 			Display.getDefault().syncExec(getPathRunnable);
 			IPath containerPath = getPathRunnable.getResult();
@@ -271,7 +258,7 @@ public class EcoreModule extends AbstractScriptModule {
 		}
 		if (fileName == null) {
 			// Launch input dialog
-			fileName = input.ask("Give the resource name (With it's extension)");
+			fileName = getEnvironment().getModule(UIModule.class).showInputDialog("", "Give the resource name (With it's extension)", "");
 		}
 
 		container = container.appendSegment(fileName);
@@ -310,7 +297,7 @@ public class EcoreModule extends AbstractScriptModule {
 	}
 
 	private void initEPackageFromDialog() {
-		UriSelectionDialog dialog = new UriSelectionDialog(getShell());
+		UriSelectionDialog dialog = new UriSelectionDialog(getEnvironment().getModule(UIModule.class).getShell());
 		int returnCode = DialogModule.openDialog(dialog);
 		if (returnCode == Window.OK) {
 			Object[] result = dialog.getResult();
@@ -318,7 +305,6 @@ public class EcoreModule extends AbstractScriptModule {
 				uri = (String) result[0];
 			}
 		}
-
 	}
 
 	/**
@@ -334,7 +320,6 @@ public class EcoreModule extends AbstractScriptModule {
 	public void addErrorMarker(@ScriptParameter(name = "eObject") final EObject eObject, @ScriptParameter(name = "message") final String message)
 			throws CoreException {
 		EMFMarkerUtil.addMarkerFor(eObject, message, IMarker.SEVERITY_ERROR);
-
 	}
 
 	/**
@@ -393,16 +378,8 @@ public class EcoreModule extends AbstractScriptModule {
 				IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 
 				// this can be null if you close all perspectives
-				if ((window != null) && (window.getActivePage() != null) && (window.getActivePage().getActiveEditor() != null)) {
+				if ((window != null) && (window.getActivePage() != null) && (window.getActivePage().getActiveEditor() != null))
 					activeEditorRef.activeEditorPart = window.getActivePage().getActiveEditor();
-				} else {
-					Shell shell;
-					if ((window != null) && (window.getShell() != null)) {
-						shell = window.getShell();
-					} else {
-						shell = new Shell();
-					}
-				}
 			}
 		});
 		return activeEditorRef.activeEditorPart;
@@ -438,30 +415,6 @@ public class EcoreModule extends AbstractScriptModule {
 
 	public void save() {
 		getCurrentEditorPart().doSave(new NullProgressMonitor());
-	}
-
-	/**
-	 * @return a {@link Shell}
-	 */
-	@WrapToScript
-	protected Shell getShell() {
-		RunnableWithResult<Shell> getShellRunnable = new RunnableWithResult<Shell>() {
-
-			private Shell activeShell;
-
-			@Override
-			public void run() {
-				activeShell = Display.getDefault().getActiveShell();
-
-			}
-
-			@Override
-			public Shell getResult() {
-				return activeShell;
-			}
-		};
-		Display.getDefault().syncExec(getShellRunnable);
-		return getShellRunnable.getResult();
 	}
 
 	protected EditingDomain getEditingDomain() {
@@ -615,7 +568,6 @@ public class EcoreModule extends AbstractScriptModule {
 				return element.toString();
 			}
 		});
-
 	}
 
 	private static ComposedAdapterFactory adapter = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
@@ -655,12 +607,10 @@ public class EcoreModule extends AbstractScriptModule {
 			operation.run();
 			return CommandResult.newOKCommandResult();
 		}
-
 	}
 
 	@Override
 	public IModuleWrapper getWrapper() {
 		return BootStrapper.getWrapper(getScriptEngine().getDescription().getID());
 	}
-
 }
