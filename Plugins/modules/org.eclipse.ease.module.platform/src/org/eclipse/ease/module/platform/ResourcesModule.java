@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.common.RunnableWithResult;
 import org.eclipse.ease.modules.AbstractScriptModule;
@@ -71,6 +72,27 @@ public class ResourcesModule extends AbstractScriptModule {
 	@WrapToScript
 	public IProject getProject(final String name) {
 		return getWorkspace().getProject(name);
+	}
+
+	/**
+	 * Create a new workspace project. Will create a new project if it now already exists. If creation fails, <code>null</code> is returned.
+	 * 
+	 * @param name name or project to create
+	 * @return <code>null</code> or project
+	 */
+	@WrapToScript
+	public IProject createProject(String name) {
+		IProject project = getProject(name);
+		if (!project.exists()) {
+			try {
+				project.create(new NullProgressMonitor());
+				project.open(new NullProgressMonitor());
+			} catch (CoreException e) {
+				return null;
+			}
+		}
+
+		return project;
 	}
 
 	/**
