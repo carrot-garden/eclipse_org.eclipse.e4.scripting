@@ -29,8 +29,8 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
 		private Class<?> fClazz;
 		private String fName = "";
-		private boolean fOptional = true;
-		private String fDefaultValue = ScriptParameter.UNDEFINED;
+		private boolean fOptional = false;
+		private String fDefaultValue = ScriptParameter.NULL;
 
 		public void setClass(final Class<?> clazz) {
 			fClazz = clazz;
@@ -145,14 +145,15 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
 		if (!parameters.isEmpty()) {
 			Parameter parameter = parameters.get(parameters.size() - 1);
+			data.append("\tif (typeof " + parameter.getName() + " === \"undefined\") {\n");
 			if (parameter.isOptional()) {
-				data.append("\tif (typeof " + parameter.getName() + " === \"undefined\") {\n");
 				data.append("\t\t" + parameter.getName() + " = " + getDefaultValue(parameter) + ";\n");
+			} else {
+				data.append("\t\tthrow new java.lang.RuntimeException('Parameter " + parameter.getName() + " is not optional');\n");
 
-				data.append(verifyParameters(parameters.subList(0, parameters.size() - 1)));
-
-				data.append("\t}\n");
 			}
+			data.append(verifyParameters(parameters.subList(0, parameters.size() - 1)));
+			data.append("\t}\n");
 		}
 
 		return data;
