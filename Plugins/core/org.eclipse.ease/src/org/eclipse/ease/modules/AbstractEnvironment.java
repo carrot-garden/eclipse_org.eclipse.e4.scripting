@@ -228,6 +228,9 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 				if (file != null)
 					return file;
 
+			} catch (IllegalArgumentException e) {
+				// this is a valid URI, but we could not convert it into a local file
+				return null;
 			} catch (MalformedURLException e) {
 			} catch (URISyntaxException e) {
 			}
