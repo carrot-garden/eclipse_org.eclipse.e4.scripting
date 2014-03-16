@@ -21,6 +21,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.IExecutionListener;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineProvider;
@@ -29,12 +31,15 @@ import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.ui.Activator;
+import org.eclipse.ease.ui.dialogs.SelectScriptStorageDialog;
+import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.ease.ui.scripts.ScriptStorage;
 import org.eclipse.ease.ui.tools.StringTools;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.IElementUpdater;
@@ -63,7 +68,7 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 
 				} else {
 					// stop recording
-					final ScriptStorage storage = ScriptStorage.createStorage();
+					final ScriptStorage storage = getStorage();
 					final StringBuffer buffer = fRecordings.get(engine);
 
 					if (buffer.length() > 0) {
@@ -108,6 +113,24 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 		}
 
 		fChecked = checked;
+	}
+
+	private ScriptStorage getStorage() {
+		// if this is the first time the storage is used, ask the user for a default storage location
+		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		boolean selected = prefs.getBoolean(IPreferenceConstants.SCRIPT_STORAGE_SELECTED, IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_SELECTED);
+		if (!selected) {
+			// user did not select a storage yet, ask for location
+			SelectScriptStorageDialog dialog = new SelectScriptStorageDialog(Display.getDefault().getActiveShell());
+			if (dialog.open() == Window.OK)
+				prefs.put(IPreferenceConstants.SCRIPT_STORAGE_LOCATION, dialog.getLocation());
+			
+			// we will not ask again, no matter if the user cancelled the dialog
+			prefs.putBoolean(IPreferenceConstants.SCRIPT_STORAGE_SELECTED, true);
+			
+		}
+		
+		return ScriptStorage.createStorage();
 	}
 
 	@Override

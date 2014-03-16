@@ -44,4 +44,6 @@ public interface IPreferenceConstants {
 	String SHELL_STARTUP = "shellStartup";
 	String SHELL_MODULES_AS_LIST = "shellModulesAsList";
 	boolean DEFAULT_SHELL_MODULES_AS_LIST = false;
+	String SCRIPT_STORAGE_SELECTED = "scriptStorageSelected";
+	boolean DEFAULT_SCRIPT_STORAGE_SELECTED = false;
 }
