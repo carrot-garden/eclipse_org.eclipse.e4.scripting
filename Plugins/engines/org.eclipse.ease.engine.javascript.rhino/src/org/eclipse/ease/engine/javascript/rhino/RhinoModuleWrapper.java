@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ease.engine.javascript.rhino;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -24,46 +23,6 @@ import org.eclipse.ease.modules.AbstractModuleWrapper;
 import org.eclipse.ease.modules.ScriptParameter;
 
 public class RhinoModuleWrapper extends AbstractModuleWrapper {
-
-	private class Parameter {
-
-		private Class<?> fClazz;
-		private String fName = "";
-		private boolean fOptional = false;
-		private String fDefaultValue = ScriptParameter.NULL;
-
-		public void setClass(final Class<?> clazz) {
-			fClazz = clazz;
-		}
-
-		public void setName(final String name) {
-			fName = name;
-		}
-
-		public void setOptional(final boolean optional) {
-			fOptional = optional;
-		}
-
-		public void setDefault(final String defaultValue) {
-			fDefaultValue = defaultValue;
-		}
-
-		public String getName() {
-			return fName;
-		}
-
-		public Class<?> getClazz() {
-			return fClazz;
-		}
-
-		public String getDefaultValue() {
-			return fDefaultValue;
-		}
-
-		public boolean isOptional() {
-			return fOptional;
-		}
-	}
 
 	private static final String UNDIFINED_KEYWORD = "undifined";
 
@@ -79,28 +38,13 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		StringBuilder javaScriptCode = new StringBuilder();
 
 		// parse parameters
-		ArrayList<Parameter> parameters = new ArrayList<Parameter>();
-		for (int index = 0; index < method.getParameterTypes().length; index++) {
-			Parameter parameter = new Parameter();
-			parameter.setClass(method.getParameterTypes()[index]);
+		List<Parameter> parameters = parseParameters(method);
 
-			ScriptParameter annotation = getParameterAnnotation(method.getParameterAnnotations()[index]);
-			if (annotation != null) {
-				parameter.setName(annotation.name());
-				parameter.setOptional(annotation.optional());
-				parameter.setDefault(annotation.defaultValue());
-			}
-			parameters.add(parameter);
-		}
-
-		// post process parameters: find unique names for unnamed parameters
+		// build parameter string
 		StringBuilder parameterList = new StringBuilder();
-		for (Parameter parameter : parameters) {
-			if (parameter.getName().isEmpty())
-				parameter.setName(findName(parameters));
-
+		for (Parameter parameter : parameters)
 			parameterList.append(", ").append(parameter.getName());
-		}
+
 		if (parameterList.length() > 2)
 			parameterList.delete(0, 2);
 
@@ -157,108 +101,6 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		}
 
 		return data;
-	}
-
-	private String getDefaultValue(final Parameter parameter) {
-		String defaultStringValue = parameter.getDefaultValue().replaceAll("\\r", "\\\\r").replaceAll("\\n", "\\\\n");
-		Class<?> clazz = parameter.getClazz();
-
-		// null as default value
-		if (ScriptParameter.NULL.equals(defaultStringValue))
-			return "null";
-
-		// base datatypes
-		if ((Integer.class.equals(clazz)) || (int.class.equals(clazz))) {
-			try {
-				return Integer.toString(Integer.parseInt(defaultStringValue));
-			} catch (NumberFormatException e1) {
-			}
-		}
-		if ((Long.class.equals(clazz)) || (long.class.equals(clazz))) {
-			try {
-				return Long.toString(Long.parseLong(defaultStringValue));
-			} catch (NumberFormatException e1) {
-			}
-		}
-		if ((Float.class.equals(clazz)) || (float.class.equals(clazz))) {
-			try {
-				return Float.toString(Float.parseFloat(defaultStringValue));
-			} catch (NumberFormatException e1) {
-			}
-		}
-		if ((Double.class.equals(clazz)) || (double.class.equals(clazz))) {
-			try {
-				return Double.toString(Double.parseDouble(defaultStringValue));
-			} catch (NumberFormatException e1) {
-			}
-		}
-		if ((Boolean.class.equals(clazz)) || (boolean.class.equals(clazz))) {
-			return Boolean.toString(Boolean.parseBoolean(defaultStringValue));
-		}
-
-		// undefined resolves to empty constructor
-		if (ScriptParameter.UNDEFINED.equals(defaultStringValue)) {
-			// look for empty constructor
-			try {
-				clazz.getConstructor();
-				// empty constructor found, return class
-				return classInstantiation(clazz, null);
-			} catch (SecurityException e) {
-			} catch (NoSuchMethodException e) {
-			}
-		}
-
-		// look for string constructor
-		try {
-			clazz.getConstructor(String.class);
-			// string constructor found, return class
-			return classInstantiation(clazz, new String[] { defaultStringValue });
-		} catch (SecurityException e) {
-		} catch (NoSuchMethodException e) {
-		}
-
-		// special handling for string defaults passed to an Object.class
-		if (clazz.isAssignableFrom(String.class))
-			return classInstantiation(String.class, new String[] { defaultStringValue });
-
-		return "null";
-	}
-
-	/**
-	 * Find a unique name that is not used yet.
-	 * 
-	 * @param parameters
-	 *            list of available parameters
-	 * @return unique unused parameter name
-	 */
-	private String findName(final ArrayList<Parameter> parameters) {
-		String name;
-		int index = 1;
-		boolean found;
-		do {
-			found = true;
-			name = "param" + index;
-
-			for (Parameter parameter : parameters) {
-				if (name.equals(parameter.getName())) {
-					index++;
-					found = false;
-					break;
-				}
-			}
-
-		} while (!found);
-
-		return name;
-	}
-
-	private ScriptParameter getParameterAnnotation(final Annotation[] annotations) {
-		for (Annotation annotation : annotations) {
-			if (annotation instanceof ScriptParameter)
-				return (ScriptParameter) annotation;
-		}
-
-		return null;
 	}
 
 	/**
@@ -330,5 +172,10 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		code.append(")");
 
 		return code.toString();
+	}
+
+	@Override
+	protected String getNullString() {
+		return "null";
 	}
 }
