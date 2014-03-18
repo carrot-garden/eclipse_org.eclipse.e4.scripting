@@ -160,9 +160,6 @@
 		</module>
 
 		<module>
-			../../developers/features/org.eclipse.ease.tools.feature
-		</module>
-		<module>
 			../../Plugins/engines/org.eclipse.ease.engine.javascript
 		</module>
 	</modules>

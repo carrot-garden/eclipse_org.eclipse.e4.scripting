@@ -27,12 +27,8 @@
    <feature url="features/org.eclipse.ease.integration.modeling.uml.feature_0.1.1.qualifier.jar" id="org.eclipse.ease.integration.modeling.uml.feature" version="0.1.1.qualifier">
       <category name="Integration"/>
    </feature>
-   <feature url="features/org.eclipse.ease.tools.feature_0.1.1.qualifier.jar" id="org.eclipse.ease.tools.feature" version="0.1.1.qualifier">
-      <category name="Developer"/>
-   </feature>
    <category-def name="Core" label="Core"/>
    <category-def name="Lang" label="Lang"/>
    <category-def name="Modules" label="Modules"/>
    <category-def name="Integration" label="Integration"/>
-   <category-def name="Developer" label="developer"/>
 </site>
