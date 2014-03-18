@@ -12,6 +12,7 @@ package org.eclipse.ease.ui.launching;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -19,6 +20,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -143,7 +145,7 @@ public class EaseLaunchDelegate implements ILaunchShortcut, ILaunchShortcut2, IL
 	 * @param mode
 	 * @return {@link ILaunchConfiguration}s using resource
 	 */
-	private ILaunchConfiguration[] getLaunchConfgurations(final IResource resource, String mode) {
+	private ILaunchConfiguration[] getLaunchConfgurations(final IResource resource, final String mode) {
 		final List<ILaunchConfiguration> configurations = new ArrayList<ILaunchConfiguration>();
 
 		final ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
@@ -203,6 +205,14 @@ public class EaseLaunchDelegate implements ILaunchShortcut, ILaunchShortcut2, IL
 
 					final ILaunchConfigurationWorkingCopy configuration = type.newInstance(null, file.getName());
 					configuration.setAttribute(LaunchConstants.FILE_LOCATION, ResourceTools.toLocation(file));
+
+					// find a valid engine
+					Collection<EngineDescription> engines = ResourceTools.getScriptType((IFile) file).getEngines();
+					if (engines.isEmpty())
+						// TODO use a better way to bail out and use the direct file launch
+						throw new CoreException(Status.CANCEL_STATUS);
+
+					configuration.setAttribute(LaunchConstants.SCRIPT_ENGINE, engines.iterator().next().getID());
 
 					// save and return new configuration
 					configuration.doSave();
