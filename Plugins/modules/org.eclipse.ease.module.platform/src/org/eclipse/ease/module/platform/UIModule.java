@@ -223,14 +223,28 @@ public class UIModule {
 	public IEditorPart showEditor(final IFile file) throws PartInitException {
 		final IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
 
-		try {
-			return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), descriptor.getId());
-		} catch (final NullPointerException e) {
-			if (PlatformUI.getWorkbench().getWorkbenchWindowCount() > 0)
-				return PlatformUI.getWorkbench().getWorkbenchWindows()[0].getActivePage().openEditor(new FileEditorInput(file), descriptor.getId());
-		}
+		RunnableWithResult<IEditorPart> runnable = new RunnableWithResult<IEditorPart>() {
 
-		return null;
+			@Override
+			public void run() {
+				try {
+					try {
+						setResult(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+								.openEditor(new FileEditorInput(file), descriptor.getId()));
+					} catch (final NullPointerException e) {
+						if (PlatformUI.getWorkbench().getWorkbenchWindowCount() > 0)
+							setResult(PlatformUI.getWorkbench().getWorkbenchWindows()[0].getActivePage().openEditor(new FileEditorInput(file),
+									descriptor.getId()));
+					}
+				} catch (PartInitException e) {
+					// cannot handle that one, giving up
+				}
+			}
+		};
+
+		Display.getDefault().syncExec(runnable);
+
+		return runnable.getResult();
 	}
 
 	/**
