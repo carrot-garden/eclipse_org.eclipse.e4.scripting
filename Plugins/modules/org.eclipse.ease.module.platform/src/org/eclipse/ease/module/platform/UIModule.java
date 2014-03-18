@@ -253,7 +253,16 @@ public class UIModule {
 			return null;
 		}
 
-		return selectionService.getSelection();
+		// current selection needs to be accessed from Display thread
+		RunnableWithResult<ISelection> runnable = new RunnableWithResult<ISelection>() {
+
+			@Override
+			public void run() {
+				setResult(selectionService.getSelection());
+			}
+		};
+		Display.getDefault().syncExec(runnable);
+		return runnable.getResult();
 	}
 
 	/**
