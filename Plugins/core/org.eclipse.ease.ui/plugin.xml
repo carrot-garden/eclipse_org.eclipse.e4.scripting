@@ -413,10 +413,6 @@
       </page>
    </extension>
    <extension
-         point="org.eclipse.ui.startup">
-      <startup></startup>
-   </extension>
-   <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
             configTypeID="org.eclipse.ease.launchConfigurationType"
