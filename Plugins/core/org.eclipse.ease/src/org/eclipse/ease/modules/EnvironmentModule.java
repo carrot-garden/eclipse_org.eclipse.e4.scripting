@@ -100,7 +100,7 @@ public class EnvironmentModule extends AbstractEnvironment {
 
 		if (methods.isEmpty()) {
 			// no annotated methods, use all declared public methods
-			for (Method method : instance.getClass().getDeclaredMethods()) {
+			for (Method method : instance.getClass().getMethods()) {
 				if (Modifier.isPublic(method.getModifiers()))
 					methods.add(method);
 			}
