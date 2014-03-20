@@ -167,13 +167,8 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				script.setException(e);
 				String message = e.getMessage();
 
-				if (message != null)
-					getErrorStream().println("Message :" + message);
-
-				else {
-					getErrorStream().println("Stack trace");
-					e.printStackTrace(getErrorStream());
-				}
+				getErrorStream().println("Stack trace");
+				e.printStackTrace(getErrorStream());
 
 			} finally {
 				if (notifyListeners)
@@ -418,7 +413,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	@Override
 	public void setIsUI(final boolean isUI) {
-		this.fIsUI = isUI;
+		fIsUI = isUI;
 	}
 
 	@Override
