@@ -13,7 +13,10 @@ package org.eclipse.ease.modules;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractModuleWrapper implements IModuleWrapper {
 
@@ -204,4 +207,40 @@ public abstract class AbstractModuleWrapper implements IModuleWrapper {
 	}
 
 	protected abstract String getNullString();
+
+	public static Collection<String> getMethodNames(final Method method) {
+		Set<String> methodNames = new HashSet<String>();
+		methodNames.add(method.getName());
+
+		WrapToScript wrapAnnotation = method.getAnnotation(WrapToScript.class);
+		if (wrapAnnotation != null) {
+			for (String name : wrapAnnotation.alias().split(WrapToScript.DELIMITER))
+				if (!name.trim().isEmpty())
+					methodNames.add(name.trim());
+		}
+
+		return methodNames;
+	}
+
+	public static String getPreExecutionCode(final IEnvironment environment, final Method method) {
+		final StringBuffer code = new StringBuffer();
+
+		for (final Object module : environment.getModules()) {
+			if (module instanceof IScriptFunctionModifier)
+				code.append(((IScriptFunctionModifier) module).getPreExecutionCode(method));
+		}
+
+		return code.toString();
+	}
+
+	public static String getPostExecutionCode(final IEnvironment environment, final Method method) {
+		final StringBuffer code = new StringBuffer();
+
+		for (final Object module : environment.getModules()) {
+			if (module instanceof IScriptFunctionModifier)
+				code.append(((IScriptFunctionModifier) module).getPostExecutionCode(method));
+		}
+
+		return code.toString();
+	}
 }

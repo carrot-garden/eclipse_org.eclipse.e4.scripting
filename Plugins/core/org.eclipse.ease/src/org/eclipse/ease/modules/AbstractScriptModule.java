@@ -11,7 +11,6 @@
 package org.eclipse.ease.modules;
 
 import org.eclipse.ease.IScriptEngine;
-import org.eclipse.ease.injection.CodeInjectorUtils;
 
 /**
  * Base class to be used for modules. Handles retrieval of script engine and environment module.
@@ -46,14 +45,5 @@ public abstract class AbstractScriptModule implements IScriptModule {
 	 */
 	protected IEnvironment getEnvironment() {
 		return mEnvironment;
-	}
-
-	/**
-	 * Get the generic script wrapper registered for this script engine.
-	 * 
-	 * @return script wrapper
-	 */
-	protected IModuleWrapper getWrapper() {
-		return CodeInjectorUtils.getWrapper(getScriptEngine());
 	}
 }

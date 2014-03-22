@@ -1,6 +1,9 @@
 package org.eclipse.ease;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -11,7 +14,7 @@ public abstract class AbstractHeaderParser implements IHeaderParser {
 	private static final Pattern PARAMETER_PATTERN = Pattern.compile("\\s*([\\p{Alnum}-_]*)\\s*:(.*)");
 
 	@Override
-	public Map<String, String> parser(InputStream stream) {
+	public Map<String, String> parser(final InputStream stream) {
 		Map<String, String> parameters = new HashMap<String, String>();
 
 		String comment = getComment(stream);
@@ -39,7 +42,7 @@ public abstract class AbstractHeaderParser implements IHeaderParser {
 	}
 
 	@Override
-	public String createHeader(Map<String, String> headerContent) {
+	public String createHeader(final Map<String, String> headerContent) {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append(getLineCommentToken());
@@ -64,7 +67,79 @@ public abstract class AbstractHeaderParser implements IHeaderParser {
 		return builder.toString();
 	}
 
-	protected abstract String getLineCommentToken();
+	/**
+	 * Default implementation to extract the first comment area from a stream. Looks for block and line comments. Might be replaced by more specific
+	 * implementations for dedicated languages.
+	 * 
+	 * @param stream
+	 *            stream to parse
+	 * @return String containing the detected comment or an empty string. Never returns <code>null</code>
+	 */
+	protected String getComment(final InputStream stream) {
+		StringBuilder comment = new StringBuilder();
 
-	protected abstract String getComment(InputStream stream);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+
+		boolean isComment = true;
+		boolean isBlock = false;
+		try {
+			do {
+				String line = reader.readLine();
+				if (line == null)
+					break;
+
+				line = line.trim();
+
+				if (line.isEmpty())
+					continue;
+
+				if (line.startsWith(getLineCommentToken())) {
+					comment.append(line.substring(getLineCommentToken().length()).trim());
+					comment.append("\n");
+					continue;
+				}
+
+				if (hasBlockComment()) {
+					if (line.startsWith(getBlockCommentStartToken())) {
+						isBlock = true;
+						line = line.substring(getBlockCommentStartToken().length()).trim();
+					}
+
+					if (isBlock) {
+						if (line.contains(getBlockCommentEndToken())) {
+							isBlock = false;
+							line = line.substring(0, line.indexOf(getBlockCommentEndToken()));
+						}
+
+						// remove leading '*' characters
+						line = line.trim();
+						while (line.startsWith("*"))
+							line = line.substring(1);
+
+						comment.append(line.trim());
+						comment.append("\n");
+						continue;
+					}
+				}
+
+				// not a comment line, not empty
+				isComment = false;
+
+			} while (isComment);
+
+		} catch (IOException e) {
+			Logger.logError("Could not parse input stream header", e);
+			return "";
+		}
+
+		return comment.toString();
+	}
+
+	protected abstract boolean hasBlockComment();
+
+	protected abstract String getBlockCommentEndToken();
+
+	protected abstract String getBlockCommentStartToken();
+
+	protected abstract String getLineCommentToken();
 }

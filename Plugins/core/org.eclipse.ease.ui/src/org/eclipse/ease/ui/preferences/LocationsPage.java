@@ -330,7 +330,7 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 	@Override
 	public boolean performOk() {
 
-		// store enties
+		// store entries
 		final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);
 
 		Collection<IEntry> existing = repositoryService.getLocations();

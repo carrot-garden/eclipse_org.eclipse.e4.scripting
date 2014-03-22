@@ -26,25 +26,21 @@ public interface IScriptFunctionModifier {
 	 * Get code that shall be executed before actual method gets called. As multiple modules might want to inject code make sure to avoid interactions by using
 	 * commonly used variable names.
 	 * 
-	 * @param module
-	 *            module providing function
 	 * @param method
 	 *            method that will be called afterwards.
 	 * 
-	 * @return JavaScript code to be inserted before method call
+	 * @return script code to be inserted before method call
 	 */
-	String getPreExecutionCode(Object module, Method method);
+	String getPreExecutionCode(Method method);
 
 	/**
 	 * Get code that shall be executed after actual method gets called. As multiple modules might want to inject code make sure to avoid interactions by using
 	 * commonly used variable names.
 	 * 
-	 * @param module
-	 *            module providing function
 	 * @param method
 	 *            method that will be called before.
 	 * 
-	 * @return JavaScript code to be inserted after method call
+	 * @return script code to be inserted after method call
 	 */
-	String getPostExecutionCode(Object module, Method method);
+	String getPostExecutionCode(Method method);
 }

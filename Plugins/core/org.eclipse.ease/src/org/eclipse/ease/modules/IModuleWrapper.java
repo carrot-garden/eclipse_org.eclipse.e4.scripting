@@ -12,18 +12,19 @@ package org.eclipse.ease.modules;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Set;
 
 public interface IModuleWrapper {
 
-    String getSaveVariableName(String variableName);
+	String getSaveVariableName(String variableName);
 
-    String createFunctionWrapper(String moduleVariable, Method method, Set<String> functionNames, String resultName, String preExecutionCode,
-            String postExecutionCode);
+	String createFunctionWrapper(IEnvironment environment, String moduleVariable, Method method);
 
-    String getConstantDefinition(String name, Field field);
+	//
+	// String getConstantDefinition(String name, Field field);
+	//
+	// String getVariableDefinition(String name, String content);
+	//
+	String classInstantiation(Class<?> clazz, String[] parameters);
 
-    String getVariableDefinition(String name, String content);
-
-    String classInstantiation(Class<?> clazz, String[] parameters);
+	String createStaticFieldWrapper(IEnvironment environment, Field field);
 }

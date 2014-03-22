@@ -15,25 +15,48 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.ease.Activator;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.modules.AbstractModuleWrapper;
-import org.eclipse.ease.modules.ScriptParameter;
+import org.eclipse.ease.modules.IEnvironment;
+import org.eclipse.ease.modules.IScriptFunctionModifier;
 
 public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
-	private static final String UNDIFINED_KEYWORD = "undifined";
+	public static List<String> RESERVED_KEYWORDS = new ArrayList<String>();
 
-	@Override
-	public String getSaveVariableName(final String variableName) {
-		return RhinoScriptEngine.getSaveName(variableName);
+	static {
+		RESERVED_KEYWORDS.add("for");
+		RESERVED_KEYWORDS.add("while");
+		RESERVED_KEYWORDS.add("delete");
+		// TODO Complete this list
+	}
+
+	private static boolean isValidMethodName(final String methodName) {
+		return RhinoScriptEngine.isSaveName(methodName) && !RESERVED_KEYWORDS.contains(methodName);
 	}
 
 	@Override
-	public String createFunctionWrapper(final String moduleVariable, final Method method, final Set<String> functionNames, final String resultName,
-			final String preExecutionCode, final String postExecutionCode) {
+	public String classInstantiation(final Class<?> clazz, final String[] parameters) {
+		StringBuilder code = new StringBuilder();
+		code.append("new Packages.").append(clazz.getName()).append("(");
+
+		if (parameters != null) {
+			for (String parameter : parameters)
+				code.append(", ").append(parameter);
+
+			if (parameters.length > 0)
+				code.delete(0, 2);
+		}
+
+		code.append(")");
+
+		return code.toString();
+	}
+
+	@Override
+	public String createFunctionWrapper(final IEnvironment environment, final String moduleVariable, final Method method) {
 
 		StringBuilder javaScriptCode = new StringBuilder();
 
@@ -53,24 +76,22 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		body.append(verifyParameters(parameters));
 
 		// insert hooked pre execution code
-		if (preExecutionCode != null)
-			body.append(preExecutionCode);
+		body.append(getPreExecutionCode(environment, method));
 
 		// insert method call
-		body.append("\tvar ").append(resultName).append(" = ").append(moduleVariable).append('.').append(method.getName()).append('(');
+		body.append("\tvar ").append(IScriptFunctionModifier.RESULT_NAME).append(" = ").append(moduleVariable).append('.').append(method.getName()).append('(');
 		body.append(parameterList);
 		body.append(");\n");
 
 		// insert hooked post execution code
-		if (postExecutionCode != null)
-			body.append(postExecutionCode);
+		body.append(getPostExecutionCode(environment, method));
 
 		// insert return statement
-		body.append("\treturn ").append(resultName).append(";\n");
+		body.append("\treturn ").append(IScriptFunctionModifier.RESULT_NAME).append(";\n");
 
 		// build function declarations
-		for (String name : functionNames) {
-			if (!isCorrectMethodName(name)) {
+		for (String name : getMethodNames(method)) {
+			if (!isValidMethodName(name)) {
 				Logger.logError("The method name \"" + name + "\" from the module \"" + moduleVariable + "\" can not be wrapped because it's name is reserved",
 						Activator.PLUGIN_ID);
 
@@ -82,6 +103,21 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		}
 
 		return javaScriptCode.toString();
+	}
+
+	@Override
+	public String createStaticFieldWrapper(final IEnvironment environment, final Field field) {
+		return "const " + RhinoScriptEngine.getSaveName(field.getName()) + " = Packages." + field.getDeclaringClass().getName() + "." + field.getName() + ";\n";
+	}
+
+	@Override
+	protected String getNullString() {
+		return "null";
+	}
+
+	@Override
+	public String getSaveVariableName(final String variableName) {
+		return RhinoScriptEngine.getSaveName(variableName);
 	}
 
 	private StringBuilder verifyParameters(final List<Parameter> parameters) {
@@ -101,81 +137,5 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 		}
 
 		return data;
-	}
-
-	/**
-	 * Generate code for optional parameter (and handle default value)
-	 * 
-	 * @param type
-	 * @param a
-	 * @return
-	 */
-	protected CharSequence setOptionalParameterValue(final Class<?> type, final ScriptParameter a) {
-		Object defaultValue = ScriptParameter.OptionalParameterHelper.getDefaultValue(a, type);
-		StringBuilder parametersSignature = new StringBuilder();
-		parametersSignature.append("=");
-		if (defaultValue != null) {
-			if (defaultValue instanceof String) {
-				parametersSignature.append("\"" + defaultValue + "\"");
-			} else {
-				parametersSignature.append(defaultValue.toString());
-			}
-		}
-		return null;
-	}
-
-	protected String getNullVariableName() {
-		return UNDIFINED_KEYWORD;
-	}
-
-	public static List<String> RESERVED_KEYWORDS = new ArrayList<String>();
-
-	public boolean isCorrectMethodName(final String methodName) {
-		return RhinoScriptEngine.isSaveName(methodName) && !RESERVED_KEYWORDS.contains(methodName);
-	}
-
-	static {
-		RESERVED_KEYWORDS.add("for");
-		RESERVED_KEYWORDS.add("while");
-		RESERVED_KEYWORDS.add("delete");
-		// TODO Complete this list
-	}
-
-	@Override
-	public String getConstantDefinition(final String name, final Field field) {
-		return "const " + RhinoScriptEngine.getSaveName(name) + " = Packages." + field.getDeclaringClass().getName() + "." + field.getName() + ";\n";
-	}
-
-	@Override
-	public String getVariableDefinition(final String name, final String content) {
-		return "var " + RhinoScriptEngine.getSaveName(name) + " = " + content + ";";
-	}
-
-	@Override
-	public String classInstantiation(final Class<?> clazz, final String[] parameters) {
-		StringBuilder code = new StringBuilder();
-		code.append("new Packages.");
-		code.append(clazz.getName());
-		code.append("(");
-
-		if (parameters != null) {
-			for (String parameter : parameters) {
-				code.append('"');
-				code.append(parameter);
-				code.append('"');
-				code.append(", ");
-			}
-			if (parameters.length > 0)
-				code.replace(code.length() - 2, code.length(), "");
-		}
-
-		code.append(")");
-
-		return code.toString();
-	}
-
-	@Override
-	protected String getNullString() {
-		return "null";
 	}
 }

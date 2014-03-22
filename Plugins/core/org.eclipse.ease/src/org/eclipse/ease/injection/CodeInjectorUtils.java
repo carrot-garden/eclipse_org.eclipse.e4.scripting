@@ -15,8 +15,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.Script;
@@ -24,14 +22,12 @@ import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
 import org.eclipse.ease.modules.BootStrapper;
 import org.eclipse.ease.modules.IModuleWrapper;
-import org.eclipse.ease.modules.IScriptFunctionModifier;
 import org.eclipse.swt.widgets.Display;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 /**
  * Helper class used to inject code into engines
@@ -50,7 +46,7 @@ public class CodeInjectorUtils {
 	 * @param variableName
 	 * @return
 	 */
-	public static Object instancianteObject(Class<?> classToInject, IScriptEngine engine, Object[] paramaters, String variableName) {
+	public static Object instancianteObject(final Class<?> classToInject, final IScriptEngine engine, final Object[] paramaters, final String variableName) {
 		Object objectToInject = null;
 		// Inject variable
 		InstanciateClassRunnable tt = new InstanciateClassRunnable(classToInject, paramaters);
@@ -92,36 +88,16 @@ public class CodeInjectorUtils {
 	 * @param reload
 	 *            Set to true if the class has already been loaded
 	 */
-	public static void injectClass(Class<?> classToInject, Predicate<Method> methodToInjectPredicate, Predicate<Field> fieldToInjectPredicate,
-			Function<Method, String> preExceutionCode, Function<Method, String> postExceutionCode, String injectedVariableName, IScriptEngine engine,
-			String injectionName) {
+	public static void injectClass(final Class<?> classToInject, final Predicate<Method> methodToInjectPredicate,
+			final Predicate<Field> fieldToInjectPredicate, final Function<Method, String> preExceutionCode, final Function<Method, String> postExceutionCode,
+			final String injectedVariableName, final IScriptEngine engine, final String injectionName) {
 		// script code to inject
 		StringBuffer scriptCode = new StringBuffer();
 		Collection<Method> methodToInject = Collections2.filter(Lists.newArrayList(classToInject.getMethods()), methodToInjectPredicate);
 		// use reflection to access methods
 		for (final Method method : methodToInject) {
 
-			String preExecutionCode = null;
-			if (preExceutionCode != null) {
-				preExecutionCode = preExceutionCode.apply(method);
-			}
-			String postExecutionCode = null;
-			if (postExceutionCode != null) {
-				postExecutionCode = postExceutionCode.apply(method);
-			}
-
-			Set<String> methodNames = new HashSet<String>();
-			methodNames.add(method.getName());
-			Set<String> methodNamesfiltered = Sets.filter(methodNames, new Predicate<String>() {
-
-				@Override
-				public boolean apply(final String arg0) {
-					return (arg0 != null) && !arg0.isEmpty();
-				}
-			});
-
-			String code = getWrapper(engine).createFunctionWrapper(injectedVariableName, method, methodNamesfiltered, IScriptFunctionModifier.RESULT_NAME,
-					preExecutionCode, postExecutionCode);
+			String code = getWrapper(engine).createFunctionWrapper(null, injectedVariableName, method);
 			if ((code != null) && !code.isEmpty()) {
 				scriptCode.append(code);
 				scriptCode.append('\n');
@@ -131,7 +107,7 @@ public class CodeInjectorUtils {
 		// use reflection to access static members
 		Collection<Field> declaredFields = Collections2.filter(Lists.newArrayList(classToInject.getDeclaredFields()), fieldToInjectPredicate);
 		for (Field field : declaredFields) {
-			scriptCode.append(getWrapper(engine).getConstantDefinition(field.getName().toUpperCase(), field));
+			scriptCode.append(getWrapper(engine).createStaticFieldWrapper(null, field));
 		}
 
 		// execute code
@@ -148,7 +124,7 @@ public class CodeInjectorUtils {
 	 * @param scriptEngine
 	 * @return
 	 */
-	public static IModuleWrapper getWrapper(IScriptEngine scriptEngine) {
+	public static IModuleWrapper getWrapper(final IScriptEngine scriptEngine) {
 		return BootStrapper.getWrapper(scriptEngine.getDescription().getID());
 	}
 
@@ -185,7 +161,7 @@ public class CodeInjectorUtils {
 	 * @param objectToInject
 	 * @param engine
 	 */
-	public static void injectJavaVariable(String variableName, Object objectToInject, IScriptEngine engine) {
+	public static void injectJavaVariable(final String variableName, final Object objectToInject, final IScriptEngine engine) {
 		if (objectToInject != null) {
 			String registeredModuleName = variableName;
 			engine.setVariable(registeredModuleName, objectToInject);
@@ -202,7 +178,7 @@ public class CodeInjectorUtils {
 	public static final Predicate<Method> NO_METHOD_PREDICATE = new Predicate<Method>() {
 
 		@Override
-		public boolean apply(Method arg0) {
+		public boolean apply(final Method arg0) {
 			return false;
 		}
 	};
@@ -213,7 +189,7 @@ public class CodeInjectorUtils {
 	public static final Predicate<Field> NO_FIELD_PREDICATE = new Predicate<Field>() {
 
 		@Override
-		public boolean apply(Field arg0) {
+		public boolean apply(final Field arg0) {
 			return false;
 		}
 	};
@@ -232,7 +208,7 @@ public class CodeInjectorUtils {
 
 		private final Object[] parameters;
 
-		public InstanciateClassRunnable(final Class<?> toInstantiate, Object[] parameters) {
+		public InstanciateClassRunnable(final Class<?> toInstantiate, final Object[] parameters) {
 			this.toInstantiate = toInstantiate;
 			this.parameters = parameters;
 		}
@@ -242,7 +218,7 @@ public class CodeInjectorUtils {
 			Collection<Class> types = Collections2.transform(Lists.newArrayList(parameters), new Function<Object, Class>() {
 
 				@Override
-				public Class apply(Object arg0) {
+				public Class apply(final Object arg0) {
 					return arg0.getClass();
 				}
 			});
@@ -276,7 +252,7 @@ public class CodeInjectorUtils {
 
 		}
 
-		protected boolean isCorrectConstructor(Constructor con) {
+		protected boolean isCorrectConstructor(final Constructor con) {
 			Class[] paramTypes = con.getParameterTypes();
 			if (paramTypes.length == parameters.length) {
 				for (int index = 0; index < paramTypes.length; index++) {

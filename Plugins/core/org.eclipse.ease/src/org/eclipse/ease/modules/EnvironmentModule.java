@@ -17,10 +17,7 @@ import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ExitException;
@@ -29,6 +26,7 @@ import org.eclipse.ease.Logger;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
+import org.eclipse.ease.service.ScriptService;
 
 /**
  * The Environment provides base functions for all script interpreters. It is automatically loaded by any interpreter upon startup.
@@ -91,7 +89,7 @@ public class EnvironmentModule extends AbstractEnvironment {
 		// script code to inject
 		StringBuilder scriptCode = new StringBuilder();
 
-		// get methods with annotation
+		// collect methods with annotation
 		List<Method> methods = new ArrayList<Method>();
 		for (Method method : instance.getClass().getMethods()) {
 			if (useAutoLoader(method))
@@ -106,46 +104,34 @@ public class EnvironmentModule extends AbstractEnvironment {
 			}
 		}
 
-		// use reflection to access methods
+		// create wrappers for methods
 		for (final Method method : methods) {
-			String preExecutionCode = getPreExecutionCode(instance, method);
-			String postExecutionCode = getPostExecutionCode(instance, method);
+			String code = getWrapper().createFunctionWrapper(this, identifier, method);
 
-			Set<String> methodNames = new HashSet<String>();
-			methodNames.add(method.getName());
-
-			WrapToScript wrapAnnotation = method.getAnnotation(WrapToScript.class);
-			if (wrapAnnotation != null)
-				methodNames.addAll(Arrays.asList(wrapAnnotation.alias().split(WrapToScript.DELIMITER)));
-
-			// prevent from null and empty string to pass to module wrapper
-			methodNames.remove(null);
-			for (String name : new HashSet<String>(methodNames))
-				if (name.trim().isEmpty())
-					methodNames.remove(name);
-
-			String code = getWrapper().createFunctionWrapper(identifier, method, methodNames, IScriptFunctionModifier.RESULT_NAME, preExecutionCode,
-					postExecutionCode);
 			if ((code != null) && !code.isEmpty()) {
 				scriptCode.append(code);
 				scriptCode.append('\n');
 			}
 		}
 
-		// use reflection to access static members
+		// create wrappers for static fields
 		if (!reload) {
+			// this is only done upon initial loading as we try to create constants here
 			Field[] declaredFields = instance.getClass().getDeclaredFields();
 			for (Field field : declaredFields) {
 				try {
 					if ((Modifier.isStatic(field.getModifiers())) && (Modifier.isPublic(field.getModifiers()))) {
-						if (field.getAnnotation(WrapToScript.class) != null)
-							// do not generate code here as this would require the module to be exported in manifest.mf
-							getScriptEngine().setVariable(getWrapper().getSaveVariableName(field.getName()), field.get(instance));
+						if (field.getAnnotation(WrapToScript.class) != null) {
+
+							String code = getWrapper().createStaticFieldWrapper(this, field);
+
+							if ((code != null) && !code.isEmpty()) {
+								scriptCode.append(code);
+								scriptCode.append('\n');
+							}
+						}
 					}
 				} catch (IllegalArgumentException e) {
-					Logger.logError("Could not wrap field \"" + field.getName() + " \" of module \"" + instance.getClass() + "\"");
-				} catch (IllegalAccessException e) {
-					// should not happen as field is public. But in case just ignore this field and continue with the next one
 					Logger.logError("Could not wrap field \"" + field.getName() + " \" of module \"" + instance.getClass() + "\"");
 				}
 			}
@@ -154,10 +140,10 @@ public class EnvironmentModule extends AbstractEnvironment {
 		// execute code
 		String codeToInject = scriptCode.toString();
 		// FIXME move log to script engine
-		if (ITracingConstant.ENVIRONEMENT_MODULE_WRAPPER_TRACING) {
+		if (ITracingConstant.ENVIRONEMENT_MODULE_WRAPPER_TRACING)
 			Tracer.logInfo("[Environement Module] Injecting code:\n" + codeToInject);
-		}
-		getScriptEngine().inject(new Script("Wrapping " + instance.toString(), scriptCode.toString()));
+
+		getScriptEngine().inject(new Script("Wrapping " + instance.toString(), codeToInject));
 	}
 
 	/**
@@ -227,28 +213,6 @@ public class EnvironmentModule extends AbstractEnvironment {
 		throw new RuntimeException("Cannot locate '" + filename + "'");
 	}
 
-	private String getPreExecutionCode(final Object instance, final Method method) {
-		final StringBuffer code = new StringBuffer();
-
-		for (final Object module : getModules()) {
-			if (module instanceof IScriptFunctionModifier)
-				code.append(((IScriptFunctionModifier) module).getPreExecutionCode(instance, method));
-		}
-
-		return code.toString();
-	}
-
-	private String getPostExecutionCode(final Object instance, final Method method) {
-		final StringBuffer code = new StringBuffer();
-
-		for (final Object module : getModules()) {
-			if (module instanceof IScriptFunctionModifier)
-				code.append(((IScriptFunctionModifier) module).getPostExecutionCode(instance, method));
-		}
-
-		return code.toString();
-	}
-
 	// // FIXME move to rhino bundle
 	// /**
 	// * Resolves a jar file and makes its classes available for the
@@ -301,5 +265,15 @@ public class EnvironmentModule extends AbstractEnvironment {
 		}
 
 		return engine;
+	}
+
+	/**
+	 * Get the generic script wrapper registered for this script engine.
+	 * 
+	 * @return script wrapper
+	 */
+	private IModuleWrapper getWrapper() {
+		// use the static access method for the service as we might run without UI (workbench would not be available)
+		return ScriptService.getService().getModuleWrapper(getScriptEngine().getDescription().getID());
 	}
 }
