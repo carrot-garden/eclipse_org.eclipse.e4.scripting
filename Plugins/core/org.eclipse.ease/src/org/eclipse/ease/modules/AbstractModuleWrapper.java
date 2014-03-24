@@ -194,14 +194,14 @@ public abstract class AbstractModuleWrapper implements IModuleWrapper {
 		try {
 			clazz.getConstructor(String.class);
 			// string constructor found, return class
-			return classInstantiation(clazz, new String[] { defaultStringValue });
+			return classInstantiation(clazz, new String[] { "\"" + defaultStringValue + "\"" });
 		} catch (SecurityException e) {
 		} catch (NoSuchMethodException e) {
 		}
 
 		// special handling for string defaults passed to an Object.class
 		if (clazz.isAssignableFrom(String.class))
-			return classInstantiation(String.class, new String[] { defaultStringValue });
+			return classInstantiation(String.class, new String[] { "\"" + defaultStringValue + "\"" });
 
 		return getNullString();
 	}

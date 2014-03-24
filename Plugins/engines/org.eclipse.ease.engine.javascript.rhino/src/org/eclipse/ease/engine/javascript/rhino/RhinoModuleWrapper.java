@@ -44,10 +44,10 @@ public class RhinoModuleWrapper extends AbstractModuleWrapper {
 
 		if (parameters != null) {
 			for (String parameter : parameters)
-				code.append(", ").append(parameter);
+				code.append(parameter).append(", ");
 
 			if (parameters.length > 0)
-				code.delete(0, 2);
+				code.delete(code.length() - 2, code.length());
 		}
 
 		code.append(")");
