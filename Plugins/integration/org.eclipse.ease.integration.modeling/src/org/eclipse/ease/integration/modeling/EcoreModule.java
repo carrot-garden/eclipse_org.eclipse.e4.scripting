@@ -609,7 +609,6 @@ public class EcoreModule extends AbstractScriptModule {
 		}
 	}
 
-	@Override
 	public IModuleWrapper getWrapper() {
 		return BootStrapper.getWrapper(getScriptEngine().getDescription().getID());
 	}
