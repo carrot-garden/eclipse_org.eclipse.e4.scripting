@@ -26,8 +26,10 @@ import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptType;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -82,6 +84,10 @@ public class MainTab extends AbstractLaunchConfigurationTab implements ILaunchCo
 			txtSourceFile.setText(configuration.getAttribute(LaunchConstants.FILE_LOCATION, ""));
 			populateScriptEngines();
 			// TODO select correct engine from configuration
+			final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
+			EngineDescription engineDescription = scriptService.getEngineByID(configuration.getAttribute(LaunchConstants.SCRIPT_ENGINE, ""));
+			if (engineDescription != null)
+				comboViewer.setSelection(new StructuredSelection(engineDescription));
 
 			fTxtStartupParameters.setText(configuration.getAttribute(LaunchConstants.STARTUP_PARAMETERS, ""));
 
@@ -170,7 +176,7 @@ public class MainTab extends AbstractLaunchConfigurationTab implements ILaunchCo
 		txtSourceFile = new Text(grpScriptSource, SWT.BORDER);
 		txtSourceFile.addModifyListener(new ModifyListener() {
 			@Override
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(final ModifyEvent e) {
 				populateScriptEngines();
 			}
 		});
@@ -179,7 +185,7 @@ public class MainTab extends AbstractLaunchConfigurationTab implements ILaunchCo
 		Button btnBrowseProject = new Button(grpScriptSource, SWT.NONE);
 		btnBrowseProject.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(final SelectionEvent e) {
 				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(parent.getShell(), new WorkbenchLabelProvider(),
 						new WorkbenchContentProvider());
 				dialog.setTitle("Select script source file");
@@ -195,7 +201,7 @@ public class MainTab extends AbstractLaunchConfigurationTab implements ILaunchCo
 		Button btnBrowseFilesystem = new Button(grpScriptSource, SWT.NONE);
 		btnBrowseFilesystem.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(final SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
 				String fileName = dialog.open();
 				txtSourceFile.setText(new File(fileName).toURI().toString());
@@ -214,6 +220,13 @@ public class MainTab extends AbstractLaunchConfigurationTab implements ILaunchCo
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboViewer.setContentProvider(ArrayContentProvider.getInstance());
 		comboViewer.setLabelProvider(new LabelProvider());
+		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(final SelectionChangedEvent event) {
+				updateLaunchConfigurationDialog();
+			}
+		});
 
 		Group grpProgramArguments = new Group(topControl, SWT.NONE);
 		grpProgramArguments.setLayout(new GridLayout(1, false));
@@ -223,7 +236,7 @@ public class MainTab extends AbstractLaunchConfigurationTab implements ILaunchCo
 		fTxtStartupParameters = new Text(grpProgramArguments, SWT.BORDER | SWT.WRAP | SWT.MULTI);
 		fTxtStartupParameters.addModifyListener(new ModifyListener() {
 			@Override
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(final ModifyEvent e) {
 				updateLaunchConfigurationDialog();
 			}
 		});
