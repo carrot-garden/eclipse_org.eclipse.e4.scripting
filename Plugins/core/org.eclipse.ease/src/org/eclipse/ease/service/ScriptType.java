@@ -1,7 +1,11 @@
 package org.eclipse.ease.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -158,14 +162,28 @@ public class ScriptType {
 		return null;
 	}
 
-	public Collection<EngineDescription> getEngines() {
-		HashSet<EngineDescription> engines = new HashSet<EngineDescription>();
+	/**
+	 * Get available engines. Returns available script engine descriptions sorted by priority (highest first).
+	 * 
+	 * @return available engines
+	 */
+	public List<EngineDescription> getEngines() {
+		List<EngineDescription> engines = new ArrayList<EngineDescription>();
 
 		final IScriptService scriptService = ScriptService.getService();
 		for (EngineDescription description : scriptService.getEngines()) {
 			if (description.getSupportedScriptTypes().contains(this))
 				engines.add(description);
 		}
+
+		// sort engines to report highest priority first
+		Collections.sort(engines, new Comparator<EngineDescription>() {
+
+			@Override
+			public int compare(final EngineDescription o1, final EngineDescription o2) {
+				return o2.getPriority() - o1.getPriority();
+			}
+		});
 
 		return engines;
 	}

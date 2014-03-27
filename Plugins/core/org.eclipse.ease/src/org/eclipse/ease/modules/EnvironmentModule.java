@@ -123,16 +123,22 @@ public class EnvironmentModule extends AbstractEnvironment {
 					if ((Modifier.isStatic(field.getModifiers())) && (Modifier.isPublic(field.getModifiers()))) {
 						if (field.getAnnotation(WrapToScript.class) != null) {
 
-							String code = getWrapper().createStaticFieldWrapper(this, field);
+							// only wrap if field is not already declared
+							if (!getScriptEngine().hasVariable(getWrapper().getSaveVariableName(field.getName()))) {
+								String code = getWrapper().createStaticFieldWrapper(this, field);
 
-							if ((code != null) && !code.isEmpty()) {
-								scriptCode.append(code);
-								scriptCode.append('\n');
+								if ((code != null) && !code.isEmpty()) {
+									scriptCode.append(code);
+									scriptCode.append('\n');
+								}
+							} else {
+								Logger.logWarning("Skipped wrapping of field \"" + field.getName() + " \" (module \"" + instance.getClass()
+										+ "\") as variable is already declared.");
 							}
 						}
 					}
 				} catch (IllegalArgumentException e) {
-					Logger.logError("Could not wrap field \"" + field.getName() + " \" of module \"" + instance.getClass() + "\"");
+					Logger.logError("Could not wrap field \"" + field.getName() + " \" of module \"" + instance.getClass() + "\".");
 				}
 			}
 		}
