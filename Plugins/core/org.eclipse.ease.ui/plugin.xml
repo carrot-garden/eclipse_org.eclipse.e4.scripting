@@ -506,4 +506,13 @@
             class="org.eclipse.ease.ui.preferences.PreferenceInitializer">
       </initializer>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.ease.ui.perspectives.ScriptingPerspective"
+            icon="images/script.gif"
+            id="org.eclipse.ease.ui.perspectives.ScriptingPerspective"
+            name="Scripting">
+      </perspective>
+   </extension>
 </plugin>
