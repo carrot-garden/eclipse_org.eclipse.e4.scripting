@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
+import org.eclipse.ease.ui.tools.AbstractVirtualTreeProvider;
 
 public class ScriptContentProvider extends AbstractVirtualTreeProvider {
 

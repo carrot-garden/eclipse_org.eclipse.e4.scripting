@@ -23,7 +23,7 @@ import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.handler.LoadModule;
 import org.eclipse.ease.ui.preferences.IPreferenceConstants;
-import org.eclipse.ease.ui.scripts.ui.AbstractPopupItem;
+import org.eclipse.ease.ui.tools.AbstractPopupItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.AbstractContributionFactory;
 import org.eclipse.ui.menus.IContributionRoot;

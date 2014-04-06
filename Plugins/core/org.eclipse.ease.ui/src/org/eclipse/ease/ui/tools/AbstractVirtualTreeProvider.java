@@ -1,4 +1,4 @@
-package org.eclipse.ease.ui.scripts.ui;
+package org.eclipse.ease.ui.tools;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,9 +10,17 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
+/**
+ * A virtual tree content provider. Allows to build a tree structure by registering tree elements using {@link IPath}s. When the input changes
+ * {@link #populateElements(Object)} is called on the derived class to create the tree structure.
+ * 
+ */
 public abstract class AbstractVirtualTreeProvider implements ITreeContentProvider {
 
+	/** Static root node. */
 	private static final IPath ROOT = new Path("");
+
+	/** Tree elements and paths. */
 	private final Map<IPath, Collection<Object>> fElements = new HashMap<IPath, Collection<Object>>();
 
 	@Override
@@ -21,12 +29,12 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 	}
 
 	@Override
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+	public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
 		// nothing to do
 	}
 
 	@Override
-	public Object[] getElements(Object inputElement) {
+	public Object[] getElements(final Object inputElement) {
 		fElements.clear();
 		registerPath(ROOT);
 
@@ -36,7 +44,7 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 	}
 
 	@Override
-	public Object[] getChildren(Object parentElement) {
+	public Object[] getChildren(final Object parentElement) {
 		Collection<Object> children = fElements.get(parentElement);
 		if (children != null)
 			return children.toArray();
@@ -45,7 +53,7 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 	}
 
 	@Override
-	public Object getParent(Object element) {
+	public Object getParent(final Object element) {
 		for (IPath path : fElements.keySet()) {
 			if (fElements.get(path).contains(element))
 				return path;
@@ -55,7 +63,7 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 	}
 
 	@Override
-	public boolean hasChildren(Object element) {
+	public boolean hasChildren(final Object element) {
 		return (fElements.containsKey(element)) && (!fElements.get(element).isEmpty());
 	}
 
@@ -68,7 +76,7 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 	 * @param element
 	 *            element to be stored within path
 	 */
-	public void registerElement(IPath path, Object element) {
+	public void registerElement(IPath path, final Object element) {
 		path = path.makeRelative();
 		registerPath(path);
 
@@ -94,5 +102,11 @@ public abstract class AbstractVirtualTreeProvider implements ITreeContentProvide
 		}
 	}
 
+	/**
+	 * Needs to register all tree elements with their paths.
+	 * 
+	 * @param inputElement
+	 *            tree input
+	 */
 	protected abstract void populateElements(Object inputElement);
 }

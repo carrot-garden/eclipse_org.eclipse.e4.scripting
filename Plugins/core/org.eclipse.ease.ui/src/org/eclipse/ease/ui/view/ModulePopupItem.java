@@ -6,7 +6,7 @@ import java.util.Map;
 import org.eclipse.ease.modules.ModuleDefinition;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.handler.LoadModule;
-import org.eclipse.ease.ui.scripts.ui.AbstractPopupItem;
+import org.eclipse.ease.ui.tools.AbstractPopupItem;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;

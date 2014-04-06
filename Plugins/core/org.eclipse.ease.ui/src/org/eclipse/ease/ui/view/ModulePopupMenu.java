@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.eclipse.ease.ui.scripts.ui.AbstractPopupItem;
-import org.eclipse.ease.ui.scripts.ui.AbstractPopupMenu;
+import org.eclipse.ease.ui.tools.AbstractPopupItem;
+import org.eclipse.ease.ui.tools.AbstractPopupMenu;
 
 public class ModulePopupMenu extends AbstractPopupMenu {
 
