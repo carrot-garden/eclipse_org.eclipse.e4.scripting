@@ -12,8 +12,8 @@ package org.eclipse.ease.ui.scripts.ui;
 
 import java.util.HashMap;
 
-import org.eclipse.ease.ui.handler.Rename;
-import org.eclipse.ease.ui.handler.Run;
+import org.eclipse.ease.ui.handler.RenameScript;
+import org.eclipse.ease.ui.handler.RunScript;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
@@ -57,9 +57,9 @@ public class ScriptContextMenuEntries extends AbstractContributionFactory {
 					final HashMap<String, String> parameters = new HashMap<String, String>();
 
 					// add "run" entry
-					parameters.put(Run.PARAMETER_NAME, names.toString());
-					final CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(serviceLocator, null, Run.COMMAND_ID,
-							CommandContributionItem.STYLE_PUSH);
+					parameters.put(RunScript.PARAMETER_NAME, names.toString());
+					final CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(serviceLocator, null,
+							RunScript.COMMAND_ID, CommandContributionItem.STYLE_PUSH);
 					contributionParameter.label = "Run";
 					contributionParameter.visibleEnabled = true;
 					contributionParameter.parameters = parameters;
@@ -80,8 +80,8 @@ public class ScriptContextMenuEntries extends AbstractContributionFactory {
 
 					// add "rename" entry
 					parameters.clear();
-					parameters.put(Rename.PARAMETER_NAME, names.toString());
-					contributionParameter.commandId = Rename.COMMAND_ID;
+					parameters.put(RenameScript.PARAMETER_NAME, names.toString());
+					contributionParameter.commandId = RenameScript.COMMAND_ID;
 					contributionParameter.label = "Rename";
 					contribution = new CommandContributionItem(contributionParameter);
 					additions.addContributionItem(contribution, null);

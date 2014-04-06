@@ -14,22 +14,23 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.ease.ui.scripts.IScriptSupport;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.handlers.HandlerUtil;
 
-/**
- * Toggle display of the macro manager.
- */
-public class ShowMacroManager extends AbstractHandler implements IHandler {
+public class RenameScript extends AbstractHandler implements IHandler {
 
-    @Override
-    public final Object execute(final ExecutionEvent event) throws ExecutionException {
+	public static final String COMMAND_ID = "org.eclipse.ease.commands.macro.rename";
+	public static final String PARAMETER_NAME = "org.eclipse.ease.commands.macro.rename.name";
 
-        final IWorkbenchPart part = HandlerUtil.getActivePart(event);
-        if (part instanceof IScriptSupport)
-            ((IScriptSupport) part).toggleMacroManager();
+	@Override
+	public final Object execute(final ExecutionEvent event) throws ExecutionException {
 
-        return null;
-    }
+		final String[] macros = event.getParameter(PARAMETER_NAME).split(";");
+
+		for (final String macroID : macros) {
+			// TODO implement dialog
+			// final Macro macro = MacroManager.getDefault().getMacro(macroID);
+			// MacroManager.getDefault().removeMacro(macro);
+		}
+
+		return null;
+	}
 }

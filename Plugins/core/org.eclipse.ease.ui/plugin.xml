@@ -38,7 +38,7 @@
       </command>
       <command
             categoryId="org.eclipse.ease.commands.category.scriptShell"
-            description="Terminate current script"
+            description="Terminate Current Script"
             id="org.eclipse.ease.commands.scriptShell.stop"
             name="Abort script execution">
       </command>
@@ -46,13 +46,13 @@
             categoryId="org.eclipse.ease.commands.category.scriptShell"
             defaultHandler="org.eclipse.ease.ui.handler.Reset"
             id="org.eclipse.ease.commands.scriptShell.reset"
-            name="Reset">
+            name="Reset Engine">
       </command>
       <command
             categoryId="org.eclipse.ease.commands.category.scriptShell"
             defaultHandler="org.eclipse.ease.ui.handler.SwitchEngine"
             id="org.eclipse.ease.commands.scriptShell.switchEngine"
-            name="Switch script engine">
+            name="Switch Script Engine">
          <commandParameter
                id="org.eclipse.ease.commands.scriptShell.switchEngine.id"
                name="Script engine ID"
@@ -76,16 +76,77 @@
                optional="true">
          </commandParameter>
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.eclipse.ease.commands.category.script"
+            name="Script">
+      </category>
       <command
-            categoryId="org.eclipse.ease.commands.category.scriptShell"
+            categoryId="org.eclipse.ease.commands.category.script"
+            defaultHandler="org.eclipse.ease.ui.handler.RunScript"
+            id="org.eclipse.ease.commands.script.run"
+            name="Run Script">
+         <commandParameter
+               id="org.eclipse.ease.commands.script.run.name"
+               name="Script Name"
+               optional="false">
+         </commandParameter>
+      </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.script"
+            defaultHandler="org.eclipse.ease.ui.handler.ToggleScriptRecording"
+            id="org.eclipse.ease.commands.script.toggleScriptRecording"
+            name="Toggle  Script Recording">
+         <state
+               class="org.eclipse.jface.commands.ToggleState"
+               id="STYLE">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.script"
+            defaultHandler="org.eclipse.ease.ui.handler.ToggleScriptPane"
+            id="org.eclipse.ease.commands.script.toggleScriptPane"
+            name="Toggle Script Pane">
+      </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.script"
+            defaultHandler="org.eclipse.ease.ui.handler.DeleteScript"
+            id="org.eclipse.ease.commands.script.delete"
+            name="Delete Script">
+         <commandParameter
+               id="org.eclipse.ease.commands.script.delete.name"
+               name="Script Name"
+               optional="false">
+         </commandParameter>
+      </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.script"
+            defaultHandler="org.eclipse.ease.ui.handler.RenameScript"
+            id="org.eclipse.ease.commands.script.rename"
+            name="Rename Script">
+         <commandParameter
+               id="org.eclipse.ease.commands.script.rename.name"
+               name="Script Name"
+               optional="false">
+         </commandParameter>
+      </command>
+      <command
+            categoryId="org.eclipse.ease.commands.category.script"
             defaultHandler="org.eclipse.ease.ui.handler.EditScript"
-            id="org.eclipse.ease.commands.scriptShell.editScript"
+            id="org.eclipse.ease.commands.script.edit"
             name="Edit Script">
+         <commandParameter
+               id="org.eclipse.ease.commands.script.edit.name"
+               name="Script Name"
+               optional="false">
+         </commandParameter>
       </command>
       <command
             categoryId="org.eclipse.ease.commands.category.scriptShell"
-            defaultHandler="org.eclipse.ease.ui.handler.UpdateRepository"
-            id="org.eclipse.ease.commands.scriptShell.updateRepository"
+            defaultHandler="org.eclipse.ease.ui.handler.RefreshRepository"
+            id="org.eclipse.ease.commands.scriptShell.refreshRepository"
             name="Refresh Repository">
       </command>
       <command
@@ -94,76 +155,9 @@
             id="org.eclipse.ease.commands.scriptShell.runScript"
             name="Run Script">
          <commandParameter
-               id="org.eclipse.ease.commands.scriptShell.runScript.scriptName"
+               id="org.eclipse.ease.commands.scriptShell.runScript.name"
                name="Script Name"
                optional="true">
-         </commandParameter>
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            id="org.eclipse.ease.commands.category.macro"
-            name="Macro">
-      </category>
-      <command
-            categoryId="org.eclipse.ease.commands.category.macro"
-            defaultHandler="org.eclipse.ease.ui.handler.Run"
-            id="org.eclipse.ease.commands.macro.run"
-            name="Run Macro">
-         <commandParameter
-               id="org.eclipse.ease.commands.macro.run.name"
-               name="Macro Name"
-               optional="false">
-         </commandParameter>
-      </command>
-      <command
-            categoryId="org.eclipse.ease.commands.category.macro"
-            defaultHandler="org.eclipse.ease.ui.handler.ToggleScriptRecording"
-            id="org.eclipse.ease.commands.macro.toggleMacroRecording"
-            name="Toggle  Macro Recording">
-         <state
-               class="org.eclipse.jface.commands.ToggleState"
-               id="STYLE">
-         </state>
-      </command>
-      <command
-            categoryId="org.eclipse.ease.commands.category.macro"
-            defaultHandler="org.eclipse.ease.ui.handler.ShowMacroManager"
-            id="org.eclipse.ease.commands.macro.showMacroManager"
-            name="Show Macro Manager">
-      </command>
-      <command
-            categoryId="org.eclipse.ease.commands.category.macro"
-            defaultHandler="org.eclipse.ease.ui.handler.Delete"
-            id="org.eclipse.ease.commands.macro.delete"
-            name="Delete Macro">
-         <commandParameter
-               id="org.eclipse.ease.commands.macro.delete.name"
-               name="Macro Name"
-               optional="false">
-         </commandParameter>
-      </command>
-      <command
-            categoryId="org.eclipse.ease.commands.category.macro"
-            defaultHandler="org.eclipse.ease.ui.handler.Rename"
-            id="org.eclipse.ease.commands.macro.rename"
-            name="Rename Macro">
-         <commandParameter
-               id="org.eclipse.ease.commands.macro.rename.name"
-               name="Macro Name"
-               optional="false">
-         </commandParameter>
-      </command>
-      <command
-            categoryId="org.eclipse.ease.commands.category.macro"
-            defaultHandler="org.eclipse.ease.ui.handler.Edit"
-            id="org.eclipse.ease.commands.macro.edit"
-            name="Edit Macro">
-         <commandParameter
-               id="org.eclipse.ease.commands.macro.edit.name"
-               name="Macro Name"
-               optional="false">
          </commandParameter>
       </command>
    </extension>
@@ -226,16 +220,16 @@
                visible="true">
          </separator>
          <command
-               commandId="org.eclipse.ease.commands.macro.showMacroManager"
+               commandId="org.eclipse.ease.commands.script.toggleScriptPane"
                icon="images/macro_folder.gif"
-               id="org.eclipse.ease.commands.macro.showMacroManager.popup"
-               label="Macro Manager"
+               id="org.eclipse.ease.commands.script.toggleScriptPane.popup"
+               label="Script Pane"
                style="pulldown">
          </command>
          <command
-               commandId="org.eclipse.ease.commands.macro.toggleMacroRecording"
+               commandId="org.eclipse.ease.commands.script.toggleScriptRecording"
                icon="images/start_record_macro.gif"
-               label="Toggle Macro Recording"
+               label="Toggle Script Recording"
                style="toggle">
          </command>
          <separator
@@ -252,13 +246,13 @@
                style="push">
          </command>
          <command
-               commandId="org.eclipse.ease.commands.scriptShell.editScript"
+               commandId="org.eclipse.ease.commands.script.edit"
                icon="images/start_record_macro.gif"
                label="Edit"
                style="push">
          </command>
          <command
-               commandId="org.eclipse.ease.commands.scriptShell.updateRepository"
+               commandId="org.eclipse.ease.commands.scriptShell.refreshRepository"
                label="Refresh"
                style="push">
          </command>

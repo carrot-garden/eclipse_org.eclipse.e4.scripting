@@ -13,7 +13,7 @@ package org.eclipse.ease.ui.scripts.ui;
 import java.util.HashMap;
 
 import org.eclipse.ease.ui.Activator;
-import org.eclipse.ease.ui.handler.Run;
+import org.eclipse.ease.ui.handler.RunScript;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.menus.CommandContributionItem;
@@ -29,15 +29,15 @@ public class ScriptPopup extends AbstractPopupItem {
 
 	@Override
 	public CommandContributionItemParameter getContributionParameter() {
-		final CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(null, null, Run.COMMAND_ID,
+		final CommandContributionItemParameter contributionParameter = new CommandContributionItemParameter(null, null, RunScript.COMMAND_ID,
 				CommandContributionItem.STYLE_PUSH);
 
 		final HashMap<String, String> parameters = new HashMap<String, String>();
-		parameters.put(Run.PARAMETER_NAME, fScript.getName());
+		parameters.put(RunScript.PARAMETER_NAME, fScript.getPath().toString());
 
 		contributionParameter.parameters = parameters;
 
-		contributionParameter.icon = Activator.getImageDescriptor("/images/macro.gif");
+		contributionParameter.icon = Activator.getImageDescriptor("/images/script.gif");
 
 		return contributionParameter;
 	}

@@ -7,7 +7,7 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.ui.PlatformUI;
 
-public class UpdateRepository extends AbstractHandler implements IHandler {
+public class RefreshRepository extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {

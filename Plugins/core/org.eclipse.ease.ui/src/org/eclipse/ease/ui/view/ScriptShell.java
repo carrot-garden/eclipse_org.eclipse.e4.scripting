@@ -151,8 +151,8 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		if (!engines.isEmpty())
 			setEngine(engines.iterator().next().getID());
 
-		// add dynamic context menu for macros
-		ScriptContributionFactory.addContextMenu("org.eclipse.ease.commands.javascript.shell.showMacroManager.popup");
+		// add dynamic context menu for scripts
+		ScriptContributionFactory.addContextMenu("org.eclipse.ease.commands.script.toggleScriptPane.popup");
 
 		// FIXME add preferences lookup
 		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(this);

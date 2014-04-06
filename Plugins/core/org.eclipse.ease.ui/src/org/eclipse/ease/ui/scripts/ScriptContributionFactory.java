@@ -22,6 +22,7 @@ import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.ease.ui.scripts.ui.ScriptPopup;
 import org.eclipse.ease.ui.scripts.ui.ScriptPopupMenu;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.AbstractContributionFactory;
 import org.eclipse.ui.menus.IContributionRoot;
@@ -81,14 +82,14 @@ public final class ScriptContributionFactory extends AbstractContributionFactory
 
 			final Map<IPath, ScriptPopupMenu> dynamicMenus = new HashMap<IPath, ScriptPopupMenu>();
 
+			List<IContributionItem> rootItems = new ArrayList<IContributionItem>();
 			for (final IScript script : scripts) {
 				final ScriptPopup popup = new ScriptPopup(script);
 
-				final IPath path = script.getPath();
-
-				if (path.isEmpty()) {
+				final IPath path = script.getPath().removeLastSegments(1);
+				if (path.lastSegment() == null) {
 					// script in root folder
-					additions.addContributionItem(popup.getContribution(serviceLocator), null);
+					rootItems.add(popup.getContribution(serviceLocator));
 
 				} else {
 					// script in sub menu
@@ -97,15 +98,19 @@ public final class ScriptContributionFactory extends AbstractContributionFactory
 				}
 			}
 
-			// add sub menus to contributions
+			// add root menus to additions
 			for (IPath path : dynamicMenus.keySet()) {
 				if (path.segmentCount() == 1)
 					additions.addContributionItem(dynamicMenus.get(path).getContribution(serviceLocator), null);
 			}
+
+			// add root elements to additions
+			for (IContributionItem item : rootItems)
+				additions.addContributionItem(item, null);
 		}
 	}
 
-	private ScriptPopupMenu registerPath(Map<IPath, ScriptPopupMenu> dynamicMenus, IPath path) {
+	private ScriptPopupMenu registerPath(final Map<IPath, ScriptPopupMenu> dynamicMenus, final IPath path) {
 		if (!dynamicMenus.containsKey(path)) {
 			dynamicMenus.put(path, new ScriptPopupMenu(path.lastSegment()));
 

@@ -4,17 +4,19 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.ease.IScriptEngineProvider;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 public class RunScript extends AbstractHandler implements IHandler {
 
-	public static final String COMMAND_ID = "org.eclipse.ease.commands.scriptShell.runScript";
-	public static final String PARAMETER_NAME = COMMAND_ID + ".scriptName";
+	public static final String COMMAND_ID = "org.eclipse.ease.commands.script.run";
+	public static final String PARAMETER_NAME = COMMAND_ID + ".name";
 
 	@Override
 	public final Object execute(final ExecutionEvent event) throws ExecutionException {
@@ -36,8 +38,17 @@ public class RunScript extends AbstractHandler implements IHandler {
 			}
 		}
 
-		if (script != null)
-			script.run();
+		if (script != null) {
+			// see if we may execute this in the current view or as stand-alone
+			IWorkbenchPart part = HandlerUtil.getActivePart(event);
+
+			if (part instanceof IScriptEngineProvider)
+				// execute in current view
+				((IScriptEngineProvider) part).getScriptEngine().executeAsync("include('script:/" + script.getPath() + "');");
+			else
+				// execute stand-alone
+				script.run();
+		}
 
 		return null;
 	}

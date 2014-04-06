@@ -14,32 +14,21 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.ease.IScriptEngine;
-import org.eclipse.ease.IScriptEngineProvider;
+import org.eclipse.ease.ui.scripts.IScriptSupport;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * Run macro command. Invoke a given macro.
+ * Toggle display of the macro manager.
  */
-public class Run extends AbstractHandler implements IHandler {
-
-    public static final String COMMAND_ID = "org.eclipse.ease.commands.macro.run";
-    public static final String PARAMETER_NAME = "org.eclipse.ease.commands.macro.run.name";
+public class ToggleScriptPane extends AbstractHandler implements IHandler {
 
     @Override
     public final Object execute(final ExecutionEvent event) throws ExecutionException {
 
         final IWorkbenchPart part = HandlerUtil.getActivePart(event);
-        if (part instanceof IScriptEngineProvider) {
-            final IScriptEngine scriptEngine = ((IScriptEngineProvider) part).getScriptEngine();
-            if (scriptEngine != null) {
-                final String[] macros = event.getParameter(PARAMETER_NAME).split(";");
-
-                for (final String macroID : macros)
-                    scriptEngine.executeAsync("include(\"macro://" + macroID + "\");");
-            }
-        }
+        if (part instanceof IScriptSupport)
+            ((IScriptSupport) part).toggleMacroManager();
 
         return null;
     }
