@@ -3,43 +3,35 @@
 package org.eclipse.ease.ui.repository.impl;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IRepository;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
 import org.eclipse.ease.ui.repository.IScript;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Repository</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Repository</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.ease.ui.repository.impl.RepositoryImpl#getEntries <em>Entries</em>}</li>
- *   <li>{@link org.eclipse.ease.ui.repository.impl.RepositoryImpl#getScripts <em>Scripts</em>}</li>
+ * <li>{@link org.eclipse.ease.ui.repository.impl.RepositoryImpl#getEntries <em>Entries</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RepositoryImpl extends MinimalEObjectImpl.Container implements IRepository {
 	/**
-	 * The cached value of the '{@link #getEntries() <em>Entries</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getEntries() <em>Entries</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getEntries()
 	 * @generated
 	 * @ordered
@@ -47,18 +39,8 @@ public class RepositoryImpl extends MinimalEObjectImpl.Container implements IRep
 	protected EList<IEntry> entries;
 
 	/**
-	 * The cached value of the '{@link #getScripts() <em>Scripts</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getScripts()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IScript> scripts;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected RepositoryImpl() {
@@ -66,8 +48,8 @@ public class RepositoryImpl extends MinimalEObjectImpl.Container implements IRep
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -76,10 +58,11 @@ public class RepositoryImpl extends MinimalEObjectImpl.Container implements IRep
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<IEntry> getEntries() {
 		if (entries == null) {
 			entries = new EObjectContainmentEList<IEntry>(IEntry.class, this, IRepositoryPackage.REPOSITORY__ENTRIES);
@@ -88,102 +71,86 @@ public class RepositoryImpl extends MinimalEObjectImpl.Container implements IRep
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<IScript> getScripts() {
-		if (scripts == null) {
-			scripts = new EObjectContainmentEList<IScript>(IScript.class, this, IRepositoryPackage.REPOSITORY__SCRIPTS);
-		}
-		return scripts;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(final InternalEObject otherEnd, final int featureID, final NotificationChain msgs) {
 		switch (featureID) {
-			case IRepositoryPackage.REPOSITORY__ENTRIES:
-				return ((InternalEList<?>)getEntries()).basicRemove(otherEnd, msgs);
-			case IRepositoryPackage.REPOSITORY__SCRIPTS:
-				return ((InternalEList<?>)getScripts()).basicRemove(otherEnd, msgs);
+		case IRepositoryPackage.REPOSITORY__ENTRIES:
+			return ((InternalEList<?>) getEntries()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(final int featureID, final boolean resolve, final boolean coreType) {
 		switch (featureID) {
-			case IRepositoryPackage.REPOSITORY__ENTRIES:
-				return getEntries();
-			case IRepositoryPackage.REPOSITORY__SCRIPTS:
-				return getScripts();
+		case IRepositoryPackage.REPOSITORY__ENTRIES:
+			return getEntries();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(final int featureID, final Object newValue) {
 		switch (featureID) {
-			case IRepositoryPackage.REPOSITORY__ENTRIES:
-				getEntries().clear();
-				getEntries().addAll((Collection<? extends IEntry>)newValue);
-				return;
-			case IRepositoryPackage.REPOSITORY__SCRIPTS:
-				getScripts().clear();
-				getScripts().addAll((Collection<? extends IScript>)newValue);
-				return;
+		case IRepositoryPackage.REPOSITORY__ENTRIES:
+			getEntries().clear();
+			getEntries().addAll((Collection<? extends IEntry>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(final int featureID) {
 		switch (featureID) {
-			case IRepositoryPackage.REPOSITORY__ENTRIES:
-				getEntries().clear();
-				return;
-			case IRepositoryPackage.REPOSITORY__SCRIPTS:
-				getScripts().clear();
-				return;
+		case IRepositoryPackage.REPOSITORY__ENTRIES:
+			getEntries().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(final int featureID) {
 		switch (featureID) {
-			case IRepositoryPackage.REPOSITORY__ENTRIES:
-				return entries != null && !entries.isEmpty();
-			case IRepositoryPackage.REPOSITORY__SCRIPTS:
-				return scripts != null && !scripts.isEmpty();
+		case IRepositoryPackage.REPOSITORY__ENTRIES:
+			return (entries != null) && !entries.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //RepositoryImpl
+	@Override
+	public Collection<IScript> getScripts() {
+		HashSet<IScript> scripts = new HashSet<IScript>();
+
+		for (IEntry entry : getEntries())
+			scripts.addAll(entry.getScripts());
+
+		return scripts;
+	}
+} // RepositoryImpl

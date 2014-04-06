@@ -142,7 +142,7 @@ public interface IRepositoryPackage extends EPackage {
 	int SCRIPT__TIMESTAMP = LOCATION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Entry</b></em>' reference.
+	 * The feature id for the '<em><b>Entry</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -260,22 +260,13 @@ public interface IRepositoryPackage extends EPackage {
 	int REPOSITORY__ENTRIES = 0;
 
 	/**
-	 * The feature id for the '<em><b>Scripts</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REPOSITORY__SCRIPTS = 1;
-
-	/**
 	 * The number of structural features of the '<em>Repository</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REPOSITORY_FEATURE_COUNT = 2;
+	int REPOSITORY_FEATURE_COUNT = 1;
 
 	/**
 	 * The number of operations of the '<em>Repository</em>' class.
@@ -324,13 +315,22 @@ public interface IRepositoryPackage extends EPackage {
 	int ENTRY__HIDDEN = LOCATION_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Scripts</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY__SCRIPTS = LOCATION_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Entry</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENTRY_FEATURE_COUNT = LOCATION_FEATURE_COUNT + 2;
+	int ENTRY_FEATURE_COUNT = LOCATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Content</em>' operation.
@@ -450,10 +450,10 @@ public interface IRepositoryPackage extends EPackage {
 	EAttribute getScript_Timestamp();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ease.ui.repository.IScript#getEntry <em>Entry</em>}'.
+	 * Returns the meta object for the container reference '{@link org.eclipse.ease.ui.repository.IScript#getEntry <em>Entry</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Entry</em>'.
+	 * @return the meta object for the container reference '<em>Entry</em>'.
 	 * @see org.eclipse.ease.ui.repository.IScript#getEntry()
 	 * @see #getScript()
 	 * @generated
@@ -586,17 +586,6 @@ public interface IRepositoryPackage extends EPackage {
 	EReference getRepository_Entries();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ease.ui.repository.IRepository#getScripts <em>Scripts</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Scripts</em>'.
-	 * @see org.eclipse.ease.ui.repository.IRepository#getScripts()
-	 * @see #getRepository()
-	 * @generated
-	 */
-	EReference getRepository_Scripts();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ease.ui.repository.IEntry <em>Entry</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -627,6 +616,17 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEntry_Hidden();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ease.ui.repository.IEntry#getScripts <em>Scripts</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Scripts</em>'.
+	 * @see org.eclipse.ease.ui.repository.IEntry#getScripts()
+	 * @see #getEntry()
+	 * @generated
+	 */
+	EReference getEntry_Scripts();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Parameter Map</em>}'.
@@ -726,7 +726,7 @@ public interface IRepositoryPackage extends EPackage {
 		EAttribute SCRIPT__TIMESTAMP = eINSTANCE.getScript_Timestamp();
 
 		/**
-		 * The meta object literal for the '<em><b>Entry</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Entry</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -834,14 +834,6 @@ public interface IRepositoryPackage extends EPackage {
 		EReference REPOSITORY__ENTRIES = eINSTANCE.getRepository_Entries();
 
 		/**
-		 * The meta object literal for the '<em><b>Scripts</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference REPOSITORY__SCRIPTS = eINSTANCE.getRepository_Scripts();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.EntryImpl <em>Entry</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -866,6 +858,14 @@ public interface IRepositoryPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ENTRY__HIDDEN = eINSTANCE.getEntry_Hidden();
+
+		/**
+		 * The meta object literal for the '<em><b>Scripts</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ENTRY__SCRIPTS = eINSTANCE.getEntry_Scripts();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ease.ui.repository.impl.ParameterMapImpl <em>Parameter Map</em>}' class.

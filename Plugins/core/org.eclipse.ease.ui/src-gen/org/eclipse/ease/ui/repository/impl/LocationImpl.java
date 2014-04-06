@@ -79,7 +79,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public void setLocation(String newLocation) {
+	public void setLocation(final String newLocation) {
 		String oldLocation = location;
 		location = newLocation;
 		if (eNotificationRequired())
@@ -89,7 +89,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getContent() {
@@ -99,7 +99,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public InputStream getInputStream() {
@@ -112,7 +112,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(final int featureID, final boolean resolve, final boolean coreType) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__LOCATION:
 			return getLocation();
@@ -126,7 +126,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(final int featureID, final Object newValue) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__LOCATION:
 			setLocation((String) newValue);
@@ -141,7 +141,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(final int featureID) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__LOCATION:
 			setLocation(LOCATION_EDEFAULT);
@@ -156,7 +156,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(final int featureID) {
 		switch (featureID) {
 		case IRepositoryPackage.LOCATION__LOCATION:
 			return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
@@ -170,7 +170,7 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	 * @generated
 	 */
 	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+	public Object eInvoke(final int operationID, final EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 		case IRepositoryPackage.LOCATION___GET_CONTENT:
 			return getContent();

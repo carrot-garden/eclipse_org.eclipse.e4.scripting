@@ -2,14 +2,21 @@
  */
 package org.eclipse.ease.ui.repository.impl;
 
+import java.util.Collection;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
 
+import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,6 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.EntryImpl#isRecursive <em>Recursive</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.EntryImpl#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.impl.EntryImpl#getScripts <em>Scripts</em>}</li>
  * </ul>
  * </p>
  *
@@ -65,6 +73,16 @@ public class EntryImpl extends LocationImpl implements IEntry {
 	 * @ordered
 	 */
 	protected boolean hidden = HIDDEN_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getScripts() <em>Scripts</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScripts()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<IScript> scripts;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -132,6 +150,47 @@ public class EntryImpl extends LocationImpl implements IEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<IScript> getScripts() {
+		if (scripts == null) {
+			scripts = new EObjectContainmentWithInverseEList<IScript>(IScript.class, this, IRepositoryPackage.ENTRY__SCRIPTS, IRepositoryPackage.SCRIPT__ENTRY);
+		}
+		return scripts;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case IRepositoryPackage.ENTRY__SCRIPTS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getScripts()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case IRepositoryPackage.ENTRY__SCRIPTS:
+				return ((InternalEList<?>)getScripts()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -139,6 +198,8 @@ public class EntryImpl extends LocationImpl implements IEntry {
 				return isRecursive();
 			case IRepositoryPackage.ENTRY__HIDDEN:
 				return isHidden();
+			case IRepositoryPackage.ENTRY__SCRIPTS:
+				return getScripts();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -148,6 +209,7 @@ public class EntryImpl extends LocationImpl implements IEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -156,6 +218,10 @@ public class EntryImpl extends LocationImpl implements IEntry {
 				return;
 			case IRepositoryPackage.ENTRY__HIDDEN:
 				setHidden((Boolean)newValue);
+				return;
+			case IRepositoryPackage.ENTRY__SCRIPTS:
+				getScripts().clear();
+				getScripts().addAll((Collection<? extends IScript>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -175,6 +241,9 @@ public class EntryImpl extends LocationImpl implements IEntry {
 			case IRepositoryPackage.ENTRY__HIDDEN:
 				setHidden(HIDDEN_EDEFAULT);
 				return;
+			case IRepositoryPackage.ENTRY__SCRIPTS:
+				getScripts().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -191,6 +260,8 @@ public class EntryImpl extends LocationImpl implements IEntry {
 				return recursive != RECURSIVE_EDEFAULT;
 			case IRepositoryPackage.ENTRY__HIDDEN:
 				return hidden != HIDDEN_EDEFAULT;
+			case IRepositoryPackage.ENTRY__SCRIPTS:
+				return scripts != null && !scripts.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -43,6 +43,11 @@ public class RepositoryService implements IRepositoryService {
 	private static final long DEFAULT_DELAY = 0; // 1 minute
 	public static final long UPDATE_STREAM_INTERVAL = 0;
 
+	/**
+	 * Get the repository service singleton.
+	 * 
+	 * @return repository service
+	 */
 	public static RepositoryService getInstance() {
 		if (fInstance == null)
 			fInstance = new RepositoryService();
@@ -77,6 +82,9 @@ public class RepositoryService implements IRepositoryService {
 	private final ListenerList fListeners = new ListenerList();
 	private final UIIntegration fUiIntegration;
 
+	/**
+	 * Initialize the repository service.
+	 */
 	private RepositoryService() {
 		RepositoryFactoryImpl.init();
 
@@ -124,7 +132,7 @@ public class RepositoryService implements IRepositoryService {
 	}
 
 	@Override
-	public void update(boolean force) {
+	public void update(final boolean force) {
 		if (force) {
 			for (IScript script : getScripts())
 				script.setTimestamp(0);
@@ -201,7 +209,7 @@ public class RepositoryService implements IRepositoryService {
 		notifyListeners(new ScriptRepositoryEvent(script, ScriptRepositoryEvent.DELETE, null));
 	}
 
-	void updateScript(IScript script, Map<String, String> parameters) {
+	void updateScript(final IScript script, final Map<String, String> parameters) {
 		// TODO update listeners (only if parameters changed)
 
 		// store current parameters

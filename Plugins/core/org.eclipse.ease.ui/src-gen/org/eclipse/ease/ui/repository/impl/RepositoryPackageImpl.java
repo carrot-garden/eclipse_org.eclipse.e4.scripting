@@ -279,15 +279,6 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRepository_Scripts() {
-		return (EReference)repositoryEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getEntry() {
 		return entryEClass;
 	}
@@ -308,6 +299,15 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 */
 	public EAttribute getEntry_Hidden() {
 		return (EAttribute)entryEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getEntry_Scripts() {
+		return (EReference)entryEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -400,11 +400,11 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		repositoryEClass = createEClass(REPOSITORY);
 		createEReference(repositoryEClass, REPOSITORY__ENTRIES);
-		createEReference(repositoryEClass, REPOSITORY__SCRIPTS);
 
 		entryEClass = createEClass(ENTRY);
 		createEAttribute(entryEClass, ENTRY__RECURSIVE);
 		createEAttribute(entryEClass, ENTRY__HIDDEN);
+		createEReference(entryEClass, ENTRY__SCRIPTS);
 
 		parameterMapEClass = createEClass(PARAMETER_MAP);
 		createEAttribute(parameterMapEClass, PARAMETER_MAP__KEY);
@@ -449,7 +449,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 		// Initialize classes, features, and operations; add parameters
 		initEClass(scriptEClass, IScript.class, "Script", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getScript_Timestamp(), ecorePackage.getELong(), "timestamp", "-1", 1, 1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getScript_Entry(), this.getEntry(), null, "entry", null, 1, 1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getScript_Entry(), this.getEntry(), this.getEntry_Scripts(), "entry", null, 1, 1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScript_UpdatePending(), ecorePackage.getEBoolean(), "updatePending", "false", 1, 1, IScript.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScript_ScriptParameters(), this.getParameterMap(), null, "scriptParameters", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScript_UserParameters(), this.getParameterMap(), null, "userParameters", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -469,11 +469,11 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		initEClass(repositoryEClass, IRepository.class, "Repository", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRepository_Entries(), this.getEntry(), null, "entries", null, 0, -1, IRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRepository_Scripts(), this.getScript(), null, "scripts", null, 0, -1, IRepository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(entryEClass, IEntry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEntry_Recursive(), ecorePackage.getEBoolean(), "recursive", "false", 1, 1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEntry_Hidden(), ecorePackage.getEBoolean(), "hidden", "false", 1, 1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEntry_Scripts(), this.getScript(), this.getScript_Entry(), "scripts", null, 0, -1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterMapEClass, Map.Entry.class, "ParameterMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterMap_Key(), ecorePackage.getEString(), "key", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

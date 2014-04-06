@@ -14,12 +14,12 @@ import org.eclipse.ease.Logger;
 
 public class WorkspaceScriptStorage extends ScriptStorage {
 
-	public WorkspaceScriptStorage(String location) {
+	public WorkspaceScriptStorage(final String location) {
 		super(location);
 	}
 
 	@Override
-	protected boolean createFile(Path path, String content) {
+	protected boolean createFile(final Path path, final String content) {
 		Path locationPath = new Path(getLocation().substring(12));
 		IPath fullPath = locationPath.append(path.removeLastSegments(1));
 
@@ -43,20 +43,25 @@ public class WorkspaceScriptStorage extends ScriptStorage {
 	}
 
 	@Override
-	protected boolean createPath(IPath path) {
+	protected boolean createPath(final IPath path) {
 		Path locationPath = new Path(getLocation().substring(12));
 		IPath fullPath = locationPath.append(path);
 
 		IProject project = createProject(fullPath.segment(0));
 
-		if (project != null)
+		if (project != null) {
 			// project exists
-			return createFolders(project, fullPath.removeFirstSegments(1));
+			if (fullPath.segmentCount() > 1)
+				// create subfolders
+				return createFolders(project, fullPath.removeFirstSegments(1));
+
+			return true;
+		}
 
 		return false;
 	}
 
-	private boolean createFolders(IContainer container, IPath folderPath) {
+	private boolean createFolders(final IContainer container, final IPath folderPath) {
 		IFolder folder = container.getFolder(folderPath);
 
 		// create parent if needed
@@ -79,7 +84,7 @@ public class WorkspaceScriptStorage extends ScriptStorage {
 		return false;
 	}
 
-	private IProject createProject(String name) {
+	private IProject createProject(final String name) {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
 		if (!project.exists()) {
 			try {
