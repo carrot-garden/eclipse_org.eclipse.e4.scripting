@@ -1,5 +1,6 @@
 package org.eclipse.ease.ui;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.eclipse.core.resources.IStorage;
@@ -13,15 +14,22 @@ import org.eclipse.ui.IStorageEditorInput;
 
 public class ScriptEditorInput implements IEditorInput, IStorageEditorInput {
 
-	private final IScript fScript;
+	private final String fName;
+	private final InputStream fContent;
 
 	public ScriptEditorInput(final IScript script) {
-		fScript = script;
+		fName = script.getName();
+		fContent = script.getInputStream();
+	}
+
+	public ScriptEditorInput(final String name, final String content) {
+		fName = name;
+		fContent = new ByteArrayInputStream(content.getBytes());
 	}
 
 	@Override
 	public final boolean equals(final Object other) {
-		return (other instanceof ScriptEditorInput) && fScript.equals(((ScriptEditorInput) other).fScript);
+		return (other instanceof ScriptEditorInput) && fName.equals(((ScriptEditorInput) other).fName);
 	}
 
 	@Override
@@ -54,7 +62,7 @@ public class ScriptEditorInput implements IEditorInput, IStorageEditorInput {
 
 			@Override
 			public String getName() {
-				return fScript.getName();
+				return fName;
 			}
 
 			@Override
@@ -64,7 +72,7 @@ public class ScriptEditorInput implements IEditorInput, IStorageEditorInput {
 
 			@Override
 			public InputStream getContents() throws CoreException {
-				return fScript.getInputStream();
+				return fContent;
 			}
 		};
 	}
@@ -76,7 +84,7 @@ public class ScriptEditorInput implements IEditorInput, IStorageEditorInput {
 
 	@Override
 	public final String getName() {
-		return "Script: " + fScript.getName();
+		return "Script: " + fName;
 	}
 
 	@Override

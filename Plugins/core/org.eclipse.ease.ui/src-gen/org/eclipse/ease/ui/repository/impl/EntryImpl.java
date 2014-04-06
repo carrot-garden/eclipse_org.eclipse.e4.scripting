@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.EntryImpl#isRecursive <em>Recursive</em>}</li>
- *   <li>{@link org.eclipse.ease.ui.repository.impl.EntryImpl#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.impl.EntryImpl#isDefault <em>Default</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.EntryImpl#getScripts <em>Scripts</em>}</li>
  * </ul>
  * </p>
@@ -55,24 +55,24 @@ public class EntryImpl extends LocationImpl implements IEntry {
 	protected boolean recursive = RECURSIVE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isHidden() <em>Hidden</em>}' attribute.
+	 * The default value of the '{@link #isDefault() <em>Default</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isHidden()
+	 * @see #isDefault()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean HIDDEN_EDEFAULT = false;
+	protected static final boolean DEFAULT_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isHidden() <em>Hidden</em>}' attribute.
+	 * The cached value of the '{@link #isDefault() <em>Default</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isHidden()
+	 * @see #isDefault()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean hidden = HIDDEN_EDEFAULT;
+	protected boolean default_ = DEFAULT_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getScripts() <em>Scripts</em>}' containment reference list.
@@ -129,8 +129,8 @@ public class EntryImpl extends LocationImpl implements IEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isHidden() {
-		return hidden;
+	public boolean isDefault() {
+		return default_;
 	}
 
 	/**
@@ -138,11 +138,11 @@ public class EntryImpl extends LocationImpl implements IEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setHidden(boolean newHidden) {
-		boolean oldHidden = hidden;
-		hidden = newHidden;
+	public void setDefault(boolean newDefault) {
+		boolean oldDefault = default_;
+		default_ = newDefault;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.ENTRY__HIDDEN, oldHidden, hidden));
+			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.ENTRY__DEFAULT, oldDefault, default_));
 	}
 
 	/**
@@ -196,8 +196,8 @@ public class EntryImpl extends LocationImpl implements IEntry {
 		switch (featureID) {
 			case IRepositoryPackage.ENTRY__RECURSIVE:
 				return isRecursive();
-			case IRepositoryPackage.ENTRY__HIDDEN:
-				return isHidden();
+			case IRepositoryPackage.ENTRY__DEFAULT:
+				return isDefault();
 			case IRepositoryPackage.ENTRY__SCRIPTS:
 				return getScripts();
 		}
@@ -216,8 +216,8 @@ public class EntryImpl extends LocationImpl implements IEntry {
 			case IRepositoryPackage.ENTRY__RECURSIVE:
 				setRecursive((Boolean)newValue);
 				return;
-			case IRepositoryPackage.ENTRY__HIDDEN:
-				setHidden((Boolean)newValue);
+			case IRepositoryPackage.ENTRY__DEFAULT:
+				setDefault((Boolean)newValue);
 				return;
 			case IRepositoryPackage.ENTRY__SCRIPTS:
 				getScripts().clear();
@@ -238,8 +238,8 @@ public class EntryImpl extends LocationImpl implements IEntry {
 			case IRepositoryPackage.ENTRY__RECURSIVE:
 				setRecursive(RECURSIVE_EDEFAULT);
 				return;
-			case IRepositoryPackage.ENTRY__HIDDEN:
-				setHidden(HIDDEN_EDEFAULT);
+			case IRepositoryPackage.ENTRY__DEFAULT:
+				setDefault(DEFAULT_EDEFAULT);
 				return;
 			case IRepositoryPackage.ENTRY__SCRIPTS:
 				getScripts().clear();
@@ -258,8 +258,8 @@ public class EntryImpl extends LocationImpl implements IEntry {
 		switch (featureID) {
 			case IRepositoryPackage.ENTRY__RECURSIVE:
 				return recursive != RECURSIVE_EDEFAULT;
-			case IRepositoryPackage.ENTRY__HIDDEN:
-				return hidden != HIDDEN_EDEFAULT;
+			case IRepositoryPackage.ENTRY__DEFAULT:
+				return default_ != DEFAULT_EDEFAULT;
 			case IRepositoryPackage.ENTRY__SCRIPTS:
 				return scripts != null && !scripts.isEmpty();
 		}
@@ -278,8 +278,8 @@ public class EntryImpl extends LocationImpl implements IEntry {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (recursive: ");
 		result.append(recursive);
-		result.append(", hidden: ");
-		result.append(hidden);
+		result.append(", default: ");
+		result.append(default_);
 		result.append(')');
 		return result.toString();
 	}

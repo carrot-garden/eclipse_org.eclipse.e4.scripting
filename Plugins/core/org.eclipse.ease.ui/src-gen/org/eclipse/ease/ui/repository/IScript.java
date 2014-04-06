@@ -16,7 +16,6 @@ import org.eclipse.emf.common.util.EMap;
  * <ul>
  *   <li>{@link org.eclipse.ease.ui.repository.IScript#getTimestamp <em>Timestamp</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.IScript#getEntry <em>Entry</em>}</li>
- *   <li>{@link org.eclipse.ease.ui.repository.IScript#isUpdatePending <em>Update Pending</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.IScript#getScriptParameters <em>Script Parameters</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.IScript#getUserParameters <em>User Parameters</em>}</li>
  * </ul>
@@ -78,32 +77,6 @@ public interface IScript extends ILocation {
 	 * @generated
 	 */
 	void setEntry(IEntry value);
-
-	/**
-	 * Returns the value of the '<em><b>Update Pending</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Update Pending</em>' attribute isn't clear, there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Update Pending</em>' attribute.
-	 * @see #setUpdatePending(boolean)
-	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getScript_UpdatePending()
-	 * @model default="false" required="true" transient="true"
-	 * @generated
-	 */
-	boolean isUpdatePending();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ease.ui.repository.IScript#isUpdatePending <em>Update Pending</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @param value the new value of the '<em>Update Pending</em>' attribute.
-	 * @see #isUpdatePending()
-	 * @generated
-	 */
-	void setUpdatePending(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Script Parameters</b></em>' map.

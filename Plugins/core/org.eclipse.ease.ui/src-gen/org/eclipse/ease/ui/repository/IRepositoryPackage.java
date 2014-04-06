@@ -78,13 +78,22 @@ public interface IRepositoryPackage extends EPackage {
 	int LOCATION__LOCATION = 0;
 
 	/**
+	 * The feature id for the '<em><b>Update Pending</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCATION__UPDATE_PENDING = 1;
+
+	/**
 	 * The number of structural features of the '<em>Location</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION_FEATURE_COUNT = 1;
+	int LOCATION_FEATURE_COUNT = 2;
 
 	/**
 	 * The operation id for the '<em>Get Content</em>' operation.
@@ -133,6 +142,15 @@ public interface IRepositoryPackage extends EPackage {
 	int SCRIPT__LOCATION = LOCATION__LOCATION;
 
 	/**
+	 * The feature id for the '<em><b>Update Pending</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT__UPDATE_PENDING = LOCATION__UPDATE_PENDING;
+
+	/**
 	 * The feature id for the '<em><b>Timestamp</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -151,22 +169,13 @@ public interface IRepositoryPackage extends EPackage {
 	int SCRIPT__ENTRY = LOCATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Update Pending</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCRIPT__UPDATE_PENDING = LOCATION_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Script Parameters</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPT__SCRIPT_PARAMETERS = LOCATION_FEATURE_COUNT + 3;
+	int SCRIPT__SCRIPT_PARAMETERS = LOCATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>User Parameters</b></em>' map.
@@ -175,7 +184,7 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPT__USER_PARAMETERS = LOCATION_FEATURE_COUNT + 4;
+	int SCRIPT__USER_PARAMETERS = LOCATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Script</em>' class.
@@ -184,7 +193,7 @@ public interface IRepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCRIPT_FEATURE_COUNT = LOCATION_FEATURE_COUNT + 5;
+	int SCRIPT_FEATURE_COUNT = LOCATION_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Content</em>' operation.
@@ -297,6 +306,15 @@ public interface IRepositoryPackage extends EPackage {
 	int ENTRY__LOCATION = LOCATION__LOCATION;
 
 	/**
+	 * The feature id for the '<em><b>Update Pending</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTRY__UPDATE_PENDING = LOCATION__UPDATE_PENDING;
+
+	/**
 	 * The feature id for the '<em><b>Recursive</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -306,13 +324,13 @@ public interface IRepositoryPackage extends EPackage {
 	int ENTRY__RECURSIVE = LOCATION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
+	 * The feature id for the '<em><b>Default</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENTRY__HIDDEN = LOCATION_FEATURE_COUNT + 1;
+	int ENTRY__DEFAULT = LOCATION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Scripts</b></em>' containment reference list.
@@ -461,17 +479,6 @@ public interface IRepositoryPackage extends EPackage {
 	EReference getScript_Entry();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IScript#isUpdatePending <em>Update Pending</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Update Pending</em>'.
-	 * @see org.eclipse.ease.ui.repository.IScript#isUpdatePending()
-	 * @see #getScript()
-	 * @generated
-	 */
-	EAttribute getScript_UpdatePending();
-
-	/**
 	 * Returns the meta object for the map '{@link org.eclipse.ease.ui.repository.IScript#getScriptParameters <em>Script Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -545,6 +552,17 @@ public interface IRepositoryPackage extends EPackage {
 	EAttribute getLocation_Location();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.ILocation#isUpdatePending <em>Update Pending</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Update Pending</em>'.
+	 * @see org.eclipse.ease.ui.repository.ILocation#isUpdatePending()
+	 * @see #getLocation()
+	 * @generated
+	 */
+	EAttribute getLocation_UpdatePending();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ease.ui.repository.ILocation#getContent() <em>Get Content</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -607,15 +625,15 @@ public interface IRepositoryPackage extends EPackage {
 	EAttribute getEntry_Recursive();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IEntry#isHidden <em>Hidden</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ease.ui.repository.IEntry#isDefault <em>Default</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Hidden</em>'.
-	 * @see org.eclipse.ease.ui.repository.IEntry#isHidden()
+	 * @return the meta object for the attribute '<em>Default</em>'.
+	 * @see org.eclipse.ease.ui.repository.IEntry#isDefault()
 	 * @see #getEntry()
 	 * @generated
 	 */
-	EAttribute getEntry_Hidden();
+	EAttribute getEntry_Default();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ease.ui.repository.IEntry#getScripts <em>Scripts</em>}'.
@@ -734,14 +752,6 @@ public interface IRepositoryPackage extends EPackage {
 		EReference SCRIPT__ENTRY = eINSTANCE.getScript_Entry();
 
 		/**
-		 * The meta object literal for the '<em><b>Update Pending</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SCRIPT__UPDATE_PENDING = eINSTANCE.getScript_UpdatePending();
-
-		/**
 		 * The meta object literal for the '<em><b>Script Parameters</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -800,6 +810,14 @@ public interface IRepositoryPackage extends EPackage {
 		EAttribute LOCATION__LOCATION = eINSTANCE.getLocation_Location();
 
 		/**
+		 * The meta object literal for the '<em><b>Update Pending</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LOCATION__UPDATE_PENDING = eINSTANCE.getLocation_UpdatePending();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Content</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -852,12 +870,12 @@ public interface IRepositoryPackage extends EPackage {
 		EAttribute ENTRY__RECURSIVE = eINSTANCE.getEntry_Recursive();
 
 		/**
-		 * The meta object literal for the '<em><b>Hidden</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Default</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ENTRY__HIDDEN = eINSTANCE.getEntry_Hidden();
+		EAttribute ENTRY__DEFAULT = eINSTANCE.getEntry_Default();
 
 		/**
 		 * The meta object literal for the '<em><b>Scripts</b></em>' containment reference list feature.

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ease.ui.preferences;
 
-import org.eclipse.ease.ui.Activator;
-
 /**
  * Constant definitions for plug-in preferences.
  */
@@ -29,9 +27,11 @@ public interface IPreferenceConstants {
 	String CONSOLE_OPEN_ON_OUT = "consoleOpenOnOut";
 	String CONSOLE_OPEN_ON_ERR = "consoleOpenOnErr";
 
-	String LOCATIONS = "constants";
-	String SCRIPT_STORAGE_LOCATION = "scriptStorageLocation";
-	String DEFAULT_SCRIPT_STORAGE_LOCATION = Activator.getDefault().getStateLocation().append("recordedScripts").toFile().toURI().toString();
+	String SCRIPT_STORAGE_LOCATION = "location";
+	String SCRIPT_STORAGE_DEFAULT = "default";
+	String SCRIPT_STORAGE_RECURSIVE = "recursive";
+
+	String SCRIPT_STORAGE_SELECTED = "scriptStorageSelected";
 
 	String NODE_SHELL = "shell";
 
@@ -44,6 +44,4 @@ public interface IPreferenceConstants {
 	String SHELL_STARTUP = "shellStartup";
 	String SHELL_MODULES_AS_LIST = "shellModulesAsList";
 	boolean DEFAULT_SHELL_MODULES_AS_LIST = false;
-	String SCRIPT_STORAGE_SELECTED = "scriptStorageSelected";
-	boolean DEFAULT_SCRIPT_STORAGE_SELECTED = false;
 }

@@ -27,16 +27,17 @@ public final class ResourceTools {
 	private ResourceTools() {
 	}
 
-	public static File getFile(String uri) {
+	public static File getFile(final String uri) {
 		try {
-			return new File(new URI(uri));
+			// TODO find better way to encode URI correctly
+			return new File(new URI(uri.replace(" ", "%20")));
 		} catch (Exception e) {
 		}
 
 		return null;
 	}
 
-	public static IResource getResource(String uri) {
+	public static IResource getResource(final String uri) {
 		if (uri.startsWith(WorkspaceURLConnection.SCHEME + "://")) {
 			Path path = new Path(uri.substring(WorkspaceURLConnection.SCHEME.length() + 3));
 			if (!path.isEmpty()) {
@@ -48,7 +49,7 @@ public final class ResourceTools {
 		return null;
 	}
 
-	public static InputStream getInputStream(String uri) {
+	public static InputStream getInputStream(final String uri) {
 		try {
 			return new URL(uri).openStream();
 		} catch (Exception e) {
@@ -57,7 +58,7 @@ public final class ResourceTools {
 		return null;
 	}
 
-	public static Object getContent(String uri) {
+	public static Object getContent(final String uri) {
 		IResource resource = getResource(uri);
 		if (resource != null)
 			return resource;
@@ -73,7 +74,7 @@ public final class ResourceTools {
 		return null;
 	}
 
-	public static boolean exists(String uri) {
+	public static boolean exists(final String uri) {
 		IResource resource = getResource(uri);
 		if (resource != null)
 			return resource.exists();
@@ -94,11 +95,11 @@ public final class ResourceTools {
 		return false;
 	}
 
-	public static String toLocation(IResource resource) {
+	public static String toLocation(final IResource resource) {
 		return WorkspaceURLConnection.SCHEME + ":/" + resource.getFullPath().toPortableString();
 	}
 
-	public static ScriptType getScriptType(IFile file) {
+	public static ScriptType getScriptType(final IFile file) {
 		// resolve by content type
 		final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
 		try {
@@ -113,7 +114,7 @@ public final class ResourceTools {
 		return scriptService.getScriptType(file.getFileExtension());
 	}
 
-	public static ScriptType getScriptType(File file) {
+	public static ScriptType getScriptType(final File file) {
 		// resolve by extension
 		String name = file.getName();
 		if (name.contains(".")) {

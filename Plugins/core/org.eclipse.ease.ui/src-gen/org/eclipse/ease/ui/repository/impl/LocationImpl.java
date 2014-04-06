@@ -19,16 +19,17 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.ease.ui.repository.impl.LocationImpl#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.impl.LocationImpl#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.impl.LocationImpl#isUpdatePending <em>Update Pending</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class LocationImpl extends MinimalEObjectImpl.Container implements ILocation {
 	/**
-	 * The default value of the '{@link #getLocation() <em>Location</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getLocation()
 	 * @generated
 	 * @ordered
@@ -36,8 +37,8 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	protected static final String LOCATION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getLocation()
 	 * @generated
 	 * @ordered
@@ -45,8 +46,27 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 	protected String location = LOCATION_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #isUpdatePending() <em>Update Pending</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isUpdatePending()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean UPDATE_PENDING_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isUpdatePending() <em>Update Pending</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isUpdatePending()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean updatePending = UPDATE_PENDING_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected LocationImpl() {
@@ -55,7 +75,6 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -65,7 +84,6 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -75,15 +93,35 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void setLocation(final String newLocation) {
+	public void setLocation(String newLocation) {
 		String oldLocation = location;
 		location = newLocation;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.LOCATION__LOCATION, oldLocation, location));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isUpdatePending() {
+		return updatePending;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUpdatePending(boolean newUpdatePending) {
+		boolean oldUpdatePending = updatePending;
+		updatePending = newUpdatePending;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.LOCATION__UPDATE_PENDING, oldUpdatePending, updatePending));
 	}
 
 	/**
@@ -108,91 +146,96 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements ILocat
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(final int featureID, final boolean resolve, final boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case IRepositoryPackage.LOCATION__LOCATION:
-			return getLocation();
+			case IRepositoryPackage.LOCATION__LOCATION:
+				return getLocation();
+			case IRepositoryPackage.LOCATION__UPDATE_PENDING:
+				return isUpdatePending();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(final int featureID, final Object newValue) {
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case IRepositoryPackage.LOCATION__LOCATION:
-			setLocation((String) newValue);
-			return;
+			case IRepositoryPackage.LOCATION__LOCATION:
+				setLocation((String)newValue);
+				return;
+			case IRepositoryPackage.LOCATION__UPDATE_PENDING:
+				setUpdatePending((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(final int featureID) {
+	public void eUnset(int featureID) {
 		switch (featureID) {
-		case IRepositoryPackage.LOCATION__LOCATION:
-			setLocation(LOCATION_EDEFAULT);
-			return;
+			case IRepositoryPackage.LOCATION__LOCATION:
+				setLocation(LOCATION_EDEFAULT);
+				return;
+			case IRepositoryPackage.LOCATION__UPDATE_PENDING:
+				setUpdatePending(UPDATE_PENDING_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(final int featureID) {
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case IRepositoryPackage.LOCATION__LOCATION:
-			return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
+			case IRepositoryPackage.LOCATION__LOCATION:
+				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
+			case IRepositoryPackage.LOCATION__UPDATE_PENDING:
+				return updatePending != UPDATE_PENDING_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eInvoke(final int operationID, final EList<?> arguments) throws InvocationTargetException {
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-		case IRepositoryPackage.LOCATION___GET_CONTENT:
-			return getContent();
-		case IRepositoryPackage.LOCATION___GET_INPUT_STREAM:
-			return getInputStream();
+			case IRepositoryPackage.LOCATION___GET_CONTENT:
+				return getContent();
+			case IRepositoryPackage.LOCATION___GET_INPUT_STREAM:
+				return getInputStream();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (location: ");
 		result.append(location);
+		result.append(", updatePending: ");
+		result.append(updatePending);
 		result.append(')');
 		return result.toString();
 	}

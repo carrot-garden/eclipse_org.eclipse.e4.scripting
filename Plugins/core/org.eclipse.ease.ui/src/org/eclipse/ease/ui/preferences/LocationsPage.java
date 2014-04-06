@@ -7,9 +7,6 @@ import java.util.Set;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.IPreferenceNodeVisitor;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.ui.Activator;
 import org.eclipse.ease.ui.repository.IEntry;
@@ -309,33 +306,8 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 	@Override
 	protected void performDefaults() {
 
-		final IEclipsePreferences rootNode = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-
 		fEntries.clear();
-
-		try {
-			rootNode.accept(new IPreferenceNodeVisitor() {
-
-				@Override
-				public boolean visit(final IEclipsePreferences node) throws BackingStoreException {
-					if (rootNode.equals(node))
-						return true;
-
-					else {
-						IEntry entry = IRepositoryFactory.eINSTANCE.createEntry();
-						entry.setLocation(node.get("location", ""));
-						entry.setDefault(node.getBoolean("default", false));
-						entry.setRecursive(node.getBoolean("recursive", true));
-
-						fEntries.add(entry);
-
-						return false;
-					}
-				}
-			});
-		} catch (BackingStoreException e) {
-			// we were not able to load any locations, display empty view
-		}
+		fEntries.addAll(PreferencesHelper.getLocations());
 
 		// update UI
 		if (tableViewer != null)
@@ -348,39 +320,20 @@ public class LocationsPage extends PreferencePage implements IWorkbenchPreferenc
 	public boolean performOk() {
 
 		// remove existing child nodes
-		final IEclipsePreferences rootNode = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
 		try {
-			rootNode.accept(new IPreferenceNodeVisitor() {
-
-				@Override
-				public boolean visit(final IEclipsePreferences node) throws BackingStoreException {
-					if (rootNode.equals(node))
-						return true;
-
-					else {
-						node.removeNode();
-
-						return false;
-					}
-				}
-			});
+			PreferencesHelper.clearLocations();
 		} catch (BackingStoreException e) {
 			Logger.logError("Could not update script location preferences", e);
 			return false;
 		}
 
 		// add entries
-		for (IEntry entry : fEntries) {
-			String path = entry.getLocation().replace('/', '|');
-			IEclipsePreferences node = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID + "/" + path);
-			node.put("location", entry.getLocation());
-			node.putBoolean("default", entry.isDefault());
-			node.putBoolean("recursive", entry.isRecursive());
-		}
+		for (IEntry entry : fEntries)
+			PreferencesHelper.addLocation(entry);
 
 		// update repository
 		final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);
-		repositoryService.update(false);
+		repositoryService.updateLocations();
 
 		return super.performOk();
 	}

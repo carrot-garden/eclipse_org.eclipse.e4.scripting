@@ -40,7 +40,6 @@ import org.eclipse.ui.PlatformUI;
  * <ul>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getTimestamp <em>Timestamp</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getEntry <em>Entry</em>}</li>
- *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#isUpdatePending <em>Update Pending</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getScriptParameters <em>Script Parameters</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.impl.ScriptImpl#getUserParameters <em>User Parameters</em>}</li>
  * </ul>
@@ -66,24 +65,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 	 * @ordered
 	 */
 	protected long timestamp = TIMESTAMP_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isUpdatePending() <em>Update Pending</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #isUpdatePending()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean UPDATE_PENDING_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isUpdatePending() <em>Update Pending</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #isUpdatePending()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean updatePending = UPDATE_PENDING_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getScriptParameters() <em>Script Parameters</em>}' map.
@@ -180,27 +161,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.SCRIPT__ENTRY, newEntry, newEntry));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isUpdatePending() {
-		return updatePending;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUpdatePending(boolean newUpdatePending) {
-		boolean oldUpdatePending = updatePending;
-		updatePending = newUpdatePending;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IRepositoryPackage.SCRIPT__UPDATE_PENDING, oldUpdatePending, updatePending));
 	}
 
 	/**
@@ -338,8 +298,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 				return getTimestamp();
 			case IRepositoryPackage.SCRIPT__ENTRY:
 				return getEntry();
-			case IRepositoryPackage.SCRIPT__UPDATE_PENDING:
-				return isUpdatePending();
 			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
 				if (coreType) return getScriptParameters();
 				else return getScriptParameters().map();
@@ -362,9 +320,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 				return;
 			case IRepositoryPackage.SCRIPT__ENTRY:
 				setEntry((IEntry)newValue);
-				return;
-			case IRepositoryPackage.SCRIPT__UPDATE_PENDING:
-				setUpdatePending((Boolean)newValue);
 				return;
 			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
 				((EStructuralFeature.Setting)getScriptParameters()).set(newValue);
@@ -389,9 +344,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 			case IRepositoryPackage.SCRIPT__ENTRY:
 				setEntry((IEntry)null);
 				return;
-			case IRepositoryPackage.SCRIPT__UPDATE_PENDING:
-				setUpdatePending(UPDATE_PENDING_EDEFAULT);
-				return;
 			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
 				getScriptParameters().clear();
 				return;
@@ -413,8 +365,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 				return timestamp != TIMESTAMP_EDEFAULT;
 			case IRepositoryPackage.SCRIPT__ENTRY:
 				return getEntry() != null;
-			case IRepositoryPackage.SCRIPT__UPDATE_PENDING:
-				return updatePending != UPDATE_PENDING_EDEFAULT;
 			case IRepositoryPackage.SCRIPT__SCRIPT_PARAMETERS:
 				return scriptParameters != null && !scriptParameters.isEmpty();
 			case IRepositoryPackage.SCRIPT__USER_PARAMETERS:
@@ -452,8 +402,6 @@ public class ScriptImpl extends LocationImpl implements IScript {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (timestamp: ");
 		result.append(timestamp);
-		result.append(", updatePending: ");
-		result.append(updatePending);
 		result.append(')');
 		return result.toString();
 	}

@@ -171,17 +171,8 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getScript_UpdatePending() {
-		return (EAttribute)scriptEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getScript_ScriptParameters() {
-		return (EReference)scriptEClass.getEStructuralFeatures().get(3);
+		return (EReference)scriptEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -190,7 +181,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * @generated
 	 */
 	public EReference getScript_UserParameters() {
-		return (EReference)scriptEClass.getEStructuralFeatures().get(4);
+		return (EReference)scriptEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -236,6 +227,15 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 */
 	public EAttribute getLocation_Location() {
 		return (EAttribute)locationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLocation_UpdatePending() {
+		return (EAttribute)locationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -297,7 +297,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getEntry_Hidden() {
+	public EAttribute getEntry_Default() {
 		return (EAttribute)entryEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -386,7 +386,6 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 		scriptEClass = createEClass(SCRIPT);
 		createEAttribute(scriptEClass, SCRIPT__TIMESTAMP);
 		createEReference(scriptEClass, SCRIPT__ENTRY);
-		createEAttribute(scriptEClass, SCRIPT__UPDATE_PENDING);
 		createEReference(scriptEClass, SCRIPT__SCRIPT_PARAMETERS);
 		createEReference(scriptEClass, SCRIPT__USER_PARAMETERS);
 		createEOperation(scriptEClass, SCRIPT___RUN);
@@ -395,6 +394,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		locationEClass = createEClass(LOCATION);
 		createEAttribute(locationEClass, LOCATION__LOCATION);
+		createEAttribute(locationEClass, LOCATION__UPDATE_PENDING);
 		createEOperation(locationEClass, LOCATION___GET_CONTENT);
 		createEOperation(locationEClass, LOCATION___GET_INPUT_STREAM);
 
@@ -403,7 +403,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		entryEClass = createEClass(ENTRY);
 		createEAttribute(entryEClass, ENTRY__RECURSIVE);
-		createEAttribute(entryEClass, ENTRY__HIDDEN);
+		createEAttribute(entryEClass, ENTRY__DEFAULT);
 		createEReference(entryEClass, ENTRY__SCRIPTS);
 
 		parameterMapEClass = createEClass(PARAMETER_MAP);
@@ -450,7 +450,6 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 		initEClass(scriptEClass, IScript.class, "Script", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getScript_Timestamp(), ecorePackage.getELong(), "timestamp", "-1", 1, 1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScript_Entry(), this.getEntry(), this.getEntry_Scripts(), "entry", null, 1, 1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getScript_UpdatePending(), ecorePackage.getEBoolean(), "updatePending", "false", 1, 1, IScript.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScript_ScriptParameters(), this.getParameterMap(), null, "scriptParameters", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScript_UserParameters(), this.getParameterMap(), null, "userParameters", null, 0, -1, IScript.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -462,6 +461,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		initEClass(locationEClass, ILocation.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLocation_Location(), ecorePackage.getEString(), "location", null, 1, 1, ILocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLocation_UpdatePending(), ecorePackage.getEBoolean(), "updatePending", "false", 1, 1, ILocation.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getLocation__GetContent(), ecorePackage.getEJavaObject(), "getContent", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -472,7 +472,7 @@ public class RepositoryPackageImpl extends EPackageImpl implements IRepositoryPa
 
 		initEClass(entryEClass, IEntry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEntry_Recursive(), ecorePackage.getEBoolean(), "recursive", "false", 1, 1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEntry_Hidden(), ecorePackage.getEBoolean(), "hidden", "false", 1, 1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEntry_Default(), ecorePackage.getEBoolean(), "default", "false", 1, 1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEntry_Scripts(), this.getScript(), this.getScript_Entry(), "scripts", null, 0, -1, IEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterMapEClass, Map.Entry.class, "ParameterMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);

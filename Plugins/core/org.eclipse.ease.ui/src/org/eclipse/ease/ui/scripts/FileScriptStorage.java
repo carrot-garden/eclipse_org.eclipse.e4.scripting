@@ -52,8 +52,8 @@ public class FileScriptStorage extends ScriptStorage {
 
 	@Override
 	protected boolean createPath(final IPath path) {
-
-		File file = new File(URI.create(getLocation() + "/" + path));
+		// TODO find a better way to encode URIs correctly
+		File file = new File(URI.create((getLocation() + "/" + path).replace(" ", "%20")));
 		if (!file.exists())
 			return file.mkdirs();
 

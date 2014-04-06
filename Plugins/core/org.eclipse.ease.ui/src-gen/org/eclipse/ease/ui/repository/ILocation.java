@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.ease.ui.repository.ILocation#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.ILocation#isUpdatePending <em>Update Pending</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +48,33 @@ public interface ILocation extends EObject {
 	 * @generated
 	 */
 	void setLocation(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Update Pending</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Update Pending</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Update Pending</em>' attribute.
+	 * @see #setUpdatePending(boolean)
+	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getLocation_UpdatePending()
+	 * @model default="false" required="true" transient="true"
+	 * @generated
+	 */
+	boolean isUpdatePending();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ease.ui.repository.ILocation#isUpdatePending <em>Update Pending</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Update Pending</em>' attribute.
+	 * @see #isUpdatePending()
+	 * @generated
+	 */
+	void setUpdatePending(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->

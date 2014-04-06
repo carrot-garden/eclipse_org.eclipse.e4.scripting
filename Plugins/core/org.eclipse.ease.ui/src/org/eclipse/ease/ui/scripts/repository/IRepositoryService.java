@@ -34,9 +34,9 @@ public interface IRepositoryService {
 	 */
 	IScript getScript(String name);
 
-	void addLocation(IEntry entry);
-
-	void removeLocation(IEntry entry);
-
 	Collection<IEntry> getLocations();
+
+	void updateLocations();
+
+	IEntry getDefaultLocation();
 }

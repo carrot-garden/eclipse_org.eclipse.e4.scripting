@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.ease.ui.repository.IEntry#isRecursive <em>Recursive</em>}</li>
- *   <li>{@link org.eclipse.ease.ui.repository.IEntry#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link org.eclipse.ease.ui.repository.IEntry#isDefault <em>Default</em>}</li>
  *   <li>{@link org.eclipse.ease.ui.repository.IEntry#getScripts <em>Scripts</em>}</li>
  * </ul>
  * </p>
@@ -52,31 +52,31 @@ public interface IEntry extends ILocation {
 	void setRecursive(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Hidden</b></em>' attribute.
+	 * Returns the value of the '<em><b>Default</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Hidden</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Default</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Hidden</em>' attribute.
-	 * @see #setHidden(boolean)
-	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getEntry_Hidden()
+	 * @return the value of the '<em>Default</em>' attribute.
+	 * @see #setDefault(boolean)
+	 * @see org.eclipse.ease.ui.repository.IRepositoryPackage#getEntry_Default()
 	 * @model default="false" required="true"
 	 * @generated
 	 */
-	boolean isHidden();
+	boolean isDefault();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ease.ui.repository.IEntry#isHidden <em>Hidden</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ease.ui.repository.IEntry#isDefault <em>Default</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Hidden</em>' attribute.
-	 * @see #isHidden()
+	 * @param value the new value of the '<em>Default</em>' attribute.
+	 * @see #isDefault()
 	 * @generated
 	 */
-	void setHidden(boolean value);
+	void setDefault(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Scripts</b></em>' containment reference list.

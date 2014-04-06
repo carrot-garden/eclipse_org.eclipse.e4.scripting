@@ -13,8 +13,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IPreferenceNodeVisitor;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.ui.Activator;
+import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IRepository;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
@@ -27,6 +31,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.osgi.service.prefs.BackingStoreException;
 
 public class RepositoryService implements IRepositoryService {
 
@@ -114,7 +119,7 @@ public class RepositoryService implements IRepositoryService {
 			IEntry entry = IRepositoryFactory.eINSTANCE.createEntry();
 			entry.setLocation(ScriptStorage.createStorage().getLocation());
 			entry.setRecursive(true);
-			entry.setHidden(true);
+			entry.setDefault(true);
 			fRepository.getEntries().add(entry);
 
 		} else {
@@ -133,12 +138,71 @@ public class RepositoryService implements IRepositoryService {
 
 	@Override
 	public void update(final boolean force) {
+
 		if (force) {
 			for (IScript script : getScripts())
 				script.setTimestamp(0);
 		}
 
 		fUpdateJob.scheduleUpdate(0);
+	}
+
+	@Override
+	public void updateLocations() {
+		// update locations from preferences
+		for (IEntry entry : getLocations())
+			entry.setUpdatePending(true);
+
+		final IEclipsePreferences rootNode = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		try {
+			rootNode.accept(new IPreferenceNodeVisitor() {
+
+				@Override
+				public boolean visit(final IEclipsePreferences node) throws BackingStoreException {
+					if (rootNode.equals(node))
+						return true;
+
+					else {
+						String location = node.get(IPreferenceConstants.SCRIPT_STORAGE_LOCATION, "");
+
+						boolean found = false;
+						for (IEntry entry : getLocations()) {
+							if (entry.getLocation().equals(location)) {
+								entry.setDefault(node.getBoolean(IPreferenceConstants.SCRIPT_STORAGE_DEFAULT, false));
+								entry.setRecursive(node.getBoolean(IPreferenceConstants.SCRIPT_STORAGE_RECURSIVE, false));
+								entry.setUpdatePending(false);
+
+								found = true;
+								break;
+							}
+						}
+
+						if (!found) {
+							IEntry entry = IRepositoryFactory.eINSTANCE.createEntry();
+							entry.setLocation(location);
+							entry.setDefault(node.getBoolean(IPreferenceConstants.SCRIPT_STORAGE_DEFAULT, false));
+							entry.setRecursive(node.getBoolean(IPreferenceConstants.SCRIPT_STORAGE_RECURSIVE, false));
+
+							fRepository.getEntries().add(entry);
+						}
+
+						return false;
+					}
+				}
+			});
+
+			// remove all repositories where update is pending as they are not stored in the preferences
+			for (IEntry entry : new HashSet<IEntry>(getLocations())) {
+				if (entry.isUpdatePending())
+					fRepository.getEntries().remove(entry);
+			}
+
+			// we updated our locations, now update all scripts
+			update(false);
+
+		} catch (BackingStoreException e) {
+			Logger.logError("Could not update script repository.", e);
+		}
 	}
 
 	IRepository getRepository() {
@@ -186,22 +250,6 @@ public class RepositoryService implements IRepositoryService {
 	@Override
 	public Collection<IEntry> getLocations() {
 		return Collections.unmodifiableCollection(fRepository.getEntries());
-	}
-
-	@Override
-	public void removeLocation(final IEntry entry) {
-		fRepository.getEntries().remove(entry);
-		// TODO use better interval
-		fUpdateJob.scheduleUpdate(1000);
-		save();
-	}
-
-	@Override
-	public void addLocation(final IEntry entry) {
-		fRepository.getEntries().add(entry);
-		// TODO use better interval
-		fUpdateJob.scheduleUpdate(1000);
-		save();
 	}
 
 	void removeScript(final IScript script) {
@@ -257,4 +305,12 @@ public class RepositoryService implements IRepositoryService {
 		}
 	}
 
+	@Override
+	public IEntry getDefaultLocation() {
+		for (IEntry entry : getLocations())
+			if (entry.isDefault())
+				return entry;
+
+		return null;
+	}
 }

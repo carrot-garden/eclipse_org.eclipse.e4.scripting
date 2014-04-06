@@ -32,7 +32,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(IPreferenceConstants.SHELL_MODULES_AS_LIST, false);
 		store.setDefault(IPreferenceConstants.SHELL_AUTOFOCUS, true);
 		store.setDefault(IPreferenceConstants.SHELL_KEEP_COMMAND, false);
-		store.setDefault(IPreferenceConstants.SCRIPT_STORAGE_LOCATION, IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION);
-		store.setDefault(IPreferenceConstants.SCRIPT_STORAGE_SELECTED, IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_SELECTED);
+		store.setDefault(IPreferenceConstants.SCRIPT_STORAGE_SELECTED, false);
 	}
 }

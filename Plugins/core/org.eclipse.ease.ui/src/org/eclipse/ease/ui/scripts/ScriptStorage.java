@@ -2,18 +2,14 @@ package org.eclipse.ease.ui.scripts;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.ease.ui.Activator;
-import org.eclipse.ease.ui.preferences.IPreferenceConstants;
+import org.eclipse.ease.ui.preferences.PreferencesHelper;
 import org.eclipse.ease.ui.scripts.repository.IRepositoryService;
 import org.eclipse.ui.PlatformUI;
 
 public abstract class ScriptStorage {
 
 	public static ScriptStorage createStorage() {
-		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-		String location = prefs.get(IPreferenceConstants.SCRIPT_STORAGE_LOCATION, IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_LOCATION);
+		String location = PreferencesHelper.getScriptStorageLocation();
 
 		if (location.startsWith("workspace://"))
 			return new WorkspaceScriptStorage(location);
@@ -23,16 +19,16 @@ public abstract class ScriptStorage {
 
 	private final String fLocation;
 
-	protected ScriptStorage(String location) {
+	protected ScriptStorage(final String location) {
 		fLocation = location;
 	}
 
-	public boolean exists(String name) {
+	public boolean exists(final String name) {
 		final IRepositoryService repositoryService = (IRepositoryService) PlatformUI.getWorkbench().getService(IRepositoryService.class);
 		return repositoryService.getScript(name) != null;
 	}
 
-	public boolean store(String name, String content) {
+	public boolean store(final String name, final String content) {
 		Path path = new Path(name);
 		if (createPath(path.removeLastSegments(1))) {
 			if (createFile(path, content)) {

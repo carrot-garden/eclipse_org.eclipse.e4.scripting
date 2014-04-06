@@ -9,9 +9,6 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong" defaultValueLiteral="-1"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="entry" lowerBound="1" eType="#//Entry"
         eOpposite="#//Entry/scripts"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="updatePending" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" transient="true"
-        defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scriptParameters" upperBound="-1"
         eType="#//ParameterMap" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="userParameters" upperBound="-1"
@@ -22,6 +19,9 @@
     <eOperations name="getInputStream" eType="#//InputStream"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="updatePending" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" transient="true"
+        defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Repository">
     <eStructuralFeatures xsi:type="ecore:EReference" name="entries" upperBound="-1"
@@ -30,7 +30,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Entry" eSuperTypes="#//Location">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="recursive" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hidden" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="default" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scripts" upperBound="-1"
         eType="#//Script" containment="true" eOpposite="#//Script/entry"/>

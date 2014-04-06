@@ -19,20 +19,20 @@ import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.IExecutionListener;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineProvider;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.service.EngineDescription;
-import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.ui.Activator;
+import org.eclipse.ease.ui.ScriptEditorInput;
 import org.eclipse.ease.ui.dialogs.SelectScriptStorageDialog;
-import org.eclipse.ease.ui.preferences.IPreferenceConstants;
+import org.eclipse.ease.ui.preferences.PreferencesHelper;
 import org.eclipse.ease.ui.scripts.ScriptStorage;
 import org.eclipse.ease.ui.tools.StringTools;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -40,10 +40,15 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.menus.UIElement;
 
 /**
@@ -58,8 +63,10 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 	@Override
 	protected final void executeToggle(final ExecutionEvent event, final boolean checked) {
 		final IWorkbenchPart part = HandlerUtil.getActivePart(event);
+
 		if (part instanceof IScriptEngineProvider) {
 			final IScriptEngine engine = ((IScriptEngineProvider) part).getScriptEngine();
+
 			if (engine != null) {
 				if (checked) {
 					// start recording, eventually overrides a running recording of the same provider
@@ -68,44 +75,66 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 
 				} else {
 					// stop recording
-					final ScriptStorage storage = getStorage();
 					final StringBuffer buffer = fRecordings.get(engine);
 
 					if (buffer.length() > 0) {
-						final InputDialog dialog = new InputDialog(HandlerUtil.getActiveShell(event), "Save Script",
-								"Enter a unique name for your script (use '/' as path delimiter)", "", new IInputValidator() {
+						// script data is available
+						String name = "recorded script";
 
-									@Override
-									public String isValid(final String name) {
-										if (storage.exists(name))
-											return "Script name <" + name + "> is already in use. Choose a different one.";
+						final ScriptStorage storage = getStorage();
+						if (storage != null) {
+							// ask for script name
+							final InputDialog dialog = new InputDialog(HandlerUtil.getActiveShell(event), "Save Script",
+									"Enter a unique name for your script (use '/' as path delimiter)", "", new IInputValidator() {
 
-										return null;
-									}
-								});
+										@Override
+										public String isValid(final String name) {
+											if (storage.exists(name))
+												return "Script name <" + name + "> is already in use. Choose a different one.";
 
-						if (dialog.open() == Window.OK) {
-							final IScriptService scriptService = (IScriptService) PlatformUI.getWorkbench().getService(IScriptService.class);
-							EngineDescription description = engine.getDescription();
-							ScriptType scriptType = description.getSupportedScriptTypes().iterator().next();
+											return null;
+										}
+									});
 
-							String name = dialog.getValue() + "." + scriptType.getDefaultExtension();
+							if (dialog.open() == Window.OK)
+								name = dialog.getValue();
+						}
 
-							// write script header
-							Map<String, String> header = new HashMap<String, String>();
-							header.put("name", new Path(dialog.getValue()).makeRelative().toString());
-							header.put("description", "Script recorded by user.");
-							header.put("script-type", scriptType.getName());
-							header.put("author", System.getProperty("user.name"));
-							header.put("date-recorded", new SimpleDateFormat("yyyy-MM-dd, HH:mm").format(new Date()));
+						EngineDescription description = engine.getDescription();
+						ScriptType scriptType = description.getSupportedScriptTypes().iterator().next();
 
-							buffer.insert(0, "\n");
-							buffer.insert(0, scriptType.getHeaderParser().createHeader(header));
+						String fileName = name + "." + scriptType.getDefaultExtension();
 
+						// write script header
+						Map<String, String> header = new HashMap<String, String>();
+						header.put("name", new Path(name).makeRelative().toString());
+						header.put("description", "Script recorded by user.");
+						header.put("script-type", scriptType.getName());
+						header.put("author", System.getProperty("user.name"));
+						header.put("date-recorded", new SimpleDateFormat("yyyy-MM-dd, HH:mm").format(new Date()));
+
+						buffer.insert(0, "\n");
+						buffer.insert(0, scriptType.getHeaderParser().createHeader(header));
+
+						if (storage != null) {
 							// store script
-							if (!storage.store(name, buffer.toString()))
+							if (!storage.store(fileName, buffer.toString()))
 								// could not store script
 								MessageDialog.openError(HandlerUtil.getActiveShell(event), "Save error", "Could not store script data");
+
+						} else {
+							// we do not have a storage, open script in editor and let user decide, what to do
+							IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+							try {
+								IEditorDescriptor editor = IDE.getDefaultEditor(ResourcesPlugin.getWorkspace().getRoot()
+										.getFile(new Path("/sample/foo." + scriptType.getDefaultExtension())));
+								IEditorPart openEditor = IDE.openEditor(page, new ScriptEditorInput(name, buffer.toString()), editor.getId());
+								// the editor starts indicating it is not dirty, so ask the user to perform a save as action
+								openEditor.doSaveAs();
+
+							} catch (PartInitException e) {
+								Logger.logError("Could not open editor for recorded script.", e);
+							}
 						}
 					}
 				}
@@ -116,20 +145,18 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 	}
 
 	private ScriptStorage getStorage() {
-		// if this is the first time the storage is used, ask the user for a default storage location
-		IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-		boolean selected = prefs.getBoolean(IPreferenceConstants.SCRIPT_STORAGE_SELECTED, IPreferenceConstants.DEFAULT_SCRIPT_STORAGE_SELECTED);
-		if (!selected) {
+		// if no default storage is selected, ask the user for the correct location
+		if (PreferencesHelper.getUserScriptStorageLocation() == null) {
+
 			// user did not select a storage yet, ask for location
 			SelectScriptStorageDialog dialog = new SelectScriptStorageDialog(Display.getDefault().getActiveShell());
 			if (dialog.open() == Window.OK)
-				prefs.put(IPreferenceConstants.SCRIPT_STORAGE_LOCATION, dialog.getLocation());
-			
-			// we will not ask again, no matter if the user cancelled the dialog
-			prefs.putBoolean(IPreferenceConstants.SCRIPT_STORAGE_SELECTED, true);
-			
+				PreferencesHelper.addLocation(dialog.getLocation(), true, true);
+
+			else
+				return null;
 		}
-		
+
 		return ScriptStorage.createStorage();
 	}
 
