@@ -1,30 +1,34 @@
 package org.eclipse.ease.ui;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.ui.repository.IScript;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 
-public class ScriptEditorInput implements IEditorInput, IStorageEditorInput {
+public class ScriptEditorInput implements IStorageEditorInput {
 
 	private final String fName;
 	private final InputStream fContent;
+	private final IScript fScript;
 
 	public ScriptEditorInput(final IScript script) {
+		fScript = script;
 		fName = script.getName();
-		fContent = script.getInputStream();
+		fContent = null;
 	}
 
 	public ScriptEditorInput(final String name, final String content) {
 		fName = name;
 		fContent = new ByteArrayInputStream(content.getBytes());
+		fScript = null;
 	}
 
 	@Override
@@ -67,11 +71,20 @@ public class ScriptEditorInput implements IEditorInput, IStorageEditorInput {
 
 			@Override
 			public IPath getFullPath() {
+				if (fScript != null) {
+					Object content = fScript.getContent();
+					if (content instanceof File)
+						return new Path(((File) content).getPath());
+				}
+
 				return null;
 			}
 
 			@Override
 			public InputStream getContents() throws CoreException {
+				if (fScript != null)
+					return fScript.getInputStream();
+
 				return fContent;
 			}
 		};
@@ -79,7 +92,7 @@ public class ScriptEditorInput implements IEditorInput, IStorageEditorInput {
 
 	@Override
 	public final ImageDescriptor getImageDescriptor() {
-		return null;
+		return Activator.getImageDescriptor("/images/script.gif");
 	}
 
 	@Override
