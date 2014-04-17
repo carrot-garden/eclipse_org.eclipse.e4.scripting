@@ -299,10 +299,7 @@ public class RepositoryService implements IRepositoryService {
 	void addScript(final IScript script) {
 		script.setUpdatePending(false);
 
-		if (!getRepository().getScripts().contains(script)) {
-			getRepository().getScripts().add(script);
-			notifyListeners(new ScriptRepositoryEvent(script, ScriptRepositoryEvent.ADD, null));
-		}
+		notifyListeners(new ScriptRepositoryEvent(script, ScriptRepositoryEvent.ADD, null));
 	}
 
 	@Override

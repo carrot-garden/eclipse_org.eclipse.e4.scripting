@@ -47,7 +47,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 	private IDoubleClickListener fDoubleClickListener = new IDoubleClickListener() {
 
 		@Override
-		public void doubleClick(DoubleClickEvent event) {
+		public void doubleClick(final DoubleClickEvent event) {
 
 			Object element = ((IStructuredSelection) event.getSelection()).getFirstElement();
 
@@ -83,7 +83,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 
 		treeViewer.setLabelProvider(new LabelProvider() {
 			@Override
-			public String getText(Object element) {
+			public String getText(final Object element) {
 				if (element instanceof IPath)
 					return ((IPath) element).lastSegment();
 
@@ -94,7 +94,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 			}
 
 			@Override
-			public Image getImage(Object element) {
+			public Image getImage(final Object element) {
 				if (element instanceof IPath)
 					return Activator.getImage("org.eclipse.ui", "/icons/full/obj16/fldr_obj.gif", true);
 
@@ -108,7 +108,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 
 		treeViewer.setComparator(new ViewerComparator() {
 			@Override
-			public int category(Object element) {
+			public int category(final Object element) {
 				return (element instanceof IPath) ? 0 : 1;
 			}
 
@@ -125,7 +125,8 @@ public class ScriptComposite extends Composite implements IScriptListener {
 		if (fDoubleClickListener != null)
 			treeViewer.addDoubleClickListener(fDoubleClickListener);
 
-		// TODO subscribe for add/delete script events
+		// add listener for script repository changes
+		repositoryService.addScriptListener(this);
 
 		// add context menu support
 		final MenuManager menuManager = new MenuManager();
@@ -159,7 +160,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 		super.dispose();
 	}
 
-	public void setDoubleClickListener(IDoubleClickListener doubleClickListener) {
+	public void setDoubleClickListener(final IDoubleClickListener doubleClickListener) {
 		if ((fDoubleClickListener != null) && (treeViewer != null))
 			treeViewer.removeDoubleClickListener(fDoubleClickListener);
 
@@ -170,7 +171,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 	}
 
 	@Override
-	public void notify(ScriptRepositoryEvent event) {
+	public void notify(final ScriptRepositoryEvent event) {
 		switch (event.getType()) {
 		case ScriptRepositoryEvent.PARAMETER_CHANGE:
 			Map<String, String> eventData = (Map<String, String>) event.getEventData();
