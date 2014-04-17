@@ -19,14 +19,14 @@ import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.progress.UIJob;
 
-public class UIIntegration extends UIJob implements IScriptListener {
+public class UIIntegrationJob extends UIJob implements IScriptListener {
 	private final Map<String, ScriptContributionFactory> fContributionFactories = new HashMap<String, ScriptContributionFactory>();
 
 	private final RepositoryService fRepositoryService;
 
 	private final Collection<IScript> fAddedScripts = new HashSet<IScript>();
 
-	public UIIntegration(RepositoryService repositoryService) {
+	public UIIntegrationJob(final RepositoryService repositoryService) {
 		super("Update script UI components");
 
 		fRepositoryService = repositoryService;
@@ -34,26 +34,26 @@ public class UIIntegration extends UIJob implements IScriptListener {
 	}
 
 	@Override
-	public IStatus runInUIThread(IProgressMonitor monitor) {
+	public IStatus runInUIThread(final IProgressMonitor monitor) {
 		if (PlatformUI.getWorkbench().getActiveWorkbenchWindow() == null) {
 			// we might get called before the workbench is loaded.
 			// in that case delay execution until the workbench is ready
 			PlatformUI.getWorkbench().addWindowListener(new IWindowListener() {
 
 				@Override
-				public void windowOpened(IWorkbenchWindow window) {
+				public void windowOpened(final IWorkbenchWindow window) {
 				}
 
 				@Override
-				public void windowDeactivated(IWorkbenchWindow window) {
+				public void windowDeactivated(final IWorkbenchWindow window) {
 				}
 
 				@Override
-				public void windowClosed(IWorkbenchWindow window) {
+				public void windowClosed(final IWorkbenchWindow window) {
 				}
 
 				@Override
-				public void windowActivated(IWorkbenchWindow window) {
+				public void windowActivated(final IWorkbenchWindow window) {
 					PlatformUI.getWorkbench().removeWindowListener(this);
 					schedule();
 				}
@@ -80,7 +80,7 @@ public class UIIntegration extends UIJob implements IScriptListener {
 		return Status.OK_STATUS;
 	}
 
-	private void updateContributionFactory(IScript script, String type) {
+	private void updateContributionFactory(final IScript script, final String type) {
 		String location = script.getParameters().get(type);
 		if (location != null) {
 			// map to a real location
@@ -104,11 +104,14 @@ public class UIIntegration extends UIJob implements IScriptListener {
 
 				IViewPart view = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(location.substring(location.indexOf(":") + 1));
 				if (view instanceof ViewPart) {
-					final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
-					if (view.getViewSite().getActionBars().getToolBarManager() instanceof ContributionManager) {
-						view.getViewSite().getActionBars().getToolBarManager().removeAll();
-						menuService.populateContributionManager((ContributionManager) view.getViewSite().getActionBars().getToolBarManager(), location);
-						view.getViewSite().getActionBars().updateActionBars();
+					if (view.getViewSite() != null) {
+						// the view is already rendered, contributions will not be considered anymore
+						final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
+						if (view.getViewSite().getActionBars().getToolBarManager() instanceof ContributionManager) {
+							view.getViewSite().getActionBars().getToolBarManager().removeAll();
+							menuService.populateContributionManager((ContributionManager) view.getViewSite().getActionBars().getToolBarManager(), location);
+							view.getViewSite().getActionBars().updateActionBars();
+						}
 					}
 				}
 
@@ -117,7 +120,7 @@ public class UIIntegration extends UIJob implements IScriptListener {
 	}
 
 	@Override
-	public void notify(ScriptRepositoryEvent event) {
+	public void notify(final ScriptRepositoryEvent event) {
 		switch (event.getType()) {
 		case ScriptRepositoryEvent.ADD:
 			addScript(event.getScript());
@@ -126,12 +129,12 @@ public class UIIntegration extends UIJob implements IScriptListener {
 
 	}
 
-	public synchronized void addScripts(Collection<IScript> scripts) {
+	public synchronized void addScripts(final Collection<IScript> scripts) {
 		fAddedScripts.addAll(scripts);
 		schedule();
 	}
 
-	private synchronized void addScript(IScript script) {
+	private synchronized void addScript(final IScript script) {
 		fAddedScripts.add(script);
 		schedule();
 	}

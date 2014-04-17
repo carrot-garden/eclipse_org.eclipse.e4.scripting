@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IScript;
 
-public class UpdateJob extends Job implements IResourceChangeListener
+public class UpdateRepositoryJob extends Job implements IResourceChangeListener
 // , IScriptListener
 {
 
@@ -31,7 +31,7 @@ public class UpdateJob extends Job implements IResourceChangeListener
 
 	private final Map<String, ScriptContributionFactory> fContributionFactories = new HashMap<String, ScriptContributionFactory>();
 
-	public UpdateJob(final RepositoryService repositoryService) {
+	public UpdateRepositoryJob(final RepositoryService repositoryService) {
 		super("Updating script repository");
 
 		fRepositoryService = repositoryService;
@@ -67,7 +67,7 @@ public class UpdateJob extends Job implements IResourceChangeListener
 
 			} else if ((content instanceof File) && (((File) content).exists())) {
 				// this is a valid file system resource
-				new FilesystemParser(fRepositoryService).parse((File) content, entry);
+				new FileSystemParser(fRepositoryService).parse((File) content, entry);
 
 			} else if (content instanceof InputStream) {
 				// new InputStreamParser(fRepositoryService).parse(stream, entry);

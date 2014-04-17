@@ -12,9 +12,9 @@ import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
 import org.eclipse.ease.ui.repository.IScript;
 
-public class FilesystemParser extends InputStreamParser {
+public class FileSystemParser extends InputStreamParser {
 
-	public FilesystemParser(RepositoryService repositoryService) {
+	public FileSystemParser(RepositoryService repositoryService) {
 		super(repositoryService);
 	}
 

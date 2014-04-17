@@ -62,7 +62,7 @@ public class RepositoryService implements IRepositoryService {
 
 	private IRepository fRepository = null;
 
-	private final UpdateJob fUpdateJob;
+	private final UpdateRepositoryJob fUpdateJob;
 	private final Job fSaveJob = new Job("Save Script Repositories") {
 
 		@Override
@@ -85,7 +85,7 @@ public class RepositoryService implements IRepositoryService {
 	};
 
 	private final ListenerList fListeners = new ListenerList();
-	private final UIIntegration fUiIntegration;
+	private final UIIntegrationJob fUiIntegration;
 
 	/**
 	 * Initialize the repository service.
@@ -128,11 +128,11 @@ public class RepositoryService implements IRepositoryService {
 		}
 
 		// apply UI integrations
-		fUiIntegration = new UIIntegration(this);
+		fUiIntegration = new UIIntegrationJob(this);
 		fUiIntegration.addScripts(getScripts());
 
 		// update repository
-		fUpdateJob = new UpdateJob(this);
+		fUpdateJob = new UpdateRepositoryJob(this);
 		fUpdateJob.schedule(updateDelay);
 	}
 
