@@ -26,7 +26,6 @@ import org.eclipse.ease.ui.console.ScriptConsole;
 import org.eclipse.ease.ui.dnd.ShellDropTarget;
 import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.ease.ui.scripts.IScriptSupport;
-import org.eclipse.ease.ui.scripts.ScriptContributionFactory;
 import org.eclipse.ease.ui.scripts.ui.ScriptComposite;
 import org.eclipse.jface.resource.ColorDescriptor;
 import org.eclipse.jface.resource.FontDescriptor;
@@ -152,7 +151,7 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 			setEngine(engines.iterator().next().getID());
 
 		// add dynamic context menu for scripts
-		ScriptContributionFactory.addContextMenu("org.eclipse.ease.commands.script.toggleScriptPane.popup");
+		// ScriptContributionFactory.addContextMenu("org.eclipse.ease.commands.script.toggleScriptPane.popup");
 
 		// FIXME add preferences lookup
 		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(this);

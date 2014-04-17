@@ -24,8 +24,8 @@ public class ScriptPopup extends AbstractPopupItem {
 
 	private final IScript fScript;
 
-	public ScriptPopup(final IScript macro) {
-		fScript = macro;
+	public ScriptPopup(final IScript script) {
+		fScript = script;
 	}
 
 	@Override
@@ -38,8 +38,6 @@ public class ScriptPopup extends AbstractPopupItem {
 
 		contributionParameter.parameters = parameters;
 
-		contributionParameter.icon = Activator.getImageDescriptor("/images/script.gif");
-
 		return contributionParameter;
 	}
 
@@ -50,7 +48,6 @@ public class ScriptPopup extends AbstractPopupItem {
 
 	@Override
 	protected ImageDescriptor getImageDescriptor() {
-		// TODO Auto-generated method stub
-		return null;
+		return Activator.getImageDescriptor("/images/script.gif");
 	}
 }

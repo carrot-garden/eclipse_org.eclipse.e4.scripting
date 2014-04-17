@@ -99,7 +99,7 @@ public class ScriptComposite extends Composite implements IScriptListener {
 					return Activator.getImage("org.eclipse.ui", "/icons/full/obj16/fldr_obj.gif", true);
 
 				if (element instanceof IScript)
-					return Activator.getImage("org.eclipse.ease.ui", "/images/shell_view.gif", true);
+					return Activator.getImage("org.eclipse.ease.ui", "/images/script.gif", true);
 
 				return super.getImage(element);
 			}

@@ -165,10 +165,10 @@ public class ToggleScriptRecording extends ToggleHandler implements IHandler, IE
 		super.updateElement(element, parameters);
 
 		if (fChecked)
-			element.setIcon(Activator.getImageDescriptor(Activator.PLUGIN_ID, "/images/stop_record_macro.gif"));
+			element.setIcon(Activator.getImageDescriptor(Activator.PLUGIN_ID, "images/record_script_stop.png"));
 
 		else
-			element.setIcon(Activator.getImageDescriptor(Activator.PLUGIN_ID, "/images/start_record_macro.gif"));
+			element.setIcon(Activator.getImageDescriptor(Activator.PLUGIN_ID, "images/record_script_start.png"));
 	}
 
 	@Override

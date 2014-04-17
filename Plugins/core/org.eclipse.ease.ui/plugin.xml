@@ -228,7 +228,7 @@
          </command>
          <command
                commandId="org.eclipse.ease.commands.script.toggleScriptRecording"
-               icon="images/start_record_macro.gif"
+               icon="images/record_script_start.png"
                label="Toggle Script Recording"
                style="toggle">
          </command>
@@ -247,12 +247,13 @@
          </command>
          <command
                commandId="org.eclipse.ease.commands.script.edit"
-               icon="images/start_record_macro.gif"
+               icon="images/script_edit.png"
                label="Edit"
                style="push">
          </command>
          <command
                commandId="org.eclipse.ease.commands.scriptShell.refreshRepository"
+               icon="images/refresh.gif"
                label="Refresh"
                style="push">
          </command>
@@ -260,6 +261,13 @@
                name="additions"
                visible="false">
          </separator>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:org.eclipse.ease.commands.script.toggleScriptPane.popup">
+         <dynamic
+               class="org.eclipse.ease.ui.scripts.ScriptContributionFactory"
+               id="org.eclipse.ease.ui.dynamic">
+         </dynamic>
       </menuContribution>
    </extension>
    <extension
