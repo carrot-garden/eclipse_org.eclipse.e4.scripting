@@ -204,6 +204,4 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 	public final Object resolveFile(final String filename) {
 		return ResourceTools.resolveFile(filename, getScriptEngine().getExecutedFile());
 	}
-
-	protected abstract void wrap(Object module);
 }

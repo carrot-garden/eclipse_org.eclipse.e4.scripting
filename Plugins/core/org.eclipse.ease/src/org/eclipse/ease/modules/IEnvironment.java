@@ -43,4 +43,14 @@ public interface IEnvironment {
 	Object loadModule(final String moduleIdentifier);
 
 	Object resolveFile(final String filename);
+
+	/**
+	 * Wrap a java instance. Will create accessors in the target language for methods and constants defined by the java instance <i>toBeWrapped</i>. If the
+	 * instance contains annotations of type {@link WrapToScript} only these will be wrapped. If no annotation can be found, all public methods/constants will
+	 * be wrapped. As some target languages might not support method overloading this might result in some methods not wrapped correctly.
+	 * 
+	 * @param toBeWrapped
+	 *            instance to be wrapped
+	 */
+	void wrap(final Object toBeWrapped);
 }
