@@ -82,12 +82,13 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 			getScriptEngine().getErrorStream().append("Unable to find module \"" + moduleName + "\"");
 
 		else {
-			// create function wrappers
-			wrap(module);
-
+			// first take care that module is tracked as it might modify itself implementing IScriptFunctionModifier
 			// move module up to first position
 			fModules.remove(module);
 			fModules.add(0, module);
+
+			// create function wrappers
+			wrap(module);
 		}
 
 		return module;
