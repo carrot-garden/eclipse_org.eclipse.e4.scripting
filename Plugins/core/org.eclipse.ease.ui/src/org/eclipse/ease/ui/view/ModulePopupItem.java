@@ -15,7 +15,7 @@ public class ModulePopupItem extends AbstractPopupItem {
 
 	private final ModuleDefinition fDefinition;
 
-	public ModulePopupItem(ModuleDefinition definition) {
+	public ModulePopupItem(final ModuleDefinition definition) {
 		fDefinition = definition;
 	}
 

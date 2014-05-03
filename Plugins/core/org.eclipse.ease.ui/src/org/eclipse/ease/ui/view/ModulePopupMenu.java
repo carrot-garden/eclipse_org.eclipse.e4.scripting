@@ -12,7 +12,7 @@ public class ModulePopupMenu extends AbstractPopupMenu {
 
 	private final List<AbstractPopupItem> fItems = new ArrayList<AbstractPopupItem>();
 
-	public ModulePopupMenu(String name) {
+	public ModulePopupMenu(final String name) {
 		super(name);
 	}
 
@@ -22,15 +22,15 @@ public class ModulePopupMenu extends AbstractPopupMenu {
 			addPopup(item);
 	}
 
-	public void addEntry(AbstractPopupItem item) {
+	public void addEntry(final AbstractPopupItem item) {
 		fItems.add(item);
 	}
 
-	public List<AbstractPopupItem> getEntries() {
+	public void sortEntries() {
 		Collections.sort(fItems, new Comparator<AbstractPopupItem>() {
 
 			@Override
-			public int compare(AbstractPopupItem o1, AbstractPopupItem o2) {
+			public int compare(final AbstractPopupItem o1, final AbstractPopupItem o2) {
 				if ((o1 instanceof AbstractPopupMenu) && (!(o2 instanceof AbstractPopupMenu)))
 					return -1;
 
@@ -40,7 +40,9 @@ public class ModulePopupMenu extends AbstractPopupMenu {
 				return o1.getDisplayName().compareTo(o2.getDisplayName());
 			}
 		});
+	}
 
+	public List<AbstractPopupItem> getEntries() {
 		return fItems;
 	}
 }

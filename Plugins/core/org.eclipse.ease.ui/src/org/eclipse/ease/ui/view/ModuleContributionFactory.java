@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ease.ui.view;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,18 +90,12 @@ public class ModuleContributionFactory extends AbstractContributionFactory {
 			}
 		}
 
-		ModulePopupMenu root = moduleTree.get(new Path("/"));
-
-		// sort alphabetically
-		Collections.sort(root.getEntries(), new Comparator<AbstractPopupItem>() {
-
-			@Override
-			public int compare(final AbstractPopupItem o1, final AbstractPopupItem o2) {
-				return o1.getDisplayName().compareToIgnoreCase(o2.getDisplayName());
-			}
-		});
+		// sort all menus
+		for (ModulePopupMenu popupMenu : moduleTree.values())
+			popupMenu.sortEntries();
 
 		// populate root contributions
+		ModulePopupMenu root = moduleTree.get(new Path("/"));
 		for (AbstractPopupItem item : root.getEntries())
 			additions.addContributionItem(item.getContribution(serviceLocator), null);
 	}

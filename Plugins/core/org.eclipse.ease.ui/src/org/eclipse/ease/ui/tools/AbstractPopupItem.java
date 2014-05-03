@@ -32,6 +32,11 @@ public abstract class AbstractPopupItem {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return getDisplayName();
+	}
+
 	protected abstract CommandContributionItemParameter getContributionParameter();
 
 	public abstract String getDisplayName();
