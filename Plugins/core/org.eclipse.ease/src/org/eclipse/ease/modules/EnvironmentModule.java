@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ease.modules;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -19,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ease.ExitException;
 import org.eclipse.ease.IScriptEngine;
@@ -219,44 +221,6 @@ public class EnvironmentModule extends AbstractEnvironment {
 		throw new RuntimeException("Cannot locate '" + filename + "'");
 	}
 
-	// // FIXME move to rhino bundle
-	// /**
-	// * Resolves a jar file and makes its classes available for the
-	// ClassLoader.
-	// *
-	// * @param location
-	// * location of jar file to register
-	// */
-	// // @WrapToJavaScript
-	// // public final void registerJar(final String location) {
-	// // final Object currentFile =
-	// getScriptEngine().getFileTrace().getTopMostFile();
-	// // final Object file = ResourceTools.getFile(location, currentFile);
-	// //
-	// // final IScriptEngine engine = getScriptEngine();
-	// // if (engine instanceof RhinoScriptEngine) {
-	// // if (file != null) {
-	// // try {
-	// // if (file instanceof IFile) {
-	// // final URL url = ((IFile) file).getRawLocationURI().toURL();
-	// // ((RhinoScriptEngine) engine).registerJar(url);
-	// // return;
-	// //
-	// // } else if (file instanceof File) {
-	// // final URL url = ((File) file).toURI().toURL();
-	// // ((RhinoScriptEngine) engine).registerJar(url);
-	// // return;
-	// //
-	// // }
-	// // } catch (final MalformedURLException e) {
-	// // // nothing to do
-	// // }
-	// // }
-	// // }
-	// //
-	// // throw new RuntimeException("Jar file \"" + location + "\" not found");
-	// // }
-
 	/**
 	 * Re-implementation as we might not have initialized the engine on the first module load.
 	 */
@@ -281,5 +245,25 @@ public class EnvironmentModule extends AbstractEnvironment {
 	private IModuleWrapper getWrapper() {
 		// use the static access method for the service as we might run without UI (workbench would not be available)
 		return ScriptService.getService().getModuleWrapper(getScriptEngine().getDescription().getID());
+	}
+
+	@WrapToScript
+	public void registerJar(Object location) throws MalformedURLException {
+		if (!(location instanceof URL)) {
+			// try to resolve workspace URIs
+			Object file = resolveFile(location.toString());
+
+			if (file instanceof IFile)
+				file = ((IFile) file).getFullPath().toFile();
+
+			if (file instanceof File)
+				location = ((File) file).toURI().toURL();
+
+			else
+				location = new URL(location.toString());
+		}
+
+		if (location != null)
+			getScriptEngine().registerJar((URL) location);
 	}
 }

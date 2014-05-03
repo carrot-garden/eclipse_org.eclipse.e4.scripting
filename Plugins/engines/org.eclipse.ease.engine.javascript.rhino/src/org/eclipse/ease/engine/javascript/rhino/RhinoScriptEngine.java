@@ -225,6 +225,7 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 		return mScope;
 	}
 
+	@Override
 	public synchronized void registerJar(final URL url) {
 		RhinoClassLoader.registerURL(this, url);
 	}
@@ -265,6 +266,7 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 		throw new RuntimeException("Cannot retrieve variable, Scope not initialized");
 	}
 
+	@Override
 	public Object removeVariable(final String name) {
 		if (getScope() != null) {
 			final Object result = getVariable(name);
@@ -277,6 +279,7 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 		return null;
 	}
 
+	@Override
 	public Map<String, Object> getVariables() {
 		if (getScope() != null) {
 			final Map<String, Object> result = new HashMap<String, Object>();

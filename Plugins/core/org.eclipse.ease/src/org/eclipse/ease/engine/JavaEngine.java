@@ -3,6 +3,7 @@ package org.eclipse.ease.engine;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -188,5 +189,10 @@ public class JavaEngine implements IScriptEngine {
 	@Override
 	public Map<String, Object> getVariables() {
 		return fVariables;
+	}
+
+	@Override
+	public void registerJar(final URL url) {
+		throw new RuntimeException("not supported");
 	}
 }

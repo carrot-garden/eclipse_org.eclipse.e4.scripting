@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.net.URL;
 import java.util.Map;
 
 import org.eclipse.ease.service.EngineDescription;
@@ -236,4 +237,11 @@ public interface IScriptEngine {
 	 */
 	Map<String, Object> getVariables();
 
+	/**
+	 * Register a jar file and add it to the classpath. After registering, classes within the jar file shall be usable within the script.
+	 * 
+	 * @param url
+	 *            url to load jar file from
+	 */
+	void registerJar(final URL url);
 }
