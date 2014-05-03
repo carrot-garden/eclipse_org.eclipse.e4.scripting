@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
@@ -26,42 +27,42 @@ import org.eclipse.core.runtime.Platform;
 public class Script {
 
 	/** command to be executed. */
-	private final Object mCommand;
+	private final Object fCommand;
 
 	/** script result returned from command. */
-	private final ScriptResult mResult;
+	private final ScriptResult fResult;
 
-	private String mCodeBuffer = null;
+	private String fCodeBuffer = null;
 
-	private final String mTitle;
+	private final String fTitle;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param title
-	 *        name of script object
+	 *            name of script object
 	 * @param command
-	 *        command (sequence) to be executed
+	 *            command (sequence) to be executed
 	 */
 	public Script(final String title, final Object command) {
-		mTitle = title;
-		mCommand = command;
-		mResult = new ScriptResult();
+		fTitle = title;
+		fCommand = command;
+		fResult = new ScriptResult();
 	}
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param command
-	 *        command (sequence) to be executed
+	 *            command (sequence) to be executed
 	 */
 	public Script(final Object command) {
 		this(null, command);
 	}
 
 	/**
-	 * Get the scriptable data as {@link InputStream}. The caller needs to close the stream when it is not used anymore. Calling this method multiple
-	 * times will return different streams with the same text content.
+	 * Get the scriptable data as {@link InputStream}. The caller needs to close the stream when it is not used anymore. Calling this method multiple times will
+	 * return different streams with the same text content.
 	 * 
 	 * @return scriptable data
 	 * @throws Exception
@@ -77,34 +78,37 @@ public class Script {
 	 * @throws Exception
 	 */
 	public String getCode() throws Exception {
-		if(mCodeBuffer != null)
-			return mCodeBuffer;
+		if (fCodeBuffer != null)
+			return fCodeBuffer;
 
-		if(mCommand instanceof String)
-			return (String)mCommand;
+		if (fCommand instanceof String)
+			return (String) fCommand;
 
-		if(mCommand instanceof InputStream)
+		if (fCommand instanceof URL)
+			return bufferStream(((URL) fCommand).openStream());
+
+		if (fCommand instanceof InputStream)
 			// streams can only be read once, therefore buffer
-			return bufferStream((InputStream)mCommand);
+			return bufferStream((InputStream) fCommand);
 
-		if(mCommand instanceof Reader)
+		if (fCommand instanceof Reader)
 			// readers can only be read once, therefore buffer
-			return bufferReader((Reader)mCommand);
+			return bufferReader((Reader) fCommand);
 
 		// if we already have a scriptable
-		if(mCommand instanceof IScriptable)
-			return bufferStream(((IScriptable)mCommand).getSourceCode());
+		if (fCommand instanceof IScriptable)
+			return bufferStream(((IScriptable) fCommand).getSourceCode());
 
 		// try to adapt to scriptable
-		final Object scriptable = Platform.getAdapterManager().getAdapter(mCommand, IScriptable.class);
-		if(scriptable != null)
-			return bufferStream(((IScriptable)scriptable).getSourceCode());
+		final Object scriptable = Platform.getAdapterManager().getAdapter(fCommand, IScriptable.class);
+		if (scriptable != null)
+			return bufferStream(((IScriptable) scriptable).getSourceCode());
 
 		// last resort, convert to String
-		if(mCommand != null) {
+		if (fCommand != null) {
 			// better buffer stuff, we do not know if toString() remains constant
-			mCodeBuffer = mCommand.toString();
-			return mCodeBuffer;
+			fCodeBuffer = fCommand.toString();
+			return fCodeBuffer;
 		}
 
 		return null;
@@ -112,17 +116,17 @@ public class Script {
 	}
 
 	private String bufferReader(final Reader command) throws IOException {
-		mCodeBuffer = toString(command);
-		return mCodeBuffer;
+		fCodeBuffer = toString(command);
+		return fCodeBuffer;
 	}
 
 	private String bufferStream(final InputStream command) throws IOException {
-		mCodeBuffer = toString(command);
-		return mCodeBuffer;
+		fCodeBuffer = toString(command);
+		return fCodeBuffer;
 	}
 
 	public final Object getCommand() {
-		return mCommand;
+		return fCommand;
 	}
 
 	/**
@@ -131,28 +135,28 @@ public class Script {
 	 * @return execution result.
 	 */
 	public final ScriptResult getResult() {
-		return mResult;
+		return fResult;
 	}
 
 	/**
 	 * Set the execution result.
 	 * 
 	 * @param result
-	 *        execution result
+	 *            execution result
 	 */
 	public final void setResult(final Object result) {
-		mResult.setResult(result);
+		fResult.setResult(result);
 
 		// gracefully close input streams & readers
-		if(mCommand instanceof InputStream) {
+		if (fCommand instanceof InputStream) {
 			try {
-				((InputStream)mCommand).close();
+				((InputStream) fCommand).close();
 			} catch (final IOException e) {
 			}
 
-		} else if(mCommand instanceof Reader) {
+		} else if (fCommand instanceof Reader) {
 			try {
-				((Reader)mCommand).close();
+				((Reader) fCommand).close();
 			} catch (final IOException e) {
 			}
 		}
@@ -162,29 +166,29 @@ public class Script {
 	 * Set an execution exception.
 	 * 
 	 * @param e
-	 *        exception
+	 *            exception
 	 */
 	public final void setException(final Exception e) {
-		mResult.setException(e);
+		fResult.setException(e);
 
 		// gracefully close input streams & readers
-		if(mCommand instanceof InputStream) {
+		if (fCommand instanceof InputStream) {
 			try {
-				((InputStream)mCommand).close();
+				((InputStream) fCommand).close();
 			} catch (final IOException ex) {
 			}
 
-		} else if(mCommand instanceof Reader) {
+		} else if (fCommand instanceof Reader) {
 			try {
-				((Reader)mCommand).close();
+				((Reader) fCommand).close();
 			} catch (final IOException ex) {
 			}
 		}
 	}
 
 	public Object getFile() {
-		if((mCommand instanceof IFile) || (mCommand instanceof File))
-			return mCommand;
+		if ((fCommand instanceof IFile) || (fCommand instanceof File))
+			return fCommand;
 
 		return null;
 	}
@@ -193,10 +197,10 @@ public class Script {
 	 * Convert an input stream to a string.
 	 * 
 	 * @param stream
-	 *        input string to read from
+	 *            input string to read from
 	 * @return string containing stream data
 	 * @throws IOException
-	 *         thrown on problems with input stream
+	 *             thrown on problems with input stream
 	 */
 	private static String toString(final InputStream stream) throws IOException {
 		return toString(new InputStreamReader(stream));
@@ -206,10 +210,10 @@ public class Script {
 	 * Read characters from a {@link Reader} and return its string representation. Can be used to convert an {@link InputStream} to a string.
 	 * 
 	 * @param reader
-	 *        reader to read from
+	 *            reader to read from
 	 * @return string content of reader
 	 * @throws IOException
-	 *         when reader is not accessible
+	 *             when reader is not accessible
 	 */
 	private static String toString(final Reader reader) throws IOException {
 		final StringBuffer out = new StringBuffer();
@@ -218,61 +222,61 @@ public class Script {
 		int bytes = 0;
 		do {
 			bytes = reader.read(buffer);
-			if(bytes > 0)
+			if (bytes > 0)
 				out.append(buffer, 0, bytes);
-		} while(bytes != -1);
+		} while (bytes != -1);
 
 		return out.toString();
 	}
 
 	@Override
 	public String toString() {
-		if(mCommand instanceof IFile)
-			return ((IFile)mCommand).getName();
+		if (fCommand instanceof IFile)
+			return ((IFile) fCommand).getName();
 
-		if(mCommand instanceof File)
-			return ((File)mCommand).getName();
+		if (fCommand instanceof File)
+			return ((File) fCommand).getName();
 
 		return "(unknown script source)";
 	}
 
 	public String getTitle() {
-		return mTitle;
+		return fTitle;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((mCodeBuffer == null) ? 0 : mCodeBuffer.hashCode());
-		result = (prime * result) + ((mCommand == null) ? 0 : mCommand.hashCode());
-		result = (prime * result) + ((mResult == null) ? 0 : mResult.hashCode());
+		result = (prime * result) + ((fCodeBuffer == null) ? 0 : fCodeBuffer.hashCode());
+		result = (prime * result) + ((fCommand == null) ? 0 : fCommand.hashCode());
+		result = (prime * result) + ((fResult == null) ? 0 : fResult.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(final Object obj) {
-		if(this == obj)
+		if (this == obj)
 			return true;
-		if(obj == null)
+		if (obj == null)
 			return false;
-		if(getClass() != obj.getClass())
+		if (getClass() != obj.getClass())
 			return false;
-		final Script other = (Script)obj;
-		if(mCodeBuffer == null) {
-			if(other.mCodeBuffer != null)
+		final Script other = (Script) obj;
+		if (fCodeBuffer == null) {
+			if (other.fCodeBuffer != null)
 				return false;
-		} else if(!mCodeBuffer.equals(other.mCodeBuffer))
+		} else if (!fCodeBuffer.equals(other.fCodeBuffer))
 			return false;
-		if(mCommand == null) {
-			if(other.mCommand != null)
+		if (fCommand == null) {
+			if (other.fCommand != null)
 				return false;
-		} else if(!mCommand.equals(other.mCommand))
+		} else if (!fCommand.equals(other.fCommand))
 			return false;
-		if(mResult == null) {
-			if(other.mResult != null)
+		if (fResult == null) {
+			if (other.fResult != null)
 				return false;
-		} else if(!mResult.equals(other.mResult))
+		} else if (!fResult.equals(other.fResult))
 			return false;
 		return true;
 	}

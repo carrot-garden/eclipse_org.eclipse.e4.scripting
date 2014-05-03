@@ -1,9 +1,5 @@
 package org.eclipse.ease.modules;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,21 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.Logger;
+import org.eclipse.ease.ResourceTools;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptService;
 import org.eclipse.ui.PlatformUI;
 
 public abstract class AbstractEnvironment extends AbstractScriptModule implements IEnvironment {
-
-	private static final String PROJECT_SCHEME = "project://";
-
-	private static final String WORKSPACE_SCHEME = "workspace://";
 
 	/** Stores ordering of wrapped elements. */
 	private final List<Object> fModules = new ArrayList<Object>();
@@ -211,61 +202,7 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 
 	@Override
 	public final Object resolveFile(final String filename) {
-		if (filename.startsWith(PROJECT_SCHEME)) {
-			// project relative link, we cannot resolve this via URL as we need a relative file in the project
-			Object currentFile = getScriptEngine().getExecutedFile();
-			if (currentFile instanceof IFile)
-				return ((IFile) currentFile).getProject().getFile(new Path(filename.substring(PROJECT_SCHEME.length())));
-
-		} else if (filename.startsWith(WORKSPACE_SCHEME)) {
-			// workspace absolute link
-			return ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(filename.substring(WORKSPACE_SCHEME.length())));
-
-		} else {
-			// maybe this is a URI
-			try {
-				URL url = new URL(filename);
-				File file = new File(url.toURI());
-				if (file != null)
-					return file;
-
-			} catch (IllegalArgumentException e) {
-				// this is a valid URI, but we could not convert it into a local file
-				return null;
-			} catch (MalformedURLException e) {
-			} catch (URISyntaxException e) {
-			}
-
-			// maybe this is an absolute path within the file system
-			File systemFile = new File(filename);
-			if (systemFile.exists())
-				return systemFile;
-
-			// maybe this is an absolute path within the workspace
-			try {
-				IFile workspaceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(filename));
-				if (workspaceFile.exists())
-					return workspaceFile;
-			} catch (IllegalArgumentException e) {
-				// invalid path detected
-			}
-
-			// maybe a relative filename
-			Object currentFile = getScriptEngine().getExecutedFile();
-			if (currentFile instanceof IFile) {
-				IFile workspaceFile = ((IFile) currentFile).getParent().getFile(new Path(filename));
-				if (workspaceFile.exists())
-					return workspaceFile;
-
-			} else if (currentFile instanceof File) {
-				systemFile = new File(((File) currentFile).getParentFile().getAbsolutePath() + File.pathSeparator + filename);
-				if (systemFile.exists())
-					return systemFile;
-			}
-		}
-
-		// giving up
-		return null;
+		return ResourceTools.resolveFile(filename, getScriptEngine().getExecutedFile());
 	}
 
 	protected abstract void wrap(Object module);
