@@ -19,11 +19,6 @@ public interface IModuleWrapper {
 
 	String createFunctionWrapper(IEnvironment environment, String moduleVariable, Method method);
 
-	//
-	// String getConstantDefinition(String name, Field field);
-	//
-	// String getVariableDefinition(String name, String content);
-	//
 	String classInstantiation(Class<?> clazz, String[] parameters);
 
 	String createStaticFieldWrapper(IEnvironment environment, Field field);
