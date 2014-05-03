@@ -1,9 +1,9 @@
 package org.eclipse.ease.module.platform;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.ease.common.RunnableWithResult;
 import org.eclipse.ease.modules.ScriptParameter;
 import org.eclipse.ease.modules.WrapToScript;
+import org.eclipse.ease.tools.RunnableWithResult;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.ITextSelection;

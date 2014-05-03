@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ease.modules.incubation;
 
-import org.eclipse.ease.common.RunnableWithResult;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
+import org.eclipse.ease.tools.RunnableWithResult;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;

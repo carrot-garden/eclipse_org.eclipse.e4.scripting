@@ -5,7 +5,7 @@ package org.eclipse.ease.ui.repository.impl;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.ease.ResourceTools;
+import org.eclipse.ease.tools.ResourceTools;
 import org.eclipse.ease.ui.repository.ILocation;
 import org.eclipse.ease.ui.repository.IRepositoryPackage;
 import org.eclipse.emf.common.notify.Notification;

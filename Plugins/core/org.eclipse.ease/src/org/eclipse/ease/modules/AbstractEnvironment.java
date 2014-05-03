@@ -11,9 +11,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.Logger;
-import org.eclipse.ease.ResourceTools;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ease.tools.ResourceTools;
 import org.eclipse.ui.PlatformUI;
 
 public abstract class AbstractEnvironment extends AbstractScriptModule implements IEnvironment {

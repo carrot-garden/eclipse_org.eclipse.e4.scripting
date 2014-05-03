@@ -1,4 +1,4 @@
-package org.eclipse.ease;
+package org.eclipse.ease.tools;
 
 import java.io.File;
 import java.io.IOException;

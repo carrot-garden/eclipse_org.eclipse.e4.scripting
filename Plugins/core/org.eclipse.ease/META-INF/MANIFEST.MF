@@ -12,14 +12,14 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0";visibility:=reex
  org.eclipse.help,
  org.eclipse.ecf.filetransfer;bundle-version="5.0.0"
 Export-Package: org.eclipse.ease,
- org.eclipse.ease.common,
  org.eclipse.ease.debug,
  org.eclipse.ease.debugging,
  org.eclipse.ease.debugging.events,
  org.eclipse.ease.engine,
  org.eclipse.ease.injection,
  org.eclipse.ease.modules,
- org.eclipse.ease.service
+ org.eclipse.ease.service,
+ org.eclipse.ease.tools
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.ease.Activator
 Bundle-Name: EASE Core (Incubation)

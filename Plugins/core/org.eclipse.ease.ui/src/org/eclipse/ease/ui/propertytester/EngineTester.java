@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.ease.ResourceTools;
 import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.ScriptType;
+import org.eclipse.ease.tools.ResourceTools;
 import org.eclipse.ui.part.FileEditorInput;
 
 public class EngineTester extends PropertyTester {

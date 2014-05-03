@@ -8,7 +8,7 @@
  * Contributors:
  *     Arthur Daussy - initial implementation
  *******************************************************************************/
-package org.eclipse.ease.common;
+package org.eclipse.ease.tools;
 
 public abstract class RunnableWithResult<T extends Object> implements Runnable {
 

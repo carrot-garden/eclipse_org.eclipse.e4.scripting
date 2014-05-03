@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.eclipse.ease.Logger;
-import org.eclipse.ease.ResourceTools;
 import org.eclipse.ease.service.ScriptType;
+import org.eclipse.ease.tools.ResourceTools;
 import org.eclipse.ease.ui.repository.IEntry;
 import org.eclipse.ease.ui.repository.IRepositoryFactory;
 import org.eclipse.ease.ui.repository.IScript;

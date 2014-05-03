@@ -10,9 +10,9 @@ F * Copyright (c) 2013 Atos
  *******************************************************************************/
 package org.eclipse.ease.modules.incubation;
 
-import org.eclipse.ease.common.RunnableWithResult;
 import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.WrapToScript;
+import org.eclipse.ease.tools.RunnableWithResult;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
