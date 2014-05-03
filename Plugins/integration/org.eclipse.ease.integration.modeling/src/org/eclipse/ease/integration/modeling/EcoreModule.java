@@ -28,7 +28,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ease.Logger;
-import org.eclipse.ease.injection.CodeInjectorUtils;
 import org.eclipse.ease.integration.modeling.selector.GMFSemanticSeletor;
 import org.eclipse.ease.integration.modeling.ui.UriSelectionDialog;
 import org.eclipse.ease.module.platform.UIModule;
@@ -169,25 +168,24 @@ public class EcoreModule extends AbstractScriptModule {
 	 */
 	@WrapToScript
 	public void initEPackage(@ScriptParameter(name = "nsURI") final String nsURI) {
-		if (nsURI == null) {
+		if (nsURI == null)
 			initEPackageFromDialog();
-		} else {
+		else
 			uri = nsURI;
-		}
+
 		EPackage ePack = getEPackage();
 		if (ePack == null) {
 			getEnvironment().getModule(UIModule.class).showErrorDialog("Error", "Unable to find metamodel with URI : " + uri);
 			return;
 		}
+
 		EFactory factory = getFactory();
 		if (factory != null) {
-			String factoryName = getFactoryVariableName();
-			CodeInjectorUtils.injectJavaVariable(factoryName, factory, getScriptEngine());
-			CodeInjectorUtils.injectClass(factory.getClass(), createMethodFilter, CodeInjectorUtils.NO_FIELD_PREDICATE, null, null, factoryName,
-					getScriptEngine(), "[Ecore Module] Injecting class " + factory.getClass().getName());
-		} else {
+			getScriptEngine().setVariable(getFactoryVariableName(), factory);
+			getEnvironment().wrap(factory.getClass());
+
+		} else
 			getEnvironment().getModule(UIModule.class).showErrorDialog("Error", "Unable to find metamodel with URI : " + uri);
-		}
 	}
 
 	/**

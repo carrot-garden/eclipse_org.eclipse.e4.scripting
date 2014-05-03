@@ -16,7 +16,6 @@ Export-Package: org.eclipse.ease,
  org.eclipse.ease.debugging,
  org.eclipse.ease.debugging.events,
  org.eclipse.ease.engine,
- org.eclipse.ease.injection,
  org.eclipse.ease.modules,
  org.eclipse.ease.service,
  org.eclipse.ease.tools
