@@ -77,7 +77,7 @@ public final class PreferencesHelper {
 	 * @return path to default script storage location
 	 */
 	public static String getDefaultScriptStorageLocation() {
-		return "file://" + Activator.getDefault().getStateLocation().append("recordedScripts").toString();
+		return "file:///" + Activator.getDefault().getStateLocation().append("recordedScripts").toString();
 	}
 
 	/**
