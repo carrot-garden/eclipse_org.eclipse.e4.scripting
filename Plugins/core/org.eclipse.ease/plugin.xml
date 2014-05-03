@@ -17,6 +17,20 @@
          <adapter type="org.eclipse.ease.IScriptable">
          </adapter>
       </factory>
+      <factory
+            adaptableType="java.net.URL"
+            class="org.eclipse.ease.adapters.ScriptableAdapter">
+         <adapter
+               type="org.eclipse.ease.IScriptable">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="java.net.URI"
+            class="org.eclipse.ease.adapters.ScriptableAdapter">
+         <adapter
+               type="org.eclipse.ease.IScriptable">
+         </adapter>
+      </factory>
    </extension>
    <extension point="org.eclipse.ecf.filetransfer.urlStreamHandlerService">
       <urlStreamHandlerService protocol="workspace" serviceClass="org.eclipse.ease.urlhandler.WorkspaceURLStreamHandlerService">

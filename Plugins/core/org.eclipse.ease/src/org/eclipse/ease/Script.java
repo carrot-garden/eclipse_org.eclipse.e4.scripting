@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
@@ -83,9 +82,6 @@ public class Script {
 
 		if (fCommand instanceof String)
 			return (String) fCommand;
-
-		if (fCommand instanceof URL)
-			return bufferStream(((URL) fCommand).openStream());
 
 		if (fCommand instanceof InputStream)
 			// streams can only be read once, therefore buffer

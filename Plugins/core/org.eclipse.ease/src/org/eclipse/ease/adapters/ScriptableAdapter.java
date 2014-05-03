@@ -13,6 +13,8 @@ package org.eclipse.ease.adapters;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdapterFactory;
@@ -32,7 +34,7 @@ public class ScriptableAdapter implements IAdapterFactory {
 
 					@Override
 					public InputStream getSourceCode() throws Exception {
-						return ((IFile)adaptableObject).getContents();
+						return ((IFile) adaptableObject).getContents();
 					}
 				};
 			}
@@ -42,7 +44,27 @@ public class ScriptableAdapter implements IAdapterFactory {
 
 					@Override
 					public InputStream getSourceCode() throws Exception {
-						return new FileInputStream((File)adaptableObject);
+						return new FileInputStream((File) adaptableObject);
+					}
+				};
+			}
+
+			if (adaptableObject instanceof URL) {
+				return new IScriptable() {
+
+					@Override
+					public InputStream getSourceCode() throws Exception {
+						return ((URL) adaptableObject).openStream();
+					}
+				};
+			}
+
+			if (adaptableObject instanceof URI) {
+				return new IScriptable() {
+
+					@Override
+					public InputStream getSourceCode() throws Exception {
+						return ((URI) adaptableObject).toURL().openStream();
 					}
 				};
 			}
@@ -54,6 +76,6 @@ public class ScriptableAdapter implements IAdapterFactory {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public final Class[] getAdapterList() {
-		return new Class[]{ IScriptable.class };
+		return new Class[] { IScriptable.class };
 	}
 }
