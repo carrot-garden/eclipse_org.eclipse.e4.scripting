@@ -17,7 +17,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -91,23 +90,8 @@ public class EnvironmentModule extends AbstractEnvironment {
 		// script code to inject
 		StringBuilder scriptCode = new StringBuilder();
 
-		// collect methods with annotation
-		List<Method> methods = new ArrayList<Method>();
-		for (Method method : instance.getClass().getMethods()) {
-			if (useAutoLoader(method))
-				methods.add(method);
-		}
-
-		if (methods.isEmpty()) {
-			// no annotated methods, use all declared public methods
-			for (Method method : instance.getClass().getMethods()) {
-				if (Modifier.isPublic(method.getModifiers()))
-					methods.add(method);
-			}
-		}
-
 		// create wrappers for methods
-		for (final Method method : methods) {
+		for (final Method method : ModuleHelper.getMethods(instance.getClass())) {
 			String code = getWrapper().createFunctionWrapper(this, identifier, method);
 
 			if ((code != null) && !code.isEmpty()) {
@@ -119,26 +103,22 @@ public class EnvironmentModule extends AbstractEnvironment {
 		// create wrappers for static fields
 		if (!reload) {
 			// this is only done upon initial loading as we try to create constants here
-			Field[] declaredFields = instance.getClass().getDeclaredFields();
-			for (Field field : declaredFields) {
+			for (Field field : ModuleHelper.getFields(instance.getClass())) {
 				try {
-					if ((Modifier.isStatic(field.getModifiers())) && (Modifier.isPublic(field.getModifiers()))) {
-						if (field.getAnnotation(WrapToScript.class) != null) {
 
-							// only wrap if field is not already declared
-							if (!getScriptEngine().hasVariable(getWrapper().getSaveVariableName(field.getName()))) {
-								String code = getWrapper().createStaticFieldWrapper(this, field);
+					// only wrap if field is not already declared
+					if (!getScriptEngine().hasVariable(getWrapper().getSaveVariableName(field.getName()))) {
+						String code = getWrapper().createStaticFieldWrapper(this, field);
 
-								if ((code != null) && !code.isEmpty()) {
-									scriptCode.append(code);
-									scriptCode.append('\n');
-								}
-							} else {
-								Logger.logWarning("Skipped wrapping of field \"" + field.getName() + " \" (module \"" + instance.getClass()
-										+ "\") as variable is already declared.");
-							}
+						if ((code != null) && !code.isEmpty()) {
+							scriptCode.append(code);
+							scriptCode.append('\n');
 						}
+					} else {
+						Logger.logWarning("Skipped wrapping of field \"" + field.getName() + " \" (module \"" + instance.getClass()
+								+ "\") as variable is already declared.");
 					}
+
 				} catch (IllegalArgumentException e) {
 					Logger.logError("Could not wrap field \"" + field.getName() + " \" of module \"" + instance.getClass() + "\".");
 				}
@@ -148,8 +128,9 @@ public class EnvironmentModule extends AbstractEnvironment {
 		// execute code
 		String codeToInject = scriptCode.toString();
 		// FIXME move log to script engine
-		if (ITracingConstant.ENVIRONEMENT_MODULE_WRAPPER_TRACING)
+		if (ITracingConstant.ENVIRONEMENT_MODULE_WRAPPER_TRACING) {
 			Tracer.logInfo("[Environement Module] Injecting code:\n" + codeToInject);
+		}
 
 		getScriptEngine().inject(new Script("Wrapping " + instance.toString(), codeToInject));
 	}

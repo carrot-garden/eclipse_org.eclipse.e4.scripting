@@ -129,4 +129,9 @@ public class ModuleDefinition {
 	public String getId() {
 		return (fConfig.getAttribute(ID) != null) ? fConfig.getAttribute(ID) : "";
 	}
+
+	public String getBundleID() {
+
+		return fConfig.getDeclaringExtension().getContributor().getName();
+	}
 }
