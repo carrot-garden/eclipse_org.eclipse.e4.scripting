@@ -35,6 +35,10 @@ public class ModulePopupItem extends AbstractPopupItem {
 
 	@Override
 	protected ImageDescriptor getImageDescriptor() {
+		ImageDescriptor descriptor = fDefinition.getImageDescriptor();
+		if (descriptor != null)
+			return descriptor;
+
 		return Activator.getImageDescriptor("/images/library.png");
 	}
 }

@@ -24,6 +24,8 @@ import org.eclipse.ease.Activator;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptService;
+import org.eclipse.ease.tools.ContributionTools;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.osgi.service.prefs.Preferences;
 
 public class ModuleDefinition {
@@ -48,6 +50,9 @@ public class ModuleDefinition {
 
 	/** Module id parameter name. */
 	private static final String ID = "id";
+
+	/** Module icon parameter name. */
+	private static final String ICON = "icon";
 
 	/** Main configuration element for module. */
 	private final IConfigurationElement fConfig;
@@ -130,8 +135,7 @@ public class ModuleDefinition {
 		return (fConfig.getAttribute(ID) != null) ? fConfig.getAttribute(ID) : "";
 	}
 
-	public String getBundleID() {
-
-		return fConfig.getDeclaringExtension().getContributor().getName();
+	public ImageDescriptor getImageDescriptor() {
+		return ContributionTools.getImageDescriptor(fConfig, ICON);
 	}
 }
