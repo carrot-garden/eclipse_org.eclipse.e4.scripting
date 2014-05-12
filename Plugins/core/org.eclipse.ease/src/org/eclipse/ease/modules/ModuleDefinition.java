@@ -17,7 +17,9 @@ import java.util.Set;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.Activator;
@@ -26,6 +28,7 @@ import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptService;
 import org.eclipse.ease.tools.ContributionTools;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.osgi.framework.Bundle;
 import org.osgi.service.prefs.Preferences;
 
 public class ModuleDefinition {
@@ -81,8 +84,26 @@ public class ModuleDefinition {
 		return dependencies;
 	}
 
-	public String getModuleClassName() {
-		return fConfig.getAttribute(CLASS);
+	/**
+	 * Get the class definition of the provided module. Will not create an instance of this class, but look up the class definition directly.
+	 * 
+	 * @return class definition of module contribution
+	 */
+	public Class<?> getModuleClass() {
+		Bundle bundle = Platform.getBundle(fConfig.getDeclaringExtension().getContributor().getName());
+		if (bundle != null) {
+			try {
+				String className = fConfig.getAttribute(CLASS);
+				return Platform.getBundle(fConfig.getDeclaringExtension().getContributor().getName()).loadClass(className);
+			} catch (InvalidRegistryObjectException e) {
+				// ignore
+			} catch (ClassNotFoundException e) {
+				// ignore
+			}
+		}
+
+		// we could not locate the class, use instance
+		return createModuleInstance().getClass();
 	}
 
 	public Object createModuleInstance() {
