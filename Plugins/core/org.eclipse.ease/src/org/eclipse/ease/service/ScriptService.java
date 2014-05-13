@@ -98,7 +98,10 @@ public class ScriptService implements IScriptService {
 				if (e.getName().equals(EXTENSION_MODULE)) {
 					// module extension detected
 					ModuleDefinition definition = new ModuleDefinition(e);
-					fAvailableModules.put(definition.getPath().toString(), definition);
+					if (definition.getModuleClass() != null)
+						fAvailableModules.put(definition.getPath().toString(), definition);
+					else
+						Logger.logWarning("Module <" + definition.getName()+"> in plugin <"+definition.getBundleID()+"> could not be located!");
 				}
 			}
 		}

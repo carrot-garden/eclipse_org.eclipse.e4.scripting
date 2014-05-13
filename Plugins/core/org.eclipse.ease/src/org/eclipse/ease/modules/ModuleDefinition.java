@@ -159,4 +159,9 @@ public class ModuleDefinition {
 	public ImageDescriptor getImageDescriptor() {
 		return ContributionTools.getImageDescriptor(fConfig, ICON);
 	}
+
+	public String getBundleID() {
+
+		return fConfig.getContributor().getName();
+	}
 }
