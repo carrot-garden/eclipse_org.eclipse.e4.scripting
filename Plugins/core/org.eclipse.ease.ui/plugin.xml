@@ -23,6 +23,15 @@
             id="org.eclipse.ease.ui.view.ScriptEplorerView"
             name="Script Explorer">
       </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.ease.ui.views.category.scripting"
+            class="org.eclipse.ease.ui.view.ModuleExplorerView"
+            icon="icons/full/obj16/ModuleExplorer_16x16.png"
+            id="org.eclipse.ease.ui.view.ModulesExplorerView"
+            name="Modules Explorer"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -268,6 +277,24 @@
                class="org.eclipse.ease.ui.scripts.ScriptContributionFactory"
                id="org.eclipse.ease.ui.dynamic">
          </dynamic>
+      </menuContribution>
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.eclipse.ease.ui.view.ModulesExplorerView">
+         <separator
+               name="top"
+               visible="false">
+         </separator>
+         <command
+               commandId="org.eclipse.ease.commands.ModulesExplorer.openHelp"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/elcl16/linkto_help.gif"
+               label="open help"
+               style="push">
+         </command>
+         <separator
+               name="additions"
+               visible="false">
+         </separator>
       </menuContribution>
    </extension>
    <extension
@@ -516,5 +543,37 @@
             id="org.eclipse.ease.ui.perspectives.ScriptingPerspective"
             name="Scripting">
       </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.ease.commands.category.ModulesExplorer"
+            defaultHandler="org.eclipse.ease.ui.modules.ui.OpenHelp"
+            id="org.eclipse.ease.commands.ModulesExplorer.openHelp"
+            name="open help">
+      </command>
+      <category
+            id="org.eclipse.ease.commands.category.ModulesExplorer"
+            name="Modules Explorer">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            class="org.eclipse.ease.ui.modules.decorators.ModulesExplorerFieldDecorator"
+            id="org.eclipse.ease.decorators.field"
+            label="field"
+            lightweight="true"
+            objectClass="java.lang.reflect.Field"
+            state="true">
+      </decorator>
+      <decorator
+            class="org.eclipse.ease.ui.modules.decorators.ModulesExplorerMethodDecorator"
+            id="org.eclipse.ease.decorators.method"
+            label="method"
+            lightweight="true"
+            objectClass="java.lang.reflect.Method"
+            state="true">
+      </decorator>
    </extension>
 </plugin>
