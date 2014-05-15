@@ -3,27 +3,6 @@
    <extension-point id="Selector" name="Selector" schema="schema/Selector.exsd"/>
    <extension point="org.eclipse.ease.modules">
       <module
-            class="org.eclipse.ease.module.platform.modules.DialogModule"
-            id="org.eclipse.ease.module.platform.dialog"
-            name="DialogModule"
-            visible="true">
-      </module>
-      <module
-            class="org.eclipse.ease.module.platform.modules.WorkbenchModule"
-            id="org.eclipse.ease.module.platform.workbench"
-            name="WorkbenchModule"
-            visible="true">
-      </module>
-      <module
-            class="org.eclipse.ease.module.platform.modules.SelectionModule"
-            id="org.eclipse.ease.module.platform.selection"
-            name="SelectionModule"
-            visible="true">
-         <dependency
-               module="org.eclipse.ease.module.platform.ui">
-         </dependency>
-      </module>
-      <module
             category="org.eclipse.ease.category.system"
             class="org.eclipse.ease.module.platform.UIModule"
             id="org.eclipse.ease.module.platform.ui"
