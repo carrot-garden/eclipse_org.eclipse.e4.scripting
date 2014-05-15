@@ -19,9 +19,22 @@ Maintaining backward compatibility for API-clean clients
 Developer resources:
 --------------------
 
+Project wiki
+
+- http://wiki.eclipse.org/E4/Scripting
+
 Information regarding source code management, builds, coding standards, and more.
 
 - https://projects.eclipse.org/projects/eclipse.e4/developer
+
+Gerrit:
+
+- https://git.eclipse.org/r/#/admin/projects/e4/org.eclipse.e4.scripting
+
+Git repository:
+
+- http://git.eclipse.org/c/e4/org.eclipse.e4.scripting.git/
+
 
 Contributor License Agreement:
 ------------------------------
@@ -35,14 +48,14 @@ Contact:
 
 Contact the project developers via the project's "dev" list.
 
-- https://dev.eclipse.org/mailman/listinfo/e4-dev
+- https://dev.eclipse.org/mailman/listinfo/eclipse-scripting-dev
 
 Search for bugs:
 ----------------
 
 This project uses Bugzilla to track ongoing development and issues.
 
-- https://bugs.eclipse.org/bugs/buglist.cgi?product=E4
+- https://bugs.eclipse.org/bugs/buglist.cgi?classification=Eclipse&component=Scripting&product=e4
 
 Create a new bug:
 -----------------
