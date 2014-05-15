@@ -66,6 +66,15 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 					((IScriptModule) module).initialize(getScriptEngine(), this);
 
 				fModuleNames.put(moduleName, module);
+
+				// scripts changing functions force reloading of the whole module stack
+				if (module instanceof IScriptFunctionModifier) {
+					List<Object> reverseList = new ArrayList<Object>(fModules);
+					Collections.reverse(reverseList);
+
+					for (Object loadedModule : reverseList)
+						wrap(loadedModule);
+				}
 			}
 		}
 

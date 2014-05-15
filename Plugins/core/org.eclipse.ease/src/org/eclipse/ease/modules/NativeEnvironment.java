@@ -4,6 +4,7 @@ public class NativeEnvironment extends AbstractEnvironment implements IEnvironme
 
 	@Override
 	public void wrap(final Object module) {
-		// nothing to do
+		// notify listeners
+		fireModuleEvent(module, IModuleListener.LOADED);
 	}
 }
