@@ -162,6 +162,9 @@
 		<module>
 			../../Plugins/engines/org.eclipse.ease.engine.javascript
 		</module>
+		<module>
+			../../Plugins/engines/org.eclipse.ease.lang.javascript.ui
+		</module>
 	</modules>
 	<profiles>
 		<profile>
