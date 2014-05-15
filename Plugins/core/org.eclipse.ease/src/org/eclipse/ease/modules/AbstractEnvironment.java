@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.ease.Logger;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptService;
@@ -39,7 +37,7 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 	@WrapToScript
 	public final Object loadModule(final String identifier) {
 		// resolve identifier
-		String moduleName = resolveModuleName(identifier);
+		String moduleName = ModuleHelper.resolveName(identifier);
 
 		Object module = getModule(moduleName);
 		if (module == null) {
@@ -92,28 +90,6 @@ public abstract class AbstractEnvironment extends AbstractScriptModule implement
 		}
 
 		return module;
-	}
-
-	private String resolveModuleName(final String identifier) {
-		final IScriptService scriptService = ScriptService.getService();
-		Map<String, ModuleDefinition> availableModules = scriptService.getAvailableModules();
-
-		IPath searchPath = new Path(identifier);
-		if ((searchPath.segmentCount() == 1) && (!searchPath.isAbsolute())) {
-			// only module name given
-			for (String pathName : availableModules.keySet()) {
-				if (new Path(pathName).lastSegment().equals(identifier)) {
-					// candidate detected
-					if (searchPath.isAbsolute())
-						// we already had one candidate, name is ambiguous
-						throw new RuntimeException("Module identifier \"" + identifier + "\" is ambiguous. Use full path name to load.");
-
-					searchPath = availableModules.get(pathName).getPath();
-				}
-			}
-		}
-
-		return searchPath.toString();
 	}
 
 	/**

@@ -16,6 +16,12 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.ease.service.IScriptService;
+import org.eclipse.ease.service.ScriptService;
 
 public final class ModuleHelper {
 
@@ -33,13 +39,12 @@ public final class ModuleHelper {
 	 */
 	public static List<Method> getMethods(final Class<?> clazz) {
 
-		Method[] declaredMethods = clazz.getMethods();
-		if (declaredMethods.length == 0)
+		if ((clazz == null) || (clazz.getMethods().length == 0))
 			return Collections.emptyList();
 
 		List<Method> methods = new ArrayList<Method>();
 		boolean wrapping = ModuleHelper.hasWrapToScript(clazz);
-		for (Method method : declaredMethods) {
+		for (Method method : clazz.getMethods()) {
 			if ((Modifier.isPublic(method.getModifiers()) && (!wrapping || method.isAnnotationPresent(WrapToScript.class))))
 				methods.add(method);
 		}
@@ -57,13 +62,12 @@ public final class ModuleHelper {
 	 */
 	public static List<Field> getFields(final Class<?> clazz) {
 
-		Field[] declaredFields = clazz.getDeclaredFields();
-		if (declaredFields.length == 0)
+		if ((clazz == null) || (clazz.getDeclaredFields().length == 0))
 			return Collections.emptyList();
 
 		List<Field> fields = new ArrayList<Field>();
 		boolean wrapping = ModuleHelper.hasWrapToScript(clazz);
-		for (Field field : declaredFields) {
+		for (Field field : clazz.getDeclaredFields()) {
 			if ((Modifier.isStatic(field.getModifiers()))
 					&& (Modifier.isPublic(field.getModifiers()) && (!wrapping || field.isAnnotationPresent(WrapToScript.class))))
 				fields.add(field);
@@ -92,5 +96,46 @@ public final class ModuleHelper {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Resolve a relative module name to its absolute name. When only the last part of a module name is provided (without path), this method tries to locate the
+	 * module and returns its absolute path. If 2 modules with the same name are detected, a {@link RuntimeException} is thrown.
+	 * 
+	 * @param identifier
+	 *            module identifier
+	 * @return absolute module name
+	 */
+	public static String resolveName(final String identifier) {
+		final IScriptService scriptService = ScriptService.getService();
+		Map<String, ModuleDefinition> availableModules = scriptService.getAvailableModules();
+
+		// check for absolute path
+		if (identifier.startsWith("/")) {
+
+			// check for valid, absolute path
+			if (availableModules.containsKey(identifier))
+				return identifier;
+
+			// path is already absolute, module does not exist
+			return null;
+		}
+
+		IPath searchPath = new Path(identifier);
+		if ((searchPath.segmentCount() == 1) && (!searchPath.isAbsolute())) {
+			// only module name given
+			for (String pathName : availableModules.keySet()) {
+				if (new Path(pathName).lastSegment().equals(identifier)) {
+					// candidate detected
+					if (searchPath.isAbsolute())
+						// we already had one candidate, name is ambiguous
+						throw new RuntimeException("Module identifier \"" + identifier + "\" is ambiguous. Use full path name to load.");
+
+					searchPath = availableModules.get(pathName).getPath();
+				}
+			}
+		}
+
+		return searchPath.toString();
 	}
 }

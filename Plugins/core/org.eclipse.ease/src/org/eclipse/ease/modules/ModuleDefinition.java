@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ease.modules;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
@@ -102,8 +105,12 @@ public class ModuleDefinition {
 			}
 		}
 
-		// we could not locate the class, use instance
-		return createModuleInstance().getClass();
+		// we could not locate the class, try to create instance
+		Object instance = createModuleInstance();
+		if (instance != null)
+			return createModuleInstance().getClass();
+
+		return null;
 	}
 
 	public Object createModuleInstance() {
@@ -163,5 +170,13 @@ public class ModuleDefinition {
 	public String getBundleID() {
 
 		return fConfig.getContributor().getName();
+	}
+
+	public List<Method> getMethods() {
+		return ModuleHelper.getMethods(getModuleClass());
+	}
+
+	public List<Field> getFields() {
+		return ModuleHelper.getFields(getModuleClass());
 	}
 }
