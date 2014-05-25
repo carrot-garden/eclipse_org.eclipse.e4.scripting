@@ -27,16 +27,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.ui.IEditorDescriptor;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.SaveAsDialog;
-import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
-import org.eclipse.ui.part.FileEditorInput;
 
 public class ResourcesModule extends AbstractScriptModule {
 
@@ -77,11 +72,12 @@ public class ResourcesModule extends AbstractScriptModule {
 	/**
 	 * Create a new workspace project. Will create a new project if it now already exists. If creation fails, <code>null</code> is returned.
 	 * 
-	 * @param name name or project to create
+	 * @param name
+	 *            name or project to create
 	 * @return <code>null</code> or project
 	 */
 	@WrapToScript
-	public IProject createProject(String name) {
+	public IProject createProject(final String name) {
 		IProject project = getProject(name);
 		if (!project.exists()) {
 			try {
@@ -291,9 +287,20 @@ public class ResourcesModule extends AbstractScriptModule {
 		return handle.exists();
 	}
 
+	/**
+	 * Create a file from a given file handle.
+	 * 
+	 * @param handle
+	 *            handle to the file to be created
+	 * @param createHierarchy
+	 *            create non existing folders in fiel hierarchy
+	 * @return <code>true</code> on success
+	 * @throws Exception
+	 */
 	@WrapToScript
-	public boolean createFile(final IFileHandle handle, @ScriptParameter(optional = true, defaultValue = "true") final Object createHierarchy) throws Exception {
-		return handle.createFile(Boolean.parseBoolean(createHierarchy.toString()));
+	public boolean createFile(final IFileHandle handle, @ScriptParameter(optional = true, defaultValue = "true") final boolean createHierarchy)
+			throws Exception {
+		return handle.createFile(createHierarchy);
 	}
 
 	/**
@@ -322,39 +329,6 @@ public class ResourcesModule extends AbstractScriptModule {
 	@WrapToScript
 	public void closeFile(final IFileHandle handle) {
 		handle.close();
-	}
-
-	/**
-	 * Open a file using the default editor
-	 * 
-	 * @param location
-	 *            location of the file
-	 */
-	@WrapToScript
-	public void openFile(Object location) {
-		if (location instanceof String)
-			location = getFile((String) location);
-
-		if (location instanceof IFile) {
-			final IFile file = (IFile) location;
-
-			Display.getDefault().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-					try {
-						IEditorDescriptor editor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
-						if (editor == null)
-							editor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(EditorsUI.DEFAULT_TEXT_EDITOR_ID);
-
-						if (editor != null)
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), editor.getId());
-
-					} catch (PartInitException e) {
-					}
-				}
-			});
-		}
 	}
 
 	/**

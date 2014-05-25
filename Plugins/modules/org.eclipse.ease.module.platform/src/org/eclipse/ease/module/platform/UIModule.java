@@ -18,6 +18,7 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.views.IViewDescriptor;
 import org.eclipse.ui.views.IViewRegistry;
@@ -221,30 +222,38 @@ public class UIModule {
 	 */
 	@WrapToScript(alias = "openEditor")
 	public IEditorPart showEditor(final IFile file) throws PartInitException {
-		final IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
+		IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
+		if (descriptor == null)
+			descriptor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(EditorsUI.DEFAULT_TEXT_EDITOR_ID);
 
-		RunnableWithResult<IEditorPart> runnable = new RunnableWithResult<IEditorPart>() {
+		if (descriptor != null) {
+			final IEditorDescriptor editorDescriptor = descriptor;
+			RunnableWithResult<IEditorPart> runnable = new RunnableWithResult<IEditorPart>() {
 
-			@Override
-			public void run() {
-				try {
+				@Override
+				public void run() {
 					try {
-						setResult(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-								.openEditor(new FileEditorInput(file), descriptor.getId()));
-					} catch (final NullPointerException e) {
-						if (PlatformUI.getWorkbench().getWorkbenchWindowCount() > 0)
-							setResult(PlatformUI.getWorkbench().getWorkbenchWindows()[0].getActivePage().openEditor(new FileEditorInput(file),
-									descriptor.getId()));
+						try {
+
+							setResult(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+									.openEditor(new FileEditorInput(file), editorDescriptor.getId()));
+						} catch (final NullPointerException e) {
+							if (PlatformUI.getWorkbench().getWorkbenchWindowCount() > 0)
+								setResult(PlatformUI.getWorkbench().getWorkbenchWindows()[0].getActivePage().openEditor(new FileEditorInput(file),
+										editorDescriptor.getId()));
+						}
+					} catch (PartInitException e) {
+						// cannot handle that one, giving up
 					}
-				} catch (PartInitException e) {
-					// cannot handle that one, giving up
 				}
-			}
-		};
+			};
 
-		Display.getDefault().syncExec(runnable);
+			Display.getDefault().syncExec(runnable);
 
-		return runnable.getResult();
+			return runnable.getResult();
+		}
+
+		return null;
 	}
 
 	/**
