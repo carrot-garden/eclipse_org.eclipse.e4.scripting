@@ -40,16 +40,6 @@
 		<module>
 			../../Plugins/core/org.eclipse.ease.storedscript
 		</module>
-		<!-- Discovery -->
-		<module>
-				../../Plugins/core/org.eclipse.ease.discovery.ui.menu
-			</module>
-		<module>
-				../../Plugins/core/org.eclipse.ease.discovery.ui
-			</module>
-		<module>
-				../../Plugins/core/org.eclipse.ease.discovery
-			</module>
 
 		<!-- UI -->
 		<module>

@@ -6,9 +6,6 @@
    <feature url="features/org.eclipse.ease.ui.feature_0.1.1.qualifier.jar" id="org.eclipse.ease.ui.feature" version="0.1.1.qualifier">
       <category name="Core"/>
    </feature>
-   <feature url="features/org.eclipse.ease.discovery.feature_0.1.1.qualifier.jar" id="org.eclipse.ease.discovery.feature" version="0.1.1.qualifier">
-      <category name="Core"/>
-   </feature>
    <feature url="features/org.eclipse.ease.javascript.feature_0.1.1.qualifier.jar" id="org.eclipse.ease.javascript.feature" version="0.1.1.qualifier">
       <category name="Lang"/>
    </feature>

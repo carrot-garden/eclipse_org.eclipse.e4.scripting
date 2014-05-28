@@ -40,6 +40,7 @@
 <unit id="org.eclipse.gef.sdk.feature.group" version="3.9.0.201305060205"/>
 <unit id="org.eclipse.papyrus.sdk.feature.feature.group" version="0.10.1.v201309181302"/>
 <unit id="org.eclipse.xtext.sdk.feature.group" version="2.4.3.v201309030823"/>
+<unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.0.100.v20130502-0334"/>
 <repository location="http://download.eclipse.org/releases/kepler"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">

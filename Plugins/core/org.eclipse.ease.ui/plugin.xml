@@ -107,7 +107,7 @@
             categoryId="org.eclipse.ease.commands.category.script"
             defaultHandler="org.eclipse.ease.ui.handler.ToggleScriptRecording"
             id="org.eclipse.ease.commands.script.toggleScriptRecording"
-            name="Toggle  Script Recording">
+            name="Toggle Script Recording">
          <state
                class="org.eclipse.jface.commands.ToggleState"
                id="STYLE">
@@ -295,6 +295,20 @@
                name="additions"
                visible="false">
          </separator>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:help?after=additions">
+         <command
+               commandId="org.eclipse.equinox.p2.ui.discovery.commands.ShowRepositoryCatalog"
+               icon="images/monkey.gif"
+               label="Install EASE Components"
+               tooltip="Install EASE Additional Components">
+            <parameter
+                  name="org.eclipse.equinox.p2.ui.discovery.commands.RepositoryParameter"
+                  value="http://topcased-mm.gforge.enseeiht.fr/ease_jython/updates/ease_jython_nightly/">
+            </parameter>
+         </command>
       </menuContribution>
    </extension>
    <extension
