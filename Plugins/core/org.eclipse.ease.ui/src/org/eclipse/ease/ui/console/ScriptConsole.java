@@ -82,24 +82,18 @@ public class ScriptConsole extends IOConsole implements IExecutionListener, IScr
 	}
 
 	public IOConsoleOutputStream getErrorStream() {
-		if (mErrorStream == null)
+		if ((mErrorStream == null) || (mErrorStream.isClosed()))
 			mErrorStream = newOutputStream();
 
 		return mErrorStream;
 	}
 
 	public IOConsoleOutputStream getOutputStream() {
-		if (mOutputStream == null)
+		if ((mOutputStream == null) || (mOutputStream.isClosed()))
 			mOutputStream = newOutputStream();
 
-		System.out.println();
 		return mOutputStream;
 	}
-
-	// public void stopScriptExecution() {
-	// if (mEngine != null)
-	// mEngine.terminate();
-	// }
 
 	@Override
 	protected void dispose() {
@@ -113,25 +107,28 @@ public class ScriptConsole extends IOConsole implements IExecutionListener, IScr
 	}
 
 	@Override
-	public synchronized void notify(final IScriptEngine engine, final Script script, final int status) {
+	public void notify(final IScriptEngine engine, final Script script, final int status) {
 		// do not react on engines that are no longer tracked by this console
 		if (engine.equals(getScriptEngine())) {
 			switch (status) {
 			case ENGINE_END:
-				Display.getDefault().asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						setName(getName() + TITLE_TERMINATED);
-					}
-				});
-
-				setScriptEngine(null);
-				closeStreams();
-
+				terminate();
 				break;
 			}
 		}
+	}
+
+	public synchronized void terminate() {
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				setName(getName() + TITLE_TERMINATED);
+			}
+		});
+
+		setScriptEngine(null);
+		closeStreams();
 	}
 
 	private void closeStreams() {
