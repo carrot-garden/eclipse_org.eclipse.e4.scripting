@@ -40,6 +40,16 @@ public class UIModule extends AbstractScriptModule {
 	}
 
 	/**
+	 * Returns <code>true</code> when executed in the UI thread.
+	 * 
+	 * @return <code>true</code> in UI thread
+	 */
+	@WrapToScript
+	public boolean isUIThread() {
+		return Thread.currentThread().equals(Display.getDefault().getThread());
+	}
+
+	/**
 	 * Displays an info dialog. Needs UI to be available.
 	 * 
 	 * @param title
