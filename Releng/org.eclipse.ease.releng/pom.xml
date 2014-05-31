@@ -140,9 +140,6 @@
 		<module>
 			../../Features/org.eclipse.ease.python.feature
 		</module>
-		<module>
-			../../Features/org.eclipse.ease.discovery.feature
-		</module>
 
 		<!-- Update site -->
 		<module>
