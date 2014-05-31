@@ -60,6 +60,16 @@ public interface IScriptEngine {
 	Object inject(final Object content);
 
 	/**
+	 * Inject script code and execute synchronously within the UI thread. Code passed to this method will be invoked immediately. It might interrupt a currently
+	 * running execution requested asynchronously.
+	 * 
+	 * @param content
+	 *            content to be executed.
+	 * @return execution result
+	 */
+	Object injectUI(final Object content);
+
+	/**
 	 * Get the currently executed file instance.
 	 * 
 	 * @return currently executed file
@@ -130,20 +140,6 @@ public interface IScriptEngine {
 	public void addExecutionListener(IExecutionListener listener);
 
 	void removeExecutionListener(IExecutionListener listener);
-
-	/**
-	 * Set to true if the thread as to be launch in the UI thread
-	 * 
-	 * @param isUI
-	 */
-	public void setIsUI(boolean isUI);
-
-	/**
-	 * Return true is the engine will be launch in the UI Thread
-	 * 
-	 * @return
-	 */
-	public boolean isUI();
 
 	/**
 	 * Resets the script engine to a fresh state (removes all variables and code history).

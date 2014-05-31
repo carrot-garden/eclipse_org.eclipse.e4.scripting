@@ -16,9 +16,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import org.eclipse.ease.AbstractScriptEngine;
@@ -26,6 +28,8 @@ import org.eclipse.ease.FileTrace;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.engine.javascript.rhino.debugger.LineNumberDebugger;
 import org.eclipse.ease.engine.javascript.rhino.debugger.LineNumberDebugger.LineNumberDebugFrame;
+import org.eclipse.ease.tools.RunnableWithResult;
+import org.eclipse.swt.widgets.Display;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.NativeFunction;
@@ -157,9 +161,42 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 	}
 
 	@Override
-	protected Object execute(final Script script, final Object reference, final String fileName) throws Exception {
+	protected Object execute(final Script script, final Object reference, final String fileName, final boolean uiThread) throws Exception {
+		if (uiThread) {
+			// run in UI thread
+			RunnableWithResult<Entry<Object, Exception>> runnable = new RunnableWithResult<Entry<Object, Exception>>() {
+
+				@Override
+				public void run() {
+					// initialize scope
+					getContext().initStandardObjects(getScope());
+
+					// call execute again, now from correct thread
+					try {
+						setResult(new AbstractMap.SimpleEntry<Object, Exception>(internalExecute(script, reference, fileName), null));
+					} catch (Exception e) {
+						setResult(new AbstractMap.SimpleEntry<Object, Exception>(null, e));
+					}
+				}
+			};
+
+			Display.getDefault().syncExec(runnable);
+
+			// evaluate result
+			Entry<Object, Exception> result = runnable.getResult();
+			if (result.getValue() != null)
+				throw (result.getValue());
+
+			return result.getKey();
+
+		} else
+			// run in engine thread
+			return internalExecute(script, reference, fileName);
+	}
+
+	private Object internalExecute(final Script script, final Object reference, final String fileName) throws Exception {
 		// remove an eventually cached terminate request
-		((ObservingContextFactory) ContextFactory.getGlobal()).cancelTerminate(mContext);
+		((ObservingContextFactory) ContextFactory.getGlobal()).cancelTerminate(getContext());
 
 		final InputStreamReader codeReader = new InputStreamReader(script.getCodeStream());
 		try {
@@ -173,7 +210,7 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 				result = ((org.mozilla.javascript.Script) script.getCommand()).exec(getContext(), getScope());
 
 			else
-				result = getContext().evaluateReader(mScope, codeReader, fileName, 1, null);
+				result = getContext().evaluateReader(getScope(), codeReader, fileName, 1, null);
 
 			if (result instanceof Undefined)
 				return null;
@@ -188,7 +225,6 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 			if (wrapped instanceof Exception)
 				throw ((Exception) wrapped);
 
-			e.printStackTrace();
 		} finally {
 			try {
 				if (codeReader != null)
@@ -214,6 +250,7 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 
 	@Override
 	public void terminateCurrent() {
+		// typically requested by a different thread, so do not use getContext() here
 		((ObservingContextFactory) ContextFactory.getGlobal()).terminate(mContext);
 	}
 
@@ -221,7 +258,7 @@ public class RhinoScriptEngine extends AbstractScriptEngine {
 		mDebugger = debugger;
 	}
 
-	public Scriptable getScope() {
+	public ScriptableObject getScope() {
 		return mScope;
 	}
 

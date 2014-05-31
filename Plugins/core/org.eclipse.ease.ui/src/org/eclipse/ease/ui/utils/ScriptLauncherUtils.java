@@ -29,7 +29,7 @@ import org.eclipse.ui.PlatformUI;
 
 public class ScriptLauncherUtils {
 
-	public static void launchStoredScript(IStoredScript script) {
+	public static void launchStoredScript(final IStoredScript script) {
 		ScriptType scriptType = script.getScriptType();
 
 		IScriptEngine engine = null;
@@ -46,9 +46,6 @@ public class ScriptLauncherUtils {
 			engine = engines.get(0).createEngine();
 		}
 
-		if (UIMetadataUtils.hasToBeLaunchInUI(script)) {
-			engine.setIsUI(true);
-		}
 		if (UIMetadataUtils.generateCodeInjectionFile(script)) {
 			engine.addExecutionListener(new EffectiveScriptGenerator());
 		}

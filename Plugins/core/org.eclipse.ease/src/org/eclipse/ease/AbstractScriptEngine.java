@@ -27,10 +27,7 @@ import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
 import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.IScriptService;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.misc.UIStats;
-import org.eclipse.ui.internal.progress.ProgressMessages;
 
 /**
  * Base implementation for a script engine. Handles Job implementation of script engine, adding script code for execution, module loading support and a basic
@@ -53,8 +50,6 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	private InputStream fInputStream = null;
 
 	private FileTrace fFileTrace = new FileTrace();
-
-	private boolean fIsUI = false;
 
 	private EngineDescription fDescription;
 
@@ -111,12 +106,21 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	@Override
 	public final Object inject(final Object content) {
+		return internalInject(content, false);
+	}
+
+	@Override
+	public final Object injectUI(final Object content) {
+		return internalInject(content, true);
+	}
+
+	private final Object internalInject(final Object content, final boolean uiThread) {
 		// injected code shall not trigger a new event, therefore notifyListerners needs to be false
 		ScriptResult result;
 		if (content instanceof Script)
-			result = inject((Script) content, false);
+			result = inject((Script) content, false, uiThread);
 		else
-			result = inject(new Script(content), false);
+			result = inject(new Script(content), false, uiThread);
 
 		if (result.hasException()) {
 			// re-throw previous exception
@@ -131,16 +135,20 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	}
 
 	/**
-	 * Inject script code to the script engine. Injected code is processed synchronous by the current thread. Therefore this is a blocking call.
+	 * Inject script code to the script engine. Injected code is processed synchronous by the current thread unless <i>uiThread</i> is set to <code>true</code>.
+	 * Nevertheless this is a blocking call.
 	 * 
 	 * @param script
 	 *            script to be executed
 	 * @param notifyListeners
 	 *            <code>true</code> when listeners should be informed of code fragment
+	 * @param uiThread
+	 *            when set to <code>true</code> run injected code in UI thread
 	 * @return script execution result
 	 */
-	private ScriptResult inject(final Script script, final boolean notifyListeners) {
+	private ScriptResult inject(final Script script, final boolean notifyListeners, final boolean uiThread) {
 
+		// FIXME make UI access optional by using preferences
 		synchronized (script.getResult()) {
 
 			try {
@@ -155,7 +163,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				else
 					notifyExecutionListeners(script, IExecutionListener.SCRIPT_INJECTION_START);
 
-				script.setResult(execute(script, script.getFile(), fFileTrace.peek().getFileName()));
+				script.setResult(execute(script, script.getFile(), fFileTrace.peek().getFileName(), uiThread));
 
 			} catch (final ExitException e) {
 				script.setResult(e.getCondition());
@@ -165,9 +173,6 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 			} catch (final Exception e) {
 				script.setException(e);
-				String message = e.getMessage();
-
-				getErrorStream().println("Stack trace");
 				e.printStackTrace(getErrorStream());
 
 			} finally {
@@ -183,61 +188,8 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 		return script.getResult();
 	}
 
-	public final IStatus runUIThread(final IProgressMonitor monitor) {
-		if (monitor.isCanceled()) {
-			return Status.CANCEL_STATUS;
-		}
-		Display asyncDisplay = getDisplay();
-		if ((asyncDisplay == null) || asyncDisplay.isDisposed()) {
-			return Status.CANCEL_STATUS;
-		}
-		asyncDisplay.asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				IStatus result = null;
-				Throwable throwable = null;
-				try {
-					// As we are in the UI Thread we can
-					// always know what to tell the job.
-					setThread(Thread.currentThread());
-					if (monitor.isCanceled()) {
-						result = Status.CANCEL_STATUS;
-					} else {
-						UIStats.start(UIStats.UI_JOB, getName());
-						result = runCode(monitor);
-					}
-
-				} catch (Throwable t) {
-					throwable = t;
-				} finally {
-					UIStats.end(UIStats.UI_JOB, AbstractScriptEngine.this, getName());
-					if (result == null) {
-						result = new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, IStatus.ERROR, ProgressMessages.InternalError, throwable);
-					}
-					done(result);
-				}
-			}
-		});
-		return Job.ASYNC_FINISH;
-	}
-
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
-		IStatus status = null;
-		if (isUI()) {
-			status = runUIThread(monitor);
-		} else {
-			status = runCode(monitor);
-		}
-		return status;
-	}
-
-	protected Display getDisplay() {
-		return PlatformUI.getWorkbench().getDisplay();
-	}
-
-	public final IStatus runCode(final IProgressMonitor monitor) {
 		if (setupEngine()) {
 			fFileTrace = new FileTrace();
 
@@ -249,7 +201,7 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 				// execute code
 				if (!fCodePieces.isEmpty()) {
 					final Script piece = fCodePieces.remove(0);
-					inject(piece, true);
+					inject(piece, true, false);
 
 				} else {
 
@@ -411,16 +363,6 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 		fDescription = description;
 	}
 
-	@Override
-	public void setIsUI(final boolean isUI) {
-		fIsUI = isUI;
-	}
-
-	@Override
-	public boolean isUI() {
-		return fIsUI;
-	}
-
 	/**
 	 * Setup method for script engine. Run directly after the engine is activated. Needs to return <code>true</code>. Otherwise the engine will terminate
 	 * instantly.
@@ -441,11 +383,14 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	 * 
 	 * @param fileName
 	 *            name of file executed
+	 * @param uiThread
 	 * @param reader
 	 *            reader for script data to be executed
+	 * @param uiThread
+	 *            when set to <code>true</code> run code in UI thread
 	 * @return execution result
 	 * @throws Exception
 	 *             any exception thrown during script execution
 	 */
-	protected abstract Object execute(Script script, Object reference, String fileName) throws Exception;
+	protected abstract Object execute(Script script, Object reference, String fileName, boolean uiThread) throws Exception;
 }

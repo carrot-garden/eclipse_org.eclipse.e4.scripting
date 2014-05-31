@@ -1,6 +1,7 @@
 package org.eclipse.ease.module.platform;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.ease.modules.AbstractScriptModule;
 import org.eclipse.ease.modules.ScriptParameter;
 import org.eclipse.ease.modules.WrapToScript;
 import org.eclipse.ease.tools.RunnableWithResult;
@@ -23,7 +24,21 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.views.IViewDescriptor;
 import org.eclipse.ui.views.IViewRegistry;
 
-public class UIModule {
+public class UIModule extends AbstractScriptModule {
+
+	/**
+	 * Run code in UI thread. Needed to interact with SWT elements. Might not be supported by some engines. Might be disabled by the user. Code will be executed
+	 * synchronously and stall UI updates while executed.
+	 * 
+	 * @param code
+	 *            code/object to execute
+	 * @return execution result
+	 */
+	@WrapToScript
+	public Object executeUI(final Object code) {
+		return getEnvironment().getScriptEngine().injectUI(code);
+	}
+
 	/**
 	 * Displays an info dialog. Needs UI to be available.
 	 * 

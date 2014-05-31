@@ -45,6 +45,11 @@ public class JavaEngine implements IScriptEngine {
 	}
 
 	@Override
+	public Object injectUI(final Object content) {
+		throw new RuntimeException("not supported");
+	}
+
+	@Override
 	public Object getExecutedFile() {
 		return null;
 	}
@@ -82,16 +87,6 @@ public class JavaEngine implements IScriptEngine {
 	@Override
 	public void removeExecutionListener(final IExecutionListener listener) {
 		// do nothing
-	}
-
-	@Override
-	public void setIsUI(final boolean isUI) {
-		// do nothing
-	}
-
-	@Override
-	public boolean isUI() {
-		throw new RuntimeException("not supported");
 	}
 
 	@Override
