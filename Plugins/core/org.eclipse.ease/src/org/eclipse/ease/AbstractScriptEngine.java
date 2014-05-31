@@ -22,12 +22,14 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.FileTrace.Trace;
 import org.eclipse.ease.debug.ITracingConstant;
 import org.eclipse.ease.debug.Tracer;
 import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.service.prefs.Preferences;
 
 /**
  * Base implementation for a script engine. Handles Job implementation of script engine, adding script code for execution, module loading support and a basic
@@ -111,6 +113,11 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 
 	@Override
 	public final Object injectUI(final Object content) {
+		Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).node(Activator.PREFERENCES_NODE_SCRIPTS);
+		boolean allowUIAccess = prefs.getBoolean(Activator.SCRIPTS_ALLOW_UI_ACCESS, Activator.DEFAULT_SCRIPTS_ALLOW_UI_ACCESS);
+		if (!allowUIAccess)
+			throw new RuntimeException("Script UI access disabled by user preferences.");
+
 		return internalInject(content, true);
 	}
 
@@ -148,7 +155,6 @@ public abstract class AbstractScriptEngine extends Job implements IScriptEngine 
 	 */
 	private ScriptResult inject(final Script script, final boolean notifyListeners, final boolean uiThread) {
 
-		// FIXME make UI access optional by using preferences
 		synchronized (script.getResult()) {
 
 			try {

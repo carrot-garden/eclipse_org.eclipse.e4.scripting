@@ -18,6 +18,11 @@ public class Activator extends AbstractUIPlugin {
 
 	public static final String PLUGIN_ID = "org.eclipse.ease";
 
+	public static String PREFERENCES_NODE_SCRIPTS = "scripts";
+
+	public static String SCRIPTS_ALLOW_UI_ACCESS = "scriptUIAccess";
+	public static boolean DEFAULT_SCRIPTS_ALLOW_UI_ACCESS = false;
+
 	private static Activator fInstance;
 
 	public static Activator getDefault() {
