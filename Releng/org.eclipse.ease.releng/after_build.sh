@@ -8,7 +8,7 @@ rm -rf ${targetUpdateSiteLocation}*
 echo "Moving $sourceUpdateSiteLocation to $targetUpdateSiteLocation"
 cp -R ${sourceUpdateSiteLocation}* ${targetUpdateSiteLocation}
 
-#Publish dicovery
-sourceDiscoveryLocation=Plugins/core/org.eclipse.ease.discovery/DiscoveryDefinition.xmi
-cp ${sourceDiscoveryLocation} ${targetUpdateSiteLocation}
+#Publish discovery - we do not have a discovery file right now
+#sourceDiscoveryLocation=Plugins/core/org.eclipse.ease.discovery/DiscoveryDefinition.xmi
+#cp ${sourceDiscoveryLocation} ${targetUpdateSiteLocation}
 
