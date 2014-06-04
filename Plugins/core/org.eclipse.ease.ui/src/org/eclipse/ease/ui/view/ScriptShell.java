@@ -17,16 +17,23 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ease.IExecutionListener;
 import org.eclipse.ease.IScriptEngine;
 import org.eclipse.ease.IScriptEngineProvider;
+import org.eclipse.ease.Logger;
 import org.eclipse.ease.Script;
 import org.eclipse.ease.service.EngineDescription;
 import org.eclipse.ease.service.IScriptService;
 import org.eclipse.ease.service.ScriptType;
 import org.eclipse.ease.ui.Activator;
+import org.eclipse.ease.ui.completion.ICompletionProvider;
+import org.eclipse.ease.ui.completion.ModuleCompletionProvider;
 import org.eclipse.ease.ui.console.ScriptConsole;
 import org.eclipse.ease.ui.dnd.ShellDropTarget;
 import org.eclipse.ease.ui.preferences.IPreferenceConstants;
 import org.eclipse.ease.ui.scripts.IScriptSupport;
 import org.eclipse.ease.ui.scripts.ui.ScriptComposite;
+import org.eclipse.jface.bindings.keys.KeyStroke;
+import org.eclipse.jface.bindings.keys.ParseException;
+import org.eclipse.jface.fieldassist.ComboContentAdapter;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.resource.ColorDescriptor;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -137,6 +144,8 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 
 	private AutoFocus fAutoFocusListener = null;
 
+	private ContentProposalAdapter fContentAssistAdapter = null;
+
 	/**
 	 * Default constructor.
 	 */
@@ -246,6 +255,8 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 			}
 		}
 
+		addAutoCompletion();
+
 		// clear reference as we are done with initialization
 		mInitMemento = null;
 
@@ -273,6 +284,27 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 		runStartupCommands();
 	}
 
+	private void addAutoCompletion() {
+		// we cannot detach an existing provider, so disable them
+		if (fContentAssistAdapter != null)
+			fContentAssistAdapter.setEnabled(false);
+
+		// get auto completion provider for current engine
+		ICompletionProvider provider = ModuleCompletionProvider.getCompletionProvider(fScriptEngine.getDescription());
+
+		if (provider != null) {
+			try {
+				KeyStroke activationKey = KeyStroke.getInstance("Ctrl+Space");
+				ContentProposalAdapter adapter = new ContentProposalAdapter(mInputCombo, new ComboContentAdapter(), provider, activationKey,
+						provider.getActivationChars());
+				adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_INSERT);
+				fContentAssistAdapter = adapter;
+			} catch (ParseException e) {
+				Logger.logError("Cannot create content assist", e);
+			}
+		}
+	}
+
 	public void runStartupCommands() {
 		Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).node(IPreferenceConstants.NODE_SHELL);
 
@@ -295,8 +327,7 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 			mInputCombo.remove(mInputCombo.getSelectionIndex());
 
 		else {
-			// new element; check if we already have such an element in our
-			// history
+			// new element; check if we already have such an element in our history
 			for (int index = 0; index < mInputCombo.getItemCount(); index++) {
 				if (mInputCombo.getItem(index).equals(input)) {
 					mInputCombo.remove(index);
@@ -525,6 +556,11 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 						localPrint(script.getResult().getResult().toString(), TYPE_RESULT);
 					else
 						localPrint("[null]", TYPE_RESULT);
+
+					// add to content assist
+					if (fContentAssistAdapter != null)
+						((ICompletionProvider) fContentAssistAdapter.getContentProposalProvider()).addCode(script.getCode());
+
 				}
 
 				if (fKeepCommand) {
@@ -588,18 +624,4 @@ public class ScriptShell extends ViewPart implements IScriptSupport, IPropertyCh
 				runStartupCommands();
 		}
 	}
-
-	/**
-	 * Get the JavaScript console for this shell.
-	 * 
-	 * @return instance of JavaScript console
-	 */
-	// private ScriptConsole getConsole() {
-	// if (mConsole == null)
-	// // create console
-	// mConsole = ScriptConsole.create(mScriptEngine.getName() + "Script Shell", mScriptEngine);
-	//
-	// return mConsole;
-	// }
-
 }

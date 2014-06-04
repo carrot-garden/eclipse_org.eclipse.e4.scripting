@@ -90,7 +90,7 @@ public class ScriptService implements IScriptService {
 	}
 
 	@Override
-	public Map<String, ModuleDefinition> getAvailableModules() {
+	public synchronized Map<String, ModuleDefinition> getAvailableModules() {
 		if (fAvailableModules == null) {
 			fAvailableModules = new HashMap<String, ModuleDefinition>();
 			final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_MODULES_ID);
@@ -101,7 +101,7 @@ public class ScriptService implements IScriptService {
 					if (definition.getModuleClass() != null)
 						fAvailableModules.put(definition.getPath().toString(), definition);
 					else
-						Logger.logWarning("Module <" + definition.getName()+"> in plugin <"+definition.getBundleID()+"> could not be located!");
+						Logger.logWarning("Module <" + definition.getName() + "> in plugin <" + definition.getBundleID() + "> could not be located!");
 				}
 			}
 		}

@@ -34,6 +34,7 @@ Require-Bundle: org.eclipse.ui.console;bundle-version="[3.5.100,4.0.0)",
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.ease.ui.Activator
 Export-Package: org.eclipse.ease.ui,
+ org.eclipse.ease.ui.completion,
  org.eclipse.ease.ui.console,
  org.eclipse.ease.ui.launching,
  org.eclipse.ease.ui.metadata,
