@@ -32,6 +32,7 @@ public abstract class ModuleCompletionProvider implements ICompletionProvider {
 	private static final String PARAMETER_CLASS = "class";
 
 	private static final Pattern LOAD_MODULE_PATTERN = Pattern.compile("loadModule\\([\"'](.*)[\"']\\)");
+	private static final Pattern LINE_DATA_PATTERN = Pattern.compile(".*?([^\\p{Alnum}]?)(\\p{Alnum}*)$");
 
 	public static ICompletionProvider getCompletionProvider(final EngineDescription engineDescription) {
 		final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_PROCESSOR_ID);
@@ -66,36 +67,44 @@ public abstract class ModuleCompletionProvider implements ICompletionProvider {
 
 		List<ContentProposal> proposals = new ArrayList<ContentProposal>();
 
-		for (ModuleDefinition definition : fLoadedModules) {
-			for (Field field : definition.getFields()) {
-				// if (field.getName().startsWith(prefix)) {
-				proposals.add(new ContentProposal(field.getName()));
-				// }
-			}
+		Matcher matcher = matchLastToken(contents);
+		if (matcher.matches()) {
+			if (".".equals(matcher.group(1))) {
+				// code tries to call a class method, not a function
+				// do nothing
+			} else {
+				for (ModuleDefinition definition : fLoadedModules) {
+					// add fields from modules
+					for (Field field : definition.getFields()) {
+						if ((field.getName().startsWith(matcher.group(2))) && (matcher.group(2).length() < field.getName().length()))
+							proposals.add(new ContentProposal(field.getName().substring(matcher.group(2).length()), field.getName(), null));
+					}
 
-			for (Method method : definition.getMethods()) {
-				// if (method.getName().startsWith(prefix)) {
-				proposals.add(new ContentProposal(method.getName() + "()"));
-				// }
+					// add methods from modules
+					for (Method method : definition.getMethods()) {
+						if ((method.getName().startsWith(matcher.group(2))) && (matcher.group(2).length() < method.getName().length()))
+							proposals.add(new ContentProposal(method.getName().substring(matcher.group(2).length()) + "()", method.getName() + "()", null));
+					}
+				}
 			}
 		}
 
 		// allow implementers to modify proposal list
-		modifyProposals(proposals);
+		modifyProposals(proposals, contents);
 
 		// sort proposals
 		Collections.sort(proposals, new Comparator<ContentProposal>() {
 
 			@Override
 			public int compare(final ContentProposal arg0, final ContentProposal arg1) {
-				return arg0.getContent().compareTo(arg1.getContent());
+				return arg0.getLabel().compareTo(arg1.getLabel());
 			}
 		});
 
 		return proposals.toArray(new IContentProposal[proposals.size()]);
 	}
 
-	protected abstract void modifyProposals(Collection<ContentProposal> proposals);
+	protected abstract void modifyProposals(Collection<ContentProposal> proposals, String contents);
 
 	@Override
 	public char[] getActivationChars() {
@@ -130,5 +139,18 @@ public abstract class ModuleCompletionProvider implements ICompletionProvider {
 			modules.add(matcher.group(1));
 
 		return modules;
+	}
+
+	/**
+	 * Extract context relevant information from current line. The returned matcher locates the last alphanumeric word in the line and an optional non
+	 * alphanumeric character right before that word. result.group(1) contains the last non-alphanumeric token (eg a dot, brackets, arithmetic operators, ...),
+	 * result.group(2) contains the alphanumeric text. This text can be used to filter content assist proposals.
+	 * 
+	 * @param data
+	 *            current line of code left from cursor
+	 * @return matcher containing content assist information
+	 */
+	protected Matcher matchLastToken(final String data) {
+		return LINE_DATA_PATTERN.matcher(data);
 	}
 }

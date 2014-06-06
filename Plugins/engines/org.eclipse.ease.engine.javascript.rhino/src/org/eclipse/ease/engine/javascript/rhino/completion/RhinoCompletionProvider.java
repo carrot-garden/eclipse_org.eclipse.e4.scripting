@@ -23,7 +23,7 @@ public class RhinoCompletionProvider extends ModuleCompletionProvider {
 		while (matcher.find())
 			fVariables.add(matcher.group(1));
 
-		// extract funcitons
+		// extract functions
 		matcher = FUNCTION_PATTERN.matcher(code);
 		while (matcher.find())
 			fFunctions.add(matcher.group(1));
@@ -32,14 +32,25 @@ public class RhinoCompletionProvider extends ModuleCompletionProvider {
 	}
 
 	@Override
-	protected void modifyProposals(final Collection<ContentProposal> proposals) {
+	protected void modifyProposals(final Collection<ContentProposal> proposals, final String contents) {
 
-		// add variables
-		for (String variable : fVariables)
-			proposals.add(new ContentProposal(variable));
+		Matcher matcher = matchLastToken(contents);
+		if (matcher.matches()) {
+			if (".".equals(matcher.group(1))) {
+				// code tries to call a class method, not a function
+				// do nothing
+			} else {
+				// add variables
+				for (String variable : fVariables) {
+					if ((variable.startsWith(matcher.group(2))) && (matcher.group(2).length() < variable.length()))
+						proposals.add(new ContentProposal(variable.substring(matcher.group(2).length()), variable, "local variable"));
+				}
 
-		// add functions
-		for (String function : fFunctions)
-			proposals.add(new ContentProposal(function + "()"));
+				// add functions
+				for (String function : fFunctions)
+					if ((function.startsWith(matcher.group(2))) && (matcher.group(2).length() < function.length()))
+						proposals.add(new ContentProposal(function.substring(matcher.group(2).length()), function, "local function"));
+			}
+		}
 	}
 }
