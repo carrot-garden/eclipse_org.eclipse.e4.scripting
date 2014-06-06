@@ -36,10 +36,9 @@ public class ModulesComposite extends Composite {
 	 * @param parent
 	 * @param style
 	 * @param modulesOnly
-	 *            if true only the modules are shown in the tree. if false also
-	 *            the fields and functions are shown.
+	 *            if true only the modules are shown in the tree. if false also the fields and functions are shown.
 	 */
-	public ModulesComposite(Composite parent, int style, boolean modulesOnly) {
+	public ModulesComposite(final Composite parent, final int style, final boolean modulesOnly) {
 		super(parent, style);
 
 		treeViewer = new TreeViewer(this, SWT.NONE);
@@ -50,14 +49,13 @@ public class ModulesComposite extends Composite {
 		ColumnViewerToolTipSupport.enableFor(treeViewer);
 
 		// use a decorated label provider
-		treeViewer.setLabelProvider(new ModulesDecoratedLabelProvider(
-				new ModulesLabelProvider()));
+		treeViewer.setLabelProvider(new ModulesDecoratedLabelProvider(new ModulesLabelProvider()));
 
 		treeViewer.setContentProvider(new ModulesContentProvider(modulesOnly));
 
 		treeViewer.setComparator(new ViewerComparator() {
 			@Override
-			public int category(Object element) {
+			public int category(final Object element) {
 				if ((element instanceof IPath))
 					return 1;
 				if ((element instanceof ModuleDefinition))
@@ -71,9 +69,7 @@ public class ModulesComposite extends Composite {
 			}
 		});
 
-		treeViewer.addDragSupport(DND.DROP_COPY,
-				new Transfer[] { TextTransfer.getInstance() },
-				new ModulesDragListener(treeViewer));
+		treeViewer.addDragSupport(DND.DROP_MOVE | DND.DROP_COPY, new Transfer[] { TextTransfer.getInstance() }, new ModulesDragListener(treeViewer));
 
 	}
 
@@ -82,7 +78,7 @@ public class ModulesComposite extends Composite {
 		super.dispose();
 	}
 
-	public void setInput(Object input) {
+	public void setInput(final Object input) {
 		treeViewer.setInput(input);
 	}
 
@@ -90,7 +86,7 @@ public class ModulesComposite extends Composite {
 		treeViewer.refresh();
 	}
 
-	public void addFilter(ViewerFilter filter) {
+	public void addFilter(final ViewerFilter filter) {
 
 		treeViewer.addFilter(filter);
 
