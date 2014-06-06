@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -135,25 +134,14 @@ public class EnvironmentModule extends AbstractEnvironment {
 	}
 
 	/**
-	 * Verify that a method is treated by the autoloader. This is the case when the method is marked by an @WrapToJavaScript annotation.
-	 * 
-	 * @param method
-	 *            method to be evaluated
-	 * @return true when autoloader should handle this method
-	 */
-	private static boolean useAutoLoader(final Method method) {
-		return (Modifier.isPublic(method.getModifiers())) && (method.getAnnotation(WrapToScript.class) != null);
-	}
-
-	/**
 	 * Execute script code. This method executes script code directly in the running interpreter. Execution is done in the same thread as the caller thread.
 	 * 
 	 * @param data
 	 *            code to be interpreted
 	 * @return result of code execution
 	 */
-	@WrapToScript
-	public final Object eval(final Object data) {
+	@WrapToScript(alias = "eval")
+	public final Object execute(final Object data) {
 		return getScriptEngine().inject(data);
 	}
 
