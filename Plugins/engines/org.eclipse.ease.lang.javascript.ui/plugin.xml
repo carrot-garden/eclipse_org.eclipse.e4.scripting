@@ -16,5 +16,16 @@
       activate="true">
    </javaCompletionProposalComputer>
  </extension>
+ <extension
+       point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+    <hyperlinkDetector
+          activate="true"
+          class="org.eclipse.ease.lang.javascript.ui.ResourceHyperlinkDetector"
+          description="Links to included files"
+          id="org.eclipse.ease.lang.javascript.ui.includeHyperlinkDetector"
+          name="Include Files"
+          targetId="org.eclipse.wst.jsdt.ui.javaCode">
+    </hyperlinkDetector>
+ </extension>
 
 </plugin>
