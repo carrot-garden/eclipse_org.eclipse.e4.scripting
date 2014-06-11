@@ -343,7 +343,7 @@ public class ResourcesModule extends AbstractScriptModule {
 			@ScriptParameter(optional = true, defaultValue = "true") final boolean recursive) {
 		Pattern regExp = Pattern.compile(pattern);
 
-		List<File> result = new ArrayList<File>();
+		List<IFile> result = new ArrayList<IFile>();
 		Collection<IContainer> toVisit = new HashSet<IContainer>();
 
 		// locate root folder to start with
@@ -362,7 +362,7 @@ public class ResourcesModule extends AbstractScriptModule {
 				for (IResource child : container.members()) {
 					if (child instanceof IFile) {
 						if (regExp.matcher(child.getName()).matches())
-							result.add((File) child);
+							result.add((IFile) child);
 
 					} else if ((recursive) && (child instanceof IContainer))
 						toVisit.add((IContainer) child);
