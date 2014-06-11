@@ -31,7 +31,7 @@ public class ResourceHyperlink implements IHyperlink {
 
 	@Override
 	public String getHyperlinkText() {
-		return null;
+		return "Open in editor";
 	}
 
 	@Override
